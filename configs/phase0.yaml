@@ -1,0 +1,79 @@
+# Phase 0 run configuration - everything not stated here is inherited from
+# default.yaml via `_base_` (resolved recursively by ccg.utils.config.load_config).
+#
+# Phase 0 answers RQ1/RQ2 with the four frozen baselines only:
+#   b0_random              - uniform chance floor, calibration reference
+#   b1_cosine              - frozen CLIP query-crop cosine (no trainable part)
+#   b2_temp                - B1 + one global temperature fitted on val_calib
+#   b3_mlp                 - candidate-blind MLP (B3), <= 300k parameters
+# No set-aware model (DeepSets) and no presence/NONE model is trained here:
+# both are gated behind Gate Q1 / Gate Q2 (docs/research_protocol.md is
+# authoritative for the gate thresholds; the values below are a mirror).
+
+_base_: default.yaml
+
+phase: 0
+experiment_prefix: phase0
+
+baselines: [b0_random, b1_cosine, b2_temp, b3_mlp]
+# Model registry name -> the class that has to provide it.  run_phase0.py reads
+# this mapping so a baseline cannot be silently swapped mid-experiment.
+baseline_implementations:
+  b0_random: numpy_random            # no scorer object, uniform logits
+  b1_cosine: ccg.models.CosineScorer  # temperature forced to 1.0
+  b2_temp: ccg.calibration.TemperatureScaler
+  b3_mlp: ccg.models.IndependentMLPScorer
+
+# --- what Phase 0 must sweep --------------------------------------------------
+evaluation:
+  Ks: [5, 10, 20, 50]         # 20/50 are out-of-distribution for B3 by design
+  hardness: [random, same_category_hard, clip_hard]
+  target_presence: [present, synthetic_absent, natural_absent]
+  # The three presence conditions must be reported separately: synthetic
+  # omission is a designed counterfactual, natural omission is a detector
+  # failure (section 6). Pooling them would make RQ4 unreadable.
+  report_regimes_separately: true
+
+# --- gates (mirror of docs/research_protocol.md; that file wins on conflict) --
+gates:
+  q1_k_sensitive_baseline:        # Gate Q1: does performance move with K?
+    metric: accuracy
+    min_abs_gap_K5_to_K50: 0.02
+    requires_ci_excludes_zero: true
+  q2_set_aware_gain:              # Gate Q2: does set-aware context help at all?
+    metric: accuracy
+    min_gain_over_b3: 0.01
+    verdicts: [GO_DEEPSETS, NO_GO_FLAT, SUFFICIENT_STATS_ONLY]
+  q3_calibration_gain:            # Gate Q3: does our calibration beat global T?
+    metric: top_label_ece
+    min_relative_improvement: 0.10
+
+# --- training budget (B3 only, Phase 0) ---------------------------------------
+training:
+  b3_mlp:
+    # Trained on K in Ks_train with random hardness only; hard sets are an
+    # evaluation regime and must never appear in training (section 5).
+    Ks: [5, 10]
+    hardness: [random]
+    target_presence: [present]    # target-absent rows are counted, not trained
+    epochs: 20
+    lr: 0.001
+    batch_size: 32
+    weight_decay: 0.0
+    early_stopping_split: val_select
+    seeds: [0, 1, 2]
+
+calibration:
+  # B2 fits ONE global T on val_calib.  The K-aware form T(K)=a+b*log K is fitted
+  # on the same split; test K=20/50 are then reached by extrapolation through the
+  # functional form and are never fitted (see ccg.calibration.temperature).
+  variants: [global, k_aware]
+  fit_split: val_calib
+  extrapolate_test_ks: [20, 50]
+  report_extrapolation_risk: true
+
+outputs:
+  dir: results/phase0
+  save_raw_predictions: true      # logits + candidate ids + confidence + correct
+  audit_report: results/phase0/proposal_audit.json
+  gates_report: results/phase0/gates.json

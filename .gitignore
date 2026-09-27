@@ -1,0 +1,37 @@
+# Data & caches
+data/*
+!data/README.md
+data/raw/
+data/processed/
+data/*.gz
+data/*.json
+data/*.pkl
+cache/*
+!cache/README.md
+results/*
+!results/README.md
+experiments/**/outputs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+venv/
+env/
+environment.local.yml
+
+# Editors / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

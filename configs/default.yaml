@@ -1,0 +1,117 @@
+# Phase 0 default configuration for calibrated-candidate-grounding.
+#
+# Frozen design decisions (dataset, backbone, proposal count, IoU threshold, the
+# test grid) live here and nowhere else; phase0.yaml inherits this file via
+# `_base_`.  Changing anything marked FROZEN is a protocol amendment, not a
+# run-time knob - see docs/research_protocol.md (authoritative).
+
+dataset:
+  name: refcoco+          # FROZEN: the only primary dataset in Phase 0
+  variant: unc            # FROZEN: UNC image-level split (avoids cache contamination)
+  root: data/refcoco+     # filled by scripts/prepare_refcoco.py once downloaded
+  annotation_file: null   # e.g. data/refcoco+/refcoco+.json (待真实数据核对 file name)
+  coco_root: data/coco
+
+backbone:
+  library: open_clip      # FROZEN
+  model_name: ViT-B/32    # FROZEN
+  pretrained: laion2b_s34b_b79k
+  embed_dim: 512
+  freeze: true            # no backbone training at any phase
+  precision: fp16         # feature extraction only (section 24)
+
+# --- proposal / candidate protocol -----------------------------------------
+proposal_n: 64            # target bank size N per image (section 4)
+iou_threshold: 0.5        # proposal is the unique target iff IoU >= this (section 4)
+top_k_audits: [32, 64]    # proposal recall is reported at @32 and @64
+
+Ks_train: [5, 10]         # FROZEN: trained cardinalities (section 10)
+Ks_test: [5, 10, 20, 50]  # FROZEN: tested cardinalities, 20/50 are OOD by design
+hardness_train: [random]
+hardness_test: [random, same_category_hard, clip_hard]
+candidate_regimes: [random, same_category_hard, clip_hard]
+# Hard candidate sets are a diagnostic/adversarial evaluation regime, NOT a
+# realistic detector distribution (section 5). Never silently drop examples that
+# cannot reach a requested K: report candidate availability first.
+require_availability_report: true
+
+# --- splits -----------------------------------------------------------------
+splits:
+  val_select: val_select    # architecture / optimizer / early stopping
+  val_calib: val_calib      # temperature / thresholds / calibration ONLY (FROZEN use)
+  calib_fraction: 0.5       # image-level cut of the UNC validation split
+  split_seed: 0             # fixed; changing it is an amendment
+  test_split_frozen: true
+
+seed: 0
+seeds: [0, 1, 2]            # every learned model runs 3 seeds (section 23)
+deterministic: true
+
+# --- models ------------------------------------------------------------------
+models:
+  b0_random:
+    enabled: true
+  b1_clip_cosine:
+    temperature: 1.0
+  b2_temperature_scaling:
+    fit_split: val_calib
+    bounds: [0.05, 100.0]
+  b3_independent_mlp:
+    feature_dim: 512
+    hidden_dim: 128
+    geo_dim: 5              # x, y, w, h, area (set 6 to append objectness)
+    use_objectness: false
+    param_budget: 300000    # hard cap, asserted in tests/test_models_phase0.py
+    epochs: 20
+    lr: 0.001
+    batch_size: 32
+  c3_stats_only_calibrator:
+    hidden_dim: 64
+    include_top3: false
+    output_mode: p_correct
+    trainable: false        # Phase 0.5, gated behind Gate Q1
+  deepsets:
+    enabled: false          # Phase 1, gated behind Gate Q1 + Gate Q2
+  presence:
+    enabled: false          # Phase 2
+
+# --- calibration --------------------------------------------------------------
+calibration:
+  fit_split: val_calib      # never val_select, never test
+  temperature_bounds: [0.05, 100.0]
+  k_aware_form: "T(K)=a+b*log(K)"
+  extrapolate_test_ks: [20, 50]   # evaluated through the form, never fitted
+  abstention_criteria: [max_confidence, margin]
+  target_coverages: [0.5, 0.8, 0.9, 0.95]
+
+# --- metrics ------------------------------------------------------------------
+metrics:
+  ece_bins: 15
+  ece_scheme: adaptive      # equal-mass bins; top-label ECE is the primary metric
+  fixed_width_bins: 10      # reported as secondary
+  risk_levels: [0.5, 0.8, 0.9, 0.95]
+  aurc: true
+  brier: true
+  top_k_accuracy: 5
+  presence_metrics: [auroc, auprc, fpr_at_95_tpr, none_precision, none_recall, none_f1, false_selection_rate]
+
+statistics:
+  bootstrap_replicates: 5000        # FROZEN minimum (section 23)
+  bootstrap_resample: image_level   # image-level beats expression-level
+  confidence_level: 0.95
+  paired: true
+
+cache:
+  root: cache
+  backend: hdf5             # h5py; falls back to npz when unavailable
+  feature_dtype: float16    # ~1.3 GB of proposal embeddings (section 24)
+  target_size_budget_gb: 3
+  avoid_many_small_files: true
+
+logging:
+  dir: results/logs
+  save_predictions: true    # raw logits, candidate ids, confidence, correctness
+  save_bootstrap_summary: true
+
+scripts:
+  batch_size_start: 64      # drop to 32 on OOM; no gradient tricks (no training)
