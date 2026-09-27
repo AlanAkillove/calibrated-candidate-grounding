@@ -279,7 +279,7 @@ results_claimed: false
 ```yaml
 # ===== FORMAL ENTRY — REAL RESULT（非示例）=====
 experiment_id: audit-proposal-001
-git_commit: "pending"          # 待提交时由主智能体填入完整 40 位 SHA
+git_commit: "f9b79b2087796398151d2dd5743ca88872729a0c"   # 实验运行时的审计流水线提交
 timestamp: "2026-09-27"        # 日期级（运行日）
 dataset: refcoco+              # refs(unc).p（latin1 解析）+ instances.json；图像 = COCO train2014
 split: [train, val_select]     # image 级 audit subset：train 池 1000 + val_select 500（共 1500 图）
