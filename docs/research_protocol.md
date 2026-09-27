@@ -486,11 +486,13 @@ indices：ref_id/regime/K/hardness/target_present/candidate_indices/target_candi
 
 ## 16. Amendments
 
-（本章节为追加区。当前无 amendment。）
+（本章节为追加区。登记索引见下表；amendment 全文append 于文件末尾。）
 
 | # | 日期 | 修改条款 | 原因 | 原始标准保留位置 |
 |---|---|---|---|---|
-| — | — | — | — | — |
+| A1 | 2026-09-27 | §6 regime taxonomy / §11 Gate Q1 证据层级（新增约束） | GT 信息不对称 + CLIP-hard↔B1 构造器耦合 | §6/§11 原文完整保留于上方；全文见文件末 “Amendment A1” |
+| A2 | 2026-09-27 | §5 proposal bank 语义 / N-selection 预注册（新增工标准） | proposal bank 定义模糊（detector vs RPN）+ N 选择需工程预注册 | §5 原文完整保留于上方；全文见文件末 “Amendment A2” |
+| A3 | 2026-09-27 | §A2.4 N-selection 执行 + §A2.5 待决项关闭（**结果记录**：不修改任何条款与 gate 数字） | proposal-system audit 完成（1500 图），登记 outcome：N=64 选定、K=50 排除报告义务、RQ4 功效风险、train2014 澄清、冗余极低不需新阈值 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A3” |
 
 ---
 
@@ -520,3 +522,192 @@ Python package 名 `ccg` = calibrated candidate grounding。
 - 不在结果存在之前对结论做任何方向性预测；
 - 本项目成功标准不是 positive result，而是：Phase 0 能够以可复现、统计严谨、低成本的
   方式判断 candidate-set shift 是否真的形成独立的 grounding reliability 问题。
+
+---
+
+## Amendment A1 — 2026-09-27 — Candidate regime taxonomy & evidence hierarchy
+
+> 本 amendment 为**追加条款**，不修改、不删除上方任何原始条款。原始 §5/§6/§11 全部文本
+> 仍在上文原样保留、继续可见、可追溯。本条款只**新增约束层级**。
+
+### A1.1 修改原因
+
+首轮协议审计发现两处不对称：
+
+1. **GT 信息不对称**：`same-category hard negatives` 与 `CLIP-hard negatives` 一样，在构造时
+   都使用了 evaluation 时不可得的信息（前者使用 COCO GT 类别 + IoU，后者使用 frozen CLIP
+   相似度），但原始协议只把 **CLIP-hard** 明确标为 diagnostic regime（§6 Regime 声明），对
+   same-category hard negatives 只在风险清单 R7 处附带提及，证据地位不对等。
+2. **构造器耦合未标注**：CLIP-hard 用 frozen CLIP 相似度选负样本，而 **B1（frozen CLIP
+   cosine baseline）** 恰好用同一 CLIP 打分——存在 constructor / evaluator coupling，原始 §6/§11
+   未点明该耦合对 Gate Q1 解释力的影响。
+
+因此需要为三类 candidate regime 建立明确的**证据层级（evidence hierarchy）**，并据此**收紧**
+Gate Q1 的通过条件（只加约束，不改任何原始数字）。
+
+### A1.2 三类 candidate regimes（正式定义）
+
+> **Random** — 主 controlled candidate distribution。distractor 的选择不依赖 query 文本，也不依赖
+> GT category（仅从同一 image 的 proposal bank 中随机采样，固定随机种子并保存 candidate
+> indices）。这是唯一可作为 "部署可类比分布" 论证基础的 regime。
+>
+> **GT Same-Category Hard** — **GT-assisted diagnostic stress test**。candidate 的类别通过
+> `proposal → 最高 IoU COCO GT object` 的 assignment 获得：仅当某 proposal 与某 COCO GT object 的
+> IoU ≥ 0.5 才赋予该 GT object 的类别，否则记为 `unknown`（无类别）。**明确声明**：本 regime
+> (a) **使用 GT metadata**（COCO 类别 + GT box），真实 deployment 期的 detector 无法获得；
+> (b) **不代表 deployment-realistic distribution**；(c) **不用于证明真实 detector 会自然产生同等的
+> composition shift**；(d) 其主要用途是 **controlled same-category competition analysis**（在受控
+> 条件下研究同类外观竞争候选对 ranking / calibration 的影响）。
+>
+> **CLIP-Hard** — **model-assisted adversarial diagnostic stress test**。**明确声明**：(a) 使用
+> frozen CLIP 的 query–crop similarity 选择最易混淆的错误 proposals；(b) 与 **CLIP cosine
+> baseline（B1）** 存在 **constructor / evaluator coupling**（选负样本与打分用同一模型）；因此
+> (c) **B1 在该 regime 上的性能下降不能单独作为 candidate-set reliability failure 的主要证据**，
+> 只能作为对抗性压力下的佐证。
+
+### A1.3 Evidence hierarchy（照抄结构，作为 Gate Q1 的证据分层依据）
+
+```text
+Primary: candidate cardinality shift
+Secondary: GT same-category composition shift
+Adversarial diagnostic: CLIP-hard shift
+```
+
+### A1.4 Gate Q1 修订条款（只增约束，不改原始判据）
+
+1. Gate Q1 **不允许仅凭 CLIP-hard cells 通过**（因其与 B1 存在 §A1.1(2) 所述耦合）。
+2. 原始 §11 Gate Q1 第 3 条 "**至少两个 OOD cells** 满足" 中：满足条件的 OOD cells **至少一个必须
+   属于 cardinality shift**（即 **random** regime 下的 `K=20` 或 `K=50` cells）。
+3. 上述仅**收紧** Gate Q1 的通过条件；不放松、不替换任何原始比较方向与原始阈值。
+
+### A1.5 原始 Gate 数字不变声明
+
+原始 Gate Q1 / Q2 / Q3 的全部数字判据（`3pp` Accuracy、`3pp` ECE、`20%` AURC relative、
+`ECE < 3%`、`ΔAURC < 5%`、`ΔAUPRC_presence ≥ 2pp`、`ΔAccuracy ≥ 1.5pp` 等）**保持不变**；
+本次 amendment **仅新增 regime 的证据层级约束**。相关原始条款全部保留在上方 §11 正文中，
+不删除、不改写。
+
+---
+
+## Amendment A2 — 2026-09-27 — Class-agnostic RPN proposal bank & N-selection rule
+
+> 本 amendment 为**追加条款**，不修改、不删除上方任何原始条款（含 §5 target 定义、§13 N≈64
+> 预算）。原始 §5 文本仍在上文原样保留、继续有效。本条款**澄清并冻结** proposal bank 的确切
+> 语义，并**新增**一条工程性 N-selection 预注册规则。
+
+### A2.1 主 proposal bank 冻结为 class-agnostic RPN proposals
+
+主 proposal bank **正式冻结为 class-agnostic RPN proposals**（即 RPN 输出的候选框），**不是**
+Faster R-CNN 的最终 detection boxes（后者已经过 ROI head 分类 + 置信度过滤 + 按类 NMS）。
+pipeline 定义（照抄，为唯一权威口径）：
+
+```text
+image → frozen Faster R-CNN backbone/FPN → RPN proposals → RPN NMS → objectness ranking → top-N class-agnostic proposal bank
+```
+
+### A2.2 proposal 内容、类别 metadata 与禁止项
+
+- 每个 proposal 只携带 `box`（几何）+ `objectness`（RPN 前景分）。**不含** detector 预测类别。
+- COCO category **只能作为 offline diagnostic metadata**，且必须经
+  `proposal → highest-IoU COCO GT object → GT category` 的 assignment 获得（IoU ≥ 0.5 才赋类别，
+  否则 `unknown`）。此 assignment 仅用于 GT same-category hard-negative 构造（见 A1.2）与离线
+  audit，**不进入** 主 candidate space 的定义。
+- **禁止**使用 detector predicted class（ROI-head 分类结果 / 按类 NMS 后的标签）定义主 candidate
+  space。**理由**：detector 的分类头置信度过滤与按类 NMS 会把 "检测置信度" 与 "目标存在性" 混入
+  candidate 组成，从而**混淆 cardinality shift 与 detection confidence**，破坏 §6 所要求的 "K 与
+  hardness 尽量独立" 以及 "cardinality shift 为 Primary 证据"（A1.3）的可解释性。
+
+### A2.3 版本依赖与实现方式（引用名字，不写实现）
+
+- 版本依赖记录：**torchvision 0.20.1 / torch 2.5.1**。
+- RPN 提取**不依赖脆弱的 forward hook**，而是直接调用 `GeneralizedRCNN` 的公开子模块
+  `transform` / `backbone` / `rpn` 的方式获得 class-agnostic RPN proposals。
+- 实现细节以代码 `src/ccg/data/rpn.py` 为准（该文件由代码智能体并行实现，本 protocol 仅引用其
+  名字，不在本文重复其实现）。
+
+### A2.4 N-selection 预注册规则（工程标准，非研究 gate）
+
+> 预注册 N-selection 规则（照抄语义）：
+>
+> ```text
+> if N=64 allows K=50 construction for >=90% of otherwise eligible target-present examples:
+>     use N=64;
+> else:
+>     use N=128.
+> ```
+>
+> 若 `N=128` 时仍 `<90%`：**不自行删除 K=50**，必须先汇报 availability curve，再决定是否发起新的
+> amendment。
+
+**明确声明**：该 `90%` 是一条 **proposal engineering criterion（工程可用性判据）**，**不是**研究结果
+gate，**不改变** Gate Q1 的任何判据或 §A1.4 的证据层级。它只决定 proposal bank 的 N 取值。
+
+### A2.5 Target 定义保持原文 + duplicate 概念澄清
+
+- §5 的 target 定义**保持原文不变**：`max IoU ≥ 0.5` 的**唯一** max-IoU proposal 为 target，并同时
+  移除其他所有 `IoU(p_j,b*) ≥ 0.5` 的等价 proposal。
+- **追加澄清**：以下两个是**不同概念**，不得混用——
+  * **GT-equivalent proposal**：与 **GT box** `IoU ≥ 0.5` 的 proposal（§5 移除规则针对的就是这一类，
+    以消除多正确答案歧义）。
+  * **proposal-near-duplicate**：与 **target proposal** `IoU > threshold` 的 proposal（proposal 之间的
+    近重复，与 GT box 无关）。
+- 是否针对 proposal-near-duplicate 引入**更严格的 duplicate suppression**：**待** proposal audit 的
+  "remaining candidate count distribution"（见 `docs/dataset_protocol.md` audit design 小节）结果出来后
+  再决定；**在审计结果出来之前不得引入任何新的 IoU threshold**。
+
+### A2.6 同步修正原 dataset 描述中的模糊表述
+
+原 §5 "使用**一个冻结的 COCO-pretrained detector / RPN**" 的措辞存在 "detector vs RPN" 模糊。现**正式
+选择**为：**torchvision `fasterrcnn_resnet50_fpn`（`FasterRCNN_ResNet50_FPN_Weights.COCO_V1` 权重）
+之 RPN 子模块**（class-agnostic proposals，见 §A2.1）。该选择与 `docs/dataset_protocol.md` §4 的
+proposal generator 选型一致；`detector / RPN` 原文不删除，由本条款给出唯一确定解读。
+
+---
+
+### Amendment A3 — 2026-09-27 — Proposal audit outcome & N-selection decision (results record)
+
+> 本条款为**结果记录（results record）**：登记 2026-09-27 完成的 proposal-system audit
+> （audit subset 1500 图）的 outcome，并按 §A2.4 预注册规则**执行** N-selection 决定。
+> **本条款为追加记录：不修改、不删除上方任何原始条款，不修改任何 Gate 数字**——Gate Q1/Q2/Q3
+> 的全部数字判据与 §A1.4 的证据层级保持不变；§5/§6 的 target 定义、嵌套性与
+> K∈{5,10,20,50} 网格保持不变。逐项完整数字（recall@0.5/@0.7、CI、IoU 分布、冗余度等）见
+> `docs/experiment_log.md` 条目 `audit-proposal-001`，本条款只登记协议层结论。
+
+### A3.1 N-selection 决定（按 A2.4 预注册规则执行）
+
+- 实测（audit 仅使用 `train` 池 1000 + `val_select` 500 的 image 级子集，不涉及 testA/testB 与
+  `val_calib`；3752 expressions；N=64 与 N=128 两档对比）：
+  - **N=64**：能构造 K=50（valid distractors ≥ K−1）比例 = **3719/3752 = 0.9912046908315565**
+    [0.9876741623023597, 0.9937303782938145]；
+  - **N=128**：K=5/10/20/50 全部为 1.0。
+- 按 §A2.4 规则（N=64 能支撑 ≥90% otherwise eligible target-present examples 的 K=50 构造则用
+  N=64）：**0.9912046908315565 ≥ 0.90 → 正式选定 N=64 作为主 proposal bank 规模**。
+- 该 90% 为工程判据（§A2.4 已声明：不是研究 gate）；本决定不改变任何 Gate 判据。
+
+### A3.2 K=50 排除样本的报告义务
+
+- 实测 **0.88%（33/3752）** 的 expression 在 N=64 下无法支持 K=50 构造：这些样本**必须在
+  K=50 cells 中显式报告排除计数（禁止静默过滤）**——重申 §7、§14.6 与 R5 的既有纪律，非新增判据。
+- 主网格最大 K 维持 **50**（不因候选不足而降为 20）。
+
+### A3.3 Natural omission 稀缺 → RQ4 统计功效风险（不影响 Gate）
+
+- 实测 expression 级 natural omission（P(max IoU<0.5)）：N=64 = **53/3752 = 0.014125799573560768**；
+  N=128 = 22/3752 = 0.005863539445628998。
+- 记录：**RQ4 的 natural omission split 统计功效有限**，需在 Phase 2 前做功效评估。
+- **明确**：该项为统计功效风险记录，**不触发、不改变任何 Gate**，Phase 0 主路线不受影响。
+
+### A3.4 分割澄清：全部图像来自 COCO train2014（不改变 Gate 与评估协议）
+
+- 实测：全部 **19,992** 张 RefCOCO+ 图像位于 **COCO train2014**（1500 张 val-split 抽样图在
+  `instances_val2014` 中 0 命中）。本项目只需 COCO train2014 图像；val2014 图像非必需
+  （`instances_val2014.json` 仅用于交叉核验）。
+- **明确**：该澄清**不改变** Gate、评估协议、§9 split 用途边界或任何数据划分；同步修正见
+  `docs/dataset_protocol.md` §1.3/§1.4。
+
+### A3.5 A2.5 待决项处置：不引入新的 duplicate-suppression 阈值
+
+- 实测冗余极低：两两 IoU>0.7 比例 N=64 = 0.001429563492063492（N=128 = 0.0006508366141732283）；
+  remaining candidate count（移除 target-equivalent 后）median：N=64 = 59，N=128 = 120。
+- 处置：**不引入**新的 duplicate-suppression IoU threshold——不存在“用近重复 box 凑 K=50”的问题；
+  §A2.5 中“待审计结果出来后决定”的待决项就此关闭（审计结果已出，结论为不需要引入）。

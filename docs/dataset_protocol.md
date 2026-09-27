@@ -4,9 +4,12 @@
 先核实数据组织、依赖、license、proposal generator 选型、存储与显存预算，并给出风险清单。
 
 写作日期：2026-09-26。状态：pre-download audit（Phase 0 之前）。
+实测更新：2026-09-27（下载与解析后核验完成；见 §1.4 实测更新与各小节行内标注——原 `[待下载后验证]`
+相关猜测已按实测结果标注为 **已确认 / 已证伪**）。proposal audit 结果见 `docs/experiment_log.md`
+条目 `audit-proposal-001` 与 `docs/research_protocol.md` **Amendment A3**。
 
 本文件中所有来自外部检索的事实都标出来源；凡是**无法在下载后核验之前确认**的具体数字，
-一律显式标注 **`[待下载后验证]`**，不允许写成已确定结论。
+一律显式标注 **`[待下载后验证]`**（2026-09-27 已核验的条目标注“已实测”），不允许写成已确定结论。
 
 ---
 
@@ -17,45 +20,52 @@
 | 项目 | 结论 | 来源 |
 |---|---|---|
 | 数据归属 | RefCOCO / RefCOCO+ / RefCOCOg 由 UNC（Kazemzadeh et al. EMNLP 2014 采集协议；Yu et al. ECCV 2016 "Modeling Context in Referring Expressions" 定义 split 与 REF/REC 任务）发布，图像来自 **MS COCO** | `github.com/lichengunc/refer` README |
-| 官方分发形式 | 每个数据集一个 zip：`https://bvisionweb1.cs.unc.edu/licheng/referit/data/refcoco+.zip`（README 明确写出该 URL） | 同上 |
+| 官方分发形式 | 每个数据集一个 zip：`https://bvisionweb1.cs.unc.edu/licheng/referit/data/refcoco+.zip`（README 明确写出该 URL）。**2026-09-27 实测：官方直链 SSL 失败（refer issue #14 已知）→ 改用 Wayback 存档成功，见 §1.4 / R13** | 同上 |
 | 服务器可用性 | UNC README 自述 "As the webserver is broken (sry about this), please check this Issue for all datasets downloading" → 官方直链可能失效，需走 GitHub issue 列出的镜像（社区镜像如 HuggingFace / OpenDataLab / TensorFlow Datasets `ref_coco`） | 同上 |
 | 图像依赖 | README "Prepare Images"：把 `mscoco` 图像放入 `data/images`；RefCOCO、RefCOCO+、RefCOCOg 使用 COCO 图像 | 同上 |
 | API / split 选择 | `refer.py` 支持 `dataset='refcoco+', splitBy='unc'`；同一 API 亦支持 `refcoco` 的 `unc`/`google`、`refcocog` 的 `google`/`umd`、`refclef` 的 `unc`/`berkeley` | 同上 |
 | **UNC split 是 image-level** | TFDS 文档："`unc`" 和 "`umd`" splits **partition images** between train / validation / test（即图像不跨 split 出现）；而 Google-style split 不保证图像不相交 | `tensorflow.org/datasets/catalog/ref_coco`（经 OpenDataLab 镜像页复核） |
 | RefCOCOg 的 google split 无 canonical test（val 常被论文当 test 报告，称 "val\*"） | 同上 | 同上 |
-| **RefCOCO+ 不含空间介词** | TFDS 文档："RefCoco+ expressions are strictly appearance based descriptions, which they enforced by preventing raters from using location based descriptions"（禁用 "person on the left" 这类绝对空间描述词） | 同上；第三方标注文档复核 |
-| 规模（常引用值） | RefCOCO：142,210 expressions / 50,000 objects / 19,994 images；**RefCOCO+：141,565 expressions / 49,856 objects / 19,992 images** | Liao et al., "A Real-Time Cross-Modality Correlation Filtering Method for Referring Expression Comprehension", CVPR 2020（openaccess.thecvf.com） |
-| RefCOCO+ 的 UNC split 各子集表达数 | 常见表格值：train 120,624 / val 10,758 / testA 5,726 / testB 4,889（**注意**：四项相加 =141,997，与 141,565 不一致，可能因不同论文对 duplicate/unanswerable 表达的处理不同） | arXiv:2312.08007 Table 1 等；**`[待下载后验证]`** |
+| **RefCOCO+ 禁用绝对位置词（非“无空间介词/纯外观”）** | TFDS 文档原文（其 “strictly appearance based” 属过强表述，见右注）：“RefCoco+ expressions are strictly appearance based descriptions, which they enforced by preventing raters from using location based descriptions”。**修正表述**：RefCOCO+ 标注采集禁止绝对位置词，降低了对简单绝对位置捷径的依赖，但关系型与上下文型表达仍可出现。> RefCOCO+ annotation collection prohibits absolute location words, reducing reliance on simple absolute-position shortcuts, while relational and contextual expressions can still occur. | 同上；第三方标注文档复核 |
+| 规模（常引用值） | RefCOCO：142,210 expressions / 50,000 objects / 19,994 images；**RefCOCO+：141,565 expressions / 49,856 objects / 19,992 images**（**2026-09-27 实测确认：`refs(unc).p` 含 49,856 条 region 级 refs；`instances.json` 含 19,992 图像**） | Liao et al., "A Real-Time Cross-Modality Correlation Filtering Method for Referring Expression Comprehension", CVPR 2020（openaccess.thecvf.com） |
+| RefCOCO+ 的 UNC split 各子集表达数 | **【2026-09-27 已实测（本项目口径）】**UNC split 内置在 refs 的 `split` 字段：**train 42,278 / val 3,805 / testA 1,975 / testB 1,798 refs**。原“常见表格值”（train 120,624 / val 10,758 / testA 5,726 / testB 4,889）保留为历史引用，不再作为项目口径 | 实测来源：`refs(unc).p`（2026-09-27）；原文献值 arXiv:2312.08007 Table 1 等 |
 | testA / testB 语义 | 社区普遍描述为 RefCOCO/RefCOCO+ 的 testA 以 person 图像为主、testB 为非 person；本项目的 `testA`/`testB` 命名沿用官方文件中的 split 字段，**不自行重新定义** | OpenDataLab/TFDS 描述；**`[待下载后验证]`** |
 
 **对本项目的影响**：
 - 采用 **UNC image-level split** 是协议级决定（见 `research_protocol.md` §9），因为本项目缓存
   image/proposal feature，若同一图像跨 split 会造成 calibration/selection 污染。
-- RefCOCO+ **不含绝对空间介词**这一点是一个有利条件：本项目 backbone 是 CLIP 家族（对空间
-  关系本就弱），主数据集避免依赖空间介词可以减少 "失效究竟来自 candidate-set shift 还是来自
-  CLIP 空间盲区" 的混淆。代价：RefCOCO+ 的表达偏外观，hardness 主要来自同类外观相似对象，
-  这与本项目 same-category hard negatives 的定义天然契合（但也带来 §7 所述的 GT 信息泄漏风险）。
+- RefCOCO+ **标注采集禁止绝对位置词**（注意：这不是“无空间介词 / 纯外观描述”——关系型与
+  上下文型表达仍可出现，见 §1.1 修正表述）这一倾向是一个有利条件：本项目 backbone 是 CLIP
+  家族（对空间关系本就弱），主数据集降低对简单绝对位置捷径的依赖，可以减少 "失效究竟来自
+  candidate-set shift 还是来自 CLIP 空间盲区" 的混淆。代价：RefCOCO+ 的表达更侧重外观，
+  hardness 更多来自同类外观相似对象，这与本项目 same-category hard negatives 的定义天然契合
+  （但也带来 §7 所述的 GT 信息泄漏风险）。
 
 ### 1.2 Annotation parser 方案对比（已核实）
 
 | 方案 | 形式 | 优点 | 缺点 / 风险 | 选型 |
 |---|---|---|---|---|
-| **官方 `lichengunc/refer`（`refer.py` + `refs.json`）** | zip 内为 JSON 元数据 + split 信息；API 按 `splitBy='unc'` 加载 | 权威、与论文口径一致；UNC/Google/UMD split 同一 API 可选，便于**交叉核对 split 是否被误用** | 原始代码为 Python 2 时代风格；`make` 会编译 `_mask.c/_mask.so`（复制自 mscoco API），在 Windows 上是额外摩擦；包含 mask 功能但本项目只需 box | **采用（只取 JSON 解析逻辑，自己写只读 parser，不编译 mask 扩展）** |
+| **官方 `lichengunc/refer`（`refer.py` + `refs.json`）** | zip 内含 refs 元数据 + split 信息；API 按 `splitBy='unc'` 加载。**2026-09-27 实测更正：zip 内实际为 `refs(unc).p`（Python pickle，需 `encoding="latin1"`）而非 `refs.json`——“JSON 主格式”假设已证伪，实际以 pickle 为准** | 权威、与论文口径一致；UNC/Google/UMD split 同一 API 可选，便于**交叉核对 split 是否被误用** | 原始代码为 Python 2 时代风格；`make` 会编译 `_mask.c/_mask.so`（复制自 mscoco API），在 Windows 上是额外摩擦；包含 mask 功能但本项目只需 box | **采用（自写只读 parser：`refs(unc).p` pickle + `instances.json` 解析逻辑，不编译 mask 扩展）** |
 | **Lake/ITSC "referring coco" `.mats`**（SCAN / RESCON / MATCHING 系列使用，如 `refcoco+ train_splitA.mat`） | MATLAB 导出的 `.mat`，需 `scipy.io.loadmat` | 大量开源 baseline 直接可用，字段扁平 | 属于**第三方二次预处理**，split 字段命名（splitA/splitB/splitC）与官方 `unc` split 的对应关系必须实证核对；混用有污染风险 | 仅作 **cross-check**（若可用），不作为主输入 |
 | **JSON 转换版（`instances.json` + `refs.json` / `refcoco+.json`，常见于 ALBEF / LLaVA / PropVG 等仓库）** | COCO-style `instances.json` + 表达列表 | 与 pycocotools 生态兼容，字段清晰 | 不同仓库转换脚本字段不一致（有的把 `split` 写成字符串，有的写成 `.p` 索引文件）；来源可信度需逐仓库确认 | 备选（若官方 zip 不可达时的镜像路线） |
 | `pycocotools` + 官方 COCO annotations | 只做 COCO GT 侧（IoU metadata、同类别查询） | 权威、必需 | 不含 referring expression 与 split | **必需辅件** |
 
 **最终选择（冻结）**：以官方 `refcoco+.zip`（UNC split，`splitBy='unc'`）为唯一真值来源；
-自行实现只读 parser 输出 `ReferringExample` dataclass（Task 4），仅依赖 `refs.json` 类元数据 +
-COCO2014 `instances_trainval2014.json`。**禁止**在同一份实验里混用 `.mats` 第三方 split 与官方
+自行实现只读 parser 输出 `ReferringExample` dataclass（Task 4）。**【2026-09-27 实测更正】**
+zip 内实际为 `refs(unc).p`（Python pickle，需 `encoding="latin1"`；49,856 条 region 级 refs，字段
+`ref_id/image_id/split/sentences/ann_id/category_id/file_name`）+ `instances.json`（COCO 风格：
+`ann_id → bbox(xywh)/category_id`，19,992 图像）——原“`refs.json` / JSON 主格式”假设**已证伪**，
+本 parser 以 **pickle 为准**；COCO2014 `instances_trainval2014.json` 仍作 COCO GT 辅件。
+**禁止**在同一份实验里混用 `.mats` 第三方 split 与官方
 split 的样本成员定义；若为了对齐 baseline 需要引用 `.mats`，只能作为额外的
 `split_provenance` 标签列，不作为 split 判定依据。
 
-### 1.3 COCO 图像依赖与获取步骤（不实际下载）
+### 1.3 COCO 图像依赖与获取步骤（2026-09-27 实测更新）
 
-- RefCOCO+ 图像来自 COCO **train2014 + val2014**（官方 README 要求把 `mscoco` 放入 images
-  目录）。常引用规模：train2014 = 82,783 张、val2014 = 40,504 张（COCO 官方页面）；
-  RefCOCO+ 实际用到的图像约 **19,992 张**（见 §1.1），即 **约 20k 量级**。
+- **【已实测修正】**RefCOCO+ 全部 **19,992 张**图像位于 COCO **train2014**（1500 张 val-split
+  抽样图在 `instances_val2014` 中 **0 命中**）。本项目**只需 COCO train2014 图像**；val2014
+  图像**非必需**（`instances_val2014.json` 仅用于交叉核验）。原“train2014 + val2014 双依赖”
+  表述据此修正。常引用规模：train2014 = 82,783 张、val2014 = 40,504 张（COCO 官方页面）。
 - **注册要求**：COCO 官网下载需注册（填邮箱 → 邮件确认 → 获得带令牌的下载链接），
   `images_train2014.zip` 与 `images_val2014.zip` 各约 20GB / 6GB 量级。
 - **License 注意事项**：COCO **annotations** 为 CC BY 4.0；COCO **images** 源自 Flickr，
@@ -63,12 +73,41 @@ split 的样本成员定义；若为了对齐 baseline 需要引用 `.mats`，�
   `cocoapi` issue #81 指出 "COCO images do not adhere to license.txt"（不存在统一图像 license）。
   → 本项目 README/data 文档必须写明：图像由使用者自行从 COCO 官方获取，遵守逐图 CC 许可；
   仓库**不得**再分发图像；若发布派生数据（feature cache）需说明其依赖 COCO 图像许可。
-- 下载步骤说明（未来由人工执行）：
-  1. 注册 cocodataset.org → 下载 `annotations_trainval2014.zip`、`images_train2014.zip`、
-     `images_val2014.zip` 至 `data/mscoco/`；
-  2. 从 UNC 官方链接（或其 issue 列出的镜像）下载 `refcoco+.zip`，解压到 `data/refcoco+/`；
-  3. 运行 `scripts/prepare_refcoco.py` 做完整性校验（见 §6 artifact）；
-  4. **不下载** RefCOCO / RefCOCOg / gRefCOCO / Ref-L4（Phase 0 禁止多数据集全矩阵）。
+- 下载步骤说明（2026-09-27 实测执行记录）：
+  1. 注册 cocodataset.org → 下载 `annotations_trainval2014.zip`（**实测官方 SCDN 正常：
+     252,872,794 bytes**）、`images_train2014.zip` 至 `data/mscoco/`；**val2014 图像非必需**；
+  2. 下载 `refcoco+.zip` —— **实测官方 UNC 直链 SSL 失败（refer issue #14 已知）**，改用 Wayback
+     存档 `https://web.archive.org/web/20220413011656id_/https://bvisionweb1.cs.unc.edu/licheng/referit/data/refcoco+.zip`
+     （**45,613,210 bytes**）成功，解压到 `data/raw/refcoco+/refcoco+/`；
+  3. audit 图像按 manifest 逐张从 `images.cocodataset.org` 下载（**1500 张，首轮 6 张失败、
+     重试后 1500/1500 成功**）；
+  4. 运行 `scripts/prepare_refcoco.py` 做完整性校验（见 §6 artifact）；
+  5. **不下载** RefCOCO / RefCOCOg / gRefCOCO / Ref-L4（Phase 0 禁止多数据集全矩阵）。
+
+### 1.4 实测更新（2026-09-27，下载与解析后核验）
+
+> 本节汇总下载完成后的实测事实；与 §1.1–§1.3 原文冲突处，以本节 + 对应行内标注为准。
+
+1. **数据格式**：`data/raw/refcoco+/refcoco+/` 下为 `refs(unc).p`（Python pickle，需
+   `encoding="latin1"`；**49,856 条 region 级 refs**，字段 `ref_id/image_id/split/sentences/
+   ann_id/category_id/file_name`）+ `instances.json`（COCO 风格：`ann_id → bbox(xywh)/category_id`，
+   **19,992 图像**）。**“refs.json / JSON 主格式”假设已证伪**——实际以 **pickle 为准**（见 §1.2）。
+2. **Split 计数（实测，项目口径）**：UNC split 内置在 refs 的 `split` 字段：
+   **train 42,278 / val 3,805 / testA 1,975 / testB 1,798 refs**（见 §1.1）。
+3. **图像来源（实测）**：全部 **19,992** 张 RefCOCO+ 图像位于 COCO **train2014**；1500 张
+   val-split 抽样图在 `instances_val2014` 中 **0 命中**。本项目只需 **train2014** 图像；
+   val2014 图像非必需（`instances_val2014.json` 仅用于交叉核验）——原“train2014+val2014
+   双依赖”表述已修正（见 §1.3）。
+4. **下载途径（实测）**：
+   - RefCOCO+：官方 UNC 直链 **SSL 失败**（refer issue #14 已知）→ Wayback 存档
+     `https://web.archive.org/web/20220413011656id_/https://bvisionweb1.cs.unc.edu/licheng/referit/data/refcoco+.zip`
+     成功（45,613,210 bytes）；
+   - COCO annotations：官方 SCDN 正常（`annotations_trainval2014.zip`，252,872,794 bytes）；
+   - audit 图像：按 manifest 逐张从 `images.cocodataset.org` 下载（1500 张；首轮 6 张失败，
+     重试后 1500/1500 成功）。
+5. **Audit subset（冻结）**：`data/audit_subset.csv`——1500 张（train 池 1000 + val_select 500；
+   val_select = val 池按 seed+1 permutation 前半；抽样 seed 20260927）；冻结复现：
+   `scripts/build_audit_subset.py` 已实现字节级一致再生成（详见 §10.1）。
 
 ## 2. External stress test：FineCops-Ref（已核实）
 
@@ -147,10 +186,13 @@ split 的样本成员定义；若为了对齐 baseline 需要引用 `.mats`，�
   具体数值（例如 FPN 论文 AR@100 的精确数字）**需查证**。
 - 因此协议规定：**Phase 0 的第一件产出物是 proposal quality audit**
   （recall@64、recall@32、natural miss rate、IoU distribution、candidate availability
-  distribution），并且必须在任何 decision-model 结果之前完成、写入日志。
+  distribution），并且必须在任何 decision-model 结果之前完成、写入日志。**（2026-09-27 已完成：结果见
+  `docs/experiment_log.md` 条目 `audit-proposal-001`；protocol 层 outcome 见 `docs/research_protocol.md`
+  Amendment A3。）**
 - 若 audit 显示 recall 过低（本项目预注册的操作性阈值，写在此处以免事后随意改）：
   - `recall@64 < 0.85`：必须报告为数据侧限制，并考虑以 **amendment** 方式更换 generator
     （保留原 generator 全部审计数字），同时把 natural-omission split 的统计单独报告；
+    （**2026-09-27 实测：RefCOCO+ referring target 级 N=64 recall@IoU0.5 = 0.9858742004264393，未触发本处置流程**）
   - 任何情况下**不得**通过提高 IoU 阈值、或从 RefCOCO+ 中静默删除 target-missing 样本来 "修复" recall。
   - `research_protocol.md` §5/§6 的 target 定义、嵌套性质、K∈{5,10,20,50} 网格不因 generator 更换而改变。
 
@@ -158,7 +200,7 @@ split 的样本成员定义；若为了对齐 baseline 需要引用 `.mats`，�
 
 | 项 | 估算 | 依据 |
 |---|---|---|
-| RefCOCO+ 使用图像数 | ~19,992（约 **20k** 量级） | §1.1 文献值，`[待下载后验证]` |
+| RefCOCO+ 使用图像数 | **19,992**（**2026-09-27 实测确认**，全部位于 COCO train2014） | §1.4 实测更新；原文献值 |
 | Proposal crops 总数 | ~20k × 64 ≈ **1.28M** | prompt §二十四 |
 | Region embeddings 体积 | 1.28M × 512 × 2 bytes (FP16) ≈ **1.31 GB** | prompt §二十四 |
 | Global image features | ~20k × 512 × 2B ≈ 20 MB | 估算 |
@@ -179,9 +221,9 @@ split 的样本成员定义；若为了对齐 baseline 需要引用 `.mats`，�
 |---|---|---|---|
 | R1 | **UNC / Google split 混用污染** | 真实存在。同一 `refer.py` 可加载两种 split，极易在换 baseline 代码时被替换；Google-style 为 object-level，图像跨 split | 只在 `splits.py` 一处读取 split；把 `splitBy='unc'` 写入每个 artifact 的 provenance 字段；新增单测断言 "train/val/test 图像集合两两不相交"；任何引用 `.mats` 第三方 split 的对照都单独标注，不进入主结论 |
 | R2 | **RefCOCO+ annotation leakage** | 存在多个层面：(a) 同一 image 的多条表达天然共享图像与 GT；(b) 若 split 用 object-level 则同图跨 split；(c) `val_select`/`val_calib` 若按表达随机切分会继承同图相关性 | image-level split（R1）；`val_select`/`val_calib` 也**按 image** 划分；bootstrap 一律 **image-level resampling**（§12 协议）；同一表达文本在多个 split 重复出现的比例需 `[待下载后验证]` |
-| R3 | **Proposal recall 过低** | 未知，取决于 N=64 与 RefCOCO+ target 尺寸分布 | 由 §5 的 audit + 预注册操作阈值处理；必须报告 recall@32/recall@64/IoU 直方图，不允许静默过滤 |
-| R4 | **Natural omission 样本量过少** | **高概率发生**（冻结 detector 在 COCO 上通常召回较高 → natural miss 少），导致 RQ4 的 natural split 统计功效不足 | 预先声明：natural_omission 为**描述性/小样本**结果，CI 必报；若样本量 < 足以支撑 3-seed 比较，则明确写 "该结论不显著"；主要 NONE 能力评估放在 synthetic omission 上，并显式声明 synthetic 的局限 |
-| R5 | **K=50 时 proposal 数量不足** | 高概率发生（移除 IoU≥0.5 等价 proposal 之后，剩余候选数下降） | 先报告 **candidate availability distribution**（每图可用候选数直方图、按 split/类别分层），再决定：仅在候选数 ≥ K 的样本上评估该 K，并**同时报告被排除样本的数量与特征**（不得静默过滤）；必要时把主网格的最大 K 降为 20，并以 amendment 记录 |
+| R3 | **Proposal recall 过低** | **已实测（2026-09-27，audit subset 1500 图）**：RefCOCO+ referring target 级（3752 expressions）N=64 recall@0.5 = 0.9858742004264393 ≥ 0.85 → 不触发 §5 处置流程；GT-object 级（15349 个 iscrowd=0 GT objects）recall@0.5 = 0.8085217277998566（N=64）/ 0.8801876343735748（N=128）（参考口径） | 已由 §5 的 audit 执行完毕：`results/proposal_audit/`（summary.json + 5 CSV + 5 figures）；完整数字含 recall@0.7 与 CI，均未静默过滤；见 `docs/experiment_log.md` `audit-proposal-001` |
+| R4 | **Natural omission 样本量过少** | **已确认发生（2026-09-27）**：expression 级 P(max IoU<0.5) = 53/3752 = 0.014125799573560768（N=64）/ 22/3752 = 0.005863539445628998（N=128） | 预先声明：natural_omission 为**描述性/小样本**结果，CI 必报；若样本量 < 足以支撑 3-seed 比较，则明确写 "该结论不显著"；主要 NONE 能力评估放在 synthetic omission 上，并显式声明 synthetic 的局限。**追加（2026-09-27）：RQ4 的 natural omission split 统计功效有限，需在 Phase 2 前做功效评估（不影响 Gate；见 Amendment A3）** |
+| R5 | **K=50 时 proposal 数量不足** | **已实测（2026-09-27）**：valid distractors = N − \|{target}∪to_remove\| ≥ K−1 口径下，N=64：K=5/10/20 = 1.0（3752/3752）；K=50 = 3719/3752 = 0.9912046908315565 [0.9876741623023597, 0.9937303782938145]；N=128：全部 1.0 | 先报告 **candidate availability distribution**（每图可用候选数直方图、按 split/类别分层），再决定：仅在候选数 ≥ K 的样本上评估该 K，并**同时报告被排除样本的数量与特征**（不得静默过滤）；必要时把主网格的最大 K 降为 20，并以 amendment 记录。**处置结果（2026-09-27）：保留 K=50；33/3752 = 0.88% 无法支持 K=50 的 expression 必须在 K=50 cells 显式报告排除计数，禁止静默过滤（见 Amendment A3 §A3.2）** |
 | R6 | **Candidate set 中存在多个正确 proposal** | 若不处理则 accuracy/ECE 不可解释 | 协议 §5 已冻结：target = 唯一 max-IoU proposal，其他 IoU ≥ 0.5 的 proposal 一律移除 |
 | R7 | **Hard negative 使用 GT 信息导致不公平** | **需要注意**：same-category hard negatives 依赖 COCO GT 类别与 IoU，属于 evaluation 时不可得的信息 | 处理：该 regime 与 CLIP-hard 一样按 **diagnostic evaluation regime** 报告（真实 detector 无法使用 GT）；同时保证 **target 的定义只用一次 assignment**，hard-negative 选择不得引入任何 "该候选是否为答案" 的信息；在结果表格中每列都带 regime 标签 |
 | R8 | **CLIP-hard negatives 被误读为部署分布** | 存在 | 协议 §6 已声明 diagnostic/adversarial regime；文档与结果命名统一使用 `clip_hard_diagnostic` |
@@ -189,23 +231,23 @@ split 的样本成员定义；若为了对齐 baseline 需要引用 `.mats`，�
 | R10 | **softmax 的 K 依赖被误当成 calibration failure** | 存在（概念风险） | 协议 §2 RQ1 已写入；主指标使用 top-label ECE / correctness NLL / Brier 与 risk–coverage，并同时报告 ΔAcc 与 ΔCalibration 两条线 |
 | R11 | **Crop context 丢失 / CLIP 空间弱** | 存在：candidate 用 crop embedding，丢失全局上下文；CLIP 对空间与小目标弱 | Phase 0 冻结为 **crop-only embedding**；不做 context-expansion、不加 image-level 特征融合（属于 protocol 变更，需 amendment）；把 CLIP 空间弱点作为**解释性限制**写入结论段，并允许 FineCops-Ref 作为外部压力测试来暴露该限制 |
 | R12 | **同图表达在 evaluation 中的统计相关性** | 存在（RefCOCO+ 每对象平均 ~2.8 条表达） | 与 R2 相同：image-level bootstrap + 报告 per-image 聚合的敏感性分析（次要、不改判据） |
-| R13 | **官方直链失效 / 镜像可信度** | UNC README 自述 server broken | 优先官方链接；若不可达，选用可校验镜像并把文件 sha256 写入 `data/MANIFEST.json`；禁止使用无法追溯来源的第三方打包 |
+| R13 | **官方直链失效 / 镜像可信度** | **已确认（2026-09-27）**：官方 UNC 直链 SSL 失败（refer issue #14 已知）；改用 Wayback 存档成功（45,613,210 bytes，URL 见 §1.4）；COCO annotations 官方 SCDN 正常（252,872,794 bytes） | 优先官方链接；若不可达，选用可校验镜像并把文件 sha256 写入 `data/MANIFEST.json`；禁止使用无法追溯来源的第三方打包（实际执行：Wayback 存档，可追溯官方 URL；文件字节数已记录于 §1.4） |
 | R14 | **License 合规** | COCO 图像逐图 CC（含 NC/ND 变体）；RefCOCO 需遵守其引用要求；FineCops-Ref license **`[待下载后验证]`** | 仓库不分发图像/原始标注；README 与 `data/README.md` 写明注册要求与 attribution（Yu et al. ECCV 2016、Kazemzadeh et al. EMNLP 2014、COCO、FineCops-Ref/EMNLP 2024） |
 
 ## 8. 本文件的最终决定摘要
 
-1. **Primary data**：RefCOCO+，**UNC image-level split**，官方 `refcoco+.zip` + 自写只读
-   JSON parser；`.mats` 第三方版本仅作 cross-check，不作为 split 真值。
-2. **Images**：COCO2014 `train2014` + `val2014`（注册下载，逐图 CC license，仓库不分发）；
-   实际使用约 **20k** 张量级 `[待下载后验证]`。
+1. **Primary data**：RefCOCO+，**UNC image-level split**，官方 `refcoco+.zip`（**实测经 Wayback 存档成功获取**）+ 自写只读
+   parser（**实测以 `refs(unc).p` pickle 为准；“refs.json / JSON 主格式”假设已证伪**，见 §1.2/§1.4）；`.mats` 第三方版本仅作 cross-check，不作为 split 真值。
+2. **Images**：COCO2014 **`train2014`**（**已实测确认**：全部 19,992 张 RefCOCO+ 图像位于 train2014；val2014 图像**非必需**，`instances_val2014.json` 仅用于交叉核验；注册下载，逐图 CC license，仓库不分发）。
 3. **Proposal generator**：**冻结的 torchvision Faster R-CNN R50-FPN（COCO_V1，159.7 MB）**，
-   N = 64，取 RPN NMS 后按 objectness top-64；IoU ≥ 0.5 的等价 proposal 移除，target 为唯一
+   **N = 64（2026-09-27 按 A2.4 预注册规则选定：N=64 支持 K=50 比例 0.9912046908315565 ≥ 90%；见 `research_protocol.md` Amendment A3）**，取 RPN NMS 后按 objectness top-64；IoU ≥ 0.5 的等价 proposal 移除，target 为唯一
    max-IoU proposal。
 4. **External stress test**：FineCops-Ref（EMNLP 2024，test-only 特征待验证）。
 5. **预算**：feature cache 约 1.3 GB region embeddings (FP16) + ~0.15 GB query embeddings，
    总 **< 3 GB**；提取 FP16 batch 64 起步、OOM 降 32。
-6. **Gate 前置条件**：proposal quality audit（recall@32/@64、natural miss rate、IoU 分布、
-   candidate availability 分布）必须先于任何 decision-model 结果完成并入库。
+6. **Gate 前置条件**：proposal quality audit（recall、natural miss rate、IoU 分布、
+   candidate availability 分布）必须先于任何 decision-model 结果完成并入库。**（已完成 2026-09-27：1500 图；
+   见 `docs/experiment_log.md` `audit-proposal-001` 与 `docs/research_protocol.md` Amendment A3）**
 
 ## 9. 产出物（`scripts/prepare_refcoco.py` / `audit_proposals.py`）
 
@@ -217,3 +259,51 @@ split 的样本成员定义；若为了对齐 baseline 需要引用 `.mats`，�
 | `cache/proposal_bank.h5` | `boxes[N,4]`, `objectness[N]`, `gt_iou[N]`, `gt_assignment`, `image_id` |
 | `results/phase0/proposal_audit.json` | recall@32、recall@64、natural miss rate、IoU 直方图、候选可用数分布、按类别/尺寸分层 |
 | `results/phase0/proposal_audit.md` | 人读版本 + 风险清单核查结论 |
+
+## 10. Proposal-system audit design（本轮预注册设计，不含结果）
+
+> 本小节只写 **audit 设计**（预注册），不写任何结果；具体数值待 `scripts/audit_proposals.py`
+> 实跑后按 `docs/experiment_log.md` 规范另写入日志。预注册依据：`docs/research_protocol.md`
+> **Amendment A2**（class-agnostic RPN proposal bank 与 N-selection 工程判据）。
+> **2026-09-27 注**：本轮 audit 已运行完成；结果数字不复制到本小节，见 `docs/experiment_log.md`
+> 条目 `audit-proposal-001` 与 `docs/research_protocol.md` Amendment A3。
+
+### 10.1 Audit 样本与隔离
+
+- **audit subset**：从 `train` / `val_select` 的 **image 级**确定性抽样 **1,000–2,000 张**；
+  固定随机种子（写入 artifact 的 `seed` 字段）；抽样单位是 image，不是 expression。
+  **【2026-09-27 实测更新（冻结）】**audit subset 冻结为 `data/audit_subset.csv`：**1500 张**
+  （train 池 **1000** + val_select **500**；val_select = val 池按 seed+1 permutation 前半；
+  抽样 seed **20260927**）；冻结复现：`scripts/build_audit_subset.py` 已实现**字节级一致**再生成。
+- **硬约束**：本 audit **不查看 `testA` / `testB`**（完全隔离，与 `research_protocol.md` §9 一致）；
+  `val_calib` 也不用于 proposal 工程选型（避免与 calibration 用途重叠）。
+- **对比**：对同一 subset 同时报告 **N=64 与 N=128** 两档，以支撑 A2.4 的 N-selection 预注册判据
+  （`>=90%` target-present 例子能构造 K=50）。
+
+### 10.2 报告指标清单（N=64 / N=128 两档均报）
+
+- **proposal recall@IoU**：`recall@0.5`、`recall@0.7`（以 RefCOCO+ referring target GT box 为基准）；
+- **max-IoU 分布**：`max IoU` 的 median / P25 / P75；
+- **natural miss**：`P(max IoU < 0.5)`（即 natural proposal miss 率，对应 §5 / R3）；
+- **有效 distractor 可用性**（**在移除 target-equivalent（与 GT box IoU≥0.5）proposal 之后**）：
+  `P(valid distractors >= 4 / 9 / 19 / 49)`，分别对应 `K=5 / 10 / 20 / 50`（对应 R5：K=50 候选不足风险）；
+- **冗余度**：proposal 间 `IoU>0.7` 与 `IoU>0.9` 的比例（近重复密度；用于 A2.5 判断是否引入更严格 duplicate suppression）；
+- **remaining candidate count distribution**：每个 (image, K) 去除 target-equivalent 后的剩余候选数直方图（A2.5 明确：此结果未出之前不得引入新的 IoU threshold）；
+- **same-category distractor availability**：同类 distractor 可用性 `>= 1 / 2 / 4 / 9`（GT-assisted，仅诊断用途，见 A1.2 的 GT-assisted diagnostic 定位）。
+
+### 10.3 Artifact 清单
+
+```text
+results/proposal_audit/summary.json                       本次 audit 总览（含 seed/subset 大小/N 档位/provenance）
+results/proposal_audit/recall_by_N.csv                    recall@0.5 / @0.7 按 N=64/128
+results/proposal_audit/candidate_availability_by_N.csv     P(valid distractors>=4/9/19/49) 与 remaining count 分布
+results/proposal_audit/same_category_availability.csv      same-category distractor availability >=1/2/4/9
+results/proposal_audit/natural_omission.csv               P(max IoU<0.5) 与 natural miss 样本列表
+results/proposal_audit/proposal_iou_statistics.csv        max-IoU median/P25/P75、冗余 IoU>0.7/0.9 比例
++ 5 diagnostic figures（recall-vs-N 曲线、max-IoU 直方图、candidate availability 曲线、
+  remaining candidate count 直方图、same-category availability 曲线）
+```
+
+**与 gate 的关系**：本 audit 为 proposal engineering 产出，不产生任何 Gate Q1/Q2/Q3 结论；
+其唯一作用于 A2.4 决定 N=64 还是 N=128，并为 A2.5 的 duplicate-suppression 决策提供
+remaining candidate count distribution 依据。

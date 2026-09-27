@@ -47,6 +47,13 @@ proposal audit
 | S9 | **Gate Q1 判定** | `scripts/run_phase0.py --gate Q1` | 否 | 判 NO-GO 则停止 Phase 1 |
 | S10 | **Gate Q2 判定**（Phase 0.5 之后） | `scripts/run_phase0.py --gate Q2` | 否 | 判 NO-GO 则停止 candidate-aware |
 
+> **执行状态（2026-09-27）**：**S1 proposal audit 已完成**——1500/1500 图（failed=0）；
+> N=64：RefCOCO+ target 级 recall@IoU0.5 = 0.9858742004264393（3752 expressions）、
+> natural omission（expression 级）= 53/3752 = 0.014125799573560768；
+> N=64 满足 K=50 比例 = 3719/3752 = 0.9912046908315565 ≥ 90% → 按 A2.4 预注册规则选定 **N=64**。
+> **S2 起（feature extraction / candidate construction）实施时一律使用 N=64。**
+> 详见 `docs/experiment_log.md` 条目 `audit-proposal-001` 与 `docs/research_protocol.md` Amendment A3。
+
 ---
 
 ## S0 — 环境 / 确定性 / metrics-first
@@ -64,13 +71,14 @@ proposal audit
 
 | 字段 | 内容 |
 |---|---|
-| 输入 | COCO2014 `train2014`/`val2014` 图像；RefCOCO+ 解析结果（gt_box、image_id、split）；冻结 torchvision Faster R-CNN R50-FPN COCO_V1 权重（159.7 MB） |
+| 输入 | COCO2014 `train2014` 图像（**已实测：RefCOCO+ 全部 19,992 图像均位于 train2014；val2014 图像非必需**）；RefCOCO+ 解析结果（gt_box、image_id、split）；冻结 torchvision Faster R-CNN R50-FPN COCO_V1 权重（159.7 MB） |
 | 输出 | `cache/proposal_bank.h5`（boxes `[N,4]`、objectness `[N]`、gt_iou、gt_assignment）；`results/phase0/proposal_audit.{json,md}` |
 | 过程要点 | 每张图固定 N=64（RPN NMS 后按 objectness top-K）；保留 torchvision 官方预处理（短边 800 / 长边 ≤1333）；**query-independent**（不得使用 expression 信息）；记录权重 URL + sha256 |
 | Sanity check | ① 图像数 = 期望的 ~20k 量级；② 每图 proposal 数分布（是否普遍能达到 64）；③ **recall@64 / recall@32**；④ **natural miss rate**（`max_i IoU < 0.5` 比例）；⑤ **IoU distribution**（直方图 + 分位数）；⑥ target assignment 唯一性：确认存在多个 IoU≥0.5 proposal 的图已被正确记录，且等价 proposal 已从候选池中移除；⑦ 坐标约定（xyxy vs xywh、绝对 vs 归一化）在可视化抽查中正确 |
 | Failure condition | (a) 图像缺失/无法解码 → 必须先补齐再评估；(b) `recall@64 < 0.85` → 触发 `dataset_protocol.md` §5 的处置流程（报告 + 考虑 amendment，不得静默过滤）；(c) 大量图像候选数 < 50 → 记录 candidate availability 分布，并据此决定是否把最大 K 降为 20（需 amendment）；(d) natural miss 过少 → 标记 RQ4 的 natural split 为小样本描述性结果 |
 | 需要 GPU | **是**（FP16/autocast，batch 64 起步，OOM 降 32） |
 | Expected artifact | `proposal_bank.h5`；`proposal_audit.md`（含 4 项必报统计 + 分层表：按 COCO 类别 / 目标面积 / split） |
+| 完成状态 | **已完成（2026-09-27）**：1500/1500 图（analyzed=1500，cached=5 + extracted=1495，failed=0）；N=64：RefCOCO+ target 级 recall@0.5 = 0.9858742004264393、natural omission（expression 级）= 53/3752 = 0.014125799573560768；N=64 满足 K=50 比例 = 3719/3752 = 0.9912046908315565 ≥ 90% → 按 A2.4 选定 **N=64**；artifacts：`results/proposal_audit/`（summary.json + 5 CSV + figures 5 张）、`cache/proposal_audit/`（1500 npz，4.7 MB）。详见 `docs/experiment_log.md` `audit-proposal-001` 与 `docs/research_protocol.md` Amendment A3 |
 
 ## S2 — Feature extraction（一次性、离线缓存）
 
@@ -83,6 +91,7 @@ proposal audit
 | Failure condition | 随机访问读取延迟不可接受（说明存储布局错误）；出现 NaN；crop 全黑/越界比例 > 预期；OOM 后未记录实际使用的 batch size；发现需要重提特征才能支持 candidate 变更 ⇒ 说明 §7 缓存结构设计失败，必须先修结构 |
 | 需要 GPU | **是**（FP16 batch 64 → 32；无训练，不做 gradient tricks） |
 | Expected artifact | 三个 `.h5` + manifest（含 backbone 名、权重 hash、transform 参数、耗时、batch size、硬件） |
+| 规模冻结 | S2 起（feature extraction / candidate construction / candidate sets）一律使用 **N=64** proposal bank（2026-09-27 按 A2.4 / Amendment A3 选定；top-64 = RPN NMS 后按 objectness 排序截断） |
 
 ## S3 — Candidate construction（项目最关键步骤）
 
@@ -186,7 +195,7 @@ proposal audit
 
 ```text
 [ ] S0  metrics 单测全通过；双跑确定性
-[ ] S1  proposal_bank.h5 + recall@32/@64 + natural miss rate + IoU 分布 + candidate availability
+[x] S1  proposal_bank.h5 + recall@32/@64 + natural miss rate + IoU 分布 + candidate availability（2026-09-27 完成：1500 图；实际报告 N=64/128 两档；N=64 选定，见 Amendment A3）
 [ ] S1  等价 IoU≥0.5 proposals 已移除，target 唯一性已验证
 [ ] S2  region/text features（FP16）+ manifest（transform、batch、sha256、耗时）；总 cache < 3GB
 [ ] S3  嵌套性 + target 恒定性单测通过；candidate sets 已冻结（含 synthetic/natural omission）

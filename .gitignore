@@ -1,6 +1,7 @@
 # Data & caches
 data/*
 !data/README.md
+!data/audit_subset.csv
 data/raw/
 data/processed/
 data/*.gz
@@ -10,6 +11,8 @@ cache/*
 !cache/README.md
 results/*
 !results/README.md
+!results/proposal_audit/
+!results/proposal_audit/**
 experiments/**/outputs/
 
 # Python

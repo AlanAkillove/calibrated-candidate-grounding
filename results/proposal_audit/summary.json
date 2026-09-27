@@ -1,0 +1,430 @@
+{
+  "task": "proposal_audit",
+  "config": {
+    "subset": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\audit_subset.csv",
+    "out_dir": "F:\\DL Projects\\calibrated-candidate-grounding\\results\\proposal_audit",
+    "cache_dir": "F:\\DL Projects\\calibrated-candidate-grounding\\cache\\proposal_audit",
+    "images_root": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\raw\\mscoco",
+    "coco_annotations": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\raw\\annotations\\instances_train2014.json",
+    "refcoco_pickle": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\raw\\refcoco+\\refcoco+\\refs(unc).p",
+    "refcoco_instances": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\raw\\refcoco+\\refcoco+\\instances.json",
+    "top_n": 128,
+    "levels": [
+      64,
+      128
+    ],
+    "batch_size": 4,
+    "device": "cuda",
+    "autocast": true,
+    "max_images": 0,
+    "figures": true,
+    "iou_thresh": 0.5,
+    "K_levels": [
+      5,
+      10,
+      20,
+      50
+    ],
+    "same_category_levels": [
+      1,
+      2,
+      4,
+      9
+    ]
+  },
+  "versions": {
+    "python": "3.10.19",
+    "numpy": "1.26.4",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121"
+  },
+  "n_images": {
+    "subset_rows": 1500,
+    "analyzed": 1500,
+    "skipped_missing": 0,
+    "failed": 0,
+    "cached_reused": 5,
+    "extracted": 1495
+  },
+  "failed_examples": [],
+  "cache_size_mb": 4.658042907714844,
+  "runtime_seconds": 156.0303675999894,
+  "gpu_peak_mem_mb": 663.548828125,
+  "per_N": {
+    "64": {
+      "num_images": 1500,
+      "num_images_short_bank": 0,
+      "num_proposals_total": 96000,
+      "num_expressions": 3752,
+      "num_gt_objects": 15349,
+      "recall": {
+        "gt_object": {
+          "num_units": 15349,
+          "by_threshold": {
+            "0.5": {
+              "threshold": 0.5,
+              "num_units": 15349,
+              "num_recalled": 12410,
+              "recall": 0.8085217277998566,
+              "ci_low": 0.8022200834625711,
+              "ci_high": 0.8146689750424029
+            },
+            "0.7": {
+              "threshold": 0.7,
+              "num_units": 15349,
+              "num_recalled": 10427,
+              "recall": 0.6793276434946902,
+              "ci_low": 0.6718996488326698,
+              "ci_high": 0.6866658951510576
+            }
+          }
+        },
+        "ref_target": {
+          "num_units": 3752,
+          "by_threshold": {
+            "0.5": {
+              "threshold": 0.5,
+              "num_units": 3752,
+              "num_recalled": 3699,
+              "recall": 0.9858742004264393,
+              "ci_low": 0.9815704983373593,
+              "ci_high": 0.989183965855167
+            },
+            "0.7": {
+              "threshold": 0.7,
+              "num_units": 3752,
+              "num_recalled": 3376,
+              "recall": 0.8997867803837953,
+              "ci_low": 0.889765548241981,
+              "ci_high": 0.9089901820316281
+            }
+          }
+        }
+      },
+      "candidate_availability": {
+        "5": {
+          "K": 5,
+          "num_expressions": 3752,
+          "num_available": 3752,
+          "frac_available": 1.0,
+          "ci_low": 0.9989771666621936,
+          "ci_high": 1.0
+        },
+        "10": {
+          "K": 10,
+          "num_expressions": 3752,
+          "num_available": 3752,
+          "frac_available": 1.0,
+          "ci_low": 0.9989771666621936,
+          "ci_high": 1.0
+        },
+        "20": {
+          "K": 20,
+          "num_expressions": 3752,
+          "num_available": 3752,
+          "frac_available": 1.0,
+          "ci_low": 0.9989771666621936,
+          "ci_high": 1.0
+        },
+        "50": {
+          "K": 50,
+          "num_expressions": 3752,
+          "num_available": 3719,
+          "frac_available": 0.9912046908315565,
+          "ci_low": 0.9876741623023597,
+          "ci_high": 0.9937303782938145
+        }
+      },
+      "same_category": {
+        "num_target_category_unknown": 0,
+        "1": {
+          "threshold": 1,
+          "num_expressions": 3752,
+          "num_available": 3659,
+          "frac": 0.9752132196162047,
+          "ci_low": 0.9697310981948437,
+          "ci_high": 0.9797232131903861
+        },
+        "2": {
+          "threshold": 2,
+          "num_expressions": 3752,
+          "num_available": 3608,
+          "frac": 0.9616204690831557,
+          "ci_low": 0.9549861513583364,
+          "ci_high": 0.9673104651975908
+        },
+        "4": {
+          "threshold": 4,
+          "num_expressions": 3752,
+          "num_available": 3378,
+          "frac": 0.900319829424307,
+          "ci_low": 0.8903207470722463,
+          "ci_high": 0.9094999908417274
+        },
+        "9": {
+          "threshold": 9,
+          "num_expressions": 3752,
+          "num_available": 2499,
+          "frac": 0.6660447761194029,
+          "ci_low": 0.6507906177895277,
+          "ci_high": 0.6809592621841112
+        }
+      },
+      "natural_omission": {
+        "expression": {
+          "level": "expression",
+          "iou_thresh": 0.5,
+          "num_units": 3752,
+          "num_omitted": 53,
+          "rate": 0.014125799573560768,
+          "ci_low": 0.010816034144833078,
+          "ci_high": 0.018429501662640808,
+          "mean_max_iou": 0.8113164019737162,
+          "quantiles_max_iou": {
+            "q10": 0.6996314644813538,
+            "q25": 0.767509251832962,
+            "q50": 0.8250076770782471,
+            "q75": 0.879587858915329,
+            "q90": 0.916446876525879
+          }
+        },
+        "gt_object": {
+          "level": "coco_gt_object",
+          "iou_thresh": 0.5,
+          "num_units": 15349,
+          "num_omitted": 2939,
+          "rate": 0.19147827220014332,
+          "ci_low": 0.18533102495759712,
+          "ci_high": 0.19777991653742877,
+          "mean_max_iou": 0.676393012362546,
+          "quantiles_max_iou": {
+            "q10": 0.12210806906223305,
+            "q25": 0.6290512681007385,
+            "q50": 0.7840040326118469,
+            "q75": 0.8549325466156006,
+            "q90": 0.9034725069999695
+          }
+        }
+      },
+      "iou_stats": {
+        "target_max_iou": {
+          "num_values": 3752,
+          "mean": 0.8113164019737162,
+          "p25": 0.767509251832962,
+          "median": 0.8250076770782471,
+          "p75": 0.879587858915329
+        },
+        "gt_max_iou": {
+          "num_values": 15349,
+          "mean": 0.676393012362546,
+          "p25": 0.6290512681007385,
+          "median": 0.7840040326118469,
+          "p75": 0.8549325466156006
+        },
+        "remaining_count": {
+          "num_values": 3752,
+          "mean": 58.08555437100213,
+          "p25": 56.0,
+          "median": 59.0,
+          "p75": 61.0
+        },
+        "redundancy": {
+          "n_pairs": 3024000,
+          "frac_gt_0.7": 0.001429563492063492,
+          "frac_gt_0.9": 3.5052910052910054e-05
+        }
+      }
+    },
+    "128": {
+      "num_images": 1500,
+      "num_images_short_bank": 0,
+      "num_proposals_total": 192000,
+      "num_expressions": 3752,
+      "num_gt_objects": 15349,
+      "recall": {
+        "gt_object": {
+          "num_units": 15349,
+          "by_threshold": {
+            "0.5": {
+              "threshold": 0.5,
+              "num_units": 15349,
+              "num_recalled": 13510,
+              "recall": 0.8801876343735748,
+              "ci_low": 0.8749547342233428,
+              "ci_high": 0.8852302728309864
+            },
+            "0.7": {
+              "threshold": 0.7,
+              "num_units": 15349,
+              "num_recalled": 11545,
+              "recall": 0.752166264903251,
+              "ci_low": 0.7452732202958617,
+              "ci_high": 0.7589331150316648
+            }
+          }
+        },
+        "ref_target": {
+          "num_units": 3752,
+          "by_threshold": {
+            "0.5": {
+              "threshold": 0.5,
+              "num_units": 3752,
+              "num_recalled": 3730,
+              "recall": 0.994136460554371,
+              "ci_low": 0.9911375084526698,
+              "ci_high": 0.996124574165511
+            },
+            "0.7": {
+              "threshold": 0.7,
+              "num_units": 3752,
+              "num_recalled": 3491,
+              "recall": 0.9304371002132196,
+              "ci_low": 0.9218484853244018,
+              "ci_high": 0.9381451842701838
+            }
+          }
+        }
+      },
+      "candidate_availability": {
+        "5": {
+          "K": 5,
+          "num_expressions": 3752,
+          "num_available": 3752,
+          "frac_available": 1.0,
+          "ci_low": 0.9989771666621936,
+          "ci_high": 1.0
+        },
+        "10": {
+          "K": 10,
+          "num_expressions": 3752,
+          "num_available": 3752,
+          "frac_available": 1.0,
+          "ci_low": 0.9989771666621936,
+          "ci_high": 1.0
+        },
+        "20": {
+          "K": 20,
+          "num_expressions": 3752,
+          "num_available": 3752,
+          "frac_available": 1.0,
+          "ci_low": 0.9989771666621936,
+          "ci_high": 1.0
+        },
+        "50": {
+          "K": 50,
+          "num_expressions": 3752,
+          "num_available": 3752,
+          "frac_available": 1.0,
+          "ci_low": 0.9989771666621936,
+          "ci_high": 1.0
+        }
+      },
+      "same_category": {
+        "num_target_category_unknown": 0,
+        "1": {
+          "threshold": 1,
+          "num_expressions": 3752,
+          "num_available": 3708,
+          "frac": 0.988272921108742,
+          "ci_low": 0.9842944757342632,
+          "ci_high": 0.9912525228399046
+        },
+        "2": {
+          "threshold": 2,
+          "num_expressions": 3752,
+          "num_available": 3683,
+          "frac": 0.9816098081023454,
+          "ci_low": 0.9767920609338165,
+          "ci_high": 0.9854423421357912
+        },
+        "4": {
+          "threshold": 4,
+          "num_expressions": 3752,
+          "num_available": 3578,
+          "frac": 0.9536247334754797,
+          "ci_low": 0.9464191134740028,
+          "ci_high": 0.9599023884764522
+        },
+        "9": {
+          "threshold": 9,
+          "num_expressions": 3752,
+          "num_available": 3036,
+          "frac": 0.8091684434968017,
+          "ci_low": 0.7962807925353041,
+          "ci_high": 0.8214236388762868
+        }
+      },
+      "natural_omission": {
+        "expression": {
+          "level": "expression",
+          "iou_thresh": 0.5,
+          "num_units": 3752,
+          "num_omitted": 22,
+          "rate": 0.005863539445628998,
+          "ci_low": 0.0038754258344890257,
+          "ci_high": 0.008862491547330272,
+          "mean_max_iou": 0.8219698373424902,
+          "quantiles_max_iou": {
+            "q10": 0.7224278450012207,
+            "q25": 0.7778179496526718,
+            "q50": 0.8297169506549835,
+            "q75": 0.8810313940048218,
+            "q90": 0.9169926345348358
+          }
+        },
+        "gt_object": {
+          "level": "coco_gt_object",
+          "iou_thresh": 0.5,
+          "num_units": 15349,
+          "num_omitted": 1839,
+          "rate": 0.11981236562642518,
+          "ci_low": 0.1147697271690135,
+          "ci_high": 0.12504526577665726,
+          "mean_max_iou": 0.7274220125702763,
+          "quantiles_max_iou": {
+            "q10": 0.40232368111610417,
+            "q25": 0.7016865015029907,
+            "q50": 0.7995008826255798,
+            "q75": 0.8596125245094299,
+            "q90": 0.9054289340972901
+          }
+        }
+      },
+      "iou_stats": {
+        "target_max_iou": {
+          "num_values": 3752,
+          "mean": 0.8219698373424902,
+          "p25": 0.7778179496526718,
+          "median": 0.8297169506549835,
+          "p75": 0.8810313940048218
+        },
+        "gt_max_iou": {
+          "num_values": 15349,
+          "mean": 0.7274220125702763,
+          "p25": 0.7016865015029907,
+          "median": 0.7995008826255798,
+          "p75": 0.8596125245094299
+        },
+        "remaining_count": {
+          "num_values": 3752,
+          "mean": 119.83288912579957,
+          "p25": 117.0,
+          "median": 120.0,
+          "p75": 123.0
+        },
+        "redundancy": {
+          "n_pairs": 12192000,
+          "frac_gt_0.7": 0.0006508366141732283,
+          "frac_gt_0.9": 1.2057086614173228e-05
+        }
+      }
+    }
+  },
+  "notes": [
+    "wilson_ci comes from the frozen ccg.data.audit contract (re-exported by ccg.data.audit_report); every rate carries a Wilson 95% interval and empty populations report 0.0 with (0.0, 1.0).",
+    "candidate availability follows the frozen rule available[K] = (N - |{target} U to_remove|) >= K - 1.",
+    "RefCOCO+ targets loaded at the *region* level via the frozen ccg.data.refcoco trio load_refs_pickle + load_instances_json + refs_by_image; each region joins instances.json through ann_id (xywh -> xyxy) and carries its first sentence as text - the same unit the subset's ref_count column counts.",
+    "GT-object statistics use instances_train2014.json with iscrowd==1 rows excluded.",
+    "ref_count column cross-check (informational): 1500 rows, 0 mismatches vs loaded RefCOCO+ regions"
+  ]
+}

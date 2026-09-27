@@ -8,6 +8,11 @@ Public surface (see the module docstrings for the full API):
   ``val -> val_select / val_calib`` cut.
 * :mod:`ccg.data.refcoco` - RefCOCO+ annotation parsers (json primary, UNC mats
   skeleton).
+* :mod:`ccg.data.rpn` - class-agnostic RPN proposal extraction (torchvision
+  Faster R-CNN; resized-space -> original-image coordinate mapping).
+* :mod:`ccg.data.audit` - frozen proposal-audit statistics (GT-object recall,
+  candidate availability, redundancy, same-category supply, natural omission,
+  Wilson intervals); pure numpy, deterministic, no silent filtering.
 * :mod:`ccg.data.candidate_sets` - nested random / same-category hard / CLIP
   hard candidate construction, synthetic target omission.
 * :mod:`ccg.data.proposals` - IoU geometry, unique-target assignment, proposal
@@ -29,6 +34,20 @@ from .candidate_sets import (
     select_same_category_hard_negatives,
     synthetic_omit,
 )
+# Audit statistics (frozen multi-agent brief).  ``ccg.data.audit.proposal_recall``
+# is the GT-object-level variant and is intentionally NOT re-exported here: the
+# name is already bound to the expression-level one from .proposals below.
+from .audit import (
+    aggregate_availability,
+    assign_gt_category,
+    iou_quantiles,
+    natural_omission_rate,
+    redundancy_stats,
+    remaining_candidate_count,
+    same_category_counts,
+    target_availability,
+    wilson_ci,
+)
 from .proposals import (
     TargetAssignment,
     assign_target,
@@ -47,7 +66,21 @@ from .proposals import (
     xywh_to_xyxy,
     xyxy_to_xywh,
 )
-from .refcoco import AnnotationFormatError, ParseReport, parse_refs_json, refs_from_records
+from .refcoco import (
+    AnnotationFormatError,
+    ParseReport,
+    load_instances_json,
+    load_refs_pickle,
+    parse_refs_json,
+    refs_by_image,
+    refs_from_records,
+)
+from .rpn import (
+    RPNProposals,
+    build_rpn_model,
+    extract_proposals,
+    inverse_resized_boxes,
+)
 from .splits import (
     CALIBRATION_SPLITS,
     SELECTION_SPLITS,
@@ -85,8 +118,27 @@ __all__ = [
     # refcoco
     "parse_refs_json",
     "refs_from_records",
+    "load_refs_pickle",
+    "load_instances_json",
+    "refs_by_image",
     "ParseReport",
     "AnnotationFormatError",
+    # audit statistics (ccg.data.audit; its proposal_recall is the GT-object-level
+    # one and stays importable from the submodule, see the import note above)
+    "assign_gt_category",
+    "target_availability",
+    "aggregate_availability",
+    "remaining_candidate_count",
+    "redundancy_stats",
+    "same_category_counts",
+    "natural_omission_rate",
+    "wilson_ci",
+    "iou_quantiles",
+    # rpn (class-agnostic proposal extraction, torchvision Faster R-CNN)
+    "RPNProposals",
+    "build_rpn_model",
+    "extract_proposals",
+    "inverse_resized_boxes",
     # candidate sets
     "build_nested_random_sets",
     "build_ranked_nested_sets",
