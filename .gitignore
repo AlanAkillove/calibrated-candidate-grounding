@@ -2,6 +2,8 @@
 data/*
 !data/README.md
 !data/audit_subset.csv
+!data/full_image_manifest.csv
+!data/full_images_download_summary.json
 data/raw/
 data/processed/
 data/*.gz
@@ -13,7 +15,17 @@ results/*
 !results/README.md
 !results/proposal_audit/
 !results/proposal_audit/**
+!results/natural_omission_full/
+!results/natural_omission_full/**
+!results/phase0a_cosine/
+!results/phase0a_cosine/**
 experiments/**/outputs/
+
+# Local logs / scratch
+logs_*.txt
+pytest_*.txt
+logs_night/
+_launch_detached.py
 
 # Python
 __pycache__/

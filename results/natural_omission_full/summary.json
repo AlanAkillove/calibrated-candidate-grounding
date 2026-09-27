@@ -1,0 +1,565 @@
+{
+  "task": "natural_omission_full",
+  "counting_only": true,
+  "primary_iou_threshold": 0.5,
+  "iou_thresholds": [
+    0.3,
+    0.5,
+    0.7
+  ],
+  "units": {
+    "expression": "one unit per sentence (sum of len(sentences)); a miss region marks all of its sentences as missed",
+    "unique_object": "one unit per distinct ann_id (target object) within the split",
+    "image": "images with >= 1 miss region, over images with >= 1 scored region in the split"
+  },
+  "config": {
+    "bank": "cache\\proposals.h5",
+    "refs": "data\\raw\\refcoco+\\refcoco+\\refs(unc).p",
+    "instances": "data\\raw\\refcoco+\\refcoco+\\instances.json",
+    "out_dir": "results\\natural_omission_full"
+  },
+  "bank_attrs": {
+    "created_utc": "2026-09-27T08:33:48Z",
+    "images_root": "data\\raw\\mscoco",
+    "model_name": "fasterrcnn_resnet50_fpn",
+    "n_images": 19992,
+    "proposal_type": "class-agnostic post-NMS RPN",
+    "schema_version": "bank-v1",
+    "top_n": 64,
+    "torchvision_version": "0.20.1+cu121",
+    "weights": "COCO_V1"
+  },
+  "n_refs_total": 49856,
+  "n_refs_scored": 49856,
+  "n_refs_missing_bank_image": 0,
+  "n_refs_unscorable": 0,
+  "missing_bank_images": [],
+  "unscorable_bank_images": [],
+  "unresolved_refs": [],
+  "other_splits": {},
+  "anomalies": [],
+  "by_split": [
+    {
+      "split": "train",
+      "unit": "expression",
+      "num_total": 120191,
+      "num_miss": 1699,
+      "rate": 0.01413583379787172,
+      "ci_low": 0.013483787900559803,
+      "ci_high": 0.014818937530212762
+    },
+    {
+      "split": "train",
+      "unit": "unique_object",
+      "num_total": 42278,
+      "num_miss": 649,
+      "rate": 0.015350773451913526,
+      "ci_low": 0.014222095130436312,
+      "ci_high": 0.016567519293548473
+    },
+    {
+      "split": "train",
+      "unit": "image",
+      "num_total": 16992,
+      "num_miss": 573,
+      "rate": 0.03372175141242938,
+      "ci_low": 0.031111217790317273,
+      "ci_high": 0.036543072421471944
+    },
+    {
+      "split": "val",
+      "unit": "expression",
+      "num_total": 10758,
+      "num_miss": 150,
+      "rate": 0.013943112102621304,
+      "ci_low": 0.01189447686833437,
+      "ci_high": 0.016338757859818472
+    },
+    {
+      "split": "val",
+      "unit": "unique_object",
+      "num_total": 3805,
+      "num_miss": 56,
+      "rate": 0.014717477003942181,
+      "ci_low": 0.011351397393556943,
+      "ci_high": 0.019062469121658602
+    },
+    {
+      "split": "val",
+      "unit": "image",
+      "num_total": 1500,
+      "num_miss": 50,
+      "rate": 0.03333333333333333,
+      "ci_low": 0.025374839196732446,
+      "ci_high": 0.04367605020544928
+    },
+    {
+      "split": "testA",
+      "unit": "expression",
+      "num_total": 5726,
+      "num_miss": 59,
+      "rate": 0.010303877052043312,
+      "ci_low": 0.00799687921676721,
+      "ci_high": 0.013267513153171956
+    },
+    {
+      "split": "testA",
+      "unit": "unique_object",
+      "num_total": 1975,
+      "num_miss": 23,
+      "rate": 0.011645569620253165,
+      "ci_low": 0.00777247702699591,
+      "ci_high": 0.01741478404534055
+    },
+    {
+      "split": "testA",
+      "unit": "image",
+      "num_total": 750,
+      "num_miss": 21,
+      "rate": 0.028,
+      "ci_low": 0.01838537771414741,
+      "ci_high": 0.04242527534612414
+    },
+    {
+      "split": "testB",
+      "unit": "expression",
+      "num_total": 4889,
+      "num_miss": 131,
+      "rate": 0.026794845571691553,
+      "ci_low": 0.022626312382751628,
+      "ci_high": 0.03170644999402345
+    },
+    {
+      "split": "testB",
+      "unit": "unique_object",
+      "num_total": 1798,
+      "num_miss": 55,
+      "rate": 0.030589543937708564,
+      "ci_low": 0.023576310388444578,
+      "ci_high": 0.039604382076420246
+    },
+    {
+      "split": "testB",
+      "unit": "image",
+      "num_total": 750,
+      "num_miss": 44,
+      "rate": 0.058666666666666666,
+      "ci_low": 0.04398981902365666,
+      "ci_high": 0.07784161081518481
+    }
+  ],
+  "threshold_sensitivity": [
+    {
+      "split": "train",
+      "unit": "expression",
+      "num_total": 120191,
+      "num_miss": 602,
+      "rate": 0.005008694494596101,
+      "ci_low": 0.004625098610820153,
+      "ci_high": 0.005423931646398472,
+      "is_primary": false,
+      "iou_threshold": 0.3
+    },
+    {
+      "split": "train",
+      "unit": "unique_object",
+      "num_total": 42278,
+      "num_miss": 232,
+      "rate": 0.005487487582194049,
+      "ci_low": 0.004826826066843832,
+      "ci_high": 0.006238008914232301,
+      "is_primary": false,
+      "iou_threshold": 0.3
+    },
+    {
+      "split": "train",
+      "unit": "image",
+      "num_total": 16992,
+      "num_miss": 209,
+      "rate": 0.012299905838041431,
+      "ci_low": 0.010749381041721592,
+      "ci_high": 0.01407090205623338,
+      "is_primary": false,
+      "iou_threshold": 0.3
+    },
+    {
+      "split": "val",
+      "unit": "expression",
+      "num_total": 10758,
+      "num_miss": 72,
+      "rate": 0.006692693809258227,
+      "ci_low": 0.005318278712883103,
+      "ci_high": 0.008419295718615685,
+      "is_primary": false,
+      "iou_threshold": 0.3
+    },
+    {
+      "split": "val",
+      "unit": "unique_object",
+      "num_total": 3805,
+      "num_miss": 26,
+      "rate": 0.00683311432325887,
+      "ci_low": 0.00466740325203004,
+      "ci_high": 0.009993642247998105,
+      "is_primary": false,
+      "iou_threshold": 0.3
+    },
+    {
+      "split": "val",
+      "unit": "image",
+      "num_total": 1500,
+      "num_miss": 23,
+      "rate": 0.015333333333333332,
+      "ci_low": 0.01023883976049417,
+      "ci_high": 0.02290401251862884,
+      "is_primary": false,
+      "iou_threshold": 0.3
+    },
+    {
+      "split": "testA",
+      "unit": "expression",
+      "num_total": 5726,
+      "num_miss": 24,
+      "rate": 0.0041914076143905,
+      "ci_low": 0.0028182832510120007,
+      "ci_high": 0.006229366512988457,
+      "is_primary": false,
+      "iou_threshold": 0.3
+    },
+    {
+      "split": "testA",
+      "unit": "unique_object",
+      "num_total": 1975,
+      "num_miss": 9,
+      "rate": 0.004556962025316456,
+      "ci_low": 0.0023992665499433397,
+      "ci_high": 0.008638302096278772,
+      "is_primary": false,
+      "iou_threshold": 0.3
+    },
+    {
+      "split": "testA",
+      "unit": "image",
+      "num_total": 750,
+      "num_miss": 8,
+      "rate": 0.010666666666666666,
+      "ci_low": 0.0054146045779466905,
+      "ci_high": 0.020906044216176638,
+      "is_primary": false,
+      "iou_threshold": 0.3
+    },
+    {
+      "split": "testB",
+      "unit": "expression",
+      "num_total": 4889,
+      "num_miss": 57,
+      "rate": 0.011658825935774187,
+      "ci_low": 0.009010055024716832,
+      "ci_high": 0.015074436081637395,
+      "is_primary": false,
+      "iou_threshold": 0.3
+    },
+    {
+      "split": "testB",
+      "unit": "unique_object",
+      "num_total": 1798,
+      "num_miss": 25,
+      "rate": 0.013904338153503892,
+      "ci_low": 0.009435579675184942,
+      "ci_high": 0.020445848303833856,
+      "is_primary": false,
+      "iou_threshold": 0.3
+    },
+    {
+      "split": "testB",
+      "unit": "image",
+      "num_total": 750,
+      "num_miss": 18,
+      "rate": 0.024,
+      "ci_low": 0.015234039765412573,
+      "ci_high": 0.037617381541132464,
+      "is_primary": false,
+      "iou_threshold": 0.3
+    },
+    {
+      "split": "train",
+      "unit": "expression",
+      "num_total": 120191,
+      "num_miss": 1699,
+      "rate": 0.01413583379787172,
+      "ci_low": 0.013483787900559803,
+      "ci_high": 0.014818937530212762,
+      "is_primary": true,
+      "iou_threshold": 0.5
+    },
+    {
+      "split": "train",
+      "unit": "unique_object",
+      "num_total": 42278,
+      "num_miss": 649,
+      "rate": 0.015350773451913526,
+      "ci_low": 0.014222095130436312,
+      "ci_high": 0.016567519293548473,
+      "is_primary": true,
+      "iou_threshold": 0.5
+    },
+    {
+      "split": "train",
+      "unit": "image",
+      "num_total": 16992,
+      "num_miss": 573,
+      "rate": 0.03372175141242938,
+      "ci_low": 0.031111217790317273,
+      "ci_high": 0.036543072421471944,
+      "is_primary": true,
+      "iou_threshold": 0.5
+    },
+    {
+      "split": "val",
+      "unit": "expression",
+      "num_total": 10758,
+      "num_miss": 150,
+      "rate": 0.013943112102621304,
+      "ci_low": 0.01189447686833437,
+      "ci_high": 0.016338757859818472,
+      "is_primary": true,
+      "iou_threshold": 0.5
+    },
+    {
+      "split": "val",
+      "unit": "unique_object",
+      "num_total": 3805,
+      "num_miss": 56,
+      "rate": 0.014717477003942181,
+      "ci_low": 0.011351397393556943,
+      "ci_high": 0.019062469121658602,
+      "is_primary": true,
+      "iou_threshold": 0.5
+    },
+    {
+      "split": "val",
+      "unit": "image",
+      "num_total": 1500,
+      "num_miss": 50,
+      "rate": 0.03333333333333333,
+      "ci_low": 0.025374839196732446,
+      "ci_high": 0.04367605020544928,
+      "is_primary": true,
+      "iou_threshold": 0.5
+    },
+    {
+      "split": "testA",
+      "unit": "expression",
+      "num_total": 5726,
+      "num_miss": 59,
+      "rate": 0.010303877052043312,
+      "ci_low": 0.00799687921676721,
+      "ci_high": 0.013267513153171956,
+      "is_primary": true,
+      "iou_threshold": 0.5
+    },
+    {
+      "split": "testA",
+      "unit": "unique_object",
+      "num_total": 1975,
+      "num_miss": 23,
+      "rate": 0.011645569620253165,
+      "ci_low": 0.00777247702699591,
+      "ci_high": 0.01741478404534055,
+      "is_primary": true,
+      "iou_threshold": 0.5
+    },
+    {
+      "split": "testA",
+      "unit": "image",
+      "num_total": 750,
+      "num_miss": 21,
+      "rate": 0.028,
+      "ci_low": 0.01838537771414741,
+      "ci_high": 0.04242527534612414,
+      "is_primary": true,
+      "iou_threshold": 0.5
+    },
+    {
+      "split": "testB",
+      "unit": "expression",
+      "num_total": 4889,
+      "num_miss": 131,
+      "rate": 0.026794845571691553,
+      "ci_low": 0.022626312382751628,
+      "ci_high": 0.03170644999402345,
+      "is_primary": true,
+      "iou_threshold": 0.5
+    },
+    {
+      "split": "testB",
+      "unit": "unique_object",
+      "num_total": 1798,
+      "num_miss": 55,
+      "rate": 0.030589543937708564,
+      "ci_low": 0.023576310388444578,
+      "ci_high": 0.039604382076420246,
+      "is_primary": true,
+      "iou_threshold": 0.5
+    },
+    {
+      "split": "testB",
+      "unit": "image",
+      "num_total": 750,
+      "num_miss": 44,
+      "rate": 0.058666666666666666,
+      "ci_low": 0.04398981902365666,
+      "ci_high": 0.07784161081518481,
+      "is_primary": true,
+      "iou_threshold": 0.5
+    },
+    {
+      "split": "train",
+      "unit": "expression",
+      "num_total": 120191,
+      "num_miss": 10940,
+      "rate": 0.09102179031707865,
+      "ci_low": 0.08940865191436122,
+      "ci_high": 0.09266107178333198,
+      "is_primary": false,
+      "iou_threshold": 0.7
+    },
+    {
+      "split": "train",
+      "unit": "unique_object",
+      "num_total": 42278,
+      "num_miss": 3965,
+      "rate": 0.09378400113534226,
+      "ci_low": 0.09104185032575775,
+      "ci_high": 0.09659996705430639,
+      "is_primary": false,
+      "iou_threshold": 0.7
+    },
+    {
+      "split": "train",
+      "unit": "image",
+      "num_total": 16992,
+      "num_miss": 3218,
+      "rate": 0.18938323917137476,
+      "ci_low": 0.1835623790273294,
+      "ci_high": 0.195344517822074,
+      "is_primary": false,
+      "iou_threshold": 0.7
+    },
+    {
+      "split": "val",
+      "unit": "expression",
+      "num_total": 10758,
+      "num_miss": 933,
+      "rate": 0.08672615727830452,
+      "ci_low": 0.0815543700868434,
+      "ci_high": 0.09219299300387519,
+      "is_primary": false,
+      "iou_threshold": 0.7
+    },
+    {
+      "split": "val",
+      "unit": "unique_object",
+      "num_total": 3805,
+      "num_miss": 344,
+      "rate": 0.09040735873850198,
+      "ci_low": 0.08170390707817671,
+      "ci_high": 0.09993704118283789,
+      "is_primary": false,
+      "iou_threshold": 0.7
+    },
+    {
+      "split": "val",
+      "unit": "image",
+      "num_total": 1500,
+      "num_miss": 274,
+      "rate": 0.18266666666666667,
+      "ci_low": 0.16393129303899462,
+      "ci_high": 0.20302331175448896,
+      "is_primary": false,
+      "iou_threshold": 0.7
+    },
+    {
+      "split": "testA",
+      "unit": "expression",
+      "num_total": 5726,
+      "num_miss": 471,
+      "rate": 0.08225637443241356,
+      "ci_low": 0.07541667347097726,
+      "ci_high": 0.08965623186029754,
+      "is_primary": false,
+      "iou_threshold": 0.7
+    },
+    {
+      "split": "testA",
+      "unit": "unique_object",
+      "num_total": 1975,
+      "num_miss": 165,
+      "rate": 0.08354430379746836,
+      "ci_low": 0.0721342950147702,
+      "ci_high": 0.09657127495101178,
+      "is_primary": false,
+      "iou_threshold": 0.7
+    },
+    {
+      "split": "testA",
+      "unit": "image",
+      "num_total": 750,
+      "num_miss": 135,
+      "rate": 0.18,
+      "ci_low": 0.15415649785816865,
+      "ci_high": 0.20910496184371036,
+      "is_primary": false,
+      "iou_threshold": 0.7
+    },
+    {
+      "split": "testB",
+      "unit": "expression",
+      "num_total": 4889,
+      "num_miss": 534,
+      "rate": 0.10922479034567396,
+      "ci_low": 0.10078604702510323,
+      "ci_high": 0.11827716564869352,
+      "is_primary": false,
+      "iou_threshold": 0.7
+    },
+    {
+      "split": "testB",
+      "unit": "unique_object",
+      "num_total": 1798,
+      "num_miss": 209,
+      "rate": 0.11624026696329255,
+      "ci_low": 0.10223649053082245,
+      "ci_high": 0.13188042629471872,
+      "is_primary": false,
+      "iou_threshold": 0.7
+    },
+    {
+      "split": "testB",
+      "unit": "image",
+      "num_total": 750,
+      "num_miss": 168,
+      "rate": 0.224,
+      "ci_low": 0.19561068750933402,
+      "ci_high": 0.2552023214835366,
+      "is_primary": false,
+      "iou_threshold": 0.7
+    }
+  ],
+  "max_iou_quantiles": {
+    "n": 49856,
+    "mean": 0.8107071097452666,
+    "p10": 0.7047449052333832,
+    "p25": 0.7689094096422195,
+    "p50": 0.8245694935321808,
+    "p75": 0.8766386657953262,
+    "p90": 0.9151924848556519
+  },
+  "runtime_seconds": 15.219660000002477,
+  "notes": [
+    "Counting only: no presence model is trained or evaluated here; see the frozen counting rules of the multi-agent brief (section 27).",
+    "Primary boundary IoU=0.5; the 0.3/0.7 rows are sensitivity analysis only (is_primary=False).",
+    "Refs of images without a bank group are excluded from every denominator and listed under missing_bank_images (never assumed hit or miss).",
+    "A miss at the region (ref) level marks all of the region's sentences as missed; unique_object deduplicates by ann_id; image counts an image once."
+  ]
+}

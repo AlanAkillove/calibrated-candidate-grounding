@@ -1,0 +1,173 @@
+{
+  "denominators": {
+    "common": "sentences eligible for every reported K (target present and ordering >= max(K)-1); single shared denominator of cross-K comparisons",
+    "available": "per-K eligible sentences; denominator varies with K"
+  },
+  "splits": {
+    "val_select": {
+      "n_sentences_total": 5398,
+      "n_refs_total": 1917,
+      "n_target_missing_sentences": 73,
+      "per_K": {
+        "5": {
+          "n_available_sentences": 5325,
+          "n_available_refs": 1891,
+          "n_skipped_target_missing": 73,
+          "n_skipped_insufficient": 0
+        },
+        "10": {
+          "n_available_sentences": 5325,
+          "n_available_refs": 1891,
+          "n_skipped_target_missing": 73,
+          "n_skipped_insufficient": 0
+        },
+        "20": {
+          "n_available_sentences": 5325,
+          "n_available_refs": 1891,
+          "n_skipped_target_missing": 73,
+          "n_skipped_insufficient": 0
+        },
+        "50": {
+          "n_available_sentences": 5282,
+          "n_available_refs": 1876,
+          "n_skipped_target_missing": 73,
+          "n_skipped_insufficient": 43
+        }
+      },
+      "n_common_sentences": 5282,
+      "n_common_refs": 1876
+    },
+    "val_calib": {
+      "n_sentences_total": 5360,
+      "n_refs_total": 1888,
+      "n_target_missing_sentences": 77,
+      "per_K": {
+        "5": {
+          "n_available_sentences": 5283,
+          "n_available_refs": 1858,
+          "n_skipped_target_missing": 77,
+          "n_skipped_insufficient": 0
+        },
+        "10": {
+          "n_available_sentences": 5283,
+          "n_available_refs": 1858,
+          "n_skipped_target_missing": 77,
+          "n_skipped_insufficient": 0
+        },
+        "20": {
+          "n_available_sentences": 5283,
+          "n_available_refs": 1858,
+          "n_skipped_target_missing": 77,
+          "n_skipped_insufficient": 0
+        },
+        "50": {
+          "n_available_sentences": 5231,
+          "n_available_refs": 1841,
+          "n_skipped_target_missing": 77,
+          "n_skipped_insufficient": 52
+        }
+      },
+      "n_common_sentences": 5231,
+      "n_common_refs": 1841
+    },
+    "testA": {
+      "n_sentences_total": 5726,
+      "n_refs_total": 1975,
+      "n_target_missing_sentences": 59,
+      "per_K": {
+        "5": {
+          "n_available_sentences": 5667,
+          "n_available_refs": 1952,
+          "n_skipped_target_missing": 59,
+          "n_skipped_insufficient": 0
+        },
+        "10": {
+          "n_available_sentences": 5667,
+          "n_available_refs": 1952,
+          "n_skipped_target_missing": 59,
+          "n_skipped_insufficient": 0
+        },
+        "20": {
+          "n_available_sentences": 5667,
+          "n_available_refs": 1952,
+          "n_skipped_target_missing": 59,
+          "n_skipped_insufficient": 0
+        },
+        "50": {
+          "n_available_sentences": 5646,
+          "n_available_refs": 1945,
+          "n_skipped_target_missing": 59,
+          "n_skipped_insufficient": 21
+        }
+      },
+      "n_common_sentences": 5646,
+      "n_common_refs": 1945
+    },
+    "testB": {
+      "n_sentences_total": 4889,
+      "n_refs_total": 1798,
+      "n_target_missing_sentences": 131,
+      "per_K": {
+        "5": {
+          "n_available_sentences": 4758,
+          "n_available_refs": 1743,
+          "n_skipped_target_missing": 131,
+          "n_skipped_insufficient": 0
+        },
+        "10": {
+          "n_available_sentences": 4758,
+          "n_available_refs": 1743,
+          "n_skipped_target_missing": 131,
+          "n_skipped_insufficient": 0
+        },
+        "20": {
+          "n_available_sentences": 4758,
+          "n_available_refs": 1743,
+          "n_skipped_target_missing": 131,
+          "n_skipped_insufficient": 0
+        },
+        "50": {
+          "n_available_sentences": 4640,
+          "n_available_refs": 1702,
+          "n_skipped_target_missing": 131,
+          "n_skipped_insufficient": 118
+        }
+      },
+      "n_common_sentences": 4640,
+      "n_common_refs": 1702
+    },
+    "__pooled__": {
+      "n_sentences_total": 21373,
+      "n_refs_total": 7578,
+      "n_target_missing_sentences": 340,
+      "per_K": {
+        "5": {
+          "n_available_sentences": 21033,
+          "n_available_refs": 7444,
+          "n_skipped_target_missing": 340,
+          "n_skipped_insufficient": 0
+        },
+        "10": {
+          "n_available_sentences": 21033,
+          "n_available_refs": 7444,
+          "n_skipped_target_missing": 340,
+          "n_skipped_insufficient": 0
+        },
+        "20": {
+          "n_available_sentences": 21033,
+          "n_available_refs": 7444,
+          "n_skipped_target_missing": 340,
+          "n_skipped_insufficient": 0
+        },
+        "50": {
+          "n_available_sentences": 20799,
+          "n_available_refs": 7364,
+          "n_skipped_target_missing": 340,
+          "n_skipped_insufficient": 234
+        }
+      },
+      "n_common_sentences": 20799,
+      "n_common_refs": 7364
+    }
+  }
+}

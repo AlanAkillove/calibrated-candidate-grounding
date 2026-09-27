@@ -1,60 +1,125 @@
-"""Materialise the frozen candidate sets (checklist step 4).
+"""Materialise the frozen candidate manifests (multi-agent brief, 2026-09-27).
 
-Everything here is pure numpy and already implemented in
-:mod:`ccg.data.candidate_sets`; the script only needs the proposal cache (and,
-for the CLIP-hard regime, the region embeddings):
+This script is a thin CLI over :func:`ccg.data.manifests.build_manifests`: it
+builds one manifest per construction regime (``random`` / ``same_category``),
+cuts it into the four UNC split files and writes
 
-* nested random sets ``C_5 subset C_10 subset C_20 subset C_50`` with a constant
-  target (:func:`ccg.data.candidate_sets.build_nested_random_sets`),
-* same-category hard sets (IoU with same-category GT objects first),
-* CLIP-hard sets (query-crop cosine first) - a *diagnostic* regime, not a
-  realistic detector distribution,
-* synthetic omission variants ``C^- = C \\ {c*}``.
+    <out>/manifests/<regime>_<split>.jsonl          (+ sibling .meta.json)
 
-Sets are written as one NPZ/HDF5 artefact plus an **availability report**: a
-requested ``K`` that the bank cannot supply is recorded, never silently dropped
-(``--require-availability-report`` is on by default for exactly that reason).
+Every row freezes the target position inside the N=64 proposal bank plus ONE
+full distractor ordering; the C_K candidate sets are the prefixes
+``C_K = target + order[:K-1]`` for K in {5, 10, 20, 50}.  The ``val`` file
+carries the ``eval_split`` column (``val_select`` / ``val_calib``, cut by
+image with the frozen seed); :func:`ccg.data.manifests.filter_entries`
+selects it back.
+
+The proposal bank is produced by the main work stream
+(``cache/proposals.h5``); while it is not built yet this script exits with a
+clear FATAL message instead of producing anything.
 
 Usage
 -----
-    python scripts/build_candidate_sets.py --proposals cache/proposals_n64.h5 \
-        --annotations data/prepared/refs.json --out cache/candidate_sets.npz
+    python scripts/build_candidate_sets.py \
+        --bank cache/proposals.h5 \
+        --refs "data/raw/refcoco+/refcoco+/refs(unc).p" \
+        --instances data/raw/refcoco+/refcoco+/instances.json \
+        --coco data/raw/annotations/instances_train2014.json \
+        --out cache --regime both --seed 20260927
 """
 
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from pathlib import Path
-from typing import List, Optional
+from typing import Any, Dict, List, Optional, Sequence
+
+import numpy as np
+from tqdm import tqdm
 
 _REPO_ROOT = Path(__file__).resolve().parents[1]
 _SRC = _REPO_ROOT / "src"
 if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
-from ccg.data.candidate_sets import (  # noqa: E402  (pure numpy)
-    CandidateAvailability,
-    build_nested_random_sets,
-    synthetic_omit,
+from ccg.data.manifests import (  # noqa: E402  (pure numpy / lazy h5py)
+    FILE_SPLITS,
+    MANIFEST_SEED,
+    PRIMARY_KS,
+    REGIMES,
+    ManifestEntry,
+    build_manifests,
+    common_cohort,
+    manifest_path,
 )
-from ccg.data.proposals import assign_target, read_all_banks  # noqa: E402  (pure / h5py)
-from ccg.data.refcoco import parse_refs_json  # noqa: E402  (pure)
-from ccg.data.types import HARDNESS_VALUES  # noqa: E402
-from ccg.utils.io import save_npz  # noqa: E402
+from ccg.data.splits import SPLIT_VAL_CALIB, SPLIT_VAL_SELECT  # noqa: E402
 
 __all__ = [
-    "PENDING_MESSAGE",
-    "DEFAULT_KS",
-    "build_sets_for_example",
-    "build_all",
+    "DEFAULT_BANK",
+    "DEFAULT_REFS",
+    "DEFAULT_INSTANCES",
+    "DEFAULT_COCO",
+    "DEFAULT_OUT",
+    "summarize_entries",
     "build_parser",
+    "run",
     "main",
 ]
 
-PENDING_MESSAGE = "pending data download — Phase 0 checklist step"
-DEFAULT_KS = (5, 10, 20, 50)
+DEFAULT_BANK = Path("cache/proposals.h5")
+DEFAULT_REFS = Path("data/raw/refcoco+/refcoco+/refs(unc).p")
+DEFAULT_INSTANCES = Path("data/raw/refcoco+/refcoco+/instances.json")
+DEFAULT_COCO = Path("data/raw/annotations/instances_train2014.json")
+DEFAULT_OUT = Path("cache")
+
+#: The largest primary K; the common cohort is `eligible[50]` (protocol section 29).
+_COHORT_K = max(PRIMARY_KS)
+
+
+def summarize_entries(
+    entries: Sequence[ManifestEntry], Ks: Sequence[int] = PRIMARY_KS
+) -> Dict[str, Any]:
+    """Per-split statistics of one regime's entries (pure, no I/O)."""
+    n_refs = len(entries)
+    n_target_present = sum(1 for entry in entries if entry.target_index is not None)
+    n_eligible = {
+        str(int(K)): sum(1 for entry in entries if bool(entry.eligible.get(int(K), False)))
+        for K in Ks
+    }
+    n_common = int(common_cohort(entries, K=_COHORT_K).size)
+    same_counts = np.asarray(
+        [int(entry.n_same_category_available) for entry in entries], dtype=np.int64
+    )
+    if same_counts.size:
+        same_summary = {
+            "min": int(same_counts.min()),
+            "median": float(np.median(same_counts)),
+            "max": int(same_counts.max()),
+            "mean": float(same_counts.mean()),
+        }
+    else:
+        same_summary = {"min": 0, "median": 0.0, "max": 0, "mean": 0.0}
+    return {
+        "n_refs": n_refs,
+        "n_target_present": n_target_present,
+        "n_eligible": n_eligible,
+        "n_common_cohort": n_common,
+        "same_category_available": same_summary,
+    }
+
+
+def _print_summary(regime: str, split: str, summary: Dict[str, Any], out_path: Path) -> None:
+    eligible = " ".join(
+        f"K={K}:{summary['n_eligible'][str(int(K))]}" for K in PRIMARY_KS
+    )
+    same = summary["same_category_available"]
+    tqdm.write(f"[build_candidate_sets] {regime}/{split}: n_refs={summary['n_refs']} "
+          f"n_target_present={summary['n_target_present']} "
+          f"common_cohort(K={_COHORT_K})={summary['n_common_cohort']}")
+    tqdm.write(f"[build_candidate_sets]   eligible: {eligible}")
+    tqdm.write(f"[build_candidate_sets]   n_same_category_available: "
+          f"min={same['min']} median={same['median']} max={same['max']} mean={same['mean']:.2f}")
+    tqdm.write(f"[build_candidate_sets]   -> {out_path}")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -62,166 +127,118 @@ def build_parser() -> argparse.ArgumentParser:
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("--proposals", type=Path, default=Path("cache/proposals_n64.h5"))
-    parser.add_argument("--annotations", type=Path, default=None, help="prepared refs json")
-    parser.add_argument("--region-features", type=Path, default=None, help="needed for clip_hard")
-    parser.add_argument("--text-features", type=Path, default=None, help="needed for clip_hard")
-    parser.add_argument("--out", type=Path, default=Path("cache/candidate_sets.npz"))
-    parser.add_argument(
-        "--Ks",
-        type=int,
-        nargs="+",
-        default=list(DEFAULT_KS),
-        help="set sizes to materialise (default: %(default)s)",
-    )
-    parser.add_argument(
-        "--hardness",
-        nargs="+",
-        default=["random"],
-        choices=list(HARDNESS_VALUES),
-        help="which construction regimes to build (clip_hard needs --region-features)",
-    )
-    parser.add_argument("--iou-thresh", type=float, default=0.5, help="FROZEN target rule")
-    parser.add_argument("--seed", type=int, default=0, help="FROZEN: sets are generated once")
-    parser.add_argument(
-        "--with-omission",
-        action="store_true",
-        help="also emit synthetic_omit variants of every target-present set",
-    )
-    parser.add_argument(
-        "--require-availability-report",
-        action=argparse.BooleanOptionalAction,
-        default=True,
-        help="refuse to write when any requested K was unreachable without recording it",
-    )
-    parser.add_argument("--dry-run", action="store_true", help="print the plan and exit 0")
+    parser.add_argument("--bank", type=Path, default=DEFAULT_BANK,
+                        help="frozen proposal bank cache/proposals.h5 (written by the "
+                             "main work stream; FATAL when missing)")
+    parser.add_argument("--refs", type=Path, default=DEFAULT_REFS,
+                        help="UNC refs(unc).p pickle")
+    parser.add_argument("--instances", type=Path, default=DEFAULT_INSTANCES,
+                        help="RefCOCO+ instances.json (ann_id -> target bbox)")
+    parser.add_argument("--coco", type=Path, default=DEFAULT_COCO,
+                        help="COCO train2014 instances json (same-category GT objects)")
+    parser.add_argument("--out", type=Path, default=DEFAULT_OUT,
+                        help="output root; manifests land in <out>/manifests/")
+    parser.add_argument("--regime", choices=["random", "same_category", "both"],
+                        default="both", help="which ordering regimes to build")
+    parser.add_argument("--seed", type=int, default=MANIFEST_SEED,
+                        help="frozen manifest seed (default: %(default)s)")
     return parser
 
 
-def build_sets_for_example(
-    example,
-    bank,
-    Ks: List[int],
-    *,
-    iou_thresh: float = 0.5,
-    seed: int = 0,
-    availability: Optional[CandidateAvailability] = None,
-    with_omission: bool = False,
-) -> dict:
-    """Nested random sets for one expression, plus the target bookkeeping.
+def _require_file(path: Path, what: str, hint: str) -> None:
+    if not path.exists():
+        raise FileNotFoundError(f"{what} not found: {path}\n  {hint}")
 
-    Returns ``{K: CandidateSet}`` (``None`` where the bank was too small) merged
-    with ``"<K>_omit"`` variants when ``with_omission`` is set, and records the
-    equivalent proposals that the unique-target rule removed from the pool.
-    """
-    assignment = assign_target(bank, example.gt_box, iou_thresh=iou_thresh)
-    if assignment.target_proposal_idx is None:
-        # Natural omission: the bank does not contain the target at all.  The
-        # example stays in the dataset (regime "natural_omission") - dropping it
-        # here would hide the very failure mode RQ4 is about.
-        return {"assignment": assignment, "sets": {}, "natural_omission": True}
-    pool = list(range(bank.N))
-    pool.remove(int(assignment.target_proposal_idx))
-    for idx in assignment.to_remove.tolist():
-        pool.remove(int(idx))
-    sets = build_nested_random_sets(
-        int(assignment.target_proposal_idx),
-        pool,
-        Ks,
-        seed,
-        ref_id=example.ref_id,
-        image_id=example.image_id,
-        availability=availability,
+
+def run(args: argparse.Namespace) -> int:
+    """Build the requested regimes and write the per-split manifest files."""
+    _require_file(
+        args.refs, "RefCOCO+ refs pickle",
+        "expected data/raw/refcoco+/refcoco+/refs(unc).p (see data/README.md)",
     )
-    out = dict(sets)
-    if with_omission:
-        for k, candidate_set in sets.built().items():
-            out[f"{k}_omit"] = synthetic_omit(candidate_set)
-    return {"assignment": assignment, "sets": out, "natural_omission": False}
+    _require_file(
+        args.instances, "RefCOCO+ instances.json",
+        "expected data/raw/refcoco+/refcoco+/instances.json (ships with the refs pickle)",
+    )
+    _require_file(
+        args.bank, "proposal bank (cache/proposals.h5)",
+        "the frozen RPN bank is generated by the main work stream first; "
+        "re-run this script once cache/proposals.h5 lands",
+    )
 
+    regimes = list(REGIMES) if args.regime == "both" else [args.regime]
+    coco: Optional[Path] = args.coco
+    if coco is not None and not coco.exists():
+        if "same_category" in regimes:
+            raise FileNotFoundError(
+                f"COCO GT annotations not found: {coco}\n  needed for the same_category "
+                "proposal categories; expected "
+                "data/raw/annotations/instances_train2014.json"
+            )
+        print(f"[build_candidate_sets] WARNING: {coco} missing - random regime will "
+              "record n_same_category_available=0 (metadata unavailable)")
+        coco = None
 
-def build_all(
-    proposals: Path,
-    annotations: Path,
-    Ks: List[int],
-    *,
-    iou_thresh: float = 0.5,
-    seed: int = 0,
-    with_omission: bool = False,
-) -> dict:
-    """Pure pass over cache + annotations; returns rows and the availability report."""
-    banks = read_all_banks(proposals)
-    examples = parse_refs_json(annotations)
-    availability = CandidateAvailability(requested_Ks=tuple(int(k) for k in Ks))
-    rows: List[dict] = []
-    num_natural_miss = 0
-    num_missing_bank = 0
-    for example in examples:
-        bank = banks.get(int(example.image_id))
-        if bank is None:
-            # No bank for the image at all: an artefact gap, reported separately
-            # from a natural miss so the two are never conflated in the write-up.
-            num_missing_bank += 1
-            continue
-        result = build_sets_for_example(
-            example,
-            bank,
-            Ks,
-            iou_thresh=iou_thresh,
-            seed=seed,
-            availability=availability,
-            with_omission=with_omission,
+    print(f"[build_candidate_sets] bank      : {args.bank}")
+    print(f"[build_candidate_sets] regimes   : {regimes}")
+    print(f"[build_candidate_sets] seed      : {args.seed}")
+    print(f"[build_candidate_sets] out       : {args.out}")
+
+    # Outer bar over the regime x split files; tqdm auto-disables on a non-TTY
+    # stream (disable=None).
+    manifests_bar = tqdm(
+        total=len(regimes) * len(FILE_SPLITS), desc="manifests", unit="split", disable=None
+    )
+    for regime in regimes:
+        manifest = build_manifests(
+            args.bank, args.refs, args.instances, regime,
+            seed=int(args.seed), coco=coco,
         )
-        num_natural_miss += int(result["natural_omission"])
-        record = {
-            "ref_id": int(example.ref_id),
-            "image_id": int(example.image_id),
-            "split": example.split,
-            "natural_omission": bool(result["natural_omission"]),
-            "target_proposal_index": result["assignment"].target_proposal_idx,
-            "removed_equivalents": list(result["assignment"].to_remove),
-        }
-        for key, candidate_set in result["sets"].items():
-            if candidate_set is None:
-                continue
-            record[f"set_{key}"] = candidate_set.candidate_indices.tolist()
-            record[f"target_{key}"] = candidate_set.target_index
-        rows.append(record)
-    return {
-        "rows": rows,
-        "availability": availability.to_dict(),
-        "num_natural_omission": num_natural_miss,
-        "num_missing_banks": num_missing_bank,
-        "Ks": [int(k) for k in Ks],
-    }
+        n_missing = int(manifest.meta.get("n_missing_bank", 0))
+        if n_missing:
+            tqdm.write(f"[build_candidate_sets] WARNING: {n_missing} ref image(s) have no bank "
+                  "group (first ids: "
+                  f"{manifest.meta.get('missing_bank_images', [])[:8]}); those refs are absent")
+        tqdm.write(f"[build_candidate_sets] regime={regime}: built {manifest.meta['n_refs']} refs "
+              f"over {manifest.meta['n_images']} images, "
+              f"bank_fingerprint={manifest.meta['bank_fingerprint'][:16]}...")
+        for split in FILE_SPLITS:
+            entries = [entry for entry in manifest.entries if entry.split == split]
+            subset = manifest.subset(entries)
+            out_path = manifest_path(args.out, regime, split)
+            # Inner bar over the split's refs: the per-ref work of this split
+            # (jsonl write + statistics) is covered by its true ref count.
+            with tqdm(
+                total=len(entries), desc=f"{regime}/{split}", unit="ref", disable=None
+            ) as ref_bar:
+                subset.save(out_path)
+                summary = summarize_entries(entries)
+                ref_bar.update(len(entries))
+            _print_summary(regime, split, summary, out_path)
+            if split == "val":
+                for eval_split in (SPLIT_VAL_SELECT, SPLIT_VAL_CALIB):
+                    n_eval = sum(1 for entry in entries if entry.eval_split == eval_split)
+                    n_eval_common = int(
+                        common_cohort(
+                            [entry for entry in entries if entry.eval_split == eval_split],
+                            K=_COHORT_K,
+                        ).size
+                    )
+                    tqdm.write(f"[build_candidate_sets]   {eval_split}: n_refs={n_eval} "
+                          f"common_cohort={n_eval_common}")
+            manifests_bar.update(1)
+    manifests_bar.close()
+    print("[build_candidate_sets] done")
+    return 0
 
 
 def main(argv: Optional[List[str]] = None) -> int:
     args = build_parser().parse_args(argv)
-    print(f"[build_candidate_sets] Ks        : {args.Ks}")
-    print(f"[build_candidate_sets] hardness  : {args.hardness}")
-    print(f"[build_candidate_sets] proposals : {args.proposals} (exists: {args.proposals.exists()})")
-    print(f"[build_candidate_sets] out       : {args.out}")
-    if args.dry_run:
-        print("[build_candidate_sets] dry run, nothing written")
-        return 0
-    if not args.proposals.exists() or args.annotations is None or not Path(args.annotations).exists():
-        raise NotImplementedError(PENDING_MESSAGE)
-    report = build_all(
-        args.proposals,
-        Path(args.annotations),
-        args.Ks,
-        iou_thresh=args.iou_thresh,
-        seed=args.seed,
-        with_omission=args.with_omission,
-    )
-    save_npz(args.out, rows=json.dumps(report["rows"]), availability=json.dumps(report["availability"]))
-    print(f"[build_candidate_sets] built {len(report['rows'])} expressions")
-    print(f"[build_candidate_sets] availability: {report['availability']}")
-    if args.require_availability_report:
-        shortages = report["availability"].get("example_shortages", [])
-        print(f"[build_candidate_sets] shortages recorded: {len(shortages)}")
-    return 0
+    try:
+        return run(args)
+    except (FileNotFoundError, ValueError, KeyError) as exc:
+        print(f"FATAL: {exc}", file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":  # pragma: no cover

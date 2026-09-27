@@ -252,20 +252,35 @@ amendments:
       （禁止静默过滤）；natural omission 稀缺记为 RQ4 统计功效风险（Phase 2 前做功效评估，不影响 Gate）；
       澄清全部 RefCOCO+ 图像来自 COCO train2014（val2014 非必需）；A2.5 duplicate-suppression 待决项关闭
       （不引入新 IoU threshold）。全部 gate 数字不变；观测数字见 §9 条目 `audit-proposal-001`。
+  - id: A4
+    title: Phase 0A fixed-CLIP cosine audit outcome & calibration interpretation constraints
+    summary: >
+      登记 Phase 0A（B1 frozen CLIP cosine，random regime，全量 19992 图 / 4 splits，K∈{5,10,20,50}，
+      bootstrap 5000 replicates）outcome：三项硬 sanity check 全过、嵌套集理论性质未被违反（无
+      VALIDATION_FAILURE.json）；并新增三条解读约束（不改任何条款与 gate 数字）：(1) T* 收敛于拟合
+      搜索界 [0.05, 100] 下界边缘（0.05+ε）时必须披露边界凝结；(2) oracle per-K 温度诊断在该界内为
+      边界简并（4 个 T_K 同值、ΔECE≡0），不得解读为“per-K 温度无法修复校准漂移”；(3) native ECE 的
+      跨 K 增幅（≤5.2pp）与 ranking accuracy 降幅（至 34.7pp）必须并列报告，AURC 恶化不得先行表述为
+      独立于 ranking 的 selective-risk shift。Phase 0A 为 B1/random 单格证据，不构成 Gate Q1/Q2 判定。
+      观测数字见 §9 条目 `p0-cosine-kcardinality-20260927-01` 与 `audit-naturalomission-full-001`。
 reason: >
   首轮协议审计发现：（1）GT 信息不对称——same-category hard negatives 与 CLIP-hard 一样使用
   GT/模型信息，但原协议只将 CLIP-hard 标为 diagnostic（且 CLIP-hard↔B1 存在构造器耦合）；
   （2）proposal bank 定义模糊（detector vs RPN、是否含预测类别）；（3）N 选择需要工程预注册
   标准（避免事后调 N 规避 K=50 候选不足）。（A3 追加原因：proposal-system audit 完成，登记 outcome
-  并按 A2.4 规则执行 N-selection；结果数字见 §9 条目 `audit-proposal-001`。）
+  并按 A2.4 规则执行 N-selection；结果数字见 §9 条目 `audit-proposal-001`。）（A4 追加原因：Phase 0A
+  （B1 cosine）全量审计完成；T* 与 oracle per-K 温度均在拟合搜索下界凝结，必须显式登记解读约束。）
 original_criteria_preserved: true
 related_docs:
   - docs/research_protocol.md#amendment-a1
   - docs/research_protocol.md#amendment-a2
   - docs/research_protocol.md#amendment-a3
+  - docs/research_protocol.md#amendment-a4
   - docs/dataset_protocol.md#10-proposal-system-audit-design
 related_entries:
   - experiment_id: audit-proposal-001    # A3 依据的观测数字见 §9；本节不复制数字
+  - experiment_id: p0-cosine-kcardinality-20260927-01    # A4 依据的观测数字见 §9；本节不复制全部数字
+  - experiment_id: audit-naturalomission-full-001        # A4.4 全数据 omission counting
 results_claimed: false
 ```
 
@@ -366,4 +381,173 @@ notes: >
   audit 仅使用 train / val_select 的 image 级子集，不查看 testA / testB。candidate-sets 层 hash 不适用
   （本 audit 未构造 candidate sets）。协议层登记见 docs/research_protocol.md Amendment A3；
   dataset 侧实测更新见 docs/dataset_protocol.md §1.4。
+```
+
+```yaml
+# ===== FORMAL ENTRY — REAL RESULT（非示例）=====
+experiment_id: p0-cosine-kcardinality-20260927-01
+git_commit: "7e24cdedbbf15d3e62a048637e6d042f5eb225f4"   # 运行时的 HEAD（夜跑链路）
+dirty: true                    # Phase 0A 链路代码（src/ccg/experiment/phase0a.py、data/manifests.py、
+                               # features/cache.py、scripts/run_phase0a.py、8 个新测试文件等）运行时尚未提交；
+                               # 随本条目同批收尾 commit 入库（新增文件 + .gitignore/resume 修改）
+timestamp: "2026-09-27T15:20:26Z"   # 产物 created_utc；夜跑链路完成 15:21:46Z（logs_night/STATUS.json）
+dataset: refcoco+              # refs(unc).p；图像 = COCO train2014（全部 19992 图）；candidate = 冻结 manifest（random）
+split: [val_select, val_calib, testA, testB]   # 评估用；仅 val_calib 参与拟合（T*）；testA/testB 从不参与
+candidate_protocol: >-
+  nested-v1#ebd2690e4b1c1d524fbee80e6ba48dbfadd9f2f5e58b08566228d409afd55747（manifests-v1；
+  regime=random，seed=20260927，top_n=64，iou_thresh=0.5）；C_K = [target] + distractor_order[:K-1]；
+  三份 manifest（testA 1975 / testB 1798 / val 3805 refs）已复制入 candidate_manifests/
+K: [5, 10, 20, 50]
+hardness: random
+target_presence: present       # 全部候选集含 target；target-missing / K=50 候选不足的 sentence 显式排除并计数（禁止静默过滤）
+backbone: >-
+  openclip-vit-b-32（ViT-B-32 laion2b_s34b_b79k，frozen，离线缓存；checkpoint
+  sha256=1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad；fp16；特征缓存 phase0a-v1）
+model: B1_cosine               # 冻结 CLIP cosine 打分；native = softmax(100.0 * s)（alpha=100，primary 变体）
+seed: 0                        # bootstrap seed（打分确定性；无训练）
+training_config: null          # 无训练（frozen backbone）
+calibration_config:
+  form: "global temperature T（跨 K 单标量；B2/C1）"
+  fit_split: val_calib         # CalibrationIsolationError 保护在位；testA/testB 从不参与拟合
+  fit_objective: "candidate-set NLL（ccg.calibration.mean_nll），在 val_calib 上 pool K∈{5,10}"
+  temperature_bounds: [0.05, 100.0]
+  fitted_temperature: 0.050000102135425877   # ⚠ 收敛于搜索下界边缘（0.05+ε）——边界凝结；解读约束见 A4.3
+  nll_before: 1.9153269614775112
+  nll_after: 1.4809285520674216
+  applied_to: [val_select, val_calib, testA, testB]
+  used_test_for_fitting: false
+metrics:
+  ranking:                     # __pooled__ common cohort（n=20799；跨 K 共享分母）
+    top1_acc: {K5: 0.5348814846867638, K10: 0.3899706716669071, K20: 0.28568681186595507, K50: 0.18789364873311218}
+    top5_acc: {K5: 1.0, K10: 0.8243665560844271, K20: 0.6416654646858022, K50: 0.4355978652819847}
+    mrr_optional: {K5: 0.7112112761831498, K10: 0.5730947840135782, K20: 0.45031833929579335, K50: 0.31616990790739957}
+    acc_by_K: {delta_acc_vs_k5: {K10: -0.1449108130198567, K20: -0.2491946728208087, K50: -0.34698783595365157}}
+    acc_by_hardness: null      # random regime only；hardness 网格不属本 audit
+  calibration:                 # native = primary；__pooled__ common
+    top_label_ece_adaptive: {K5: 0.2482983856014841, K10: 0.2930576841957816, K20: 0.3001323987721474, K50: 0.27722758217776294}
+    top_label_ece_equal_width: {K5: 0.24843016615369135, K10: 0.2930576841957816, K20: 0.3001323987721474, K50: 0.27722758217776294}
+    binary_correctness_brier: {K5: 0.27630705208943346, K10: 0.2926699080224997, K20: 0.2724260762285447, K50: 0.2224079476823505}
+    top_label_correctness_nll: {K5: 0.934625176599185, K10: 0.9437111353057122, K20: 0.8522327878977813, K50: 0.6926265024575344}
+    confidence_accuracy_gap: {K5: 0.2482983856014841, K10: 0.29305768419578154, K20: 0.3001323987721474, K50: 0.277227582177763}
+    multiclass_nll: {K5: 1.7448319904705683, K10: 2.5661456543806516, K20: 3.371517977443947, K50: 4.418095654277915}
+    multiclass_brier: {K5: 0.6812383741952217, K10: 0.8538363416663426, K20: 0.955693363329776, K50: 1.024016417554413}
+    diagnostics:               # 非替换变体（协议 §11）；bootstrap 覆盖三变体
+      T1_ece_adaptive: {K5: 0.3240476601179348, K10: 0.2833783502634388, K20: 0.23192738656111678, K50: 0.16619333687008553}
+      global_T_ece_adaptive: {K5: 0.09897379577661387, K10: 0.1122205477150405, K20: 0.11592289700418534, K50: 0.10381579623944548}   # T*=0.0500001
+  selective:                   # __pooled__ common；risk = 1 - accuracy
+    aurc: {K5: 0.2716234194650477, K10: 0.4170030107913692, K20: 0.5342065403866352, K50: 0.6614556683692103}
+    risk_at_50_coverage: {K5: 0.2892307692307692, K10: 0.4522115384615385, K20: 0.5792307692307692, K50: 0.7048076923076922}
+    risk_at_80_coverage: {K5: 0.40691105769230773, K10: 0.5549278846153847, K20: 0.6694711538461539, K50: 0.7763221153846154}
+    risk_at_90_coverage: {K5: 0.4361111111111111, K10: 0.583119658119658, K20: 0.6918269230769231, K50: 0.7952457264957264}
+    risk_at_95_coverage: {K5: 0.4505566801619433, K10: 0.5964574898785425, K20: 0.7031376518218624, K50: 0.8038967611336032}
+    selective_accuracy_at_50_coverage: {K5: 0.7107692307692308, K10: 0.5477884615384615, K20: 0.4207692307692308, K50: 0.2951923076923078}
+  abstention: null             # Phase 0A 仅 target-present；presence/abstention 属 Phase 2
+  counts:
+    n_samples: 21373           # __pooled__ 全部 sentence
+    n_common_samples: 20799    # 跨 K 共享分母（= K=50 可用数）
+    n_unique_images: 2981      # common cohort 的 image 聚类数（bootstrap resampling unit）
+    n_excluded_for_insufficient_candidates:
+      target_missing_sentences: 340     # 全 split；K5/10/20 亦排除（val_select 73 / val_calib 77 / testA 59 / testB 131）
+      insufficient_for_K50: 234         # 仅 K=50（val_select 43 / val_calib 52 / testA 21 / testB 118）——显式报告，非静默过滤
+  uncertainty:
+    bootstrap_replicates: 5000
+    resampling_unit: image
+    ci_level: 0.95
+    deltas:                    # diff = metric(K_a) − metric(K_b)；__pooled__ common；[ci_low, ci_high]
+      accuracy_native:
+        5_10: {diff: 0.1449108130198567, ci: [0.13910388035127227, 0.1509778404872323]}
+        5_20: {diff: 0.2491946728208087, ci: [0.24186372154578595, 0.2570120280256724]}
+        5_50: {diff: 0.34698783595365157, ci: [0.3387827362912931, 0.3557113953011908]}
+      ece_adaptive_native:
+        5_10: {diff: -0.0447592985942975, ci: [-0.051342230670797184, -0.03849286400674796]}
+        5_20: {diff: -0.05183401317066333, ci: [-0.06008373732538603, -0.04356577643715734]}
+        5_50: {diff: -0.02892919657627885, ci: [-0.0382075533820454, -0.019648158118321934]}
+      ece_adaptive_global_T:   # 诊断变体
+        5_10: {diff: -0.013246751938426629, ci: [-0.01917875651966902, -0.007127518323151044]}
+        5_20: {diff: -0.01694910122757147, ci: [-0.024240376328465922, -0.00871013315753057]}
+        5_50: {diff: -0.0048420004628316055, ci: [-0.012637243279265959, 0.0038811307432282016]}   # CI 跨 0
+      aurc_native:
+        5_10: {diff: -0.1453795913263215, ci: [-0.15348281538403757, -0.137325052926201]}
+        5_20: {diff: -0.2625831209215875, ci: [-0.27334474333196634, -0.2520291620290432]}
+        5_50: {diff: -0.3898322489041626, ci: [-0.40179444137142634, -0.3780979501873425]}
+  risk_definition: "risk = 1 - accuracy"
+hard_checks:                   # 协议 §17-19 STOP 契约；三项全过 → 未写 VALIDATION_FAILURE.json（退出码 0）
+  score_invariance: {status: passed, atol: 0.0, n_candidate_pairs: 1148625, n_violations: 0, max_abs_diff: 0.0}
+  rank_monotonic: {status: passed, n_sentences: 20799, n_K_pairs: 6, n_violations: 0}   # rank(K') >= rank(K), K'>K
+  accuracy_monotonic: {status: passed, acc_by_K: {K5: 0.5348814846867638, K10: 0.3899706716669071, K20: 0.28568681186595507, K50: 0.18789364873311218}, n_violations: 0}
+  confidence_monotonic: not_checked   # 明示不查（§20：校准随 K 漂移是研究对象）
+run:
+  command: "tools/night_run.py：extract_features --resume → audit_cache --sample 100 → run_phase0a --bootstrap-replicates 5000 → pytest -q（全部一次通过，attempts=1）"
+  device: "cuda（特征提取，RTX 4060 Laptop）/ cpu（打分 + bootstrap）"
+  step_seconds: {extract_features: 6045.2, audit_cache: 80.1, run_phase0a: 530.4, pytest: 70.1}
+  phase0a_internal_seconds: {total: 519.5055997000018, bootstrap: 481.6167573999992}
+  feature_cache: {n_images: 19992, n_crops: 1279488, n_sentences: 141564, cache_bytes: 1507745318}
+  extract_notes: "resumed=true（本次补齐 11416 图 / 730624 crops；214.9 crops/s；peak VRAM 833.0 MB；GPU wall 6042.0s）"
+artifacts:
+  root: results/phase0a_cosine/
+  predictions: raw_predictions/K{5,10,20,50}.npz（含原始 logits）+ prediction_summary.csv
+  metrics: [ranking_metrics.csv, calibration_metrics.csv, selective_metrics.csv]
+  calibration: [reliability_bins.csv, calibration_map_shift.csv, global_temperature.json, oracle_temperature_diagnostic.json]
+  bootstrap: [bootstrap_ci.csv（120 行）, selective_curves.npz]
+  figures: figures/（reliability_per_K.png / risk_coverage_per_K.png / ece_brier_acc_vs_K.png / confidence_hist_per_K.png）
+  manifests: candidate_manifests/（三份 manifest + meta + manifest_summary.json）
+  provenance: [metadata.json, cohort_summary.json]
+notes: >
+  B1（frozen CLIP cosine）全量审计，random regime；**不构成任何 Gate Q1/Q2 判定**（§11 + A1.4 要求
+  4×2 网格与 B2/B3 等证据；本条目为 B1/random 单格证据）。协议层登记见 research_protocol.md
+  Amendment A4（含三条解读约束：T* 边界凝结披露、oracle 简并禁止误读、calibration 证据须与 ranking
+  并列报告）。native ECE 跨 K 变化（+2.9~+5.2pp vs K5）远小于 accuracy 降幅（-14.5~-34.7pp）；
+  global-T 后 ECE ≈9.9%~11.6%（残差 ≤1.7pp；pooled 5→50 diff CI 跨 0）；oracle per-K 温度在搜索界内
+  与 global 完全同值（边界简并，ΔECE≡0），该简并不得解读为“per-K 温度无法修复漂移”。
+  全数据 natural omission counting 见条目 audit-naturalomission-full-001。
+```
+
+```yaml
+# ===== FORMAL ENTRY — REAL RESULT（非示例）=====
+experiment_id: audit-naturalomission-full-001
+git_commit: "7e24cdedbbf15d3e62a048637e6d042f5eb225f4"   # 运行时的 HEAD
+dirty: true                    # scripts/natural_omission_full.py 与测试当时未提交；随收尾 commit 入库
+timestamp: "2026-09-27"        # 日期级（产物 mtime 2026-09-27 ≈ 12:19:55Z；先于夜跑链路）
+dataset: refcoco+              # refs(unc).p 全量 49856 ref；bank = cache/proposals.h5（bank-v1，top-64 class-agnostic RPN）
+split: [train, val, testA, testB]   # val = 原 refcoco+ val split 全集（本 counting 不细分 val_select/val_calib）
+candidate_protocol: "bank-v1（class-agnostic RPN top-64，frozen，post-NMS；created 2026-09-27T08:33:48Z）"
+K: null                        # 不构造 candidate sets；仅对 target box 与 bank 行做 max-IoU 计数
+hardness: null
+target_presence: "natural_miss counting（P(max IoU < 0.5)；counting only，无 presence 模型）"
+backbone: "fasterrcnn_resnet50_fpn RPN（torchvision 0.20.1+cu121，COCO_V1，frozen）"
+model: null                    # counting only（multi-agent brief section 27 冻结计数规则）
+seed: null
+training_config: null
+calibration_config: null
+metrics:
+  natural_omission_expression_level:   # 主口径（一个 sentence 一单位）；IoU 0.5；Wilson 95% CI
+    train: {count: "1699/120191", rate: 0.01413583379787172, ci95: [0.013483787900559803, 0.014818937530212762]}
+    val:   {count: "150/10758", rate: 0.013943112102621304, ci95: [0.01189447686833437, 0.016338757859818472]}
+    testA: {count: "59/5726", rate: 0.010303877052043312, ci95: [0.00799687921676721, 0.013267513153171956]}
+    testB: {count: "131/4889", rate: 0.026794845571691553, ci95: [0.022626312382751628, 0.03170644999402345]}
+  other_units:                 # summary.json by_split 全量齐备；示例（val）
+    unique_object_val: {count: "56/3805", rate: 0.014717477003942181}
+    image_val: {count: "50/1500", rate: 0.03333333333333333}
+  threshold_sensitivity: "IoU 0.3 / 0.7 行 is_primary=False（threshold_sensitivity.csv）；主判界 0.5 不变"
+  max_iou_quantiles: {n: 49856, mean: 0.8107071097452666, p10: 0.7047449052333832, p25: 0.7689094096422195, p50: 0.8245694935321808, p75: 0.8766386657953262, p90: 0.9151924848556519}
+  counts:
+    n_refs_total: 49856
+    n_refs_scored: 49856
+    n_refs_missing_bank_image: 0
+    n_refs_unscorable: 0
+  uncertainty: {bootstrap_replicates: null, ci: "Wilson 95%（wilson_ci）", resampling_unit: null, ci_level: 0.95}
+  risk_definition: null        # 无 risk 指标（counting only）
+run:
+  command: "E:\\conda\\envs\\deepminer\\python.exe -u scripts/natural_omission_full.py（全部默认参数）"
+  device: cpu
+  runtime_s: 15.219660000002477
+artifacts:
+  summary: results/natural_omission_full/summary.json
+  csv: [results/natural_omission_full/by_split.csv, results/natural_omission_full/threshold_sensitivity.csv]
+notes: >
+  全量 natural omission counting（不使用任何模型预测；不构造 candidate sets）。登记目的：为 RQ4 /
+  A3.3 的“natural omission 稀缺 → 统计功效”评估提供全数据底数。观测：expression 级 miss rate 为
+  1.03%~2.68%（testB 最高 131/4889=2.68%），与 audit 子集（N64 = 1.41%）同数量级；A3.3 的 RQ4 功效
+  风险结论不变（omission 属稀有事件；Phase 2 前需功效评估）。max-IoU 分布整体高（median 0.82），
+  低尾即 miss 来源。不产生 Gate 结论。
 ```

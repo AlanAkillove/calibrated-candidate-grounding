@@ -1,0 +1,23 @@
+{
+  "regime": "random",
+  "files": {
+    "testA": {
+      "source": "cache\\manifests\\random_testA.jsonl",
+      "copied_as": "random_testA.jsonl",
+      "meta_copied_as": "random_testA.meta.json",
+      "n_entries": 1975
+    },
+    "testB": {
+      "source": "cache\\manifests\\random_testB.jsonl",
+      "copied_as": "random_testB.jsonl",
+      "meta_copied_as": "random_testB.meta.json",
+      "n_entries": 1798
+    },
+    "val": {
+      "source": "cache\\manifests\\random_val.jsonl",
+      "copied_as": "random_val.jsonl",
+      "meta_copied_as": "random_val.meta.json",
+      "n_entries": 3805
+    }
+  }
+}

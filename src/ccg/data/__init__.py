@@ -48,6 +48,36 @@ from .audit import (
     target_availability,
     wilson_ci,
 )
+# Proposal bank v1 (frozen h5 layout; see the bank-v1 contract in bank.py).
+# Names do not collide with the legacy .proposals helpers (write_bank /
+# read_bank / iter_banks above): the v1 surface is *_bank_entry / iter_bank /
+# read_bank_image / bank_* and is what the multi-agent pipeline reads.
+from .bank import (
+    BANK_SCHEMA_VERSION,
+    bank_attrs,
+    bank_group_name,
+    bank_has_image,
+    delete_bank_entry,
+    finalize_bank,
+    find_corrupt_images,
+    image_ids,
+    iter_bank,
+    read_bank_image,
+    repair_bank,
+    write_bank_entry,
+)
+from .manifests import (
+    FILE_SPLITS,
+    MANIFEST_SEED,
+    PRIMARY_KS,
+    REGIMES,
+    ManifestEntry,
+    ManifestFile,
+    build_manifests,
+    common_cohort,
+    filter_entries,
+    manifest_path,
+)
 from .proposals import (
     TargetAssignment,
     assign_target,
@@ -134,6 +164,30 @@ __all__ = [
     "natural_omission_rate",
     "wilson_ci",
     "iou_quantiles",
+    # proposal bank v1 (ccg.data.bank, frozen schema "bank-v1")
+    "BANK_SCHEMA_VERSION",
+    "write_bank_entry",
+    "iter_bank",
+    "read_bank_image",
+    "bank_attrs",
+    "image_ids",
+    "bank_has_image",
+    "finalize_bank",
+    "find_corrupt_images",
+    "repair_bank",
+    "delete_bank_entry",
+    "bank_group_name",
+    # manifests (frozen candidate orderings + common cohort, "manifests-v1")
+    "MANIFEST_SEED",
+    "PRIMARY_KS",
+    "REGIMES",
+    "FILE_SPLITS",
+    "ManifestEntry",
+    "ManifestFile",
+    "build_manifests",
+    "common_cohort",
+    "filter_entries",
+    "manifest_path",
     # rpn (class-agnostic proposal extraction, torchvision Faster R-CNN)
     "RPNProposals",
     "build_rpn_model",

@@ -1,0 +1,18 @@
+{
+  "kind": "global",
+  "temperature": 0.050000102135425877,
+  "ks": [
+    5,
+    10
+  ],
+  "split": "val_calib",
+  "n_sets": 10566,
+  "n_valid_sets": 10566,
+  "nll_before": 1.9153269614775112,
+  "nll_after": 1.4809285520674216,
+  "bounds": [
+    0.05,
+    100.0
+  ],
+  "objective": "candidate-set NLL (ccg.calibration.mean_nll), pooled over K in [5, 10] on val_calib"
+}

@@ -1,0 +1,251 @@
+{
+  "artifact": "phase0a_cosine",
+  "created_utc": "2026-09-27T15:20:26Z",
+  "git_commit": "7e24cdedbbf15d3e62a048637e6d042f5eb225f4",
+  "python": "3.10.19",
+  "numpy": "1.26.4",
+  "config": {
+    "features_root": "cache\\features",
+    "manifests_root": "cache\\manifests",
+    "refs": "data\\raw\\refcoco+\\refcoco+\\refs(unc).p",
+    "out_dir": "results\\phase0a_cosine",
+    "regime": "random",
+    "ks": [
+      5,
+      10,
+      20,
+      50
+    ],
+    "splits": [
+      "val_select",
+      "val_calib",
+      "testA",
+      "testB"
+    ],
+    "bootstrap_replicates": 5000,
+    "bootstrap_seed": 0,
+    "bootstrap_ci": 0.95,
+    "device": "cpu",
+    "temperature_bounds": [
+      0.05,
+      100.0
+    ]
+  },
+  "feature_cache_metadata": {
+    "backbone": {
+      "checkpoint_path": "cache\\hf_hub\\models--laion--CLIP-ViT-B-32-laion2B-s34B-b79K\\snapshots\\1a25a446712ba5ee05982a381eed697ef9b435cf\\open_clip_pytorch_model.bin",
+      "checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+      "embedding_dim": 512,
+      "library": "open_clip_torch",
+      "library_version": "3.3.0",
+      "model_name": "ViT-B-32",
+      "precision": "fp16",
+      "preprocessing": {
+        "antialias": true,
+        "center_crop": [
+          224,
+          224
+        ],
+        "crop_policy": "exact proposal crop (round->clamp), no context padding",
+        "interpolation": "bicubic",
+        "mean": [
+          0.48145466,
+          0.4578275,
+          0.40821073
+        ],
+        "min_crop_px": 1,
+        "resize_mode": "shortest",
+        "resize_size": 224,
+        "source": "introspected from the live open_clip val transform",
+        "std": [
+          0.26862954,
+          0.26130258,
+          0.27577711
+        ]
+      },
+      "pretrained": "laion2b_s34b_b79k",
+      "resolution": 224,
+      "tokenizer": {
+        "context_length": 77,
+        "name": "SimpleTokenizer"
+      }
+    },
+    "cache_version": "phase0a-v1",
+    "created_utc": "2026-09-27T13:29:40+00:00",
+    "extraction_args": {
+      "bank": "F:\\DL Projects\\calibrated-candidate-grounding\\cache\\proposals.h5",
+      "batch_size": 128,
+      "images_root": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\raw\\mscoco",
+      "max_images": 0,
+      "max_sentences": 0,
+      "precision": "fp16",
+      "refs": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\raw\\refcoco+\\refcoco+\\refs(unc).p",
+      "resumed": true
+    },
+    "extraction_stats": {
+      "backbone_config": {
+        "checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+        "hf_endpoint": "https://hf-mirror.com",
+        "hf_endpoint_source": "environment",
+        "library_version": "3.3.0",
+        "model_name": "ViT-B-32",
+        "pretrained": "laion2b_s34b_b79k"
+      },
+      "batch_size": 128,
+      "cache_bytes": 1507745318,
+      "crops_per_second": 214.9,
+      "device": "cuda",
+      "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+      "finished_utc": "2026-09-27T15:10:22+00:00",
+      "global_images": 19992,
+      "global_images_encoded_this_run": 19992,
+      "global_seconds": 2555.252,
+      "images_per_second": 7.8,
+      "invalid_crop_count": 0,
+      "invalid_crop_rate": 0.0,
+      "max_images": 0,
+      "max_sentences": 0,
+      "n_sentences": 141564,
+      "n_target_images": 19992,
+      "peak_vram_mb": 833.0,
+      "precision": "fp16",
+      "region_crops_encoded": 1279488,
+      "region_crops_encoded_this_run": 730624,
+      "region_crops_total_this_run": 730624,
+      "region_extract_seconds": 3400.125,
+      "region_images": 19992,
+      "region_images_encoded_this_run": 11416,
+      "resumed": true,
+      "started_utc": "2026-09-27T13:29:40+00:00",
+      "text_seconds": 68.406,
+      "text_skipped_resume": false,
+      "texts_per_second": 2069.5,
+      "wall_seconds": 6041.996
+    },
+    "invalid_crop_count": 0,
+    "invalid_crop_rate": 0.0,
+    "n_crops": 1279488,
+    "n_images": 19992,
+    "n_sentences": 141564,
+    "native_logit_scale": 100.0,
+    "updated_utc": "2026-09-27T15:10:22+00:00"
+  },
+  "native_logit_scale": 100.0,
+  "primary_variant": "native",
+  "variant_note": "native is the primary reported variant (deployment probability); T1 and global_T are diagnostics reported next to it, never as replacements; the bootstrap covers native, T1 and global_T",
+  "durations_seconds": {
+    "load_inputs": 1.9634331999986898,
+    "score_sets": 22.762164700005087,
+    "hard_checks": 0.24398299999302253,
+    "fit_global_temperature": 1.847990000009304,
+    "metric_tables": 3.3200550000037765,
+    "bootstrap": 481.6167573999992,
+    "oracle_diagnostic": 3.6523103000072297,
+    "write_artifacts": 4.09824779999326
+  },
+  "total_seconds": 519.5055997000018,
+  "n_records": 21373,
+  "n_l2_renormalized": 0,
+  "hard_checks": {
+    "score_invariance": {
+      "check": "score_invariance",
+      "status": "passed",
+      "atol": 0.0,
+      "n_candidate_pairs": 1148625,
+      "n_violations": 0,
+      "max_abs_diff": 0.0
+    },
+    "rank_monotonic": {
+      "check": "rank_monotonic",
+      "status": "passed",
+      "n_sentences": 20799,
+      "pairs": [
+        {
+          "K_lo": 5,
+          "K_hi": 10,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 5,
+          "K_hi": 20,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 5,
+          "K_hi": 50,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 10,
+          "K_hi": 20,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 10,
+          "K_hi": 50,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 20,
+          "K_hi": 50,
+          "n_violations": 0
+        }
+      ],
+      "n_violations": 0
+    },
+    "accuracy_monotonic": {
+      "check": "accuracy_monotonic",
+      "status": "passed",
+      "accuracies": {
+        "5": 0.5348814846867638,
+        "10": 0.3899706716669071,
+        "20": 0.28568681186595507,
+        "50": 0.18789364873311218
+      },
+      "n_violations": 0,
+      "note": "confidence monotonicity in K is explicitly NOT checked (protocol section 20)"
+    }
+  },
+  "cohort_summary_file": "cohort_summary.json",
+  "candidate_manifests": {
+    "regime": "random",
+    "files": {
+      "testA": {
+        "source": "cache\\manifests\\random_testA.jsonl",
+        "copied_as": "random_testA.jsonl",
+        "meta_copied_as": "random_testA.meta.json",
+        "n_entries": 1975
+      },
+      "testB": {
+        "source": "cache\\manifests\\random_testB.jsonl",
+        "copied_as": "random_testB.jsonl",
+        "meta_copied_as": "random_testB.meta.json",
+        "n_entries": 1798
+      },
+      "val": {
+        "source": "cache\\manifests\\random_val.jsonl",
+        "copied_as": "random_val.jsonl",
+        "meta_copied_as": "random_val.meta.json",
+        "n_entries": 3805
+      }
+    }
+  },
+  "artifacts": [
+    "metadata.json",
+    "cohort_summary.json",
+    "VALIDATION_FAILURE.json (written only on a failed hard check)",
+    "raw_predictions/K{K}.npz (4 files)",
+    "prediction_summary.csv",
+    "ranking_metrics.csv",
+    "calibration_metrics.csv",
+    "selective_metrics.csv",
+    "reliability_bins.csv",
+    "calibration_map_shift.csv",
+    "global_temperature.json",
+    "oracle_temperature_diagnostic.json",
+    "bootstrap_ci.csv",
+    "selective_curves.npz",
+    "figures/ (4 files)",
+    "candidate_manifests/"
+  ]
+}

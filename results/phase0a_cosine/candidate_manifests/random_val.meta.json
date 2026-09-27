@@ -1,0 +1,26 @@
+{
+  "schema_version": "manifests-v1",
+  "regime": "random",
+  "seed": 20260927,
+  "top_n": 64,
+  "n_refs": 3805,
+  "n_images": 1500,
+  "bank_fingerprint": "ebd2690e4b1c1d524fbee80e6ba48dbfadd9f2f5e58b08566228d409afd55747",
+  "created_utc": "2026-09-27T12:20:26.359532+00:00",
+  "split_counts": {
+    "val": 3805
+  },
+  "iou_thresh": 0.5,
+  "n_missing_bank": 0,
+  "missing_bank_images": [],
+  "val_split_seed": 0,
+  "val_split_counts": {
+    "val_select": 750,
+    "val_calib": 750
+  },
+  "coco_gt_objects": "data\\raw\\annotations\\instances_train2014.json",
+  "sources": {
+    "refs": "data\\raw\\refcoco+\\refcoco+\\refs(unc).p",
+    "instances": "data\\raw\\refcoco+\\refcoco+\\instances.json"
+  }
+}

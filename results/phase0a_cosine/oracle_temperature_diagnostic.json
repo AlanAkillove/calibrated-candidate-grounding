@@ -1,0 +1,264 @@
+{
+  "status": "ORACLE/DIAGNOSTIC - NOT A LEGAL MODEL RESULT: each T_K is fitted on the same val_calib rows it is evaluated on (protocol section 23); never quote these numbers as model performance",
+  "oracle_temperatures": {
+    "5": 0.050000102135425877,
+    "10": 0.050000102135425877,
+    "20": 0.050000102135425877,
+    "50": 0.050000102135425877
+  },
+  "oracle_fits": {
+    "5": {
+      "kind": "oracle",
+      "temperature": 0.050000102135425877,
+      "ks": [
+        5
+      ],
+      "split": "val_calib",
+      "n_sets": 5283,
+      "n_valid_sets": 5283,
+      "nll_before": 1.571239469921453,
+      "nll_after": 1.1798472943427587,
+      "bounds": [
+        0.05,
+        100.0
+      ]
+    },
+    "10": {
+      "kind": "oracle",
+      "temperature": 0.050000102135425877,
+      "ks": [
+        10
+      ],
+      "split": "val_calib",
+      "n_sets": 5283,
+      "n_valid_sets": 5283,
+      "nll_before": 2.25941445303357,
+      "nll_after": 1.782009809792085,
+      "bounds": [
+        0.05,
+        100.0
+      ]
+    },
+    "20": {
+      "kind": "oracle",
+      "temperature": 0.050000102135425877,
+      "ks": [
+        20
+      ],
+      "split": "val_calib",
+      "n_sets": 5283,
+      "n_valid_sets": 5283,
+      "nll_before": 2.9498879404722564,
+      "nll_after": 2.421301432743677,
+      "bounds": [
+        0.05,
+        100.0
+      ]
+    },
+    "50": {
+      "kind": "oracle",
+      "temperature": 0.050000102135425877,
+      "ks": [
+        50
+      ],
+      "split": "val_calib",
+      "n_sets": 5231,
+      "n_valid_sets": 5231,
+      "nll_before": 3.8642966696176955,
+      "nll_after": 3.2949797525444198,
+      "bounds": [
+        0.05,
+        100.0
+      ]
+    }
+  },
+  "global_temperature": {
+    "kind": "global",
+    "temperature": 0.050000102135425877,
+    "ks": [
+      5,
+      10
+    ],
+    "split": "val_calib",
+    "n_sets": 10566,
+    "n_valid_sets": 10566,
+    "nll_before": 1.9153269614775112,
+    "nll_after": 1.4809285520674216,
+    "bounds": [
+      0.05,
+      100.0
+    ]
+  },
+  "comparisons": [
+    {
+      "eval_split": "val_select",
+      "K": 5,
+      "n": 5282,
+      "ece_global_T": 0.10247627090534357,
+      "ece_oracle_T_K": 0.10247627090534357,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "val_select",
+      "K": 10,
+      "n": 5282,
+      "ece_global_T": 0.11261121129468281,
+      "ece_oracle_T_K": 0.11261121129468281,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "val_select",
+      "K": 20,
+      "n": 5282,
+      "ece_global_T": 0.11268492238663083,
+      "ece_oracle_T_K": 0.11268492238663083,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "val_select",
+      "K": 50,
+      "n": 5282,
+      "ece_global_T": 0.1055045389270199,
+      "ece_oracle_T_K": 0.1055045389270199,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "val_calib",
+      "K": 5,
+      "n": 5231,
+      "ece_global_T": 0.09786164825538267,
+      "ece_oracle_T_K": 0.09786164825538267,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "val_calib",
+      "K": 10,
+      "n": 5231,
+      "ece_global_T": 0.11796680590893793,
+      "ece_oracle_T_K": 0.11796680590893793,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "val_calib",
+      "K": 20,
+      "n": 5231,
+      "ece_global_T": 0.12238210648272625,
+      "ece_oracle_T_K": 0.12238210648272625,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "val_calib",
+      "K": 50,
+      "n": 5231,
+      "ece_global_T": 0.10394400863581886,
+      "ece_oracle_T_K": 0.10394400863581886,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "testA",
+      "K": 5,
+      "n": 5646,
+      "ece_global_T": 0.10671788673640734,
+      "ece_oracle_T_K": 0.10671788673640734,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "testA",
+      "K": 10,
+      "n": 5646,
+      "ece_global_T": 0.11477940702323283,
+      "ece_oracle_T_K": 0.11477940702323283,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "testA",
+      "K": 20,
+      "n": 5646,
+      "ece_global_T": 0.12440187330290099,
+      "ece_oracle_T_K": 0.12440187330290099,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "testA",
+      "K": 50,
+      "n": 5646,
+      "ece_global_T": 0.11872494890375358,
+      "ece_oracle_T_K": 0.11872494890375358,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "testB",
+      "K": 5,
+      "n": 4640,
+      "ece_global_T": 0.0959806867554013,
+      "ece_oracle_T_K": 0.0959806867554013,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "testB",
+      "K": 10,
+      "n": 4640,
+      "ece_global_T": 0.10978173549479708,
+      "ece_oracle_T_K": 0.10978173549479708,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "testB",
+      "K": 20,
+      "n": 4640,
+      "ece_global_T": 0.10627423910472285,
+      "ece_oracle_T_K": 0.10627423910472285,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "testB",
+      "K": 50,
+      "n": 4640,
+      "ece_global_T": 0.08769137994145397,
+      "ece_oracle_T_K": 0.08769137994145397,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "__pooled__",
+      "K": 5,
+      "n": 20799,
+      "ece_global_T": 0.09897379577661387,
+      "ece_oracle_T_K": 0.09897379577661387,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "__pooled__",
+      "K": 10,
+      "n": 20799,
+      "ece_global_T": 0.1122205477150405,
+      "ece_oracle_T_K": 0.1122205477150405,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "__pooled__",
+      "K": 20,
+      "n": 20799,
+      "ece_global_T": 0.11592289700418534,
+      "ece_oracle_T_K": 0.11592289700418534,
+      "delta_oracle_minus_global": 0.0
+    },
+    {
+      "eval_split": "__pooled__",
+      "K": 50,
+      "n": 20799,
+      "ece_global_T": 0.10381579623944548,
+      "ece_oracle_T_K": 0.10381579623944548,
+      "delta_oracle_minus_global": 0.0
+    }
+  ],
+  "verdict": {
+    "rule": "improved = delta <= -0.01, worse = delta >= +0.01 on adaptive ECE; oracle repairs drift when improved>0 and worse==0",
+    "n_cells": 20,
+    "n_improved": 0,
+    "n_worse": 0,
+    "min_delta": 0.0,
+    "max_delta": 0.0,
+    "verdict": "no_meaningful_change",
+    "text": "every cell moves by less than 1pp: a per-K temperature would not visibly repair the calibration drift"
+  }
+}

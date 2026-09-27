@@ -493,6 +493,7 @@ indices：ref_id/regime/K/hardness/target_present/candidate_indices/target_candi
 | A1 | 2026-09-27 | §6 regime taxonomy / §11 Gate Q1 证据层级（新增约束） | GT 信息不对称 + CLIP-hard↔B1 构造器耦合 | §6/§11 原文完整保留于上方；全文见文件末 “Amendment A1” |
 | A2 | 2026-09-27 | §5 proposal bank 语义 / N-selection 预注册（新增工标准） | proposal bank 定义模糊（detector vs RPN）+ N 选择需工程预注册 | §5 原文完整保留于上方；全文见文件末 “Amendment A2” |
 | A3 | 2026-09-27 | §A2.4 N-selection 执行 + §A2.5 待决项关闭（**结果记录**：不修改任何条款与 gate 数字） | proposal-system audit 完成（1500 图），登记 outcome：N=64 选定、K=50 排除报告义务、RQ4 功效风险、train2014 澄清、冗余极低不需新阈值 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A3” |
+| A4 | 2026-09-27 | Phase 0A（B1 cosine）audit outcome 登记 + 解读约束（新增披露义务；**结果记录**：不修改任何条款与 gate 数字） | Phase 0A 全量审计完成：硬 sanity check 全过、嵌套集理论性质未违反（无 VALIDATION_FAILURE）；T* 与 oracle per-K 温度均在拟合搜索下界凝结（边界简并）；calibration 证据须与 ranking 并列报告 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A4” |
 
 ---
 
@@ -711,3 +712,68 @@ proposal generator 选型一致；`detector / RPN` 原文不删除，由本条�
   remaining candidate count（移除 target-equivalent 后）median：N=64 = 59，N=128 = 120。
 - 处置：**不引入**新的 duplicate-suppression IoU threshold——不存在“用近重复 box 凑 K=50”的问题；
   §A2.5 中“待审计结果出来后决定”的待决项就此关闭（审计结果已出，结论为不需要引入）。
+
+---
+
+## Amendment A4 — 2026-09-27 — Phase 0A fixed-CLIP cosine audit outcome & calibration interpretation constraints (results record)
+
+> 本条款为**结果记录（results record）**：登记 Phase 0A（B1 frozen CLIP cosine，random regime，全量
+> 19992 图）的执行与合规 outcome，并新增三条**解读约束**（§A4.3）。**本条款为追加记录：不修改、不删除上方
+> 任何原始条款，不修改任何 Gate 数字**——Gate Q1/Q2/Q3 的全部数字判据、§A1.4 的证据层级、§5/§6 的
+> target / candidate 定义与 K∈{5,10,20,50} 网格保持不变。逐项完整数字见 `docs/experiment_log.md` §9 条目
+> `p0-cosine-kcardinality-20260927-01`（B1 审计）与 `audit-naturalomission-full-001`（全数据 omission
+> counting）；本条款只登记协议层结论与解读约束。
+
+### A4.1 执行与合规摘要
+
+- B1（frozen CLIP ViT-B-32 laion2b_s34b_b79k）全量 **19,992 图**、4 splits、random regime、K∈{5,10,20,50}；
+  评估单元 = sentence；跨 K 共享 common cohort（n=20,799；pooled 全 sentence 21,373）。
+- 概率变体语义未变（§11）：native = softmax(100·s) 为主报告变体；T1 / global-T 为诊断变体。
+- Calibration isolation（§9）：global T* 仅在 val_calib 拟合（pool K∈{5,10}）；testA/testB 从不参与拟合；
+  oracle per-K 诊断按 §23 声明为 ORACLE/DIAGNOSTIC（不构成合法模型结果）。
+- 三项硬 sanity check（协议 §17-19 的 STOP 契约）**全部通过**：score invariance 0 violations / 1,148,625
+  candidate pairs（atol=0）；rank monotonicity 0 / 20,799 sentences（6 个 K 对）；accuracy monotonicity 通过
+  （0.5349 > 0.3900 > 0.2857 > 0.1879）。**嵌套集理论性质未被违反 → 未写 VALIDATION_FAILURE.json，退出码 0。**
+- **Phase 0A 不构成任何 Gate Q1/Q2 判定**：本审计为 B1-only、random-only 的单格证据；Gate 判定仍须按
+  §11 + §A1.4 在完整 4×2 grid 与相应模型（B2/B3，可含 C*）完成后进行。
+
+### A4.2 观测摘要（数字细节引用 §9 条目；本条款不重复全部数字）
+
+- **Ranking**：common top-1 从 K5=0.5349 单调降至 K50=0.1879（Δ vs K5：−14.5 / −24.9 / −34.7pp）。
+- **Native calibration**：ECE 0.2483 / 0.2931 / 0.3001 / 0.2772（K5/K10/K20/K50；相对 K5 变化
+  +2.9~+5.2pp，置信度系统性高估）；T1 ECE 方向相反（0.3240 → 0.1662，置信度转为低估）。
+- **Global-T（B2/C1 形式）**：T*=0.0500001 **收敛于拟合搜索界 [0.05, 100] 的下界边缘**（0.05+ε）；
+  拟合前后 val_calib NLL 1.9153 → 1.4809；加权后 ECE ≈0.099~0.116，**ECE 的 K-依赖被压至 ≤1.7pp**
+  （pooled paired diff：5→10 = −0.0132 [−0.0192, −0.0071]、5→20 = −0.0169 [−0.0242, −0.0087]、
+  5→50 = −0.0048 [−0.0126, +0.0039] **跨 0**）。注意：绝对 ECE 仍 ≈10%+，不得引用为“校准良好”。
+- **Oracle per-K 温度**：4 个 T_K 全部 =0.0500001（与 global 同一值），20/20 cells ΔECE≡0，
+  verdict=no_meaningful_change——**该结果由边界凝结导致（见 §A4.3(2) 的解读约束）**。
+- **Selective**：AURC 0.272 → 0.661（K5→K50），与 accuracy 降幅同数量级；risk@95 0.451 → 0.804；
+  paired diff 均排除 0（−0.145 / −0.263 / −0.390）。
+- **Reliability-map shift**（native，pooled）：K50 vs K5 在同置信 bin 的 empirical accuracy 差约
+  −11.9~−21.6pp（顶 bin 0.9–1.0：0.7464 vs 0.5635）——与 ranking 降幅同源，见 §A4.3(3)。
+- **全数据 natural omission**（`audit-naturalomission-full-001`）：expression 级 IoU 0.5 miss rate
+  1.03%~2.68%（testB 最高）；A3.3 的 RQ4 功效风险结论不变。
+
+### A4.3 解读约束（新增；不改任何判据；后续引用 Phase 0A 结果时必须遵守）
+
+1. **T* 边界凝结的披露义务**：任何引用 T*=0.0500001 的场合必须同时注明 (a) 拟合搜索界为 [0.05, 100]，
+   (b) 该值位于下界边缘。它是“在给定界内的 NLL 最优解”，**不是**“最佳锐化程度的无约束估计”；不得将该
+   数值本身引作“CLIP logit scale 过锐”的定量结论。
+2. **Oracle 诊断的边界简并**：per-K oracle 温度诊断在本搜索界内为**简并**（4 个 T_K 全部凝结于下界，
+   ΔECE≡0）。**不得**解读为“per-K 温度无法修复校准漂移”；只能解读为“在既定搜索界内，per-K 相对 global
+   无额外收益”。若要获得非简并的 per-K 温度诊断，需先发起新的 amendment 扩展搜索界后重拟合（test 数据
+   永不参与拟合，§9 不变）。
+3. **Calibration / selective 证据与 ranking 并列的报告义务**：native ECE 的跨 K 变化（≤5.2pp）与 accuracy
+   降幅（最高 34.7pp）**必须并列报告**；在未控制 ranking accuracy 之前，AURC 的跨 K 恶化（绝对
+   +14.5~+39.0pp）与 reliability-map 的同 bin accuracy 差**不得**先行表述为“独立于 ranking accuracy 的
+   calibration / selective-risk shift”。K-依赖证据的强度评估必须同时考虑：单标量 global-T 已把 ECE 的
+   K-依赖压至 ≤1.7pp（5→50 区间跨 0）。
+4. **Gate 地位**：Phase 0A 的结论仅登记为证据，不产生任何 GO/NO-GO；Gate Q1 判定必须等待完整 4×2 grid
+   与 B2/B3（可含 C*）按 §11 + §A1.4 完成。
+
+### A4.4 伴随 counting 登记
+
+- `audit-naturalomission-full-001`（全数据 natural omission counting，bank-v1 / top-64，counting only）：
+  expression 级 miss rate 1.03%~2.68%，与 A3.3 的 audit 子集（1.41%）同数量级；登记为 RQ4 功效评估的
+  底数，**不触发、不改变任何 Gate**。
