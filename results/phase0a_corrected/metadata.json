@@ -1,0 +1,91 @@
+{
+  "artifact": "phase0a_corrected",
+  "created_utc": "2026-09-28T05:39:06Z",
+  "git_commit": "ddf612d40557b3739de4447685accdf1b8bb2301",
+  "versions": {
+    "python": "3.10.19",
+    "numpy": "1.26.4",
+    "scipy": "1.15.3",
+    "sklearn": "1.7.2"
+  },
+  "config": {
+    "features_root": "cache\\features",
+    "manifests_root": "cache\\manifests",
+    "refs": "data\\raw\\refcoco+\\refcoco+\\refs(unc).p",
+    "out_dir": "results\\phase0a_corrected",
+    "ks": [
+      5,
+      10,
+      20,
+      50
+    ],
+    "splits": [
+      "val_select",
+      "val_calib",
+      "testA",
+      "testB"
+    ],
+    "bootstrap_replicates": 5000,
+    "bootstrap_seed": 0,
+    "bootstrap_ci": 0.95,
+    "temperature_fit_bounds": [
+      0.001,
+      10.0
+    ],
+    "temperature_expansion": 100.0,
+    "device": "cpu"
+  },
+  "native_logit_scale": 100.0,
+  "n_records": 21373,
+  "n_common_pooled": 20799,
+  "cohort_common_counts": {
+    "val_select": 5282,
+    "val_calib": 5231,
+    "testA": 5646,
+    "testB": 4640,
+    "__pooled__": 20799
+  },
+  "n_val_calib_sets_corrected_fit": 10462,
+  "variants": [
+    "native",
+    "global_T_corrected",
+    "oracle_T_K"
+  ],
+  "oracle_kind": "ORACLE / DIAGNOSTIC - NOT A VALID OOD METHOD",
+  "per_sentence_rows": 20799,
+  "counts": {
+    "calibration_rows": 60,
+    "selective_rows": 60,
+    "auroc_rows": 60,
+    "reliability_global_rows": 400,
+    "reliability_all_rows": 1200,
+    "eaurc_bootstrap_rows": 45,
+    "rer_bootstrap_rows": 36,
+    "auroc_bootstrap_rows": 9,
+    "bootstrap_comparisons_planned": 90
+  },
+  "artifacts": [
+    "temperature_fit.json",
+    "calibration_metrics_corrected.csv",
+    "normalized_selective_metrics.csv",
+    "correctness_auroc.csv",
+    "reliability_bins_globalT.csv",
+    "reliability_bins_all_variants.csv",
+    "eaurc_bootstrap.csv",
+    "rer_bootstrap.csv",
+    "auroc_bootstrap.csv",
+    "per_sentence_predictions.npz",
+    "metadata.json"
+  ],
+  "durations_seconds": {
+    "load_inputs": 2.202204899978824,
+    "score_sets": 256.79924920000485,
+    "fit_temperatures": 3.163660299993353,
+    "metric_tables": 1.6933876999828499,
+    "reliability": 0.7184617999882903,
+    "bootstrap": 1373.4455088000104,
+    "predictions_npz": 0.4079613999929279,
+    "write_artifacts": 0.08748669998021796
+  },
+  "total_seconds": 1638.5788696999953
+}

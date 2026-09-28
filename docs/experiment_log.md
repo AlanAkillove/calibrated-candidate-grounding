@@ -551,3 +551,162 @@ notes: >
   风险结论不变（omission 属稀有事件；Phase 2 前需功效评估）。max-IoU 分布整体高（median 0.82），
   低尾即 miss 来源。不产生 Gate 结论。
 ```
+
+```yaml
+# ===== FORMAL ENTRY — REAL RESULT（非示例）=====
+experiment_id: p0a1-corrected-metrics-20260928-01
+git_commit: "ddf612d40557b3739de4447685accdf1b8bb2301"   # 运行时的 HEAD
+dirty: true                    # 本条目与修正代码随收尾 commit 入库
+timestamp: "2026-09-28"
+dataset: refcoco+              # 与 p0-cosine-kcardinality-20260927-01 完全相同的 common cohort 与 nested manifests
+split: [val_select, val_calib, testA, testB]
+candidate_protocol: "bank-v1 + manifests-v1（frozen，禁止重采样；C_K = target + distractor_order[:K-1]）"
+K: [5, 10, 20, 50]
+hardness: random only
+target_presence: target-present only（primary common cohort）
+backbone: "OpenCLIP ViT-B/32 laion2b_s34b_b79k（frozen；checkpoint sha256 1bd3c717…d080ad，native logit scale 100.0）"
+model: "B1 frozen cosine（概率变体：native / global_T_corrected / oracle_T_K；不训练任何模型）"
+seed: 0                        # bootstrap seed
+training_config: null
+calibration_config:
+  method: "log-T 空间有界优化（scipy.optimize.minimize_scalar bounded；objective = candidate-set mean NLL；禁用粗 grid）"
+  legal_fit_set: "val_calib ∩ K∈{5,10}（common cohort）；n_sets=10462；testA/testB/K20/K50 未参与拟合"
+  corrected_T: 0.0335596
+  interior: true               # 距下界 1.53 decade / 上界 2.47 decade；未触发范围扩张与 warning
+  bounds: [0.001, 10.0]
+  nll: {before: 1.9151, after: 1.4386}
+  oracle_T_K: {K5: 0.034317, K10: 0.033007, K20: 0.032226, K50: 0.031264}   # ORACLE / DIAGNOSTIC，非 OOD 方法
+  oracle_note: "修正后 per-K 温度不再完全相同（≈10% 单调漂移）——上一轮 all T=0.05 确认为 optimization-boundary artifact"
+metrics:
+  ranking:                     # 与 Phase 0A 一致（同一 cohort）
+    top1_acc: {K5: 0.5348814846867638, K10: 0.3899706716669071, K20: 0.28568681186595507, K50: 0.18789364873311218}
+  calibration_global_T_corrected:   # __pooled__ common（n=20799）
+    ece_adaptive: {K5: 0.02243906459780723, K10: 0.0299108819812615, K20: 0.03985989872743931, K50: 0.05225356464219643}
+    conf_acc_gap: {K5: -0.010275198033414368, K10: -0.0233104335052548, K20: -0.03970534389822364, K50: -0.05113461495631147}
+    brier_binary: {K5: 0.20474066553857195, K10: 0.19918389863424776, K20: 0.17562316495745928, K50: 0.13785741818079983}
+    nll_binary: {K5: 0.5936072070844051, K10: 0.5839732797945749, K20: 0.529331230222234, K50: 0.43797206691266094}
+  selective_normalized:        # base-rate-aware（global_T_corrected，__pooled__）
+    e_aurc: {K5: 0.14039452617460957, K10: 0.17542511685818335, K20: 0.18492676907767885, K50: 0.1773866757134711}
+    e_aurc_relative_worsening_vs_K5:
+      5_10: {value: 0.24951535959461846, ci: [0.20870852121999842, 0.29019455365359176]}
+      5_20: {value: 0.3171935837988744, ci: [0.2617565076539002, 0.3720301066636913]}
+      5_50: {value: 0.26348712123472795, ci: [0.1936094805374815, 0.330095739766148]}
+    auroc_correct: {K5: 0.7413411832480435, K10: 0.7328162733559876, K20: 0.7329312870208611, K50: 0.7366082165576419}
+    auroc_delta_vs_K5:
+      5_10: {diff: -0.008524909892055899, ci: [-0.01586158723286626, -0.0009799430876813319]}
+      5_20: {diff: -0.008409896227182467, ci: [-0.017867081900052355, 0.0013328995496568016]}
+      5_50: {diff: -0.004732966690401685, ci: [-0.016414230580263194, 0.007563546800773381]}
+    rer_at_50: {K5: 0.38353181008571746, K10: 0.26028146674022684, K20: 0.1876274004483771, K50: 0.12217825378103042}
+    rer_at_50_delta_pp:
+      5_10: {diff_pp: -12.325034334549063, ci: [-13.77902958349951, -10.791956668866261]}
+      5_20: {diff_pp: -19.590440963734036, ci: [-21.223931633579493, -17.851037669804506]}
+      5_50: {diff_pp: -26.135355630468705, ci: [-27.88963694255214, -24.196691724532232]}
+    rer_at_80: {K5: 0.13483589041204816, K10: 0.09298575861352931, K20: 0.06319709030578699, K50: 0.04221347608307561}
+  reliability_map_global_T_fixed_bins:   # __pooled__；同 nominal confidence 跨 K 比较
+    K5_0.4_0.5: {conf: 0.4479231658017683, acc: 0.44261910349683176, n: 4261}
+    K50_0.4_0.5: {conf: 0.44070170280600546, acc: 0.5555555555555556, n: 351}
+    direction: "修正后 K=50 在同 nominal confidence 上经验准确率高于 K=5（保守/欠自信）；与 native-scale 下的下移方向相反"
+    low_support: "K=50 的 ≥0.6 桶 n<100，已标记 low-support"
+  counts: {n_common_pooled: 20799, n_unique_images: 2981}
+  uncertainty: {bootstrap_replicates: 5000, resampling_unit: image, ci_level: 0.95, seed: 0}
+  risk_definition: "risk = 1 - accuracy"
+  amendment_gate:              # Amendment A5 §A5.4（post-hoc criterion；不替换 Gate Q1）
+    route_A_selective: true    # E-AURC rel worsen ≥20% 且 CI 不跨 0（K20 +31.7% / K50 +26.3%）且 RER@50 下降 ≥10pp（-19.6 / -26.1pp）
+    route_B_correctness: false # ΔAUROC 未达 0.03 且 CI 跨 0；reliability shift 未达稳定阈值
+hard_checks:
+  note: "继承 Phase 0A 的同一 cohort 与同一批 raw scores；score invariance / rank monotonic / accuracy monotonic 仍全部通过"
+run:
+  command: "E:\conda\envs\deepminer\python.exe -u scripts/run_phase0a_corrected.py --features cache/features --manifests cache/manifests --refs \"data/raw/refcoco+/refcoco+/refs(unc).p\" --out results/phase0a_corrected --bootstrap-replicates 5000（日志 logs_p0a1.txt）"
+  device: cpu
+  step_seconds: {load_inputs: 2.2, score_sets: 256.8, fit_temperatures: 3.16, metric_tables: 1.69, reliability: 0.72, bootstrap: 1373.4, predictions_npz: 0.41, write_artifacts: 0.09}
+artifacts:
+  root: results/phase0a_corrected/
+  files: [temperature_fit.json, calibration_metrics_corrected.csv, normalized_selective_metrics.csv, correctness_auroc.csv, reliability_bins_globalT.csv, reliability_bins_all_variants.csv, eaurc_bootstrap.csv, rer_bootstrap.csv, auroc_bootstrap.csv, per_sentence_predictions.npz, metadata.json]
+notes: >
+  Post-Phase-0A 度量/温度有效性修正（Amendment A5）。目的：在控制 base error rate 与修复温度边界伪影之后，
+  重新评估 cosine 的 reliability 证据。关键观测：(1) corrected global T*=0.0336 为 interior 最优（旧 T*=0.05 确为
+  边界伪影）；oracle per-K 温度不再完全相同（≈10% 漂移），但量级小；(2) corrected global-T 下跨 K ECE drift
+  仅 +3.0pp（K50 vs K5），但绝对 ECE 仍 2.2%~5.2%——不得写 “calibration solved”；(3) base-rate 校正后的
+  selective 指标仍显著恶化：E-AURC 相对恶化 +25%~+32%（CI 不跨 0），RER@50 下降 12.3/19.6/26.1pp；
+  (4) 整体判别力 AUROC_correct 基本稳定（Δ≤0.009，K20/K50 CI 跨 0）；(5) corrected global-T 的 reliability map
+  漂移方向为保守（K=50 同置信下更准）——旧 native 下移主要由 native scale 过自信放大。结论：Route A 触发、
+  Route B 未触发 → “confidence 作为 abstention/selection 信号的质量随 K 下降”成立，但“整体判别力崩塌”不成立。
+  解释文档见 docs/phase0a_interpretation.md；本条目不产生 Gate Q1/Q2 判定。
+```
+
+```yaml
+# ===== FORMAL ENTRY — REAL RESULT（非示例）=====
+experiment_id: p0b-b3-independent-20260928-01
+git_commit: "ddf612d40557b3739de4447685accdf1b8bb2301"   # 运行时的 HEAD
+dirty: true                    # 本条目与评测代码随收尾 commit 入库
+timestamp: "2026-09-28"
+dataset: refcoco+              # 与 p0-cosine-kcardinality-20260927-01 / p0a1 完全相同的 common cohort（n=20799）与 nested manifests
+split: [val_select, val_calib, testA, testB]
+candidate_protocol: "bank-v1 + manifests-v1（frozen；与 cosine 完全相同的 nested candidate sets，未重采样；paired comparison 合法）"
+K: [5, 10, 20, 50]
+hardness: random only
+target_presence: target-present only（primary common cohort）
+backbone: "OpenCLIP ViT-B/32 laion2b_s34b_b79k（frozen cached features z_q, z_i；不重抽取）"
+model: "B3 Independent MLP（candidate-blind）——输入 [z_q, z_i, z_q⊙z_i, cos(z_q,z_i), g_i(5), o_i(1)] = 1543-d；网络 1543→128→128→1（ReLU）；214,273 params（<300k budget ✓，<1M ✓）；raw score 不读取 K / 其他候选 / 分数分布 / entropy / margin"
+seed: [1, 2, 3]                # model seeds；candidate manifests 不随 seed 变化
+training_config:
+  train_data: "RefCOCO+ train，random regime，K∈{5,10}（50:50 采样），target-present；candidate prefix 来自 frozen manifest"
+  loss: "listwise cross-entropy（per-set softmax over candidates）；无 focal / pairwise / triplet / contrastive / calibration loss"
+  optim: "AdamW；lr 由 grid {1e-4, 3e-4, 1e-3}（val_select K5/K10 mean NLL）选 1e-4；wd=1e-4；batch=64；max 15 epochs；patience 3"
+  per_seed: {epochs_run: [12, 13, 11], best_epoch: [9, 10, 8], best_val_select_nll: [0.74284, 0.74851, 0.74600]}
+  isolation: "hyperparameter / early stopping 只用 val_select K5/K10；val_calib/testA/testB/K20/K50 从未参与训练与选型"
+calibration_config:
+  method: "Phase 0A.1 同一实现（u=lnT bounded 最小化 mean NLL）"
+  legal_fit_set: "val_calib ∩ K∈{5,10}（common cohort）"
+  corrected_T_per_seed: [1.115344, 1.116630, 1.100525]     # 全部 interior=True，无 warning
+  oracle_T_K_per_seed:                  # ORACLE / DIAGNOSTIC — NOT A VALID OOD METHOD
+    seed1: {K5: 1.1431, K10: 1.0978, K20: 1.0734, K50: 1.0191}
+    seed2: {K5: 1.1414, K10: 1.1013, K20: 1.0756, K50: 1.0293}
+    seed3: {K5: 1.1287, K10: 1.0829, K20: 1.0600, K50: 1.0151}
+hard_checks:                   # 每 seed 全部通过（无 VALIDATION_FAILURE，exit 0）
+  score_invariance: "max_abs_diff = 0.0（atol=0；共 1,148,625 个共享候选对，0 violations）"
+  rank_monotonic: "0 violations（5-10 / 5-20 / 5-50 / 10-20 / 10-50 / 20-50）"
+  accuracy_monotonic: "0 violations"
+metrics:                       # pooled common cohort n=20799；global_T_corrected；跨 3 seed 报 mean±std
+  ranking_top1: {K5: 0.7907±0.0020, K10: 0.6763±0.0029, K20: 0.5643±0.0022, K50: 0.4320±0.0027}
+  calibration_ece_adaptive: {K5: 0.0098±0.0010, K10: 0.0163±0.0018, K20: 0.0356±0.0011, K50: 0.0673±0.0015}
+  selective:
+    e_aurc: {K5: 0.0378±0.0003, K10: 0.0705±0.0003, K20: 0.0961±0.0001, K50: 0.1226±0.0009}
+    auroc_correct: {K5: 0.8426±0.0006, K10: 0.8102±0.0008, K20: 0.7995±0.0001, K50: 0.7904±0.0009}
+    rer_at_50: {K5: 0.8212±0.0039, K10: 0.6484±0.0001, K20: 0.5093±0.0050, K50: 0.3653±0.0033}
+  bootstrap_worsening_vs_K5:    # image-cluster paired bootstrap 5000 reps；每 seed；正值 = 随 K 退化
+    e_aurc_relative: {K10: "+85.6%~+86.8%", K20: "+151.8%~+155.3%", K50: "+222.5%~+225.8%"}   # 每 seed CI 均不跨 0
+    auroc_correct_drop: {K10: "0.0321~0.0326", K20: "0.0425~0.0438", K50: "0.0519~0.0524"}      # CI 均不跨 0
+    rer_at_50_drop_pp: {K10: "17.0~17.7", K20: "30.6~32.2", K50: "45.1~46.1"}
+    rer_at_80_drop_pp: {K10: "13.6~13.9", K20: "20.7~21.1", K50: "27.1~27.7"}
+  reliability_map_global_T:      # equal_width 15 bins（protocol RELIABILITY_BINS=15）；pooled
+    direction: "K=5 全桶近对角（|gap|≤0.03）；K=50 在同 nominal confidence 上经验准确率系统性高于 nominal（保守/欠自信），中高桶 gap +0.06~+0.17（n≥500），三 seed 一致"
+  amendment_gate:                # Amendment A5 §A5.4（post-hoc replication criterion；cosine 与 B3 同方向）
+    route_A_selective: true      # E-AURC rel worsen ≥20%（+152%~+226%，CI 不跨 0）且 RER@50/80 下降 ≥10pp（RER@50 −30.6~−46.1pp）
+    route_B_correctness: true    # ΔAUROC_correct ≥0.03（−0.0425~−0.0524，CI 不跨 0）且 corrected global-T reliability map 稳定 shift（保守方向，三 seed 一致）
+  paired_vs_cosine:              # B3(mean±std, 3 seeds) vs cosine(global_T_corrected)；pooled n=62397；paired image-cluster bootstrap
+    K5:  {accuracy: "+0.2559 [0.2456,0.2655]", ece_adaptive: "-0.0126 [-0.0214,-0.0074]", e_aurc: "-0.1026 [-0.1087,-0.0967]", auroc_correct: "+0.1013 [0.0920,0.1107]", rer_at_50: "+0.4377", rer_at_80: "+0.2608"}
+    K20: {accuracy: "+0.2786", ece_adaptive: "-0.0043 [-0.0144,+0.0034]", e_aurc: "-0.0889", auroc_correct: "+0.0666", rer_at_50: "+0.3216", rer_at_80: "+0.1231"}
+    K50: {accuracy: "+0.2441", ece_adaptive: "+0.0151 [+0.0067,+0.0230]", e_aurc: "-0.0548", auroc_correct: "+0.0538", rer_at_50: "+0.2431", rer_at_80: "+0.0797"}
+    note: "B3 全面优于 raw cosine —— 按 §25 这本身只是 'learned matching > raw cosine'，不是 candidate-aware evidence"
+run:
+  command: "E:\conda\envs\deepminer\python.exe -u scripts/run_phase0b.py --features cache/features --manifests cache/manifests --bank cache/proposals.h5 --refs \"data/raw/refcoco+/refcoco+/refs(unc).p\" --seeds 1 2 3 --out results/phase0b_independent --bootstrap-replicates 5000 --device cuda --resume（日志 logs_phase0b_eval.txt）"
+  device: "cuda（scoring）/ cpu（bootstrap）"
+  step_seconds: "首跑 seeds 段 ~135 min（每 seed 270 次配对 bootstrap）；resume 补跑 paired+aggregate+metadata 884.5s"
+  incident: "首跑 paired 阶段 KeyError 'sentence_ids'（cosine 存档用单数 sentence_id）→ reader 修复为接受两种拼写 + 参数化回归测试 + 真实数据冒烟后 resume 补跑（seeds 未重算）"
+artifacts:
+  root: results/phase0b_independent/
+  files: [metadata.json, aggregate.csv, paired_vs_cosine.csv, grid_search.json, seed_{1,2,3}/model.npz, seed_{1,2,3}/training.json, seed_{1,2,3}/raw_scores/K{5,10,20,50}.npz, seed_{1,2,3}/per_sentence_predictions.npz, seed_{1,2,3}/eval_metadata.json, seed_{1,2,3}/ranking_metrics.csv, seed_{1,2,3}/calibration_metrics.csv, seed_{1,2,3}/normalized_selective_metrics.csv, seed_{1,2,3}/reliability_bins.csv, seed_{1,2,3}/diagnostics.csv, seed_{1,2,3}/bootstrap.csv]
+notes: >
+  B3 Independent（candidate-blind）MLP 复现实验（指令 §13–§29）。目的：验证 candidate-cardinality reliability
+  degradation 是否在另一个 independent scorer 上复现。关键观测：(1) 三个 seed 硬检查（score invariance max_abs_diff=0.0 /
+  rank monotonic / accuracy monotonic）全部通过，无 VALIDATION_FAILURE；(2) 与 cosine 同方向且更强的 reliability
+  degradation：E-AURC 相对恶化 K20 +151.8%~+155.3%、K50 +222.5%~+225.8%（CI 不跨 0），AUROC_correct 下降
+  0.0425~0.0524（≥0.03，CI 不跨 0 → Route B 触发），RER@50 下降 30.6~46.1pp；(3) 3 seed 方差极小（E-AURC std ≤0.001），
+  跨 seed 高度一致；(4) corrected global-T reliability map 漂移为保守方向（K=50 同 nominal confidence 上更准），
+  与修正后 cosine 的漂移方向一致（注：cosine 修正审计用 10 等宽桶，B3 用 protocol 的 15 等宽桶；两者方向一致）；
+  (5) B3 整体远超 cosine（accuracy +24~28pp、E-AURC −0.05~−0.10），按 §25 不构成 candidate-aware evidence；
+  (6) Amendment A5 §A5.4 判定：cosine Route A ✓ / Route B ✗；B3 Route A ✓ / Route B ✓ → 两 scorer 同方向复现
+  → 指令 §26 Case A：GO（下一问题：K + score statistics 是否已足够——留在后续阶段决定；本轮到此停止，不自动实现
+  stats calibrator）。不产生 Gate Q1/Q2/Q3 判定。
+```

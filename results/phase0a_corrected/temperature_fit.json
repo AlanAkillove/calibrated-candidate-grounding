@@ -1,0 +1,146 @@
+{
+  "corrected_global_T": {
+    "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+    "temperature": 0.03355964917131546,
+    "u_opt": -3.3944308512126398,
+    "bounds": [
+      0.001,
+      10.0
+    ],
+    "bounds_initial": [
+      0.001,
+      10.0
+    ],
+    "bounds_expanded": false,
+    "n_expansions": 0,
+    "interior": true,
+    "decades_to_low": 1.5258174121161925,
+    "decades_to_high": 2.4741825878838073,
+    "warning": null,
+    "warning_detail": null,
+    "objective": 1.4385627347198844,
+    "n_sets": 10462,
+    "nll_before": 1.9151094855014843,
+    "nll_after": 1.4385627347198844
+  },
+  "corrected_global_T_fit_split": "val_calib",
+  "corrected_global_T_ks": [
+    5,
+    10
+  ],
+  "corrected_global_T_n_sets_by_k": {
+    "5": 5231,
+    "10": 5231
+  },
+  "oracle": {
+    "kind": "ORACLE / DIAGNOSTIC - NOT A VALID OOD METHOD",
+    "note": "each T_K is fitted on the val_calib common-cohort rows of its own K and is scored on the same split: diagnostic only, never a model result",
+    "temperatures": {
+      "5": 0.034316539856463185,
+      "10": 0.03300661692063117,
+      "20": 0.03222648613115991,
+      "50": 0.03126388916594355
+    },
+    "fits": {
+      "5": {
+        "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+        "temperature": 0.034316539856463185,
+        "u_opt": -3.3721278294781807,
+        "bounds": [
+          0.001,
+          10.0
+        ],
+        "bounds_initial": [
+          0.001,
+          10.0
+        ],
+        "bounds_expanded": false,
+        "n_expansions": 0,
+        "interior": true,
+        "decades_to_low": 1.5355034913852363,
+        "decades_to_high": 2.4644965086147637,
+        "warning": null,
+        "warning_detail": null,
+        "objective": 1.1471708104905434,
+        "n_sets": 5231,
+        "nll_before": 1.5710554008393394,
+        "nll_after": 1.1471708104905434
+      },
+      "10": {
+        "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+        "temperature": 0.03300661692063117,
+        "u_opt": -3.4110472248692516,
+        "bounds": [
+          0.001,
+          10.0
+        ],
+        "bounds_initial": [
+          0.001,
+          10.0
+        ],
+        "bounds_expanded": false,
+        "n_expansions": 0,
+        "interior": true,
+        "decades_to_low": 1.5186010127278833,
+        "decades_to_high": 2.4813989872721165,
+        "warning": null,
+        "warning_detail": null,
+        "objective": 1.7297271220161465,
+        "n_sets": 5231,
+        "nll_before": 2.259163570163617,
+        "nll_after": 1.7297271220161465
+      },
+      "20": {
+        "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+        "temperature": 0.03222648613115991,
+        "u_opt": -3.434966613884031,
+        "bounds": [
+          0.001,
+          10.0
+        ],
+        "bounds_initial": [
+          0.001,
+          10.0
+        ],
+        "bounds_expanded": false,
+        "n_expansions": 0,
+        "interior": true,
+        "decades_to_low": 1.5082129540682676,
+        "decades_to_high": 2.4917870459317326,
+        "warning": null,
+        "warning_detail": null,
+        "objective": 2.3538021856471425,
+        "n_sets": 5231,
+        "nll_before": 2.9496438610210745,
+        "nll_after": 2.3538021856471425
+      },
+      "50": {
+        "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+        "temperature": 0.03126388916594355,
+        "u_opt": -3.46529154822965,
+        "bounds": [
+          0.001,
+          10.0
+        ],
+        "bounds_initial": [
+          0.001,
+          10.0
+        ],
+        "bounds_expanded": false,
+        "n_expansions": 0,
+        "interior": true,
+        "decades_to_low": 1.495043002417887,
+        "decades_to_high": 2.5049569975821133,
+        "warning": null,
+        "warning_detail": null,
+        "objective": 3.2131725993099796,
+        "n_sets": 5231,
+        "nll_before": 3.8642966696176995,
+        "nll_after": 3.2131725993099796
+      }
+    }
+  },
+  "oracle_per_k_nearly_identical": false,
+  "oracle_per_k_spread_ratio": 1.0976414250420565,
+  "oracle_per_k_conclusion": "per-K oracle temperatures differ -> the K-drift is partly a per-K sharpness effect (still diagnostic only)"
+}

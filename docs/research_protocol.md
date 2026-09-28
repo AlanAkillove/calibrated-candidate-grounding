@@ -494,6 +494,7 @@ indices：ref_id/regime/K/hardness/target_present/candidate_indices/target_candi
 | A2 | 2026-09-27 | §5 proposal bank 语义 / N-selection 预注册（新增工标准） | proposal bank 定义模糊（detector vs RPN）+ N 选择需工程预注册 | §5 原文完整保留于上方；全文见文件末 “Amendment A2” |
 | A3 | 2026-09-27 | §A2.4 N-selection 执行 + §A2.5 待决项关闭（**结果记录**：不修改任何条款与 gate 数字） | proposal-system audit 完成（1500 图），登记 outcome：N=64 选定、K=50 排除报告义务、RQ4 功效风险、train2014 澄清、冗余极低不需新阈值 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A3” |
 | A4 | 2026-09-27 | Phase 0A（B1 cosine）audit outcome 登记 + 解读约束（新增披露义务；**结果记录**：不修改任何条款与 gate 数字） | Phase 0A 全量审计完成：硬 sanity check 全过、嵌套集理论性质未违反（无 VALIDATION_FAILURE）；T* 与 oracle per-K 温度均在拟合搜索下界凝结（边界简并）；calibration 证据须与 ranking 并列报告 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A4” |
+| A5 | 2026-09-28 | 度量有效性修正 + temperature 优化重做 + reliability GO replication criterion（**post-hoc amendment**：在 Phase 0A 结果可见后加入，*不构成 preregistration*；不修改任何原始 gate 数字） | Phase 0A 暴露三个统计问题：nested candidate sets 下 raw accuracy degradation 是结构性预期；raw AURC 与 base error rate 强耦合；temperature 最优解落在优化边界（T*=0.05 贴界）。后续 reliability GO 改为依赖 accuracy-normalized / base-rate-aware 指标（E-AURC / AUROC_correct / RER@c / corrected global-T reliability map） | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A5” |
 
 ---
 
@@ -777,3 +778,74 @@ proposal generator 选型一致；`detector / RPN` 原文不删除，由本条�
 - `audit-naturalomission-full-001`（全数据 natural omission counting，bank-v1 / top-64，counting only）：
   expression 级 miss rate 1.03%~2.68%，与 A3.3 的 audit 子集（1.41%）同数量级；登记为 RQ4 功效评估的
   底数，**不触发、不改变任何 Gate**。
+
+---
+
+## Amendment A5 — 2026-09-28 — Post-Phase-0A Metric Validity Correction
+
+> **地位声明（必须先读）**：本 amendment 在 Phase 0A cosine results 已经可见之后加入，因此
+> **不能称为原始 preregistration**，任何场合不得声称它是“结果出来之前已预注册的 gate”。
+> 本条款同样为**追加记录**：不修改、不删除上方任何原始条款与 Gate 数字（Gate Q1/Q2/Q3 判据、
+> §A1.4 证据层级、§A4.3 的披露义务均保留）。修改原因**不是追求正结果**，而是 Phase 0A 暴露了三个
+> 统计/实现问题：(1) nested candidate sets 下 raw accuracy degradation 是结构性预期；
+> (2) raw AURC 与 base error rate 强耦合；(3) temperature optimum 落在 optimization boundary。
+
+### A5.1 度量有效性规则（新增强制报告义务）
+
+- **Raw accuracy** 仍然报告，但 `raw ΔAccuracy` **不能单独**满足 reliability-shift 的 GO 判据。
+- **Raw AURC** 仍然报告，但 `raw ΔAURC` **不能单独**成立 “confidence discrimination degradation”。
+- 后续 reliability GO 必须依赖 **accuracy-normalized / base-rate-aware** 指标：
+  - `E-AURC = AURC − AURC_oracle(r)`，其中 `r = 1 − Acc`，`AURC_oracle = r + (1−r)·ln(1−r)`（越低越好）；
+  - `AUROC_correct = AUROC(1[pred=target], max_i P(c_i))`（cross-K primary discrimination metric；
+    AUPRC_correct 仅 secondary，因 correct rate 随 K 大幅变化）；
+  - `RER@c = (R1 − Rc)/R1`（c ∈ {0.50, 0.80, 0.90, 0.95}，越高越好）；
+  - **corrected global-T reliability map**（fixed bins 供同 nominal confidence 跨 K 比较；equal-mass bins 供统计稳定性；
+    任一比较桶 n < 100 必须标记 low-support，不得用于强结论）。
+- 三类 reliability map 必须并列生成：native CLIP scale / corrected global T / oracle per-K T。
+
+### A5.2 温度优化修正（实现层；替换 Phase 0A 的边界凝结实现）
+
+- 以 `u = ln T` 参数化，初始范围 `T ∈ [1e-3, 10]`，直接最小化 candidate-set **mean NLL**
+  （`scipy.optimize.minimize_scalar(method="bounded")`；**禁用粗 grid**）。
+- 若最优点距任一边界不足一个数量级：自动扩大范围一次并记录；最终必须 **interior**，
+  否则标记 `TEMPERATURE_OPTIMIZATION_WARNING` 并在报告中披露侧别。
+- **合法拟合集不变**（§9 不松动）：global T 只用 `val_calib ∩ K∈{5,10}`（common cohort）拟合；
+  objective = mean NLL（不是 ECE）；**testA/testB 与 K20/K50 永不参与拟合**。
+- oracle per-K 温度：各 K 单独在 val_calib 对应 K 上重拟合，仅作 diagnostic，
+  必须标注 `ORACLE / DIAGNOSTIC — NOT A VALID OOD METHOD`。
+
+### A5.3 Phase 0A.1 修正结果登记（同 `p0a1-corrected-metrics-20260928-01` 条目）
+
+- **corrected global T\* = 0.0335596**，`interior=True`（未触边界，距下界 1.53 decade / 上界 2.47 decade），
+  未触发范围扩张与 warning；拟合集 n_sets=10,462（val_calib，K∈{5,10}）；NLL 1.9151 → 1.4386。
+- **oracle T5/T10/T20/T50 = 0.034317 / 0.033007 / 0.032226 / 0.031264** → 修复边界伪影后 per-K 温度
+  **不再完全相同**（≈10% 单调漂移）：上一轮 “all T=0.05” 确认属 **optimization-boundary artifact**；
+  但漂移量级仍小（属逐 K sharpness 效应），不改变 §A5.4 的判据结构。
+- 修正后 pooled（n=20,799）global-T 指标（K5/K10/K20/K50）：ECE 0.0224 / 0.0299 / 0.0399 / 0.0523；
+  E-AURC 0.1404 / 0.1754 / 0.1849 / 0.1774；AUROC_correct 0.7413 / 0.7328 / 0.7329 / 0.7366；
+  RER@50 0.384 / 0.260 / 0.188 / 0.122。
+- 依据 §A5.4 对 cosine 的判定：**Route A 触发**（K5→K20 E-AURC relative worsening +31.7%、K5→K50 +26.3%，
+  95% CI 均不跨 0；RER@50 下降 19.6pp / 26.1pp）；**Route B 未触发**（ΔAUROC ≈ −0.008 / −0.005，CI 跨 0）。
+- 对 §A4.3 的更新：约束 (1)(2) 因温度拟合修正而失效（T* 不再凝结于边界，oracle 不再简并）；
+  约束 (3) 继续有效——raw accuracy / raw AURC 仍不得单独作为独立 shift 的证据，但其证据门槛自此由 §A5.4 定义。
+
+### A5.4 Reliability GO（replication）Criterion（post-hoc；自 B3 起生效）
+
+仅用于判断 **是否值得继续 stats-only / candidate-aware reliability model**；要求 **cosine 与 B3 Independent MLP
+都观察到同方向现象**，且至少满足 Route A 或 Route B 之一：
+
+- **Route A — Selective discrimination**：从 K=5 到 K=20 或 K=50，`E-AURC` relative worsening ≥ 20% 且
+  95% CI 不跨 0；同时 `RER@50` 或 `RER@80` 下降 ≥ 10 个百分点。
+- **Route B — Correctness discrimination**：`AUROC_correct` 下降 ≥ 0.03 且 95% CI 不跨 0；
+  同时 corrected global-T reliability map 存在稳定 shift。
+
+判定语义：
+
+- `cosine passes but B3 does not replicate` → **不能**声称 general candidate-set reliability failure；
+  优先解释为 CLIP-cosine representation-specific phenomenon。
+- `both fail` → **NO-GO for learned candidate-aware reliability model**。
+
+### A5.5 Gate 地位（不变）
+
+- 本 criterion **不替换** Gate Q1/Q2/Q3；它只决定 “是否值得继续 reliability model 路线”。
+- Gate Q1 判定仍须按 §11 + §A1.4 在完整 4×2 grid 与相应模型完成后进行（§A4.1 最后一条不变）。

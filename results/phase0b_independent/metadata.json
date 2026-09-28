@@ -1,0 +1,408 @@
+{
+  "artifact": "phase0b_independent",
+  "created_utc": "2026-09-28T08:41:03Z",
+  "git_commit": "ddf612d40557b3739de4447685accdf1b8bb2301",
+  "python": "3.10.19",
+  "numpy": "1.26.4",
+  "config": {
+    "features_root": "cache\\features",
+    "manifests_root": "cache\\manifests",
+    "bank_path": "cache\\proposals.h5",
+    "refs": "data\\raw\\refcoco+\\refcoco+\\refs(unc).p",
+    "out_dir": "results\\phase0b_independent",
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "ks": [
+      5,
+      10,
+      20,
+      50
+    ],
+    "splits": [
+      "val_select",
+      "val_calib",
+      "testA",
+      "testB"
+    ],
+    "regime": "random",
+    "bootstrap_replicates": 5000,
+    "bootstrap_seed": 0,
+    "bootstrap_ci": 0.95,
+    "device": "cuda",
+    "temperature_bounds": [
+      0.001,
+      10.0
+    ],
+    "cosine_predictions": "results\\phase0a_corrected\\per_sentence_predictions.npz",
+    "resume": true
+  },
+  "n_records": 21373,
+  "variants": [
+    "native",
+    "global_T_corrected",
+    "oracle_T_K"
+  ],
+  "per_seed": {
+    "1": {
+      "status": "complete",
+      "temperature_corrected": 1.1153439683270872,
+      "corrected_interior": true,
+      "corrected_warning": null,
+      "oracle_temperatures": {
+        "5": 1.1430862062701155,
+        "10": 1.09784186938256,
+        "20": 1.0733870485523642,
+        "50": 1.0191443339780457
+      },
+      "training": {
+        "status": "complete",
+        "model": "b3_independent_mlp",
+        "seed": 1,
+        "lr": 0.0001,
+        "best_lr_from_grid": 0.0001,
+        "epochs_run": 12,
+        "best_epoch": 9,
+        "best_val_select_nll": 0.7428387808521298,
+        "val_select_nll_curve": [
+          0.8822517761329876,
+          0.8320829315521262,
+          0.7972961945645005,
+          0.7771756388066154,
+          0.7666226067045842,
+          0.7518582776617211,
+          0.7496559113393934,
+          0.7445449743039393,
+          0.7428387808521298,
+          0.7452070353062015,
+          0.7537101293789271,
+          0.7505972091969623
+        ],
+        "val_select_nll_by_k": {
+          "5": [
+            0.6667633684714733,
+            0.6262043722112413,
+            0.6002566283462696,
+            0.584220097560448,
+            0.5749876850205242,
+            0.563425977975353,
+            0.5608760076637779,
+            0.5560109054856759,
+            0.5544524969705341,
+            0.5553993612113529,
+            0.5625100119661969,
+            0.5584008082384474
+          ],
+          "10": [
+            1.0977401837945016,
+            1.037961490893011,
+            0.9943357607827318,
+            0.9701311800527828,
+            0.958257528388644,
+            0.9402905773480891,
+            0.9384358150150088,
+            0.9330790431222026,
+            0.9312250647337255,
+            0.9350147094010501,
+            0.9449102467916575,
+            0.942793610155477
+          ]
+        },
+        "val_select_n_rows_by_k": {
+          "5": 5325,
+          "10": 5325
+        },
+        "train_loss_curve": [
+          1.1402932734214095,
+          0.8359944213575987,
+          0.7808994203162245,
+          0.742049439776021,
+          0.7131318245284243,
+          0.6855041079995571,
+          0.6620512294299402,
+          0.639218053316594,
+          0.6178212068315201,
+          0.5974783211077521,
+          0.5787450048517331,
+          0.5613885971336061
+        ],
+        "wall_seconds": 319.360586643219,
+        "num_parameters": 214273,
+        "feature_dim": 512,
+        "hidden_dim": 128,
+        "geo_dim": 6,
+        "temperature": 1.0,
+        "epochs": 15,
+        "patience": 3,
+        "batch_size": 64,
+        "weight_decay": 0.0001,
+        "train_ks": [
+          5,
+          10
+        ],
+        "eval_ks": [
+          5,
+          10
+        ],
+        "selection_metric": "val_select_mean_nll_K5_K10",
+        "torch_version": "2.5.1+cu121",
+        "cuda_version": "12.1",
+        "device": "cuda",
+        "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+        "git_commit": "ddf612d40557b3739de4447685accdf1b8bb2301",
+        "bank_fingerprint": "ebd2690e4b1c1d524fbee80e6ba48dbfadd9f2f5e58b08566228d409afd55747",
+        "manifest_meta": "random_train.meta.json",
+        "model_path": "seed_1/model.npz",
+        "created_utc": "2026-09-28T05:47:32.209514+00:00"
+      }
+    },
+    "2": {
+      "status": "complete",
+      "temperature_corrected": 1.116630407128927,
+      "corrected_interior": true,
+      "corrected_warning": null,
+      "oracle_temperatures": {
+        "5": 1.1413563840828183,
+        "10": 1.1012860173905652,
+        "20": 1.0756169117909398,
+        "50": 1.0293096828796786
+      },
+      "training": {
+        "status": "complete",
+        "model": "b3_independent_mlp",
+        "seed": 2,
+        "lr": 0.0001,
+        "best_lr_from_grid": 0.0001,
+        "epochs_run": 13,
+        "best_epoch": 10,
+        "best_val_select_nll": 0.7485138724490719,
+        "val_select_nll_curve": [
+          0.8889984676597484,
+          0.8411308898794809,
+          0.8082019392148595,
+          0.7933720661087078,
+          0.773656691951306,
+          0.7616792823153403,
+          0.7508727159312083,
+          0.754026507210735,
+          0.7514331749921153,
+          0.7485138724490719,
+          0.7537641185825822,
+          0.7523136195078813,
+          0.7610221814385945
+        ],
+        "val_select_nll_by_k": {
+          "5": [
+            0.673309635795005,
+            0.6353697398347238,
+            0.6105290517538533,
+            0.5983201052916565,
+            0.5821998030478878,
+            0.571766119607121,
+            0.563589475274808,
+            0.5661105798343367,
+            0.5633325830339514,
+            0.5599602640902288,
+            0.5643049038915116,
+            0.5631319716694588,
+            0.5695774399865604
+          ],
+          "10": [
+            1.1046872995244919,
+            1.0468920399242378,
+            1.0058748266758655,
+            0.9884240269257591,
+            0.9651135808547245,
+            0.9515924450235597,
+            0.9381559565876086,
+            0.9419424345871333,
+            0.9395337669502791,
+            0.9370674808079149,
+            0.9432233332736527,
+            0.9414952673463038,
+            0.9524669228906285
+          ]
+        },
+        "val_select_n_rows_by_k": {
+          "5": 5325,
+          "10": 5325
+        },
+        "train_loss_curve": [
+          1.1325660139708489,
+          0.8472338091407154,
+          0.7977436327779782,
+          0.7633398744412426,
+          0.7312769791831466,
+          0.7020592255828448,
+          0.6754190417894208,
+          0.6535492920820866,
+          0.6316897155350923,
+          0.612098152200102,
+          0.5933066918142542,
+          0.5775206020709377,
+          0.560813629789669
+        ],
+        "wall_seconds": 375.8170247077942,
+        "num_parameters": 214273,
+        "feature_dim": 512,
+        "hidden_dim": 128,
+        "geo_dim": 6,
+        "temperature": 1.0,
+        "epochs": 15,
+        "patience": 3,
+        "batch_size": 64,
+        "weight_decay": 0.0001,
+        "train_ks": [
+          5,
+          10
+        ],
+        "eval_ks": [
+          5,
+          10
+        ],
+        "selection_metric": "val_select_mean_nll_K5_K10",
+        "torch_version": "2.5.1+cu121",
+        "cuda_version": "12.1",
+        "device": "cuda",
+        "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+        "git_commit": "ddf612d40557b3739de4447685accdf1b8bb2301",
+        "bank_fingerprint": "ebd2690e4b1c1d524fbee80e6ba48dbfadd9f2f5e58b08566228d409afd55747",
+        "manifest_meta": "random_train.meta.json",
+        "model_path": "seed_2/model.npz",
+        "created_utc": "2026-09-28T05:53:48.131509+00:00"
+      }
+    },
+    "3": {
+      "status": "complete",
+      "temperature_corrected": 1.100524960810151,
+      "corrected_interior": true,
+      "corrected_warning": null,
+      "oracle_temperatures": {
+        "5": 1.1287473372244607,
+        "10": 1.0828532774504198,
+        "20": 1.060037313534382,
+        "50": 1.0151276434243441
+      },
+      "training": {
+        "status": "complete",
+        "model": "b3_independent_mlp",
+        "seed": 3,
+        "lr": 0.0001,
+        "best_lr_from_grid": 0.0001,
+        "epochs_run": 11,
+        "best_epoch": 8,
+        "best_val_select_nll": 0.745997342136501,
+        "val_select_nll_curve": [
+          0.8804123586105361,
+          0.8283925941523547,
+          0.7931835062197513,
+          0.7747641183442175,
+          0.7611807939212113,
+          0.7543923248362217,
+          0.7492098147586664,
+          0.745997342136501,
+          0.747460607238107,
+          0.746024428336669,
+          0.7596252128384389
+        ],
+        "val_select_nll_by_k": {
+          "5": [
+            0.6643240582884175,
+            0.6237629472101804,
+            0.5957968812945821,
+            0.58182724021162,
+            0.5710209732377902,
+            0.5651964463333232,
+            0.5613137835473958,
+            0.5581527232086708,
+            0.5595511974392748,
+            0.5560920893512714,
+            0.5680916851275053
+          ],
+          "10": [
+            1.096500658932655,
+            1.033022241094529,
+            0.9905701311449203,
+            0.9677009964768151,
+            0.9513406146046324,
+            0.9435882033391201,
+            0.9371058459699371,
+            0.9338419610643313,
+            0.9353700170369392,
+            0.9359567673220666,
+            0.9511587405493724
+          ]
+        },
+        "val_select_n_rows_by_k": {
+          "5": 5325,
+          "10": 5325
+        },
+        "train_loss_curve": [
+          1.1290028708671134,
+          0.8356115280279133,
+          0.7771522747936053,
+          0.7334419751225197,
+          0.700047489217469,
+          0.6697504455565634,
+          0.6423666903238189,
+          0.6175748922662975,
+          0.594600908341629,
+          0.5756480791656297,
+          0.5533403676107815
+        ],
+        "wall_seconds": 362.20225286483765,
+        "num_parameters": 214273,
+        "feature_dim": 512,
+        "hidden_dim": 128,
+        "geo_dim": 6,
+        "temperature": 1.0,
+        "epochs": 15,
+        "patience": 3,
+        "batch_size": 64,
+        "weight_decay": 0.0001,
+        "train_ks": [
+          5,
+          10
+        ],
+        "eval_ks": [
+          5,
+          10
+        ],
+        "selection_metric": "val_select_mean_nll_K5_K10",
+        "torch_version": "2.5.1+cu121",
+        "cuda_version": "12.1",
+        "device": "cuda",
+        "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+        "git_commit": "ddf612d40557b3739de4447685accdf1b8bb2301",
+        "bank_fingerprint": "ebd2690e4b1c1d524fbee80e6ba48dbfadd9f2f5e58b08566228d409afd55747",
+        "manifest_meta": "random_train.meta.json",
+        "model_path": "seed_3/model.npz",
+        "created_utc": "2026-09-28T05:59:50.348827+00:00"
+      }
+    }
+  },
+  "paired_vs_cosine": {
+    "n_rows": 18,
+    "status": [
+      "ok"
+    ]
+  },
+  "total_seconds": 884.5369902999955,
+  "artifacts": [
+    "metadata.json",
+    "aggregate.csv",
+    "paired_vs_cosine.csv",
+    "seed_{s}/raw_scores/K{K}.npz",
+    "seed_{s}/ranking_metrics.csv",
+    "seed_{s}/calibration_metrics.csv",
+    "seed_{s}/normalized_selective_metrics.csv",
+    "seed_{s}/reliability_bins.csv",
+    "seed_{s}/diagnostics.csv",
+    "seed_{s}/bootstrap.csv",
+    "seed_{s}/per_sentence_predictions.npz",
+    "seed_{s}/eval_metadata.json",
+    "seed_{s}/VALIDATION_FAILURE.json (written only on a failed hard check)"
+  ]
+}

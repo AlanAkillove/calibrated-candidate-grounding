@@ -41,6 +41,9 @@ from ccg.metrics._validation import (
 
 __all__ = [
     "aurc",
+    "e_aurc",
+    "oracle_aurc",
+    "rer_at_coverage",
     "risk_at_coverage",
     "risk_coverage_curve",
     "selective_accuracy",
@@ -128,3 +131,72 @@ def risk_at_coverage(confidence: Any, correctness: Any, coverage_level: float) -
     of headline numbers used in the Phase-0 report.
     """
     return selective_risk(confidence, correctness, coverage_level)
+
+
+# ---------------------------------------------------------------------------
+# base-rate-aware / accuracy-normalised selective metrics (Phase 0A.1)
+# ---------------------------------------------------------------------------
+def oracle_aurc(error_rate: float) -> float:
+    """AURC of an *oracle* confidence ranking at a given full-set error rate.
+
+    When samples are ranked by their true correctness (all correct first), the
+    risk-coverage curve is the best achievable one and its area has a closed
+    form in the full-set error rate ``r``:
+
+        oracle_aurc(r) = r + (1 - r) * ln(1 - r)
+
+    with the conventions ``oracle_aurc(0) = 0`` and ``oracle_aurc(1) = 1`` (the
+    latter is the limiting value; ``0 * ln(0)`` is taken to be ``0``).  This is
+    the accuracy-normalisation baseline that removes the AURC / base-error-rate
+    coupling: a *worse* error rate depresses the curve, so raw AURC alone cannot
+    be compared across K.  ``ln(1 - r)`` is evaluated with :func:`numpy.log1p`
+    for accuracy near ``r = 0``.
+
+    Parameters
+    ----------
+    error_rate:
+        Full-set error rate ``r = 1 - accuracy`` in ``[0, 1]``.
+    """
+    r = float(error_rate)
+    if not np.isfinite(r) or r < 0.0 or r > 1.0:
+        raise ValueError(f"`error_rate` must be in [0, 1], got {error_rate}")
+    if r == 0.0:
+        return 0.0
+    if r == 1.0:
+        return 1.0
+    return float(r + (1.0 - r) * np.log1p(-r))
+
+
+def e_aurc(aurc_value: float, accuracy: float) -> float:
+    """Excess AURC over the oracle bound: ``AURC - oracle_aurc(1 - accuracy)``.
+
+    ``E-AURC >= 0``: how far the confidence ordering is from the best possible
+    ordering *at that accuracy*.  Subtracting the oracle term removes the
+    monotone dependence of raw AURC on the base error rate, so two candidate-set
+    sizes (or two variants) with different accuracies become comparable.
+    """
+    value = float(aurc_value)
+    if not np.isfinite(value):
+        raise ValueError(f"`aurc_value` must be finite, got {aurc_value}")
+    return float(value - oracle_aurc(1.0 - float(accuracy)))
+
+
+def rer_at_coverage(confidence: Any, correctness: Any, coverage_level: float) -> float:
+    """Risk-Erosion Ratio ``(R1 - Rc) / R1`` at a coverage level.
+
+    ``R1 = 1 - mean(correctness)`` is the risk of the full set (no abstention)
+    and ``Rc = risk_at_coverage(confidence, correctness, coverage_level)`` is the
+    risk of the most-confident ``coverage_level`` fraction.  The ratio is the
+    *relative* risk removed by abstention: ``1.0`` when the accepted subset is
+    error-free, ``0.0`` when abstention removes no risk.
+
+    If ``R1 == 0`` (every sample is correct) there is no base error to erode and
+    no measurable benefit, so ``0.0`` is returned by convention (the ratio is
+    otherwise ``0 / 0``).
+    """
+    conf, corr = _validate_pairs(confidence, correctness)
+    base_risk = 1.0 - float(np.mean(corr))
+    if base_risk == 0.0:
+        return 0.0
+    risk_at_c = risk_at_coverage(conf, corr, coverage_level)
+    return float((base_risk - risk_at_c) / base_risk)

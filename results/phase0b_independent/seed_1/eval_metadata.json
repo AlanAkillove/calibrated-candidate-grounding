@@ -1,0 +1,304 @@
+{
+  "artifact": "phase0b_independent_seed",
+  "seed": 1,
+  "status": "complete",
+  "created_utc": "2026-09-28T06:51:41Z",
+  "git_commit": "ddf612d40557b3739de4447685accdf1b8bb2301",
+  "device": "cuda",
+  "ks": [
+    5,
+    10,
+    20,
+    50
+  ],
+  "n_rows_common": {
+    "5": 20799,
+    "10": 20799,
+    "20": 20799,
+    "50": 20799
+  },
+  "n_rows_common_pooled": 20799,
+  "temperature_corrected": 1.1153439683270872,
+  "corrected_fit": {
+    "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+    "temperature": 1.1153439683270872,
+    "u_opt": 0.10916284911145117,
+    "bounds": [
+      1e-05,
+      1000.0
+    ],
+    "bounds_initial": [
+      0.001,
+      10.0
+    ],
+    "bounds_expanded": true,
+    "n_expansions": 1,
+    "interior": true,
+    "decades_to_low": 5.047408822997941,
+    "decades_to_high": 2.9525911770020596,
+    "warning": null,
+    "warning_detail": null,
+    "objective": 0.7058002063760055,
+    "n_sets": 10566,
+    "nll_before": 0.7090483367210808,
+    "nll_after": 0.7058002063760055
+  },
+  "oracle_fits": {
+    "5": {
+      "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+      "temperature": 1.1430862062701155,
+      "u_opt": 0.1337318030273673,
+      "bounds": [
+        1e-05,
+        1000.0
+      ],
+      "bounds_initial": [
+        0.001,
+        10.0
+      ],
+      "bounds_expanded": true,
+      "n_expansions": 1,
+      "interior": true,
+      "decades_to_low": 5.058078984109758,
+      "decades_to_high": 2.941921015890242,
+      "warning": null,
+      "warning_detail": null,
+      "objective": 0.5222047119972413,
+      "n_sets": 5283,
+      "nll_before": 0.5260052832665083,
+      "nll_after": 0.5222047119972413
+    },
+    "10": {
+      "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+      "temperature": 1.09784186938256,
+      "u_opt": 0.0933463157601273,
+      "bounds": [
+        1e-05,
+        1000.0
+      ],
+      "bounds_initial": [
+        0.001,
+        10.0
+      ],
+      "bounds_expanded": true,
+      "n_expansions": 1,
+      "interior": true,
+      "decades_to_low": 5.040539789840622,
+      "decades_to_high": 2.9594602101593783,
+      "warning": null,
+      "warning_detail": null,
+      "objective": 0.8891886385306683,
+      "n_sets": 5283,
+      "nll_before": 0.8920913901756555,
+      "nll_after": 0.8891886385306683
+    },
+    "20": {
+      "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+      "temperature": 1.0733870485523642,
+      "u_opt": 0.07081911487110824,
+      "bounds": [
+        1e-05,
+        1000.0
+      ],
+      "bounds_initial": [
+        0.001,
+        10.0
+      ],
+      "bounds_expanded": true,
+      "n_expansions": 1,
+      "interior": true,
+      "decades_to_low": 5.030756350801795,
+      "decades_to_high": 2.969243649198205,
+      "warning": null,
+      "warning_detail": null,
+      "objective": 1.3302235956655148,
+      "n_sets": 5283,
+      "nll_before": 1.3325846590207513,
+      "nll_after": 1.3302235956655148
+    },
+    "50": {
+      "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+      "temperature": 1.0191443339780457,
+      "u_opt": 0.0189633869756995,
+      "bounds": [
+        1e-05,
+        1000.0
+      ],
+      "bounds_initial": [
+        0.001,
+        10.0
+      ],
+      "bounds_expanded": true,
+      "n_expansions": 1,
+      "interior": true,
+      "decades_to_low": 5.008235694321742,
+      "decades_to_high": 2.9917643056782577,
+      "warning": null,
+      "warning_detail": null,
+      "objective": 2.0080571884443152,
+      "n_sets": 5231,
+      "nll_before": 2.0082860476523368,
+      "nll_after": 2.0080571884443152
+    }
+  },
+  "training": {
+    "status": "complete",
+    "model": "b3_independent_mlp",
+    "seed": 1,
+    "lr": 0.0001,
+    "best_lr_from_grid": 0.0001,
+    "epochs_run": 12,
+    "best_epoch": 9,
+    "best_val_select_nll": 0.7428387808521298,
+    "val_select_nll_curve": [
+      0.8822517761329876,
+      0.8320829315521262,
+      0.7972961945645005,
+      0.7771756388066154,
+      0.7666226067045842,
+      0.7518582776617211,
+      0.7496559113393934,
+      0.7445449743039393,
+      0.7428387808521298,
+      0.7452070353062015,
+      0.7537101293789271,
+      0.7505972091969623
+    ],
+    "val_select_nll_by_k": {
+      "5": [
+        0.6667633684714733,
+        0.6262043722112413,
+        0.6002566283462696,
+        0.584220097560448,
+        0.5749876850205242,
+        0.563425977975353,
+        0.5608760076637779,
+        0.5560109054856759,
+        0.5544524969705341,
+        0.5553993612113529,
+        0.5625100119661969,
+        0.5584008082384474
+      ],
+      "10": [
+        1.0977401837945016,
+        1.037961490893011,
+        0.9943357607827318,
+        0.9701311800527828,
+        0.958257528388644,
+        0.9402905773480891,
+        0.9384358150150088,
+        0.9330790431222026,
+        0.9312250647337255,
+        0.9350147094010501,
+        0.9449102467916575,
+        0.942793610155477
+      ]
+    },
+    "val_select_n_rows_by_k": {
+      "5": 5325,
+      "10": 5325
+    },
+    "train_loss_curve": [
+      1.1402932734214095,
+      0.8359944213575987,
+      0.7808994203162245,
+      0.742049439776021,
+      0.7131318245284243,
+      0.6855041079995571,
+      0.6620512294299402,
+      0.639218053316594,
+      0.6178212068315201,
+      0.5974783211077521,
+      0.5787450048517331,
+      0.5613885971336061
+    ],
+    "wall_seconds": 319.360586643219,
+    "num_parameters": 214273,
+    "feature_dim": 512,
+    "hidden_dim": 128,
+    "geo_dim": 6,
+    "temperature": 1.0,
+    "epochs": 15,
+    "patience": 3,
+    "batch_size": 64,
+    "weight_decay": 0.0001,
+    "train_ks": [
+      5,
+      10
+    ],
+    "eval_ks": [
+      5,
+      10
+    ],
+    "selection_metric": "val_select_mean_nll_K5_K10",
+    "torch_version": "2.5.1+cu121",
+    "cuda_version": "12.1",
+    "device": "cuda",
+    "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "git_commit": "ddf612d40557b3739de4447685accdf1b8bb2301",
+    "bank_fingerprint": "ebd2690e4b1c1d524fbee80e6ba48dbfadd9f2f5e58b08566228d409afd55747",
+    "manifest_meta": "random_train.meta.json",
+    "model_path": "seed_1/model.npz",
+    "created_utc": "2026-09-28T05:47:32.209514+00:00"
+  },
+  "hard_checks": {
+    "score_invariance": {
+      "check": "score_invariance",
+      "status": "passed",
+      "atol": 0.0,
+      "n_candidate_pairs": 1148625,
+      "n_violations": 0,
+      "max_abs_diff": 0.0
+    },
+    "rank_monotonic": {
+      "check": "rank_monotonic",
+      "status": "passed",
+      "n_sentences": 20799,
+      "pairs": [
+        {
+          "K_lo": 5,
+          "K_hi": 10,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 5,
+          "K_hi": 20,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 5,
+          "K_hi": 50,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 10,
+          "K_hi": 20,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 10,
+          "K_hi": 50,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 20,
+          "K_hi": 50,
+          "n_violations": 0
+        }
+      ],
+      "n_violations": 0
+    },
+    "accuracy_monotonic": {
+      "check": "accuracy_monotonic",
+      "status": "passed",
+      "accuracies": {
+        "5": 0.7898456656570028,
+        "10": 0.6747920573104477,
+        "20": 0.5621424106928218,
+        "50": 0.4294437232559258
+      },
+      "n_violations": 0,
+      "note": "confidence monotonicity in K is explicitly NOT checked (protocol section 20)"
+    }
+  }
+}

@@ -19,6 +19,10 @@ results/*
 !results/natural_omission_full/**
 !results/phase0a_cosine/
 !results/phase0a_cosine/**
+!results/phase0a_corrected/
+!results/phase0a_corrected/**
+!results/phase0b_independent/
+!results/phase0b_independent/**
 experiments/**/outputs/
 
 # Local logs / scratch
