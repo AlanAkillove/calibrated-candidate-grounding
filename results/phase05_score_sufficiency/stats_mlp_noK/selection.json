@@ -1,0 +1,38 @@
+{
+  "family": "stats_mlp_noK",
+  "selection_metric": "mean AUROC_correct over reliability_tune K5/K10",
+  "per_scorer": {
+    "b3_seed1": {
+      "family": "stats_mlp_noK",
+      "kind": "mlp",
+      "variant": "stats_noK",
+      "chosen_hp": 0.001,
+      "tune_mean_auroc": 0.8103025684517694,
+      "params": 1089
+    },
+    "b3_seed2": {
+      "family": "stats_mlp_noK",
+      "kind": "mlp",
+      "variant": "stats_noK",
+      "chosen_hp": 0.001,
+      "tune_mean_auroc": 0.8227687505306569,
+      "params": 1089
+    },
+    "b3_seed3": {
+      "family": "stats_mlp_noK",
+      "kind": "mlp",
+      "variant": "stats_noK",
+      "chosen_hp": 0.0003,
+      "tune_mean_auroc": 0.8198457138321666,
+      "params": 1089
+    },
+    "cosine": {
+      "family": "stats_mlp_noK",
+      "kind": "mlp",
+      "variant": "stats_noK",
+      "chosen_hp": 0.001,
+      "tune_mean_auroc": 0.7392213666816199,
+      "params": 1089
+    }
+  }
+}

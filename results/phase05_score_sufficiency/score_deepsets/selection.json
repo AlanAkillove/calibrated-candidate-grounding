@@ -1,0 +1,38 @@
+{
+  "family": "score_deepsets",
+  "selection_metric": "mean AUROC_correct over reliability_tune K5/K10",
+  "per_scorer": {
+    "b3_seed1": {
+      "family": "score_deepsets",
+      "kind": "sds",
+      "variant": "sds_logK",
+      "chosen_hp": 0.001,
+      "tune_mean_auroc": 0.6027844391153744,
+      "params": 1969
+    },
+    "b3_seed2": {
+      "family": "score_deepsets",
+      "kind": "sds",
+      "variant": "sds_logK",
+      "chosen_hp": 0.001,
+      "tune_mean_auroc": 0.5959825970548862,
+      "params": 1969
+    },
+    "b3_seed3": {
+      "family": "score_deepsets",
+      "kind": "sds",
+      "variant": "sds_logK",
+      "chosen_hp": 0.001,
+      "tune_mean_auroc": 0.6413090899928211,
+      "params": 1969
+    },
+    "cosine": {
+      "family": "score_deepsets",
+      "kind": "sds",
+      "variant": "sds_logK",
+      "chosen_hp": 0.001,
+      "tune_mean_auroc": 0.608261220174969,
+      "params": 1969
+    }
+  }
+}

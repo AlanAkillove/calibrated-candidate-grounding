@@ -23,6 +23,8 @@ results/*
 !results/phase0a_corrected/**
 !results/phase0b_independent/
 !results/phase0b_independent/**
+!results/phase05_score_sufficiency/
+!results/phase05_score_sufficiency/**
 experiments/**/outputs/
 
 # Local logs / scratch

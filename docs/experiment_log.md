@@ -710,3 +710,105 @@ notes: >
   → 指令 §26 Case A：GO（下一问题：K + score statistics 是否已足够——留在后续阶段决定；本轮到此停止，不自动实现
   stats calibrator）。不产生 Gate Q1/Q2/Q3 判定。
 ```
+
+```yaml
+# ===== FORMAL ENTRY — REAL RESULT（非示例）=====
+experiment_id: p05-score-sufficiency-20260928-01
+git_commit: "2adfc09b9c957535c6312d6db35b58da929912fa"   # 全量运行时的 HEAD；本条目与代码随收尾 commit 入库
+dirty: true
+timestamp: "2026-09-28"
+dataset: refcoco+              # 与 p0/p0a1/p0b 完全相同的 common cohort（n=20799）；raw scores 直接复用，grounding scorer 不重训
+split: [val_select, val_calib, testA, testB]
+candidate_protocol: "bank-v1 + manifests-v1（frozen；完全相同的 nested candidate sets，未重采样）"
+K: [5, 10, 20, 50]
+hardness: random only
+target_presence: target-present only（primary common cohort）
+backbone: "OpenCLIP ViT-B/32 laion2b_s34b_b79k（frozen cached features；本轮不重新前向）"
+model: >
+  Phase 0.5 score-information sufficiency zoo（协议 Amendment A6，结果可见前冻结；只读候选 score 集合，
+  绝不读 candidate/query embeddings、geometry、objectness、GT）：L0 标量（msp/top1_score/margin/-entropy/
+  normalized-entropy，无训练）；L1 handcrafted stats（≤17-d）× {LogisticRegression(L2, C∈{0.1,1,10}),
+  TinyMLP 32→16→1(lr∈{1e-4,3e-4,1e-3})} × {without-K, logK}（+ without-entropy 与 top-scores 变体）；
+  L2 ScoreDeepSets（φ:1→16→16, masked mean/max/h_top1 + z_top1, head→32→1, ±logK；1,969 / 1,937 params）
+seed: [1, 2, 3]                # B3 scorer seeds，各自独立跑完整 zoo（不合并、不充样本量）；cosine 为 secondary
+training_config:
+  reliability_data: "val_calib 的 image-level 70/30 切分（seed=20260928；split_manifest.json 先写后跑；523/224 images）：reliability_train 训练、reliability_tune 选型；仅用 K∈{5,10} 行；testA/testB/K20/K50 从不进入训练、早停或选型"
+  normalization: "跨行 μ/σ（stats / score / logK / z_top1）只用 reliability_train ∩ K∈{5,10} 估计，全 K 共用；禁止 per-K normalization"
+  selection_metric: "reliability_tune 的 mean AUROC_correct(K5,K10)（唯一用途，A6.4）"
+  early_stopping: "MLP/SDS：val = reliability_tune，patience 30，max 300 epochs，wd=1e-4（只触 tune，不触 test）"
+calibration_config:
+  fit_split: val_calib        # 不重新拟合温度：直接复用 p0a1/p0b 冻结的 corrected global T（B3: 1.115344/1.116630/1.100525；cosine: 0.0335596）
+  method: "MSP 等标量 = softmax(scores / T*)（复用既有实现）；L0 原始分数标量超出 [0,1] 时仅做单调平均秩变换 (rank−0.5)/n 以满足 ccg.metrics 的 [0,1] 契约（所有报告指标 rank-based，实测逐位不变；raw 值存 features npz scalars_raw_K*）"
+metrics:                       # pooled test (testA+testB)，n=62397；B3 报 3-seed mean±std；degradation 正値=恶化
+  selection_b3_seed_mean: {msp: 0.8201, stats_logistic_noent: 0.8197, stats_logistic: 0.8195, stats_logistic_noK: 0.8195, margin: 0.8192, stats_mlp: 0.8190, stats_mlp_noK: 0.8176, neg_entropy: 0.7991, norm_entropy: 0.7991, top_scores_logistic: 0.7950, score_deepsets_noK: 0.7615, score_deepsets: 0.6134, top1_score: 0.4758}
+  best_score_only_model: "msp（L0 标量；tune 0.8201）；best summary family = stats_logistic_noent（0.8197）；per-scorer best: seed1=margin / seed2=msp / seed3=msp / cosine=stats_mlp_noK"
+  pooled_auroc_correct:        # K5 / K20 / K50
+    msp:                {K5: "0.8407±0.0025", K20: "0.7995±0.0007", K50: "0.7890±0.0031"}
+    margin:             {K5: "0.8333±0.0021", K20: "0.7821±0.0030", K50: "0.7718±0.0066"}
+    stats_logistic:     {K5: "0.8408±0.0025", K20: "0.8015±0.0014", K50: "0.7915±0.0046"}
+    stats_mlp:          {K5: "0.8395±0.0026", K20: "0.7985±0.0016", K50: "0.7834±0.0048"}
+    score_deepsets:     {K5: "0.7380±0.0109", K20: "0.5518±0.0897", K50: "0.5529±0.0916"}   # logK 版 OOD 崩溃 + seed std ~0.09
+    score_deepsets_noK: {K5: "0.8035±0.0040", K20: "0.7432±0.0142", K50: "0.7252±0.0164"}
+  pooled_selective:            # E-AURC / RER@50（K5 → K20 → K50）
+    msp:            {e_aurc: "0.0381→0.0969→0.1241", rer_at_50: "0.8248→0.5058→0.3588"}
+    stats_logistic: {e_aurc: "0.0381→0.0958→0.1216", rer_at_50: "0.8257→0.5146→0.3611"}
+    stats_mlp:      {e_aurc: "0.0386→0.0973→0.1270", rer_at_50: "0.8152→0.5065→0.3480"}
+    score_deepsets: {e_aurc: "0.0879→0.2635→0.3047", rer_at_50: "0.5477→0.1632→0.1301"}
+  bootstrap_degradation_pooled_K50:   # image-cluster paired bootstrap 5000 reps（seed=0, ci=0.95；K5 vs K50；b3_mean）
+    msp: "dAUROC +0.0517 [+0.0380,+0.0656]；w(E-AURC) +2.257 [+1.930,+2.635]；RER50drop +46.60pp [43.03,49.92]；RER80drop +26.54pp"
+    margin: "+0.0615 [+0.0479,+0.0758]；+2.279 [+1.965,+2.653]；+47.76pp [44.15,51.13]；+25.68pp"
+    stats_logistic: "+0.0494 [+0.0359,+0.0632]；+2.188 [+1.869,+2.561]；+46.46pp；+26.36pp"
+    stats_mlp: "+0.0561 [+0.0423,+0.0703]；+2.293 [+1.964,+2.679]；+46.72pp；+26.75pp"
+    stats_logistic_noent: "+0.0461 [+0.0308,+0.0585]；+2.093 [+1.786,+2.457]；+45.86pp；+26.42pp"
+    score_deepsets: "+0.1851 [+0.1685,+0.2012]；+2.463 [+2.290,+3.124]；+41.76pp（该度量的百分位 CI 整体高于点估计 ~9pp，见 notes）；+26.43pp"
+  model_vs_model_K50:          # pooled；per B3 seed 1/2/3
+    msp_vs_stats_logistic: {auroc: ["−0.0040", "−0.0007", "−0.0026"], note: "2/3 seed CI 完全 <0；K50 上 stats_logistic ≥ msp"}
+    stats_logistic_vs_stats_mlp: {auroc: ["+0.0068", "+0.0077", "+0.0096"], note: "CI 全 >0；小容量 logistic 的外推稳定性优于 MLP"}
+    best_summary_vs_score_deepsets: {auroc: ["+0.2983", "+0.2861", "+0.1253"], note: "CI 全 >0；summary ≫ full score set"}
+  ablations:
+    withoutK_vs_logK: "tune 0.8195=0.8195；K50 AUROC 0.7920 vs 0.7915 → cardinality 本身不携额外可靠性信息"
+    without_entropy: "K50 AUROC 0.7948 vs 0.7915 → entropy 无正贡献（略负）"
+    summary_vs_full_set: "ScoreDeepSets ≪ stats（K50 AUROC 0.553 vs 0.792；配对 CI 全 >0）→ full unordered score set 不提供超出手工统计的可用信息"
+    logK_instability: "SDS+logK 在 K20/50 AUROC≈0.55、seed std 0.09（不稳定 extrapolation，§22 报告项）；SDS−logK 稳定但显著弱"
+  within_K_vs_cross_K: "msp：同 K 跨 split（val_select→testA/testB）K5 0.8439→0.8594→0.8138（漂移 ≤±4.6pp）；同 split 跨 K（K5→K50）−5.2~−5.8pp；E-AURC/RER 的 cardinality 效应远强于 split 漂移"
+  ece_adaptive_pooled: {msp: "0.0104→0.0697", stats_logistic: "0.0147→0.0358", stats_mlp: "0.0116→0.0909", score_deepsets: "0.0403→0.4761"}   # K5→K50
+  cosine_secondary:             # cosine best family = stats_mlp_noK；AUROC 基本稳定（K5→K50 dAUROC +0.0044 [−0.0122,+0.0221]），E-AURC/RER 恶化
+    e_aurc_rationale: "w(E-AURC) K50 +0.232；RER50drop +25.93pp → Route A 满足（4 cells，CI 不跨 0）"
+  sufficiency_gate:             # Amendment A6.6（§24/25/26）；headline = best score-only model（msp）
+    verdict: GO_candidate_embeddings
+    route_A_cells: [testA/K20, testA/K50, testB/K20, testB/K50]
+    route_B_cells: [testA/K20, testA/K50, testB/K20, testB/K50]
+    per_seed_consistent: "3/3 seeds 均为 GO（各 4 cells）；seed-mean 与 per-seed 一致"
+    override: false            # K50 pooled：AUROC 0.789 < 0.85；E-AURC 0.1241 > 0.03；RER@50 0.3588 < 0.70
+    no_go_sufficient: false
+    cosine_verdict: "GO_candidate_embeddings（Route A ×4，Route B ×0）——与 0A/0B 的 E-AURC/RER 恶化但 AUROC 稳定一致"
+run:
+  command: "E:\conda\envs\deepminer\python.exe _launch_detached.py logs_phase05.txt scripts/run_phase05.py --out results/phase05_score_sufficiency --bootstrap-replicates 5000 --log-file logs_phase05_driver.txt（detached；pid 33356）"
+  device: cpu
+  step_seconds: "total 4840.65s（~80.7 min）：load 0.2 / split 0.0 / features 4.1 / train 541.6（4 scorers × 8 families ≤300 epochs）/ metrics 2.8 / bootstrap 4280.4（5000 reps；660 cross-K + 96 pairwise rows）/ figure 0.7 / write 10.8"
+  incident: >
+    运行前冒烟阶段修复：(a) L0 原始分数标量做的单调 rank 变换（契约满足用，指标不变）；(b) features.py neg_entropy
+    符号修复（原实现返回 +H(P)，与 §7「−H(P)，higher=more confident」相反；修复前该基线 AUROC≈0.14，修复后 tune 0.7991）；
+    (c) gate RER@50 单位修复（fraction → ×100 转百分点后进 cell；evaluate.py 契约为 pp，修复前 Route A 恒空）；
+    (d) partial run 的 gate 兼容缺 seed；(e) paired_bootstrap.csv schema（剔除 pairwise 额外 K 列）。(c) 之后 sufficiency_gate.json
+    用 scripts/rebuild_phase05_gate.py 从冻结产物重建（重建校验：390 行 degradation 与已发布 CSV 在 1e-9 内一致；verdict 修复前后不变）。
+    全量运行一次成功，无中断。
+artifacts:
+  root: results/phase05_score_sufficiency/
+  files: [protocol.json, split_manifest.json, features/{b3_seed1,b3_seed2,b3_seed3,cosine}.npz + *_normalisation.json, scalar_baselines.csv, reliability_metrics.csv, aggregate.csv, cross_k_degradation.csv, paired_bootstrap.csv, sufficiency_gate.json, metadata.json, {stats_logistic,stats_logistic_noK,stats_logistic_noent,top_scores_logistic,stats_mlp,stats_mlp_noK,score_deepsets,score_deepsets_noK}/{selection.json,metrics.csv}, figures/score_only_reliability_vs_K.png, predictions/{scorer}/{msp,margin,norm_entropy,stats_logistic,stats_mlp,score_deepsets}.csv.gz]
+  raw_predictions_columns: [ref_id, image_id, K, eval_split, grounding_correct, reliability_score, model, scorer_seed]
+notes: >
+  Phase 0.5 score-information sufficiency 审计（指令全文 + Amendment A6）。目的：在不读取 candidate embeddings 的
+  前提下，测试「当前候选集合的 score distribution」是否已足以预测 grounding 正确性并消除 candidate-cardinality
+  reliability degradation。关键观测：(1) 最佳 score-only 模型是 L0 标量 msp（tune 0.8201）——比所有 L1/L2 学习模型都好，
+  logK/noK/entropy 消融均无正增益（cardinality 本身不携带额外可靠性信息）；(2) 该最佳模型在 K20/K50 OOD cells 仍显著退化：
+  pooled K50 dAUROC +0.0517（CI 不跨 0）、E-AURC w +226%（CI +193%~+264%）、RER@50 降 46.6pp（CI 43.0~49.9）——四个 OOD
+  cells（testA/testB × K20/K50）双 Route（A+B）同时命中，3/3 seeds 一致 → A6.6 判定 GO_candidate_embeddings（score-only 信息
+  不足，candidate embedding 信息仍有潜在价值；且 §26 override 不成立）；(3) 回答题 1：candidate-count 与 score-distribution statistics
+  不能解释/消除该退化——加入 K/logK、entropy、全部手工统计、乃至完整 score set 均不消除，退化幅度与 0B 原始 msp 基线同量级；
+  (4) 回答题 2：完整无序 score set 不提供超出手工统计的信息——ScoreDeepSets ≪ stats logistic（K50 AUROC 0.553 vs 0.792；
+  BestSummary vs SDS 配对 CI 全 >0 且 +0.125~+0.298），且 SDS+logK 出现 §22 要求报告的不稳定 extrapolation（seed std 0.09）；
+  (5) cosine secondary 复现同向：E-AURC/RER 明显恶化（Route A ×4）而 AUROC 基本稳定（Route B 不触发）；(6) 附注：ScoreDeepSets 行
+  的 RER@50 百分位 CI 相对点估计整体上移 ~9pp（近随机排序下 rank 度量的 cluster-resampling 有限样本偏置，独立复现确认；
+  不影响 gate 判定——gate 的 msp/stats 行 CI 行为正常）。本阶段不实现 candidate-embedding DeepSets（§32 禁令），到此停止。
+```

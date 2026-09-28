@@ -1,0 +1,38 @@
+{
+  "family": "stats_logistic",
+  "selection_metric": "mean AUROC_correct over reliability_tune K5/K10",
+  "per_scorer": {
+    "b3_seed1": {
+      "family": "stats_logistic",
+      "kind": "logistic",
+      "variant": "stats_logK",
+      "chosen_hp": 0.1,
+      "tune_mean_auroc": 0.8120372479148852,
+      "params": 18
+    },
+    "b3_seed2": {
+      "family": "stats_logistic",
+      "kind": "logistic",
+      "variant": "stats_logK",
+      "chosen_hp": 0.1,
+      "tune_mean_auroc": 0.8254214346804541,
+      "params": 18
+    },
+    "b3_seed3": {
+      "family": "stats_logistic",
+      "kind": "logistic",
+      "variant": "stats_logK",
+      "chosen_hp": 0.1,
+      "tune_mean_auroc": 0.8211450574607029,
+      "params": 18
+    },
+    "cosine": {
+      "family": "stats_logistic",
+      "kind": "logistic",
+      "variant": "stats_logK",
+      "chosen_hp": 10.0,
+      "tune_mean_auroc": 0.7340185006769099,
+      "params": 18
+    }
+  }
+}

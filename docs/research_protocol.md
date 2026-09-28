@@ -495,6 +495,7 @@ indices：ref_id/regime/K/hardness/target_present/candidate_indices/target_candi
 | A3 | 2026-09-27 | §A2.4 N-selection 执行 + §A2.5 待决项关闭（**结果记录**：不修改任何条款与 gate 数字） | proposal-system audit 完成（1500 图），登记 outcome：N=64 选定、K=50 排除报告义务、RQ4 功效风险、train2014 澄清、冗余极低不需新阈值 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A3” |
 | A4 | 2026-09-27 | Phase 0A（B1 cosine）audit outcome 登记 + 解读约束（新增披露义务；**结果记录**：不修改任何条款与 gate 数字） | Phase 0A 全量审计完成：硬 sanity check 全过、嵌套集理论性质未违反（无 VALIDATION_FAILURE）；T* 与 oracle per-K 温度均在拟合搜索下界凝结（边界简并）；calibration 证据须与 ranking 并列报告 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A4” |
 | A5 | 2026-09-28 | 度量有效性修正 + temperature 优化重做 + reliability GO replication criterion（**post-hoc amendment**：在 Phase 0A 结果可见后加入，*不构成 preregistration*；不修改任何原始 gate 数字） | Phase 0A 暴露三个统计问题：nested candidate sets 下 raw accuracy degradation 是结构性预期；raw AURC 与 base error rate 强耦合；temperature 最优解落在优化边界（T*=0.05 贴界）。后续 reliability GO 改为依赖 accuracy-normalized / base-rate-aware 指标（E-AURC / AUROC_correct / RER@c / corrected global-T reliability map） | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A5” |
+| A6 | 2026-09-28 | Phase 0.5 Score-Information Sufficiency Audit protocol 冻结（split seed / 模型 zoo / 选型指标 / sufficiency gate；**结果可见前冻结**；不修改任何既有条款） | 进入 score-only 可靠性信息充分性审计：需在结果前固定 reliability_train/tune 切分（image-level, seed=20260928, 70/30）、训练 K 约束（K∈{5,10}）、L0/L1/L2 模型 zoo 与 §24/25/26 sufficiency gate 判定语义 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A6” |
 
 ---
 
@@ -849,3 +850,53 @@ proposal generator 选型一致；`detector / RPN` 原文不删除，由本条�
 
 - 本 criterion **不替换** Gate Q1/Q2/Q3；它只决定 “是否值得继续 reliability model 路线”。
 - Gate Q1 判定仍须按 §11 + §A1.4 在完整 4×2 grid 与相应模型完成后进行（§A4.1 最后一条不变）。
+
+---
+
+## Amendment A6 — 2026-09-28 — Phase 0.5 Score-Information Sufficiency Audit（结果可见前冻结）
+
+> **地位**：本 amendment 在 Phase 0.5 任何结果产生**之前**写入，按指令冻结以下全部选择（split、模型 zoo、选型指标、gate 阈值与判定语义）。不修改任何既有条款与数字。训练/选择严格隔离：reliability model 只用 val_calib 派生的 reliability_train/tune 的 K∈{5,10}；testA/testB/K20/K50 永不参与训练、early stopping、选型。
+
+### A6.1 固定 scorer 与数据源
+
+- 主 scorer：**B3 Independent MLP**（3 seeds；复用 `results/phase0b_independent/seed_{1,2,3}/raw_scores/K{5,10,20,50}.npz`，20,799 common rows；**不重训**）。
+- 次 scorer（replication / secondary）：**B1 frozen cosine**（复用 `results/phase0a_cosine/raw_predictions/K{5,10,20,50}.npz`，过滤到与 B3 完全相同的 common cohort）。
+- MSP 温度使用各 scorer 已冻结的 corrected global T（B3 每 seed 1.1153 / 1.1166 / 1.1005；cosine 0.0335596；不重新拟合）。
+
+### A6.2 Split 冻结
+
+- val_calib 的行按 **image-level** 划分：seed = **20260928**、train_frac = **0.70**（`split_manifest.json` 先写后跑）。image-disjoint；确定性置换，冻结。
+- 训练集 = reliability_train ∩ K∈{5,10}；选型集 = reliability_tune ∩ K∈{5,10}（mean AUROC over K5/K10）。
+- 评估集 = testA、testB 及二者合并（`__pooled_test__`）；val_select 仅作 secondary 诊断。
+
+### A6.3 Feature normalization 冻结
+
+- 所有跨行使用的 μ/σ 只用 reliability_train ∩ K∈{5,10} 全量行估计（score 标准化、stats 标准化、logK/top1 标准化共用同一 fit）；对 K5/10/20/50 一律套用同一 μ/σ，禁止 per-K normalization。
+- 指令 §9 的 z_top1=(s_(1)−μ_s)/(σ_s+ε) 属 per-set 统计（集合内部），其后如用于跨行特征再经 train μ/σ 标准化——两层命名在文档中区分。
+
+### A6.4 模型 zoo 冻结（禁止 grid 扩张）
+
+- **L0**：msp、top1_score、margin、neg_entropy、norm_entropy（无训练，直接作 selective confidence）。
+- **L1**：stats（≤17 维：log_k / top1-3 / margins / moments / msp / entropy / logsumexp / z_top1 / z_margin / quantiles）× {LogisticRegression(L2, C∈{0.1,1,10}), TinyMLP(32→16→1, lr∈{1e-4,3e-4,1e-3}, wd=1e-4)} × {without-K, logK}；Logistic 附加 without-entropy 与 top-scores（§14：top5 z + gaps + logK + mean/std）变体。
+- **L2**：**ScoreDeepSets**（φ:1→16→16；mean/max/h_top1 pooling + z_top1；head →32→1；±logK；lr∈{1e-4,3e-4,1e-3}）；参数 <5k。
+- 选型：reliability_tune 的 mean AUROC(K5, K10)；仅此用途，绝不看 K20/K50。
+
+### A6.5 Primary metrics 与统计
+
+- Primary：AUROC_correct、E-AURC、RER@50、RER@80；Secondary：RER@90/95、ECE、Brier、NLL（ECE/Brier/NLL 仅对提供概率的模型）。
+- image-level clustered paired bootstrap（5000 reps，cluster=image_id）：
+  - 跨 K：K5 vs K20（secondary）、K5 vs K50（core）；models = {MSP, Margin, StatsLogistic, StatsMLP, ScoreDeepSets}；在 testA / testB / `__pooled_test__`。
+  - 跨模型（同 K=5、50）：MSP vs StatsLogistic、StatsLogistic vs StatsMLP、BestSummary vs ScoreDeepSets（primary pairs, §28）。
+- 每 scorer seed 独立运行；头部结论报 mean±std across seeds；**不合并 seeds 充样本量**。
+- E-AURC relative 统一以 worsening 报告 w=(K_b−K5)/K5（正值=恶化），CI 端点同映射。
+
+### A6.6 Sufficiency Gate（§24/25/26 冻结语义）
+
+- **Best Score-Only Model** = 全部合法 L0/L1/L2 中，reliability_tune K5/K10 mean AUROC 最高（跨 3 seeds 取均值选出 family；per-seed 各自再选并报告一致性）。
+- **NO-GO for candidate embeddings**（= score-only 信息已足够）：该模型在 K20/K50（`__pooled_test__`）同时满足：|ΔAUROC_correct| < 0.02（vs K5，absolute）；E-AURC rel worsening < 20% **或** absolute E-AURC < 0.03；RER@50 drop < 10pp。
+- **GO for candidate embedding information**：仅当该模型在 ≥2 个 OOD cells（split∈{testA,testB} × K∈{20,50}）满足 Route A（E-AURC worsen ≥20% 且 RER@50 drop ≥10pp）或 Route B（ΔAUROC_correct ≥0.03 下降），且对应 CI 不跨 0（seed-mean 判定 + ≥2/3 seeds 一致）。
+- §26 override：若 K50 上 AUROC≥0.85 且 E-AURC≤0.03 且 RER@50≥0.70 → “practically solved by score-only information”。
+
+### A6.7 禁止事项（与指令 §32 一致）
+
+candidate embedding / Set Transformer / query·crop embedding / geometry / objectness / GT metadata / 重训 grounding scorer / loss engineering / feature-subset search / 多检验挑选，一律禁止；本轮只回答 “How much reliability information is already present in the score set?”。
