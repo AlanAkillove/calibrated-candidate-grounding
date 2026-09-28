@@ -812,3 +812,141 @@ notes: >
   的 RER@50 百分位 CI 相对点估计整体上移 ~9pp（近随机排序下 rank 度量的 cluster-resampling 有限样本偏置，独立复现确认；
   不影响 gate 判定——gate 的 msp/stats 行 CI 行为正常）。本阶段不实现 candidate-embedding DeepSets（§32 禁令），到此停止。
 ```
+
+```yaml
+# ===== FORMAL ENTRY — REAL RESULT（非示例）=====
+experiment_id: p1-semantic-sufficiency-20260928-01
+git_commit: "62c1eff037d717ce324c97846fb6616c48569029"   # 全量运行时的 HEAD；本条目与代码随收尾 commit 入库
+dirty: true                    # src/ccg/semantic/*、scripts/run_phase1.py、4 个 semantic 测试文件、协议 A7、
+                               # results/phase1_semantic_sufficiency/ 运行时尚未提交；随本条目同批收尾 commit 入库
+timestamp: "2026-09-28"
+dataset: refcoco+              # 与 p0/p0a1/p0b/p05 完全相同的 common cohort；B3 raw scores 直接复用，grounding scorer 不重训
+split: [val_select, val_calib, testA, testB]   # 复用 A6.2 切分（reliability_train 523 / reliability_tune 224 images）；未重划
+candidate_protocol: "bank-v1 + manifests-v1（frozen；与 0A/0B/0.5 完全相同的 nested candidate sets，未重采样；paired comparison 合法）"
+K: [5, 10, 20, 50]             # 训练/选型仅 K∈{5,10}；OOD = K∈{20,50}
+hardness: random only
+target_presence: target-present only（primary common cohort）
+backbone: "OpenCLIP ViT-B/32 laion2b_s34b_b79k（frozen cached z_q/z_i，L2-normalized 512-d；本轮不重新前向）"
+model: >
+  Phase 1 candidate semantic information sufficiency zoo（协议 Amendment A7；所有 gate 数字与模型定义在结果可见前冻结）：
+  E0 参考 = MSP + A6 Stats Logistic（Phase 0.5 逐行预测直接复用 + 本地重算断言，max|Δ|=0.0 / ≤2.8e-16）；
+  E1a = 16-d 语义手工统计 logistic（17 params）；E1b = A6 17-d score stats ⊕ 16-d 语义（34 params）；
+  E2 TopCompetitor（P_q/P_v 共享 512→64；交互块 448-d；E2-score 769 / E2-semantic 123,265 / E2-combined 123,777 params）；
+  E3 SemanticDeepSets（h_i 132-d；mean/max/h_t；E3-full 与 E3-top5 149,121 / E3+logK 149,249 params）。
+  约束：只读冻结 B3 分数与 embedding；绝不改分数 / rerank / 改变 top-1 / 参与 grounding 训练。
+seed: [1, 2, 3]                # B3 scorer seeds，各自独立跑完整 zoo（不合并、不充样本量）
+training_config:
+  isolation: "训练/早停只读 reliability_train∩K∈{5,10}；选型只读 reliability_tune∩K∈{5,10}；testA/testB/K20/K50 从不进入任何阶段（driver 级断言）"
+  normalization: "E1 标准化 μ/σ 与 E3 的 score 标准化只用 reliability_train∩K∈{5,10} 估计（同 A6.3）"
+  selection_metric: "reliability_tune 的 mean AUROC_correct(K5,K10)；|Δ|<0.002 时取更简单（更小 C/lr）（A7.4）"
+  e2_e3_optim: "BCE；AdamW；wd=1e-4；patience 30；≤300 epochs；lr∈{1e-4,3e-4,1e-3} 各自选定"
+calibration_config:
+  note: "不重新拟合温度：corrected softmax 复用 Phase 0A.1/0B 冻结的 per-seed corrected global T（1.115344 / 1.116630 / 1.100525）"
+metrics:                       # pooled test = testA+testB canonical 行集（n=10,286 / 1,490 images；跨 K 共享分母）
+  selection_tune_mean:         # A7.4 选型值 3-seed 均值；gate 比较 = best score-only（msp 0.8201）vs best semantic（e1b 0.8202）
+    msp: 0.8201
+    stats_logistic: 0.8195
+    e1_semantic_stats: 0.6890
+    e1b_stats_semantic: 0.8202
+    e2_score: 0.8216           # 原始 per-seed tune 最高族；A7.6 预运行澄清将其排除出 best-semantic 候选（不消费任何 embedding）
+    e2_semantic: 0.6287
+    e2_combined: 0.8105
+    e3_full: 0.7824
+    e3_top5: 0.7766
+    e3_logk: 0.7789
+  pooled_auroc_correct:        # K5 / K10 / K20 / K50；3-seed mean±std
+    msp:                {K5: "0.8407±0.0020", K10: "0.8103±0.0024", K20: "0.7995±0.0005", K50: "0.7890±0.0025"}
+    stats_logistic:     {K5: "0.8408±0.0021", K10: "0.8105±0.0024", K20: "0.8015±0.0012", K50: "0.7915±0.0038"}
+    e1_semantic_stats:  {K5: "0.7152±0.0026", K10: "0.7116±0.0027", K20: "0.7202±0.0017", K50: "0.7143±0.0023"}
+    e1b_stats_semantic: {K5: "0.8423±0.0024", K10: "0.8171±0.0027", K20: "0.8138±0.0016", K50: "0.8069±0.0051"}
+    e2_score:           {K5: "0.8407±0.0021", K10: "0.8104±0.0022", K20: "0.8013±0.0009", K50: "0.7930±0.0036"}
+    e2_semantic:        {K5: "0.6575±0.0010", K10: "0.6501±0.0022", K20: "0.6559±0.0020", K50: "0.6611±0.0011"}
+    e2_combined:        {K5: "0.8267±0.0018", K10: "0.7984±0.0026", K20: "0.7946±0.0006", K50: "0.7878±0.0021"}
+    e3_full:            {K5: "0.7979±0.0066", K10: "0.7750±0.0049", K20: "0.7671±0.0031", K50: "0.7508±0.0013"}
+    e3_top5:            {K5: "0.7899±0.0043", K10: "0.7681±0.0039", K20: "0.7619±0.0046", K50: "0.7450±0.0052"}
+    e3_logk:            {K5: "0.7941±0.0072", K10: "0.7721±0.0053", K20: "0.7636±0.0054", K50: "0.7480±0.0038"}
+  pooled_selective:            # E-AURC / RER@50 / RER@80（K5→K10→K20→K50）
+    msp:                {e_aurc: "0.0381→0.0710→0.0969→0.1241", rer_at_50: "0.8248→0.6515→0.5058→0.3588", rer_at_80: "0.3859→0.2593→0.1870→0.1206"}
+    stats_logistic:     {e_aurc: "0.0381→0.0711→0.0958→0.1216", rer_at_50: "0.8257→0.6492→0.5146→0.3611"}
+    e1b_stats_semantic: {e_aurc: "0.0381→0.0687→0.0903→0.1140", rer_at_50: "0.8149→0.6549→0.5304→0.3836", rer_at_80: "0.3898→0.2713→0.2011→0.1313"}
+  bootstrap_e1b_vs_score_only_pooled_K50:   # image-cluster paired bootstrap 5000 reps（seed=0, ci=0.95）；diff>0 = semantic 更好；per seed 1/2/3
+    vs_stats_logistic: {auroc: ["+0.0190 [+0.0153,+0.0226]", "+0.0152 [+0.0123,+0.0181]", "+0.0121 [+0.0092,+0.0149]"],
+                        e_aurc_reduction: ["+0.0782 [+0.0619,+0.0941]", "+0.0625 [+0.0493,+0.0756]", "+0.0475 [+0.0338,+0.0609]"]}
+    vs_msp:            {auroc: ["+0.0230 [+0.0184,+0.0275]", "+0.0159 [+0.0126,+0.0192]", "+0.0146 [+0.0110,+0.0182]"],
+                        e_aurc_reduction: ["+0.1070 [+0.0880,+0.1252]", "+0.0706 [+0.0560,+0.0848]", "+0.0670 [+0.0501,+0.0837]"]}
+  ablations:
+    e2_variants_K50: "E2-score 0.7930±0.0036 ≈ msp；E2-semantic 0.6611（纯语义交互远弱）；E2-combined 0.7878；E2-combined vs stats_logistic per seed −0.0067/−0.0011/−0.0033（无正增益，1/3 seed CI 完全 <0）"
+    e3_full_vs_top5_K50: "0.7508 vs 0.7450（+0.0058；full-set 略优）；E3 全族 vs stats_logistic −0.0336~−0.0452（CI 全 <0）"
+    e3_logk_K50: "0.7480（vs e3_full −0.0028）→ logK 无正贡献"
+  e1b_coefficients_b3_mean:    # 标准化 logistic 系数（predictive association，非因果）
+    negative_top: {cand_vmax: "-0.4852±0.0678", cand_vmean: "-0.1300±0.0580"}
+    positive_top: {density_070: "+0.1692±0.0306", cand_top15_mean: "+0.1417±0.0461", cand_top12_sim: "+0.1090±0.0196", clip_margin12: "+0.0959±0.0182"}
+  ood_stability_b3_mean:       # ΔAUROC(K5−K50) / E-AURC(K50)/E-AURC(K5) / RER50(K5)−RER50(K50)
+    msp: "+0.0517 / 3.257 / +0.4660"
+    stats_logistic: "+0.0494 / 3.188 / +0.4646"
+    e1b_stats_semantic: "+0.0354 / 2.990 / +0.4313"
+    e2_combined: "+0.0389 / 2.909 / +0.4303"
+    e3_full: "+0.0471 / 2.861 / +0.4234"
+  error_subsets_K50:           # pooled；quartile 内 AUROC（score=stats_logistic / e1b / e2_combined / e3_full）
+    cand_top12_sim: {Q1: "0.8061/0.8270/0.7854/0.7614", Q2: "0.7756/0.7950/0.7660/0.7391",
+                     Q3: "0.7740/0.7906/0.7699/0.7395", Q4: "0.7704/0.7842/0.7630/0.7205", all: "0.7915/0.8069/0.7878/0.7508"}
+    clip_margin12:  {Q1: "0.7314/0.7565/0.7230/0.6916", Q2: "0.7720/0.7893/0.7721/0.7348",
+                     Q3: "0.7837/0.7967/0.7819/0.7335", Q4: "0.8193/0.8285/0.8146/0.7908"}
+    note: "e1b 在全部 8 个分组均 ≥ stats_logistic（Δ+0.012~+0.035）；高错误率/歧义组内语义增益仍然存在"
+  matched_score_K50:           # treatment = cand_top12_sim 上四分位；control = 其余；匹配变量 [MSP,margin,entropy] z-score 1-NN（不用 correctness）
+    delta_correctness_per_seed: ["−0.1108 [−0.1301,−0.0918]", "−0.1369 [−0.1568,−0.1166]", "−0.1198 [−0.1405,−0.0997]"]   # CI 全排除 0
+    note: "控制 score statistics 后，高 top1-top2 语义相似度（top-2 歧义）组 B3 正确率低 ~11-14pp —— score 之外的可靠性信息直接证据"
+  sufficiency_gate:            # A7.6；比较 = msp → e1b_stats_semantic（3-seed mean tune 选定）
+    verdict: INCONCLUSIVE      # gray zone（§31）：全部 CI 排除 0 且方向一致为正，但三项阈值全未达（0.0179<0.02 / 8.15%<10% / 2.48pp<5pp）；NO-GO 不触发（ΔAUROC≥0.01）→ 先 error analysis，不自动加 Transformer
+    cell_K20: {delta_auroc: "0.0143 [0.0112,+0.0175]", e_aurc_reduction: "6.84% [5.31%,8.42%]", rer50_gain_pp: "+2.46 [+1.25,+3.88]"}
+    cell_K50: {delta_auroc: "0.0179 [0.0140,+0.0216]", e_aurc_reduction: "8.15% [6.47%,9.79%]", rer50_gain_pp: "+2.48 [+1.48,+3.69]"}
+    per_seed_K50_delta_auroc_ci_low: [0.0184, 0.0126, 0.0110]   # 3/3 seeds CI_lo>0；seed-mean Δ=0.0179
+  counts: {n_pooled_common_rows: 10286, n_pooled_images: 1490, predictions_rows_per_seed: 62272}
+  uncertainty: {bootstrap_replicates: 5000, resampling_unit: image, ci_level: 0.95, seed: 0}
+  risk_definition: "risk = 1 - accuracy"
+run:
+  command: "E:\conda\envs\deepminer\python.exe _launch_detached.py logs_phase1.txt scripts/run_phase1.py --out results/phase1_semantic_sufficiency --bootstrap-replicates 5000 --log-file logs_phase1_driver.txt（detached；同链路先用 --tiny 冒烟）"
+  device: "cuda（torch 2.5.1+cu121；E2/E3 训练）/ cpu（bootstrap，numpy）"
+  step_seconds: "total 5915.7s（~98.6 min）：load 24.4 / features 16.7 / models 395.2 / aggregate 4.5 / bootstrap 5327.2（5000 reps；bootstrap.csv 750 行=cross-K 540+pairwise 168+ratio 42）/ analyses 5.5 / figures+gate 140.4"
+  incident: >
+    (a) A7.3 预结果修订：生成任何结果前发现 T_clip=1 使 CLIP softmax 饱和（clip_entropy 退化恒定 ≈logK；
+    核实 openai ViT-B/32 logit_scale 恰为 100）→ 修订为 T_clip=0.01 并记入协议后才继续。(b) A7.6 预运行澄清：
+    E2-score（无 embedding 输入）排除出 best-semantic 候选，防止 gate 退化为两个 score 模型比较。(c) 首次全量
+    运行在 seed3 阶段 OOM（K50 float32 打包 ~2GB ×多份）中止 → 修复（embedding float16 视图 + E3 分块预测
+    chunk=4096 + 不保留 packed 缓存）后重启，一次跑完无中断。(d) detached 运行 stdout 重定向 → tqdm 进度条
+    自动禁用（仅显示层，非错误）。
+artifacts:
+  root: results/phase1_semantic_sufficiency/     # 26 文件
+  top_level: [protocol.json, metadata.json, sufficiency_gate.json, semantic_stats.csv, aggregate.csv, bootstrap.csv,
+              pairwise_vs_score_only.csv, ood_stability.csv, error_subsets.csv, matched_score_analysis.csv]
+  families: [e1_logistic/{selection.json,metrics.csv,coefficients.csv}, e2_top_competitor/{selection.json,metrics.csv},
+             e3_semantic_deepsets/{selection.json,metrics.csv}]
+  embeddings_features: semantic_features/e1_stats_b3_seed{1,2,3}.npz
+  predictions: predictions/b3_seed{1,2,3}.csv.gz（val_select/testA/testB × K∈{5,10,20,50}；62,272 行/seed；§39 列）
+  figures: [figures/semantic_reliability_vs_K.png, figures/selective_risk_vs_K.png, figures/ambiguity_stratified_k50.png]
+  embedding_cache: cache/semantic_phase1/（gitignored，~GB 级；cohort hash 与重建方式见 protocol.json）
+notes: >
+  Phase 1 candidate semantic information sufficiency 审计（指令全文 + Amendment A7）。目的：在冻结 B3 ranking 与
+  score-only 结论（Phase 0.5 GO_candidate_embeddings）之上，检验 candidate/query semantic representation 是否携带
+  超出手工 score statistics 的额外可靠性信息；以及（若有）该信息是否集中于最强竞争者。关键观测：
+  (1) 选型（3-seed mean tune）：best score-only = msp（0.8201），best semantic（A7.6 候选集）= e1b（0.8202）；
+  e2_score 原始 tune 最高（0.8216）但按 A7.6 预运行澄清不属语义候选。
+  (2) 主结果（e1b vs msp，pooled K50）：ΔAUROC +0.0179 [0.0140,+0.0216]，E-AURC reduction +8.15% [6.47,9.79]，
+  RER@50 +2.48pp [1.48,3.69]；K20 cell 同向（+0.0143 / +6.84% / +2.46pp）；全部 CI 排除 0，3/3 seeds 显著，
+  但三项阈值全部略低于 A7.6 PASS（0.02 / 10% / 5pp）→ verdict INCONCLUSIVE（gray zone；NO-GO 不触发）。
+  (3) 语义信息的集中性：e1b（仅 34 params 手工统计）一致优于 E2-combined（full-set 交互 + 123k params）与
+  E3（149k params；E3-full 虽略优于 E3-top5 +0.0058 但仍显著低于 score-only）→ 有用信息集中在「胜者 vs
+  最强竞争者」的几何关系（cand_vmax 系数 −0.485 主导；density_070 / cand_top15_mean / cand_top12_sim 次之），
+  全候选集建模不增加价值；E2-semantic（纯语义）远弱（K50 0.66），说明语义单独不足以替代 score 信息。
+  (4) 语义信息的直接证据：matched-score diagnostic（不用 correctness 匹配）中高 top1-top2 相似度组
+  Δcorrectness −11~−14pp（CI 全排除 0）——控制 score statistics 后语义相似度仍携带正确性信息。
+  (5) OOD stability：e1b 同时提升绝对质量（K50 AUROC +0.0179 vs msp）并减弱 K 退化（ΔAUROC K5→K50
+  0.0354 vs msp 0.0517；E-AURC ratio 2.990 vs 3.257）；但幅度不足以通过 gate。
+  (6) error subsets：e1b 在 K50 全部分组（cand_top12_sim / clip_margin12 各 quartile）优于 stats_logistic（+0.012~+0.035）。
+  (7) 测试与校验：全量 pytest 561 passed（含 §41 15 项 driver 级测试映射）；E0 复现校验 msp 0.0 / stats_logistic ≤2.8e-16；
+  产物完整性校验通过（26 文件 + predictions 62272 行/seed + E0 checks）。
+  (8) 结论（回答最终两问）：Q1 —— 控制 score 信息后，candidate/query semantic representation 仍携带额外的可靠性信息
+  （方向一致、CI 全部排除 0），但幅度处于「证据存在、阈值未达」的 gray zone，需下一阶段先做 error analysis
+  （本条目不自动推进，未实现任何 Transformer / reranking）。Q2 —— 有用信息集中在最强竞争者的几何关系中，
+  full candidate set 不增加进一步价值。本阶段到此停止（§44）。
+```

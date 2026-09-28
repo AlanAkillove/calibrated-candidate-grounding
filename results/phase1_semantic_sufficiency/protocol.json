@@ -1,0 +1,192 @@
+{
+  "protocol": "Amendment A7 — Phase 1 candidate semantic information sufficiency audit",
+  "created_utc": "2026-09-28T15:22:18Z",
+  "repository": "F:\\DL Projects\\calibrated-candidate-grounding",
+  "environment": {
+    "python": "3.10.19",
+    "numpy": "1.26.4",
+    "torch": "2.5.1+cu121",
+    "device": "cuda",
+    "platform": "Windows-10-10.0.26100-SP0"
+  },
+  "config": {
+    "c_grid": [
+      0.1,
+      1.0,
+      10.0
+    ],
+    "lr_grid": [
+      0.0001,
+      0.0003,
+      0.001
+    ],
+    "max_epochs": 300,
+    "patience": 30,
+    "bootstrap_replicates": 5000,
+    "bootstrap_seed": 0,
+    "ci": 0.95,
+    "tiny": false
+  },
+  "cohort": {
+    "rows_per_k": {
+      "5": 20799,
+      "10": 20799,
+      "20": 20799,
+      "50": 20799
+    },
+    "ks": [
+      5,
+      10,
+      20,
+      50
+    ]
+  },
+  "split": {
+    "manifest": "results\\phase05_score_sufficiency\\split_manifest.json",
+    "seed": 20260928,
+    "train_frac": 0.7,
+    "n_train_images": 523,
+    "n_tune_images": 224,
+    "reused_from": "results/phase05_score_sufficiency/split_manifest.json (A6.2)"
+  },
+  "embeddings": {
+    "root": "cache\\semantic_phase1",
+    "index_sha256": "29478c2d342f66fd4b9582f4f57634354ee64f49ea20cd9b789a9e405c1c037f",
+    "source": "cache/features (frozen OpenCLIP ViT-B/32, L2-normalised, float16)",
+    "layout": "C_K = [target] + distractor_order[:K-1]; target_local == 0"
+  },
+  "phase05_reference_hashes": {
+    "results\\phase05_score_sufficiency\\split_manifest.json": "badd94bc88c1f0ba87c7136e2b33cb5b427a73fe0e112dc39d4260cb62b5b7c0",
+    "results\\phase05_score_sufficiency\\stats_logistic\\selection.json": "e911a95fe227cba2374183f56d96561ac272f9ce9502171d46ea469dbcb7938f",
+    "results\\phase05_score_sufficiency\\predictions\\b3_seed1\\msp.csv.gz": "c75b36ca4ce353b9e231a085249b022dcde8fe05fba61b219a0791af5a0502b4",
+    "results\\phase05_score_sufficiency\\predictions\\b3_seed1\\stats_logistic.csv.gz": "1f3f3822c9198c011bd60098beddce807ead857a36aa8210ba210a649d9ffbab",
+    "results\\phase05_score_sufficiency\\predictions\\b3_seed2\\msp.csv.gz": "9d3f23070f6675c3028d6aed89442503e42269d0528cef5b7a4c1c2af1f72618",
+    "results\\phase05_score_sufficiency\\predictions\\b3_seed2\\stats_logistic.csv.gz": "5fa68c81e1468c046b42682f227b00cf23d51991bddce8c31e6fdde2ef5d3f30",
+    "results\\phase05_score_sufficiency\\predictions\\b3_seed3\\msp.csv.gz": "c1a4d470c37ddfa8a1b414f6b35549b8c9fca5646bf2ecffdb4595131ab33adc",
+    "results\\phase05_score_sufficiency\\predictions\\b3_seed3\\stats_logistic.csv.gz": "d5de0aa811b96f63d5e4b8eb30269880ed83c57dfb3bce9c9997b0f2997fa4a5",
+    "results\\phase0b_independent\\seed_1\\raw_scores\\K5.npz": "0ad5f53bd1302bdcbd94435553a6fb338b165e32029d8d1672d1431e0cf3451b",
+    "results\\phase0b_independent\\seed_1\\raw_scores\\K50.npz": "86b6de430f787fcbc9dda0bb45108993fee669a018c56c158f9779c28e672a98",
+    "results\\phase0b_independent\\seed_2\\raw_scores\\K5.npz": "bed62714b0fc1bb1eb579154f7c8d90e46fe21c0d536274a57a240eebf4d3724",
+    "results\\phase0b_independent\\seed_2\\raw_scores\\K50.npz": "e9c1a6efb8cba52ce25d1712b14e9e4ef156bf0326fe38c1c89762800678a79c",
+    "results\\phase0b_independent\\seed_3\\raw_scores\\K5.npz": "5a96fd8bd62e6dd704c72f75b9fc1e1a537dc1743e6dec05bf4e872dd0e0077c",
+    "results\\phase0b_independent\\seed_3\\raw_scores\\K50.npz": "c8139330252576d5634d131da188c1d9ff2488d4e7cbbb1ea09da68214cc88e9"
+  },
+  "model_zoo": {
+    "score_only": [
+      "msp",
+      "stats_logistic"
+    ],
+    "semantic": [
+      "e1_semantic_stats",
+      "e1b_stats_semantic",
+      "e2_score",
+      "e2_semantic",
+      "e2_combined",
+      "e3_full",
+      "e3_top5",
+      "e3_logk"
+    ],
+    "pairs": [
+      {
+        "semantic": "e1b_stats_semantic",
+        "score_only": "stats_logistic"
+      },
+      {
+        "semantic": "e2_combined",
+        "score_only": "stats_logistic"
+      },
+      {
+        "semantic": "e3_full",
+        "score_only": "stats_logistic"
+      },
+      {
+        "semantic": "e3_full",
+        "score_only": "e2_combined"
+      },
+      {
+        "semantic": "e1b_stats_semantic",
+        "score_only": "msp"
+      },
+      {
+        "semantic": "e2_combined",
+        "score_only": "msp"
+      },
+      {
+        "semantic": "e3_full",
+        "score_only": "msp"
+      }
+    ],
+    "headline_models": [
+      "msp",
+      "stats_logistic",
+      "e1b_stats_semantic",
+      "e2_combined",
+      "e3_full",
+      "e3_top5"
+    ]
+  },
+  "selection": {
+    "metric": "mean AUROC_correct over reliability_tune K5/K10",
+    "tie_break": "earlier (simpler) grid value when |delta| < 0.002",
+    "grids": {
+      "logistic_C": [
+        0.1,
+        1.0,
+        10.0
+      ],
+      "torch_lr": [
+        0.0001,
+        0.0003,
+        0.001
+      ]
+    },
+    "reliability_seed": "int(scorer suffix), derived deterministically (A7 sec.25)"
+  },
+  "gate_thresholds": {
+    "auroc_gain": 0.02,
+    "auroc_gain_strong": 0.03,
+    "e_aurc_reduction": 0.1,
+    "e_aurc_reduction_strong": 0.2,
+    "rer50_gain_pp": 5.0,
+    "rer50_gain_pp_strong": 10.0,
+    "no_go_auroc": 0.01,
+    "no_go_e_aurc": 0.05,
+    "no_go_rer50_pp": 3.0,
+    "seed_sig_min": 2,
+    "seed_total": 3
+  },
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "unit": "image cluster"
+  },
+  "prohibited": [
+    "changing grounding scores / reranking",
+    "candidate-aware grounding training",
+    "Set Transformer / cross-attention",
+    "CLIP finetuning",
+    "global image feature",
+    "geometry / objectness inputs",
+    "GT metadata",
+    "FineCops / RefCOCOg",
+    "RL / VLM"
+  ],
+  "artifacts": [
+    "protocol.json",
+    "semantic_features/",
+    "semantic_stats.csv",
+    "e1_logistic/",
+    "e2_top_competitor/",
+    "e3_semantic_deepsets/",
+    "aggregate.csv",
+    "pairwise_vs_score_only.csv",
+    "bootstrap.csv",
+    "error_subsets.csv",
+    "matched_score_analysis.csv",
+    "ood_stability.csv",
+    "sufficiency_gate.json",
+    "figures/",
+    "predictions/"
+  ]
+}

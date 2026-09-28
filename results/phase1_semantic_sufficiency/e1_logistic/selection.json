@@ -1,0 +1,146 @@
+{
+  "family": "e1_logistic",
+  "selection_metric": "mean AUROC_correct over reliability_tune K5/K10",
+  "per_scorer": {
+    "b3_seed1": {
+      "models": {
+        "e1_semantic_stats": {
+          "selected_hp": 0.1,
+          "tune_mean_auroc": 0.6829297219407403,
+          "params": 17,
+          "information": "semantic_statistics"
+        },
+        "e1b_stats_semantic": {
+          "selected_hp": 0.1,
+          "tune_mean_auroc": 0.8128294927291033,
+          "params": 34,
+          "information": "score_statistics+semantic_statistics"
+        }
+      }
+    },
+    "b3_seed2": {
+      "models": {
+        "e1_semantic_stats": {
+          "selected_hp": 0.1,
+          "tune_mean_auroc": 0.6959200761265976,
+          "params": 17,
+          "information": "semantic_statistics"
+        },
+        "e1b_stats_semantic": {
+          "selected_hp": 0.1,
+          "tune_mean_auroc": 0.8257888369200321,
+          "params": 34,
+          "information": "score_statistics+semantic_statistics"
+        }
+      }
+    },
+    "b3_seed3": {
+      "models": {
+        "e1_semantic_stats": {
+          "selected_hp": 0.1,
+          "tune_mean_auroc": 0.688128553200801,
+          "params": 17,
+          "information": "semantic_statistics"
+        },
+        "e1b_stats_semantic": {
+          "selected_hp": 0.1,
+          "tune_mean_auroc": 0.8220298402611211,
+          "params": 34,
+          "information": "score_statistics+semantic_statistics"
+        }
+      }
+    }
+  },
+  "grid_search": {
+    "b3_seed1": [
+      {
+        "model": "e1_semantic_stats",
+        "grid": [
+          0.1,
+          1.0,
+          10.0
+        ],
+        "values": [
+          0.6829297219407403,
+          0.6815007122065655,
+          0.6814242193750129
+        ],
+        "chosen": 0.1
+      },
+      {
+        "model": "e1b_stats_semantic",
+        "grid": [
+          0.1,
+          1.0,
+          10.0
+        ],
+        "values": [
+          0.8128294927291033,
+          0.8123598472454254,
+          0.8111334171063699
+        ],
+        "chosen": 0.1
+      }
+    ],
+    "b3_seed2": [
+      {
+        "model": "e1_semantic_stats",
+        "grid": [
+          0.1,
+          1.0,
+          10.0
+        ],
+        "values": [
+          0.6959200761265976,
+          0.6951195949752169,
+          0.6949962845951565
+        ],
+        "chosen": 0.1
+      },
+      {
+        "model": "e1b_stats_semantic",
+        "grid": [
+          0.1,
+          1.0,
+          10.0
+        ],
+        "values": [
+          0.8257888369200321,
+          0.8246492705120345,
+          0.8235781261054098
+        ],
+        "chosen": 0.1
+      }
+    ],
+    "b3_seed3": [
+      {
+        "model": "e1_semantic_stats",
+        "grid": [
+          0.1,
+          1.0,
+          10.0
+        ],
+        "values": [
+          0.688128553200801,
+          0.6875918656460056,
+          0.68751023451614
+        ],
+        "chosen": 0.1
+      },
+      {
+        "model": "e1b_stats_semantic",
+        "grid": [
+          0.1,
+          1.0,
+          10.0
+        ],
+        "values": [
+          0.8220298402611211,
+          0.8207544378569468,
+          0.8196475216501382
+        ],
+        "chosen": 0.1
+      }
+    ]
+  }
+}

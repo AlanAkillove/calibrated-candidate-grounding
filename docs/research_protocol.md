@@ -496,6 +496,7 @@ indices：ref_id/regime/K/hardness/target_present/candidate_indices/target_candi
 | A4 | 2026-09-27 | Phase 0A（B1 cosine）audit outcome 登记 + 解读约束（新增披露义务；**结果记录**：不修改任何条款与 gate 数字） | Phase 0A 全量审计完成：硬 sanity check 全过、嵌套集理论性质未违反（无 VALIDATION_FAILURE）；T* 与 oracle per-K 温度均在拟合搜索下界凝结（边界简并）；calibration 证据须与 ranking 并列报告 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A4” |
 | A5 | 2026-09-28 | 度量有效性修正 + temperature 优化重做 + reliability GO replication criterion（**post-hoc amendment**：在 Phase 0A 结果可见后加入，*不构成 preregistration*；不修改任何原始 gate 数字） | Phase 0A 暴露三个统计问题：nested candidate sets 下 raw accuracy degradation 是结构性预期；raw AURC 与 base error rate 强耦合；temperature 最优解落在优化边界（T*=0.05 贴界）。后续 reliability GO 改为依赖 accuracy-normalized / base-rate-aware 指标（E-AURC / AUROC_correct / RER@c / corrected global-T reliability map） | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A5” |
 | A6 | 2026-09-28 | Phase 0.5 Score-Information Sufficiency Audit protocol 冻结（split seed / 模型 zoo / 选型指标 / sufficiency gate；**结果可见前冻结**；不修改任何既有条款） | 进入 score-only 可靠性信息充分性审计：需在结果前固定 reliability_train/tune 切分（image-level, seed=20260928, 70/30）、训练 K 约束（K∈{5,10}）、L0/L1/L2 模型 zoo 与 §24/25/26 sufficiency gate 判定语义 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A6” |
+| A7 | 2026-09-28 | Phase 1 Candidate Semantic Information Sufficiency Audit protocol 冻结（E1/E2/E3 模型 zoo / 统计与 gate §28-31 / P1-P4 比较；**GO/NO-GO 数字在任何 Phase 1 结果可见前冻结**；不修改任何既有条款） | Phase 0.5 已证 score-only 信息不足（GO_candidate_embeddings，4 OOD cells 双 Route）；检验唯一未使用信息源 candidate/query semantic representation 是否携带额外可靠性信息 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A7” |
 
 ---
 
@@ -900,3 +901,72 @@ proposal generator 选型一致；`detector / RPN` 原文不删除，由本条�
 ### A6.7 禁止事项（与指令 §32 一致）
 
 candidate embedding / Set Transformer / query·crop embedding / geometry / objectness / GT metadata / 重训 grounding scorer / loss engineering / feature-subset search / 多检验挑选，一律禁止；本轮只回答 “How much reliability information is already present in the score set?”。
+
+---
+
+## Amendment A7 — 2026-09-28 — Phase 1 Candidate Semantic Information Sufficiency Audit（GO/NO-GO 数字在任何 Phase 1 结果可见前冻结）
+
+**staged 声明**：本 amendment 制定于 Phase 0.5 score-sufficiency 结果已知之后（其 GO 结论是进入本阶段的动机）；属 staged research protocol，**不是**初始 preregistration；不修改任何既有条款。
+
+### A7.1 固定 grounding 与数据
+
+- 主 scorer：**B3 Independent MLP（seed 1-3）**；Phase 0B raw scores 直接复用，**不重训**；ĉ = argmax s_i 全程冻结；reliability model 不得改分数 / rerank / 改变 top-1 / 参与 grounding 训练。
+- 切分与 Phase 0.5 **完全一致**（不重划）：复用 `results/phase05_score_sufficiency/split_manifest.json` 的 train/tune images（523/224；seed=20260928, 70/30）；训练/选型只用 K∈{5,10} 行；OOD 评估 K∈{20,50}（testA/testB/pooled）；testA/testB 不参与训练/早停/选型。
+- 本轮不用 cosine（secondary 不参与）；3 个 B3 seed 各自独立跑完整流程，不混合。
+- 行集/顺序：与 Phase 0.5 canonical 行集（common cohort, n=20799, sentence_id 升序）逐 K 对齐；image_id/eval_split 逐行断言相等。
+
+### A7.2 输入（允许 / 禁止）
+
+- 允许：z_q、z_i（已缓存 L2-normalized OpenCLIP，512-d）、B3 raw scores、candidate rank、top1 indicator、corrected softmax probability。
+- 禁止：global image embedding、GT category/IoU/identity、oracle metadata、FineCops、**geometry/objectness**（B3 已用过；Phase 1 保持语义纯净）。
+
+### A7.3 模型 zoo 冻结（E0/E1/E2/E3；禁止 grid 扩张）
+
+- **E0（reference）**：MSP 与 Phase 0.5 Stats Logistic——直接复用 `results/phase05_score_sufficiency/predictions/` 中已保存的逐行预测（同数据同切分；运行时断言与本地重算一致）。
+- **E1（handcrafted semantic stats，<30 维）**，全部确定性、无阈值搜索；设 r(i) 为 B3 score 降序 stable rank，t=winner，a_i=cos(z_q,z_i)，v_{ij}=cos(z_i,z_j)：
+  `clip_top1=a_r1, clip_top2=a_r2, clip_margin12=a_r1−a_r2, clip_entropy=H(softmax(a/T_clip)), clip_normH=1−H/logK, clip_rank_top1=B3 winner 在 CLIP cosine 降序下的平均秩/K, cand_vmax=max_{j≠t} v_tj, cand_vmean, cand_vstd, cand_top12_sim=v_t,r2, cand_top15_mean=mean_{r=2..5} v_tj, density_070/#{j≠t:v_tj>0.7}/(K−1), density_080（τ=0.8）, q_top3=a_r3, q_margin13=a_r1−a_r3, cand_top13_sim=v_t,r3`（共 16 维；τ∈{0.7,0.8} 固定）。
+  **预结果修订（2026-09-28，在生成任何 Phase 1 结果前）**：`T_clip = 0.01`（= 1/logit_scale；冻结的 OpenCLIP ViT-B/32 `openai` 权重的 logit_scale 实测精确为 100）。原稿写入的 T=1 在 CLIP cosine 尺度下使该 softmax 饱和（clip_entropy 退化为恒定 ≈ log K），属特征退化；`clip_entropy/clip_normH` 因此改为 `softmax(a/0.01)`。其余定义不变。
+- **E1 模型**：LogisticRegression(L2, C∈{0.1,1,10})；**E1a**=semantic 16-d only；**E1b**=[A6 的 17-d stats（stats_logK 变体）⊕ semantic 16-d]。标准化 μ/σ 只用 reliability_train∩K∈{5,10}（同 A6.3）。
+- **E2 TopCompetitor**（torch，BCE）：P_q: 512→64，P_v: 512→64（top1/top2 共享）；交互 [q,h1,h2,q⊙h1,q⊙h2,h1⊙h2,|h1−h2|] (448-d)；变体：**E2-score**（仅 4 维 score stats: top1/top2/margin/MSP）、**E2-semantic**（仅 448-d）、**E2-combined**（448-d ⊕ 4-d）；head 128→1；参数 <150k；lr∈{1e-4,3e-4,1e-3}，wd=1e-4，patience 30，≤300 epochs，val=reliability_tune。主模型=E2-combined。
+- **E3 SemanticDeepSets**（torch，BCE）：h_i=[r_i(64), q⊙r_i(64), s_i* (train-μ/σ 标准化 raw score), p_i (corrected softmax), 1/rank_i, top1_ind_i] (132-d)；φ:132→128→GELU→128；u=[mean, max, h_t]；head→128→1；**默认 without logK**；参数 <250k；同 E2 训练配置。
+  - **E3-full**（全 K）为主模型；**E3-top5**（B3 score 前 5，所有 K 固定）为预定义 ablation；`E3+logK` 为单项 ablation。不得用 K20/K50 选择。
+
+### A7.4 选型
+
+- 只用 reliability_tune 的 mean AUROC_correct(K5,K10)；|Δ|<0.002 时取更简单模型（更少参数）；每个变体的 lr/C 各自在这套规则下选定；OOD 不参与任何选择。
+
+### A7.5 统计与主比较
+
+- 指标同 A6.5（AUROC_correct/E-AURC/RER@50/RER@80 + secondary）；worsening/减幅约定与 Phase 0.5 一致（正値=K_b 更差 / 正値=改善，后者统一以 relative reduction = (score−sem)/score 报告并给 CI）。
+- image-cluster paired bootstrap 5000 reps；跨 K（K5 vs K20/K50，testA/testB/pooled）与跨模型；跨模型固定对：**P1** StatsLogistic vs E1b；**P2** StatsLogistic vs E2-combined；**P3** StatsLogistic vs E3-full；**P4** E2-combined vs E3-full；另加 MSP vs {E1b, E2-combined, E3-full}（因 Phase 0.5 seed-mean winner 是 MSP，gate 需与其比较）；均在 pooled、K=5 与 K=50（若需要 gate 在 K20 上同样计算）。
+- 每 scorer seed 独立；头部报 mean±std；**不合并 seeds**。
+
+### A7.6 Candidate Semantic GO Gate（§28/29/30/31 冻结语义）
+
+- 比较对象（结果前就指定、运行时仅按 tune 确定具体名字）：**best score-only**（tune 最高的 {MSP, StatsLogistic}）vs **best semantic**（tune 最高的 {E1a,E1b,E2-semantic,E2-combined,E3-full,E3-top5}）；两者均由 3-seed mean tune 选定一次。**预运行澄清（2026-09-28，在任何正式 Phase 1 结果前）**：E2-score 不进入 best-semantic 候选集——它不消费任何 embedding 信息（仅 score stats 的 MLP 消融），否则 §28 “candidate semantic model” 的比较会退化为两个 score 模型的比较（E2-semantic/E2-combined/E3 均消费 embedding，保留）。
+- 单元定义：**cell(K), K∈{20,50}**，在 `__pooled_test__` 上：
+  `cell_ok(K) = [ΔAUROC ≥ 0.02 且 ΔAUROC CI_lo > 0] ∧ ([E-AURC relative reduction ≥ 0.10 且 CI_lo > 0] ∨ [ΔRER@50 ≥ 5pp 且 CI_lo > 0])`
+- **PASS（Semantic Signal PASS）** = cell_ok(20) ∧ cell_ok(50) ∧ (至少 2/3 seeds 在 K50 上 ΔAUROC CI_lo > 0) ∧ (3-seed mean 方向一致为正)。
+- **STRONG（§29）** = K50 上 ΔAUROC ≥ 0.03 ∧（E-AURC reduction ≥ 0.20 或 ΔRER@50 ≥ 10pp）∧ 同样 CI_lo > 0；标注但不作为后续必要条件。
+- **NO-GO（§30）** = 在 K20 与 K50 两个 cell 上同时：ΔAUROC < 0.01 ∧ |E-AURC relative reduction| < 0.05 ∧ |ΔRER@50| < 3pp。
+- 优先级：**STRONG > PASS > NO-GO > INCONCLUSIVE**（其余情况及 0.01≤ΔAUROC<0.02 的 gray zone 一律 INCONCLUSIVE，先 error analysis，不自动加 Transformer）。
+
+### A7.7 附加分析（§32-35）
+
+- **OOD stability**：逐模型报 ΔAUROC(K5,K50)、E-AURC(K50)/E-AURC(K5)、RER50(K5)−RER50(K50)（pooled seed-mean）→ 区分“全面提升绝对质量” vs “减弱 K 依赖退化”。
+- **Error subsets**：K50 pooled；A=B3 correct / B=incorrect；在 B 内按 cand_top12_sim  quartile 分组；同法按 clip_margin12 分组；报各组 n、score-only vs semantic 的 AUROC 与 Δ。
+- **Matched-score diagnostic**：K50 pooled；treatment = cand_top12_sim 上四分位，control = 其余，匹配变量 = pooled 内 z-score 的 [MSP, margin12, entropy] 欧氏 1-NN 贪心无放回匹配（按 sentence_id 排序确定性执行；**不使用 correctness**）；报 matched Δcorrectness + image-cluster bootstrap CI。
+- **E1 coefficients**：E1b 标准化系数（逐 seed + mean±std）；只作 predictive association diagnostic，不作 causal claim。
+
+### A7.8 禁止事项（与指令 §43 一致）
+
+changing grounding scores / reranking / candidate-aware grounding training / Set Transformer / cross-attention / CLIP finetuning / global image feature / hard-negative training / target omission / FineCops / RefCOCOg / backbone comparison / RL / VLM；只回答 “Does candidate semantic information improve reliability prediction beyond score information?”。
+
+### A7.9 Artifacts 与存储约定
+
+- `results/phase1_semantic_sufficiency/`：protocol.json、semantic_features/（E1 stats npz + provenance）、semantic_stats.csv（定义表 + summary moments）、e1_logistic/、e2_top_competitor/、e3_semantic_deepsets/、aggregate.csv、pairwise_vs_score_only.csv、bootstrap.csv、error_subsets.csv、matched_score_analysis.csv、figures/、predictions/（§39 列：ref_id, image_id, K, grounding_correct, B3_score, score_only_reliability, semantic_reliability, scorer_seed）。
+- 原始 512-d embeddings（~GB 级，可从 cache/features 确定性重建）存 `cache/semantic_phase1/`（gitignored），不入库；results 中存其 cohort hash 与重建脚本引用。
+
+### A7.10 测试要求（§41 的 15 项，全部必须 0 failed）
+
+frozen ranking 不变 / reliability model 不可改分数 / 无 GT metadata / 无 geometry·objectness / 候选投影共享 / E3 置换不变 / 变 K 支持 / top1 身份在置换下保持 / E3-top5 恰为 B3 分数前 5 / K20·K50 不入训练·选型 / 切分与 Phase 0.5 完全一致 / scorer seed 隔离 / bootstrap 同 image 簇 / semantic stats 确定性 / matched-score 不使用 correctness。

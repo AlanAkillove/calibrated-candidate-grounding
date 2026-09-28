@@ -1,0 +1,118 @@
+{
+  "comparison": {
+    "best_score_only": "msp",
+    "best_semantic": "e1b_stats_semantic",
+    "selected_by": "3-seed mean tune AUROC_correct (K5/K10), A7.6",
+    "best_score_only_ci_level": "see bootstrap.csv for the underlying rows"
+  },
+  "tune_mean_auroc": {
+    "msp": 0.8200648885040058,
+    "stats_logistic": 0.8195345800186807,
+    "e1_semantic_stats": 0.6889927837560462,
+    "e1b_stats_semantic": 0.8202160566367521,
+    "e2_score": 0.8216492128351477,
+    "e2_semantic": 0.6287125029748516,
+    "e2_combined": 0.810451344894668,
+    "e3_full": 0.7824036856369481,
+    "e3_top5": 0.7766342921016713,
+    "e3_logk": 0.7788825704085934
+  },
+  "cells": {
+    "20": {
+      "delta_auroc": 0.01432798539397954,
+      "delta_auroc_ci_low": 0.01123116911310928,
+      "delta_auroc_ci_high": 0.017533559414602905,
+      "e_aurc_reduction": 0.0683809074447164,
+      "e_aurc_reduction_ci_low": 0.05312722929285901,
+      "e_aurc_reduction_ci_high": 0.08421019077311376,
+      "rer50_gain_pp": 2.4606061478318564,
+      "rer50_gain_pp_ci_low": 1.251900301691497,
+      "rer50_gain_pp_ci_high": 3.881423525661233
+    },
+    "50": {
+      "delta_auroc": 0.017855734740933087,
+      "delta_auroc_ci_low": 0.01399692950946893,
+      "delta_auroc_ci_high": 0.021636454791493644,
+      "e_aurc_reduction": 0.08153716679115658,
+      "e_aurc_reduction_ci_low": 0.0647277995934273,
+      "e_aurc_reduction_ci_high": 0.0979138610373511,
+      "rer50_gain_pp": 2.4809905693420067,
+      "rer50_gain_pp_ci_low": 1.4766538054447818,
+      "rer50_gain_pp_ci_high": 3.685155549509372
+    }
+  },
+  "per_seed_k50_delta_ci_low": [
+    0.018435603415013015,
+    0.012559785135160087,
+    0.010995399978233693
+  ],
+  "seed_mean_delta_k50": 0.017855734740933087,
+  "verdict": {
+    "verdict": "INCONCLUSIVE",
+    "strong": false,
+    "pass": false,
+    "no_go": false,
+    "cell_ok": {
+      "20": false,
+      "50": false
+    },
+    "cell_conditions": {
+      "20": {
+        "delta_auroc_ge_thr": false,
+        "delta_auroc_ci_low_gt0": true,
+        "e_aurc_reduction_ge_thr": false,
+        "e_aurc_reduction_ci_low_gt0": true,
+        "rer50_gain_ge_thr": false,
+        "rer50_gain_ci_low_gt0": true,
+        "e_aurc_branch": false,
+        "rer_branch": false,
+        "cell_ok": false
+      },
+      "50": {
+        "delta_auroc_ge_thr": false,
+        "delta_auroc_ci_low_gt0": true,
+        "e_aurc_reduction_ge_thr": false,
+        "e_aurc_reduction_ci_low_gt0": true,
+        "rer50_gain_ge_thr": false,
+        "rer50_gain_ci_low_gt0": true,
+        "e_aurc_branch": false,
+        "rer_branch": false,
+        "cell_ok": false
+      }
+    },
+    "n_seed_significant": 3,
+    "seed_sig_required": 2,
+    "seed_mean_delta": 0.017855734740933087,
+    "thresholds": {
+      "auroc_gain": 0.02,
+      "auroc_gain_strong": 0.03,
+      "e_aurc_reduction": 0.1,
+      "e_aurc_reduction_strong": 0.2,
+      "rer50_gain_pp": 5.0,
+      "rer50_gain_pp_strong": 10.0,
+      "no_go_auroc": 0.01,
+      "no_go_e_aurc": 0.05,
+      "no_go_rer50_pp": 3.0,
+      "seed_sig_min": 2,
+      "seed_total": 3
+    }
+  },
+  "thresholds": {
+    "auroc_gain": 0.02,
+    "auroc_gain_strong": 0.03,
+    "e_aurc_reduction": 0.1,
+    "e_aurc_reduction_strong": 0.2,
+    "rer50_gain_pp": 5.0,
+    "rer50_gain_pp_strong": 10.0,
+    "no_go_auroc": 0.01,
+    "no_go_e_aurc": 0.05,
+    "no_go_rer50_pp": 3.0,
+    "seed_sig_min": 2,
+    "seed_total": 3
+  },
+  "notes": [
+    "cell values are 3-seed MEANS of the per-seed paired-bootstrap rows (values and CI endpoints), matching the Phase 0.5 b3_mean convention.",
+    "cells are the pooled test splits (testA + testB); A7.6 requires K20 AND K50.",
+    "per-seed significance = per-seed K50 delta-AUROC bootstrap CI_low > 0."
+  ]
+}

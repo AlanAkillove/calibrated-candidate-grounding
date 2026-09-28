@@ -25,6 +25,8 @@ results/*
 !results/phase0b_independent/**
 !results/phase05_score_sufficiency/
 !results/phase05_score_sufficiency/**
+!results/phase1_semantic_sufficiency/
+!results/phase1_semantic_sufficiency/**
 experiments/**/outputs/
 
 # Local logs / scratch

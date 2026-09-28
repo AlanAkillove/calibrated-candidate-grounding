@@ -1,0 +1,206 @@
+{
+  "family": "e3_semantic_deepsets",
+  "selection_metric": "mean AUROC_correct over reliability_tune K5/K10",
+  "per_scorer": {
+    "b3_seed1": {
+      "models": {
+        "e3_full": {
+          "selected_hp": 0.001,
+          "tune_mean_auroc": 0.7842411164045646,
+          "params": 149121,
+          "information": "semantic_deepsets"
+        },
+        "e3_top5": {
+          "selected_hp": 0.001,
+          "tune_mean_auroc": 0.77743883937988,
+          "params": 149121,
+          "information": "semantic_deepsets_top5"
+        },
+        "e3_logk": {
+          "selected_hp": 0.001,
+          "tune_mean_auroc": 0.7786631687484733,
+          "params": 149249,
+          "information": "semantic_deepsets+logK"
+        }
+      }
+    },
+    "b3_seed2": {
+      "models": {
+        "e3_full": {
+          "selected_hp": 0.0003,
+          "tune_mean_auroc": 0.7903476744454283,
+          "params": 149121,
+          "information": "semantic_deepsets"
+        },
+        "e3_top5": {
+          "selected_hp": 0.0001,
+          "tune_mean_auroc": 0.7826919874097726,
+          "params": 149121,
+          "information": "semantic_deepsets_top5"
+        },
+        "e3_logk": {
+          "selected_hp": 0.0003,
+          "tune_mean_auroc": 0.7891023371826695,
+          "params": 149249,
+          "information": "semantic_deepsets+logK"
+        }
+      }
+    },
+    "b3_seed3": {
+      "models": {
+        "e3_full": {
+          "selected_hp": 0.0003,
+          "tune_mean_auroc": 0.7726222660608512,
+          "params": 149121,
+          "information": "semantic_deepsets"
+        },
+        "e3_top5": {
+          "selected_hp": 0.0003,
+          "tune_mean_auroc": 0.7697720495153615,
+          "params": 149121,
+          "information": "semantic_deepsets_top5"
+        },
+        "e3_logk": {
+          "selected_hp": 0.0003,
+          "tune_mean_auroc": 0.7688822052946374,
+          "params": 149249,
+          "information": "semantic_deepsets+logK"
+        }
+      }
+    }
+  },
+  "grid_search": {
+    "b3_seed1": [
+      {
+        "model": "e3_full",
+        "grid": [
+          0.0001,
+          0.0003,
+          0.001
+        ],
+        "values": [
+          0.7585216929737355,
+          0.7608380870653393,
+          0.7842411164045646
+        ],
+        "chosen": 0.001
+      },
+      {
+        "model": "e3_top5",
+        "grid": [
+          0.0001,
+          0.0003,
+          0.001
+        ],
+        "values": [
+          0.7507803345630066,
+          0.7462816959987839,
+          0.77743883937988
+        ],
+        "chosen": 0.001
+      },
+      {
+        "model": "e3_logk",
+        "grid": [
+          0.0001,
+          0.0003,
+          0.001
+        ],
+        "values": [
+          0.7528813077806734,
+          0.7599511333868284,
+          0.7786631687484733
+        ],
+        "chosen": 0.001
+      }
+    ],
+    "b3_seed2": [
+      {
+        "model": "e3_full",
+        "grid": [
+          0.0001,
+          0.0003,
+          0.001
+        ],
+        "values": [
+          0.785811817836515,
+          0.7903476744454283,
+          0.7895151825298339
+        ],
+        "chosen": 0.0003
+      },
+      {
+        "model": "e3_top5",
+        "grid": [
+          0.0001,
+          0.0003,
+          0.001
+        ],
+        "values": [
+          0.7826919874097726,
+          0.782648031899275,
+          0.7792856415649527
+        ],
+        "chosen": 0.0001
+      },
+      {
+        "model": "e3_logk",
+        "grid": [
+          0.0001,
+          0.0003,
+          0.001
+        ],
+        "values": [
+          0.7855248678276079,
+          0.7891023371826695,
+          0.7875250762616848
+        ],
+        "chosen": 0.0003
+      }
+    ],
+    "b3_seed3": [
+      {
+        "model": "e3_full",
+        "grid": [
+          0.0001,
+          0.0003,
+          0.001
+        ],
+        "values": [
+          0.7596704484908989,
+          0.7726222660608512,
+          0.7528560492791309
+        ],
+        "chosen": 0.0003
+      },
+      {
+        "model": "e3_top5",
+        "grid": [
+          0.0001,
+          0.0003,
+          0.001
+        ],
+        "values": [
+          0.7584292884596842,
+          0.7697720495153615,
+          0.7463961456398978
+        ],
+        "chosen": 0.0003
+      },
+      {
+        "model": "e3_logk",
+        "grid": [
+          0.0001,
+          0.0003,
+          0.001
+        ],
+        "values": [
+          0.762343732272267,
+          0.7688822052946374,
+          0.7612177884349719
+        ],
+        "chosen": 0.0003
+      }
+    ]
+  }
+}
