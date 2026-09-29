@@ -1665,5 +1665,59 @@ anchor 恢复、候选类别正确性、无 target-equivalent hard distractor）
 
 全量 pytest：**691 passed, 0 failed**（本环境 `deepminer`，约 142s）。
 
+---
+
+# Amendment V2-A1 — Backbone Generalization Before Method Development
+
+（分支 `v2-backbone-generalization`；本修正案冻结于任何 V2-G 新 backbone 结果产生之前。）
+
+## V2-A1.0 与 V1 的关系
+- V1 主实验线（A1–A11 / final_registry）**已冻结**，是 V2 的 empirical foundation；V2 **不修改任何 V1 claim**。
+- V2 是**主动扩展研究**（generalization + local-competition reliability modeling），**不属于 V1 preregistration**；因此 V2 的 gate 阈值是在 V2-G 结果可见前新冻结，而非引用 V1 阈值。
+- 本轮（V2-G）**只回答**：V1 的两个核心现象是否跨越显著不同的冻结视觉-语言 backbone 复现。禁止实现 LCR、新语义模块、Grounding DINO、RefCOCO/Ref-L4、reviewed annotations、FineCops、reranking、target omission、Transformer、或改动 V1 结果。
+
+## V2-A1.1 Backbone 集（唯一核心变量）
+- **B0 = OpenCLIP ViT-B/32 / laion2b_s34b_b79k**（512-d）：V1 全部主实验基础，作为 frozen reference（只读复用 V1 cache）。
+- **B1 = OpenCLIP ViT-B/16 / laion2b_s34b_b88k**（512-d）：同 laion2b 训练家族、仅提高视觉分辨率，回答「V1 是否主要是 B/32 patch resolution 的产物」。
+- **B2 = SigLIP base patch16 224**（`google/siglip-base-patch16-224`，768-d）：训练目标（sigmoid contrastive）不同于 OpenCLIP 的 softmax CLIP，回答「reliability phenomenon 是否跨视觉-语言训练范式存在」。
+- 暂不加入更多模型。所有 backbone 完整报告，**不因 absolute accuracy 低而排除**，除非 K5 accuracy < 0.30（标记 GROUNDING FAILURE）。
+
+## V2-A1.2 数据完全复用 V1 冻结 manifests
+必须逐项复用（backbone 是唯一变量）：same `ref_ids` / proposal ids / targets / distractor ordering / K nesting；`cache/manifests/{random,same_category}_{train,val,testA,testB}.jsonl`；同一 proposal bank 与同一 cohort。V2-G 不重建候选集。
+
+## V2-A1.3 两层 scorer（不重新设计 grounding architecture）
+- **Layer A — frozen similarity** \(s_i=\sim(z_q,z_i)\)：最简单 reference。
+- **Layer B — independent scorer** \(s_i=f(z_q,z_i,g_i)\)：复刻 V1 B3 原则，每 candidate 独立；**禁止** cross-candidate attention / candidate pooling / K input / other-candidate embeddings。输入同构 \(x_i=[z_q,z_i,z_q\odot z_i,\cos,\text{geometry}]\)，geometry 与 V1 完全一致；隐藏层固定 128，**仅第一层宽度随 backbone embedding dim 自动调整**；参数预算 < 0.5M。
+- SigLIP 适配（§V2-A1.7）：显式 L2 归一化后进入 Layer B（记录原始与归一化行为）；SigLIP 文本塔 tokenizer 上限远小于 CLIP 77，其截断行为必须显式记录，作为该 backbone 的 provenance，不得静默。
+
+## V2-A1.4 reliability baseline 简化
+每个 backbone 只做 **MSP / Stats Logistic / Stats+Semantic Logistic**（V1 已证 Score MLP / ScoreDeepSets / E2 / E3 价值有限；V2-G 研究 generality 而非重新架构搜索）。这些 logistic **不共用 B/32 系数**（feature scale 改变），在该 backbone 自己的 RefCOCO+ reliability_train K5/K10 上重训；但 split / candidate manifests / 超参 grid / model class 全部冻结复用 V1。
+
+## V2-A1.5 Semantic feature 的 backbone 适配
+概念冻结（query-candidate sim、winner-competitor sim、semantic density、top-competitor relations）。主证据只用**连续相似度 / 相对 margin / normalized rank**；固定阈值 `density_070` / `density_080` 仅作 descriptive，**不作为跨 backbone primary semantic evidence**（cosine 分布随表示空间漂移）。
+
+## V2-A1.6 G1 / G2 复制判据（新 backbone 结果前冻结）
+- **G1（cardinality reliability）REPLICATED** 当 K5→K50 满足 Route A 或 Route B：Route A \(\Delta\text{AUROC}_{correct}\le -0.03\) 且 bootstrap CI 不跨 0；Route B E-AURC relative worsening \(\ge 20\%\) 且 RER@50 下降 \(\ge 10\)pp。
+- **G2（hard semantic amplification）REPLICATED** 当 \(\Delta_{hard}\ge 0.015\)（CI lower > 0）**且** \(A=\Delta_{hard}-\Delta_{rand}\ge 0.01\)（CI lower > 0）**且** same-category manipulation 在该 backbone embedding space 有效（winner-vs-competitor sim ↑ 与 query ambiguity ↑ 两个连续指标中 ≥1 个显著符合预期）。manipulation 无效 → G2 该 backbone = NOT ASSESSABLE（沿用 V1 A11 纪律：不得用 hard−random 正点估计冒充复制）。
+- **dose-response（m=0/2/4/8）仅 secondary**：成本低才做；不要求严格单调，Spearman \(\rho>0.8\) 可标 DOSE-RESPONSE REPLICATED。
+
+## V2-A1.7 总体 gate
+只有 **≥2/3 backbone**（含现有 B/32）在 **G1 与 G2 上均同方向**表现核心现象，才授权进入 **V2-M（LCR）**；否则 **STOP METHOD DEVELOPMENT**，先重新理解 phenomenon。B/16 与 SigLIP 都失败 = BACKBONE-SPECIFIC WARNING。
+
+## V2-A1.8 统计
+所有 primary comparison：image-level clustered paired bootstrap，5000 reps，95% CI；3 个 scorer seed **分开**跑，最后 mean ± std，**不拼接三 seed**。
+
+## V2-A1.9 Artifacts
+`results/v2_backbone_generalization/`：`protocol.json`、`feasibility.csv`、`backbone_metadata.json`、`openclip_b16/`、`siglip_b16/`、`cardinality_replication.csv`、`hard_replication.csv`、`dose_response.csv`、`bootstrap.csv`、`gate.json`、`figures/`。feature cache 独立 namespace `cache/v2_backbones/{openclip_b16,siglip_b16}/`，**不修改 V1 cache**，全部 L2 归一化。
+
+## V2-A1.10 G0 执行状态（本轮如实记录，不伪造数字）
+G0 feasibility 需**实测**两个新 backbone 的 checkpoint 加载 / 维度 / peak VRAM（阈值 7GB）/ 吞吐 / cache 估计。本 agent 环境事实：
+- 本地 `cache/hf_hub` **仅缓存 B/32**；B/16 与 SigLIP 权重缺失。
+- `hf-mirror.com` 可 TCP 连接但**HTTPS 文件下载在本环境被阻断**（`hf_hub_download` 重试 10 次 `LocalEntryNotFoundError`）。huggingface.co 直连 timeout。
+- 因此 **G1 全量特征提取 / G2 训练在本 agent 环境无法真实执行**；`feasibility.csv` 中标记 `status=BLOCKED_NO_CHECKPOINT_EGRESS`，维度取自 open_clip/model-card 元数据，VRAM/吞吐/cache 仅给 **V1-baseline 派生估计（measured=false）**，绝不写测量值。§V2-A1.35：不自动换更小模型；需在有 mirror 出网的机器（历史 target 机）或由用户预置权重到 `cache/hf_hub` 后再跑 G0→G5。
+
+## V2-A1.11 本轮禁止（与指令 §34 / §43 一致）
+禁止实现 LCR、新 semantic module、Grounding DINO、RefCOCO、Ref-L4、reviewed annotations、FineCops、reranking、target omission、Transformer；禁止改动 V1 结果。禁止在无真实 checkpoint / 无 GPU 实测的情况下编造 V2-G 数字。
+
 
 

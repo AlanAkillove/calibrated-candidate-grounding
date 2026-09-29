@@ -1,0 +1,52 @@
+{
+  "protocol": "V2-A1",
+  "generated_utc": "2026-09-29T00:00:00+08:00",
+  "purpose": "Planned backbone provenance for V2-G. Populated/verified only once the checkpoints are available and G0 is measured; the estimated fields below are NOT measurements.",
+  "environment": {
+    "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "torch": "2.5.1+cu121",
+    "open_clip": "3.3.0",
+    "transformers": "4.57.6",
+    "hf_endpoint_default": "https://hf-mirror.com",
+    "hf_reachability": "TCP connect OK; HTTPS file download blocked in this agent environment",
+    "v1_baseline_peak_vram_mb": 833.0
+  },
+  "backbones": {
+    "B0": {
+      "library": "open_clip",
+      "model_name": "ViT-B-32",
+      "pretrained": "laion2b_s34b_b79k",
+      "hf_hub": "laion/CLIP-ViT-B-32-laion2B-s34B-b79K",
+      "embed_dim": 512,
+      "checkpoint_local": true,
+      "checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+      "role": "frozen V1 reference (read-only reuse of cache/features)"
+    },
+    "B1": {
+      "library": "open_clip",
+      "model_name": "ViT-B-16",
+      "pretrained": "laion2b_s34b_b88k",
+      "hf_hub": "laion/CLIP-ViT-B-16-laion2B-s34B-b88K",
+      "embed_dim": 512,
+      "checkpoint_local": false,
+      "checkpoint_sha256": null,
+      "status": "BLOCKED_NO_CHECKPOINT_EGRESS",
+      "integration": "reuses ccg.features.clip_encoder.build_encoder (model_name/pretrained params); FEATURE_DIM=512 already correct for B/16; verify measured peak VRAM <= 7000 MB before full extraction"
+    },
+    "B2": {
+      "library": "transformers",
+      "model_id": "google/siglip-base-patch16-224",
+      "embed_dim": 768,
+      "checkpoint_local": false,
+      "checkpoint_sha256": null,
+      "status": "BLOCKED_NO_CHECKPOINT_EGRESS",
+      "integration_open_items": [
+        "new encoder backend (SiglipModel.get_image_features/get_text_features) with dynamic embed_dim (V1 pipeline hardcodes FEATURE_DIM=512)",
+        "SigLIP image preprocessing differs from open_clip CLIP mean/std: uses resize+center-crop with mean=std=0.5; frozen crop policy (round->clamp exact proposal crop) still applies at the PIL stage",
+        "SigLIP get_*_features is NOT L2-normalized by default -> explicit l2_normalize before Layer B, record raw vs normalized",
+        "text tower tokenizer model_max_length ~64 (< CLIP 77): RefCOCO+ expressions may truncate -> record truncation rate as provenance",
+        "decision needed: exact HF 224 model (spec-literal) vs open_clip ViT-B-16-SigLIP(-256) which would reuse the existing crop/encoder path"
+      ]
+    }
+  }
+}

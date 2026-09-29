@@ -37,6 +37,8 @@ results/*
 !results/phase1e_refcocog_external/**
 !results/final_registry/
 !results/final_registry/**
+!results/v2_backbone_generalization/
+!results/v2_backbone_generalization/**
 experiments/**/outputs/
 
 # Local logs / scratch

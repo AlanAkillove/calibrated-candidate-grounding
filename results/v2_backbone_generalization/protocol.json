@@ -1,0 +1,49 @@
+{
+  "protocol": "V2-A1",
+  "round": "V2-G",
+  "branch": "v2-backbone-generalization",
+  "frozen_before_run": true,
+  "frozen_utc": "2026-09-29T00:00:00+08:00",
+  "relationship_to_v1": {
+    "v1_frozen": true,
+    "v2_modifies_v1_claims": false,
+    "v2_is_v1_preregistration": false,
+    "note": "V2-G gate thresholds are freshly frozen here, before any new-backbone result; they are NOT inherited V1 thresholds."
+  },
+  "question": "Do the two main V1 phenomena (cardinality reliability degradation; amplified value of candidate semantics under hard competition) generalize across substantially different frozen vision-language backbones?",
+  "backbones": {
+    "B0": {"model_name": "ViT-B-32", "pretrained": "laion2b_s34b_b79k", "library": "open_clip", "embed_dim": 512, "role": "frozen V1 reference (read-only reuse of V1 cache)"},
+    "B1": {"model_name": "ViT-B-16", "pretrained": "laion2b_s34b_b88k", "library": "open_clip", "embed_dim": 512, "role": "higher visual resolution, same laion2b training family"},
+    "B2": {"model_id": "google/siglip-base-patch16-224", "library": "transformers", "embed_dim": 768, "role": "different (sigmoid) contrastive training objective", "l2_normalize": "explicit (SigLIP native interface not L2-normalized)", "text_tokenizer_max_len": 64, "text_truncation_note": "SigLIP GPT2-style tokenizer caps ~64 tokens vs CLIP 77; truncation behaviour recorded as provenance"}
+  },
+  "data_reuse": {
+    "manifests": ["random_train", "random_val", "random_testA", "random_testB", "same_category_train", "same_category_val", "same_category_testA", "same_category_testB"],
+    "reuse_fields": ["ref_ids", "proposal_ids", "targets", "distractor_ordering", "K_nesting"],
+    "proposal_bank": "cache/proposals.h5 (frozen)",
+    "rebuild_candidate_sets": false,
+    "only_variable": "backbone representation"
+  },
+  "scorers": {
+    "layerA": "frozen cosine similarity",
+    "layerB": "independent candidate scorer, hidden=128, first-layer width auto-adjusts to embed_dim, params<0.5M, no cross-candidate attention/pooling/K-input/other-candidate embeddings"
+  },
+  "reliability_baselines": ["msp", "stats_logistic", "stats_plus_semantic_logistic"],
+  "reliability_retraining": {"per_backbone": true, "shares_b32_coefficients": false, "train_regime": "backbone's own RefCOCO+ reliability_train K5/K10", "frozen_from_v1": ["split", "candidate_manifests", "hyperparameter_grid", "model_class"]},
+  "semantic_features": {"primary": ["continuous_similarities", "relative_margins", "normalized_ranks"], "descriptive_only": ["density_070", "density_080"], "reason": "fixed-threshold densities do not transfer across representation spaces"},
+  "gates": {
+    "G1_replication": {"RouteA": {"delta_auroc_correct_K5_to_K50_max": -0.03, "ci_excludes_zero": true}, "RouteB": {"e_aurc_relative_worsening_min": 0.20, "rer50_drop_min_pp": 10}, "rule": "RouteA OR RouteB"},
+    "G2_replication": {"delta_hard_min": 0.015, "delta_hard_ci_low_gt": 0, "diff_of_diffs_min": 0.01, "diff_of_diffs_ci_low_gt": 0, "manipulation_valid_required": true, "invalid_manipulation_verdict": "NOT_ASSESSABLE"},
+    "dose_response": {"levels": [0, 2, 4, 8], "secondary": true, "spearman_rho_replicated_gt": 0.8},
+    "grounding_failure": {"k5_accuracy_below": 0.30},
+    "overall_authorize_V2M": ">=2 of 3 backbones (including B/32) replicate BOTH G1 and G2 in the same direction; else STOP method development"
+  },
+  "statistics": {"bootstrap": "image-level clustered paired", "reps": 5000, "ci": 0.95, "seeds": 3, "seed_handling": "separate, mean+-std, never concatenated"},
+  "cache_namespace": "cache/v2_backbones/{openclip_b16,siglip_b16}/ (does not modify V1 cache; all features L2-normalized)",
+  "artifacts_dir": "results/v2_backbone_generalization/",
+  "execution_status": {
+    "G0": "BLOCKED_NO_CHECKPOINT_EGRESS",
+    "reason": "B/16 and SigLIP weights are not in local cache/hf_hub (only B/32 is cached) and HTTPS checkpoint download from hf-mirror.com is blocked in this agent environment; G1 extraction / G2 training cannot be executed here.",
+    "no_fabrication": "No V2-G accuracy/AUROC/E-AURC/RER numbers are produced this round; feasibility VRAM/throughput/cache are V1-baseline-derived estimates flagged measured=false.",
+    "next": "Run G0->G5 on a machine with hf-mirror egress, or pre-place the two checkpoints under cache/hf_hub, then re-derive feasibility.csv with measured=true and proceed to feature extraction."
+  }
+}
