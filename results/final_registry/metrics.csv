@@ -1,0 +1,87 @@
+table,row,column,value,unit,source_file,log_reference,matches_log
+T1,K5,accuracy,0.790743,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K5,auroc_correct,0.842606,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K5,e_aurc,0.037834,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K5,rer_at_50,0.821248,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K10,accuracy,0.676283,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K10,auroc_correct,0.810257,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K10,e_aurc,0.070481,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K10,rer_at_50,0.648416,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K20,accuracy,0.564322,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K20,auroc_correct,0.799510,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K20,e_aurc,0.096058,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K20,rer_at_50,0.509254,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K50,accuracy,0.431992,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K50,auroc_correct,0.790445,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K50,e_aurc,0.122633,fraction,phase0b_independent/aggregate.csv,,derived
+T1,K50,rer_at_50,0.365253,fraction,phase0b_independent/aggregate.csv,,derived
+T2,MSP,K5_auroc,0.840720,fraction,phase05_score_sufficiency/reliability_metrics.csv,,derived
+T2,MSP,K50_auroc,0.789022,fraction,phase05_score_sufficiency/reliability_metrics.csv,,derived
+T2,MSP,K50_e_aurc,0.124054,fraction,phase05_score_sufficiency/reliability_metrics.csv,,derived
+T2,MSP,K50_rer50,0.358815,fraction,phase05_score_sufficiency/reliability_metrics.csv,,derived
+T2,Score Stats,K5_auroc,0.840850,fraction,phase05_score_sufficiency/reliability_metrics.csv,,derived
+T2,Score Stats,K50_auroc,0.791475,fraction,phase05_score_sufficiency/reliability_metrics.csv,,derived
+T2,Score Stats,K50_e_aurc,0.121574,fraction,phase05_score_sufficiency/reliability_metrics.csv,,derived
+T2,Score Stats,K50_rer50,0.361097,fraction,phase05_score_sufficiency/reliability_metrics.csv,,derived
+T2,Score DeepSets,K5_auroc,0.737967,fraction,phase05_score_sufficiency/reliability_metrics.csv,,derived
+T2,Score DeepSets,K50_auroc,0.552905,fraction,phase05_score_sufficiency/reliability_metrics.csv,,derived
+T2,Score DeepSets,K50_e_aurc,0.304728,fraction,phase05_score_sufficiency/reliability_metrics.csv,,derived
+T2,Score DeepSets,K50_rer50,0.130086,fraction,phase05_score_sufficiency/reliability_metrics.csv,,derived
+T2,Stats + Semantic,K5_auroc,0.842256,fraction,phase1_semantic_sufficiency/aggregate.csv,,derived
+T2,Stats + Semantic,K50_auroc,0.806878,fraction,phase1_semantic_sufficiency/aggregate.csv,,derived
+T2,Stats + Semantic,K50_e_aurc,0.113953,fraction,phase1_semantic_sufficiency/aggregate.csv,,derived
+T2,Stats + Semantic,K50_rer50,0.383625,fraction,phase1_semantic_sufficiency/aggregate.csv,,derived
+T2,Semantic E2,K5_auroc,0.826717,fraction,phase1_semantic_sufficiency/aggregate.csv,,derived
+T2,Semantic E2,K50_auroc,0.787786,fraction,phase1_semantic_sufficiency/aggregate.csv,,derived
+T2,Semantic E2,K50_e_aurc,0.124045,fraction,phase1_semantic_sufficiency/aggregate.csv,,derived
+T2,Semantic E2,K50_rer50,0.354179,fraction,phase1_semantic_sufficiency/aggregate.csv,,derived
+T2,Semantic E3,K5_auroc,0.797876,fraction,phase1_semantic_sufficiency/aggregate.csv,,derived
+T2,Semantic E3,K50_auroc,0.750764,fraction,phase1_semantic_sufficiency/aggregate.csv,,derived
+T2,Semantic E3,K50_e_aurc,0.150534,fraction,phase1_semantic_sufficiency/aggregate.csv,,derived
+T2,Semantic E3,K50_rer50,0.302637,fraction,phase1_semantic_sufficiency/aggregate.csv,,derived
+T3,rand5,stats_auroc,0.837042,fraction,phase1f_hard_semantic/reliability_metrics.csv,,derived
+T3,rand5,e1b_auroc,0.838268,fraction,phase1f_hard_semantic/reliability_metrics.csv,,derived
+T3,rand5,delta_auroc,0.001227,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,rand5,e_aurc_reduction,-0.002200,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,rand5,rer50_gain,-1.211835,pp,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,hard5,stats_auroc,0.812771,fraction,phase1f_hard_semantic/reliability_metrics.csv,,derived
+T3,hard5,e1b_auroc,0.844619,fraction,phase1f_hard_semantic/reliability_metrics.csv,,derived
+T3,hard5,delta_auroc,0.031848,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,hard5,e_aurc_reduction,0.153671,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,hard5,rer50_gain,4.637289,pp,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,dose_m0,delta_auroc,-0.000718,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,dose_m0,e_aurc_reduction,-0.012092,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,dose_m0,rer50_gain,-1.465016,pp,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,dose_m2,delta_auroc,0.010592,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,dose_m2,e_aurc_reduction,0.044290,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,dose_m2,rer50_gain,2.049490,pp,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,dose_m4,delta_auroc,0.018182,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,dose_m4,e_aurc_reduction,0.081132,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,dose_m4,rer50_gain,3.551411,pp,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,dose_m8,delta_auroc,0.029912,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,dose_m8,e_aurc_reduction,0.151719,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T3,dose_m8,rer50_gain,5.398372,pp,phase1f_hard_semantic/semantic_increment.csv,,derived
+T4,RefCOCO+|random,stats_auroc,0.837042,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T4,RefCOCO+|random,semantic_auroc,0.838268,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T4,RefCOCO+|random,delta_auroc,0.001227,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T4,RefCOCO+|random,e_aurc_reduction,-0.002200,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T4,RefCOCO+|random,rer50_gain,-1.211835,pp,phase1f_hard_semantic/semantic_increment.csv,,derived
+T4,RefCOCO+|random,manipulation_valid,,bool,phase1f_hard_semantic/semantic_increment.csv,,derived
+T4,RefCOCO+|same-category,stats_auroc,0.812771,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T4,RefCOCO+|same-category,semantic_auroc,0.844619,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T4,RefCOCO+|same-category,delta_auroc,0.031848,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T4,RefCOCO+|same-category,e_aurc_reduction,0.153671,fraction,phase1f_hard_semantic/semantic_increment.csv,,derived
+T4,RefCOCO+|same-category,rer50_gain,4.637289,pp,phase1f_hard_semantic/semantic_increment.csv,,derived
+T4,RefCOCO+|same-category,manipulation_valid,,bool,phase1f_hard_semantic/semantic_increment.csv,,derived
+T4,RefCOCOg strict|random,stats_auroc,0.853689,fraction,phase1e_refcocog_external/a11_results.json,,derived
+T4,RefCOCOg strict|random,semantic_auroc,0.854249,fraction,phase1e_refcocog_external/a11_results.json,,derived
+T4,RefCOCOg strict|random,delta_auroc,0.000560,fraction,phase1e_refcocog_external/a11_results.json,,derived
+T4,RefCOCOg strict|random,e_aurc_reduction,-0.002689,fraction,phase1e_refcocog_external/a11_results.json,,derived
+T4,RefCOCOg strict|random,rer50_gain,-1.128184,pp,phase1e_refcocog_external/a11_results.json,,derived
+T4,RefCOCOg strict|random,manipulation_valid,,bool,phase1e_refcocog_external/a11_results.json,,derived
+T4,RefCOCOg strict|same-category,stats_auroc,0.917556,fraction,phase1e_refcocog_external/a11_results.json,,derived
+T4,RefCOCOg strict|same-category,semantic_auroc,0.935390,fraction,phase1e_refcocog_external/a11_results.json,,derived
+T4,RefCOCOg strict|same-category,delta_auroc,0.017834,fraction,phase1e_refcocog_external/a11_results.json,,derived
+T4,RefCOCOg strict|same-category,e_aurc_reduction,0.204211,fraction,phase1e_refcocog_external/a11_results.json,,derived
+T4,RefCOCOg strict|same-category,rer50_gain,1.021809,pp,phase1e_refcocog_external/a11_results.json,,derived
+T4,RefCOCOg strict|same-category,manipulation_valid,,bool,phase1e_refcocog_external/a11_results.json,,derived

@@ -1,0 +1,11 @@
+experiment_id,phase,commit,dataset,cohort,models,seed_count,status,gate,protocol_amendment,amendment_timing
+audit-proposal-001,Proposal audit,f9b79b2,refcoco+,1500 images (train+val_select),class-agnostic RPN (frozen),1,COMPLETE,N-selection -> N=64,"A2,A3",pre-result engineering + results-record
+p0-cosine-kcardinality,Phase 0A,7e24cde,refcoco+,20799 common (n=2981 imgs),B1 frozen CLIP cosine,1,COMPLETE,no Gate Q1/Q2 (B1/random single cell),A4,post-result disclosure
+p0a1-corrected-metrics,Phase 0A.1,ddf612d,refcoco+,20799 common (same cohort),B1 cosine (corrected T),1,COMPLETE,Route A yes / Route B no,A5,post-result methodological correction
+p0b-b3-independent,Phase 0B,ddf612d,refcoco+,20799 common,B3 Independent MLP (candidate-blind),3,COMPLETE,Route A yes / Route B yes,A5,staged follow-up (replication)
+p05-score-sufficiency,Phase 0.5,2adfc09,refcoco+,62397 pooled test,MSP/Stats/ScoreDeepSets zoo,3,COMPLETE,GO_candidate_embeddings (score-only insufficient),A6,pre-result (frozen before results)
+p1-semantic-sufficiency,Phase 1,62c1eff,refcoco+,10286 pooled test,E1a/E1b/E2/E3 semantic zoo,3,COMPLETE,INCONCLUSIVE (gray zone),A7,pre-result (frozen before results)
+p1f-hard-competition,Phase 1F,0a654b0,refcoco+,10286 pooled test,frozen B3+Stats+E1b (no new train),3,COMPLETE,CONFIRMED HARD-REGIME SEMANTIC SIGNAL,A8,pre-result (frozen before hard results)
+p1e-finecops-feasibility,FineCops feasibility,a3ee9a0,FineCops-Ref (GQA/VG),1000 imgs / 2235 expr,frozen RPN (recall audit),0,STOPPED,EXTERNAL STOP (recall@0.5 0.7579<0.80),A9,external feasibility (frozen before inference)
+p1e-refcocog-feasibility,RefCOCOg feasibility,cab89c3,RefCOCOg UMD test,strict 2909 expr / 1102 imgs,frozen RPN (no model inference),0,CLEAN EXTERNAL,Branch A (recall 0.9722; hard cohort 1890/755),A10,external feasibility (frozen before proposal results)
+a11-refcocog-external,RefCOCOg A11,b0957b5,RefCOCOg strict,1890 expr / 755 imgs,frozen B3+Stats+E1b (zero-shot),3,COMPLETE,Q1 YES / Q2 INVALID_MANIPULATION / Case D,A11,external confirmation (frozen before predictions)

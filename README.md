@@ -56,12 +56,80 @@ candidate-aware models are explicitly forbidden until Gate Q1 and Gate Q2 rules 
 ## Project Status
 
 ```text
-Current stage: Phase 0 — Candidate-Set Failure Audit
+Current stage: main experimental study complete — results frozen
 ```
 
-The project is explicitly designed to allow an early NO-GO decision if candidate-set
-shift does not produce a stable reliability failure or if simple score-level calibration
-is sufficient. No results are claimed at this stage.
+The candidate-cardinality / semantic-reliability mainline is **complete and frozen** after
+the RefCOCOg external confirmation (Amendment A11). No further external benchmarks,
+backbones, architectures, candidate-aware reranking, semantic-feature redesign, or
+hard-negative redefinition are added. The frozen evidence set lives in
+[`results/final_registry/`](results/final_registry/) and
+[`docs/final_result_summary.md`](docs/final_result_summary.md).
+
+This is a **controlled reliability study**, not a state-of-the-art or novel-architecture
+claim. Target omission / abstention (RQ4) is deliberately **out of scope** for this
+mainline: no target-absence result is reported here.
+
+## Key Findings (frozen)
+
+See [`results/final_registry/tables.md`](results/final_registry/tables.md) and
+[`results/final_registry/claims.csv`](results/final_registry/claims.csv) for the full tables.
+
+- **Candidate cardinality degrades reliability** (B3, random regime, K5→K50): E-AURC
+  relative worsening ≈ +226%, RER@50 0.821→0.365, AUROC_correct 0.843→0.790. The raw
+  accuracy decline is partly structural under nested candidate sets; the emphasis is on
+  E-AURC / AUROC_correct / RER@coverage.
+- **Temperature / score scaling is not the explanation**: the corrected global temperature
+  is an interior optimum and per-K oracle temperatures shift only ~10%.
+- **Score information is insufficient**: no score-only representation (MSP, margin, entropy,
+  handcrafted statistics, log K, full score-set DeepSets) removes the degradation.
+- **Candidate semantics add a modest signal** (Phase 1, gray zone → A7 INCONCLUSIVE).
+- **Semantic value is amplified under controlled hard competition**: RefCOCO+
+  SameCategory-K5 ΔAUROC +0.0318 vs +0.0012 under matched random, growing monotonically
+  with the number of same-category competitors (m = 0/2/4/8).
+- **Cross-dataset semantic transfer confirmed** on a strict image-disjoint RefCOCOg subset
+  (same-category ΔAUROC +0.0178, 20.4% E-AURC reduction) — *under a shared COCO visual
+  domain*, not cross-domain visual generalization.
+- **External hard-amplification replication is not assessable** (RefCOCOg manipulation
+  invalid), so the hard-minus-random gap is not claimed as replication.
+
+## Experimental Stages
+
+```text
+Proposal audit → Phase 0A (cosine) → 0A.1 (metric/temp correction) → 0B (B3)
+→ Phase 0.5 (score sufficiency) → Phase 1 (semantic sufficiency)
+→ Phase 1F (hard-competition confirmation) → FineCops feasibility (STOP)
+→ RefCOCOg feasibility → RefCOCOg A11 (external confirmation)
+```
+
+The full pre-registered protocol and its dated, append-only amendments (A1–A11, with
+pre-result / post-result / staged / external-feasibility classification) are in
+[`docs/research_protocol.md`](docs/research_protocol.md) and
+[`results/final_registry/protocol_history.csv`](results/final_registry/protocol_history.csv).
+
+## Negative Results
+
+Negative results are retained as part of the logic chain, not hidden. See
+[`results/final_registry/negative_results.csv`](results/final_registry/negative_results.csv):
+global calibration does not explain the degradation; score statistics and full score-set
+DeepSets fail; learned E2 and full-set E3 fail; the FineCops external route is stopped due
+to proposal-domain mismatch; the RefCOCOg hard manipulation is invalid for the amplification
+test.
+
+## Reproducibility
+
+Every frozen headline number is derived from existing phase artifacts — never hand-typed —
+by a read-only aggregator:
+
+```bash
+python scripts/build_final_registry.py
+```
+
+The script re-derives Tables 1–4 and Figures 1–4 into `results/final_registry/`, and runs a
+consistency audit against `docs/experiment_log.md` before writing anything: any discrepancy
+is a hard STOP (exit non-zero, no outputs written). It performs no training, fitting,
+resampling, model change, or new statistical test.
+
 
 ## Installation
 
@@ -85,19 +153,33 @@ registration requirements of COCO and RefCOCO before downloading.
 
 ## Reproduction
 
-Planned end-to-end pipeline (see [`docs/phase0_plan.md`](docs/phase0_plan.md)):
+The study is complete; the pipeline below was run in this order (each phase writes its
+artifact directory under `results/`, which the final aggregator then reads):
 
 ```bash
-python scripts/prepare_refcoco.py        # parse annotations, build UNC splits
-python scripts/extract_proposals.py      # frozen proposal bank + audit
-python scripts/extract_features.py       # offline CLIP region/text embeddings
-python scripts/build_candidate_sets.py   # nested, frozen candidate sets
-python scripts/audit_proposals.py        # recall@N, IoU distributions
-python scripts/run_phase0.py             # baselines, calibration, gates
+# Data + frozen resources
+python scripts/prepare_refcoco.py                 # parse annotations, build UNC splits
+python scripts/extract_proposals.py               # frozen proposal bank
+python scripts/audit_proposals.py                 # recall@N, IoU distributions
+python scripts/extract_features.py                # offline CLIP region/text embeddings
+python scripts/build_candidate_sets.py            # nested, frozen candidate sets
+# Staged experiments
+python scripts/run_proposal_audit.py              # proposal audit
+python scripts/run_phase0a.py                     # Phase 0A cosine
+python scripts/run_phase0a_corrected.py           # Phase 0A.1 metric/temperature correction
+python scripts/train_b3.py ; python scripts/run_phase0b.py    # Phase 0B candidate-blind scorer
+python scripts/run_phase05.py                     # Phase 0.5 score sufficiency
+python scripts/run_phase1.py                       # Phase 1 semantic sufficiency
+python scripts/run_phase1f.py                      # Phase 1F hard-competition confirmation
+python scripts/run_phase1e_feasibility.py          # FineCops feasibility (STOP)
+python scripts/run_phase1e_refcocog_feasibility.py # RefCOCOg feasibility
+python scripts/a11_external_inference.py ; python scripts/a11_external_analysis.py  # A11 external
 ```
 
 All learned components run with 3 seeds, image-level paired bootstrap (95% CI, >= 5,000
-replicates), and complete experiment logging (`docs/experiment_log.md`).
+replicates), and complete experiment logging (`docs/experiment_log.md`). The frozen final
+result set is regenerated from the phase artifacts by `scripts/build_final_registry.py`
+(see **Reproducibility** above).
 
 ## Citation
 

@@ -1,0 +1,13 @@
+amendment_id,date,classification,target_scope,gate_frozen_before_results,modified_original_gates,reason,linked_experiment
+INITIAL,2026-09-26,initial protocol,full research protocol §1-§20,n/a,n/a,baseline protocol for candidate-cardinality reliability study,n/a
+A1,2026-09-27,pre-result methodological,regime taxonomy / evidence hierarchy,yes,no (added constraints only),GT-information asymmetry + CLIP-hard<->B1 constructor coupling,n/a
+A2,2026-09-27,pre-result methodological,proposal bank semantics + N-selection rule,yes,no,proposal bank definition ambiguous (detector vs RPN); N selection needs pre-registration,n/a
+A3,2026-09-27,results record,execute N-selection (N=64) + close A2.5,n/a (results record),no,proposal-system audit completed; register outcome,audit-proposal-001
+A4,2026-09-27,results record / disclosure,Phase 0A cosine outcome + interpretation constraints,n/a (results record),no,T* and oracle per-K temperature degenerate at fit-search boundary,p0-cosine-kcardinality
+A5,2026-09-28,post-result methodological correction,metric validity + temperature redo + GO replication criterion,"NO (post-hoc, not a preregistration)",no (gate numbers unchanged),nested-set structural decline; raw AURC/base-rate coupling; T optimum at boundary,p0a1-corrected-metrics
+A6,2026-09-28,staged follow-up,Phase 0.5 score-sufficiency zoo + gate frozen,yes,no,enter score-only information-sufficiency audit,p05-score-sufficiency
+A7,2026-09-28,staged follow-up,Phase 1 semantic-sufficiency zoo + gate frozen,yes,no,score-only shown insufficient; test candidate semantic information,p1-semantic-sufficiency
+A8,2026-09-28,staged follow-up,Phase 1F hard-competition confirmation frozen,yes,no,A7 = INCONCLUSIVE; test whether semantic gain amplifies under GT same-category competition,p1f-hard-competition
+A9,2026-09-29,external feasibility,FineCops external engineering/regime/gate frozen,yes,no,"A8 = CONFIRMED; only external confirmation allowed, not architecture upgrade",p1e-finecops-feasibility
+A10,2026-09-29,external feasibility,RefCOCOg image-disjoint feasibility frozen,yes,no (does not rewrite A9 EXTERNAL STOP),A9 = EXTERNAL STOP (GQA perceptual-domain shift); need COCO-domain external candidate,p1e-refcocog-feasibility
+A11,2026-09-29,external confirmation (staged),RefCOCOg Q1 transfer + Q2 amplification gates frozen,yes,no (no tolerance relaxed),A10 = Branch A CLEAN EXTERNAL; zero-training frozen external confirmation only,a11-refcocog-external

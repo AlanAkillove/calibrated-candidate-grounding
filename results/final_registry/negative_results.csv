@@ -1,0 +1,8 @@
+id,phase,description,test_or_metric,outcome,interpretation
+N1,Phase 0A.1 / 0B,Global calibration does not explain selective degradation,corrected global-T ECE drift K5->K50 +3.0pp,ECE small but base-rate-corrected E-AURC/RER still degrade strongly,temperature/scale is not the mechanism
+N2,Phase 0.5,Score statistics fail to remove the shift,Stats Logistic / handcrafted features at K20/K50,degradation persists at same magnitude as MSP baseline,handcrafted score summaries are insufficient
+N3,Phase 0.5,Full score-set DeepSets fail,ScoreDeepSets K50 AUROC,0.553 vs stats 0.792; logK variant unstable extrapolation (seed std ~0.09),full unordered score set adds no usable reliability info over summaries
+N4,Phase 1,Learned E2 semantic interaction fails to beat simple statistics,E2-combined vs E1b / Stats at K50,E2-combined 0.7878 < E1b 0.8069; E2-semantic 0.661,"useful signal is in winner-vs-top-competitor geometry, not learned interaction"
+N5,Phase 1,Semantic full-set E3 fails,E3-full vs Stats Logistic K50,E3 full family -0.034..-0.045 vs stats (CI all <0),modeling the whole candidate set does not help
+N6,FineCops feasibility,FineCops external route stopped,frozen RPN target recall@0.5 on GQA/VG,0.7579 < 0.80 STOP; same-name K5 availability 0.1861,proposal-domain mismatch would confound A8 effect with perceptual shift
+N7,RefCOCOg A11,RefCOCOg hard manipulation invalid for the amplification test,manipulation check (cand_vmax / cand_top12_sim / clip_margin12),0/3 seeds significant; clip_margin12 wrong direction,"Q2 hard-amplification is NOT ASSESSABLE (not FAILED, not CONFIRMED)"

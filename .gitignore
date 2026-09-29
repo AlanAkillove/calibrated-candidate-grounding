@@ -35,6 +35,8 @@ results/*
 !results/phase1e_refcocog_feasibility/**
 !results/phase1e_refcocog_external/
 !results/phase1e_refcocog_external/**
+!results/final_registry/
+!results/final_registry/**
 experiments/**/outputs/
 
 # Local logs / scratch
