@@ -1,0 +1,96 @@
+{
+  "aggregate_max_abs": {
+    "conf_e1b_max_abs": 2.220446049250313e-16,
+    "conf_stats_max_abs": 2.220446049250313e-16,
+    "raw_score_max_abs": 0.0
+  },
+  "cells": [
+    "rand5",
+    "hard5"
+  ],
+  "checks": [
+    {
+      "cell": "rand5",
+      "conf_e1b_max_abs": 2.220446049250313e-16,
+      "conf_stats_max_abs": 2.220446049250313e-16,
+      "correct_identical": true,
+      "n": 9487,
+      "ranking_identical": true,
+      "raw_score_max_abs": 0.0,
+      "scorer": "b3_seed1",
+      "stop_atol": 0.0001,
+      "tolerance": 1e-09
+    },
+    {
+      "cell": "rand5",
+      "conf_e1b_max_abs": 2.220446049250313e-16,
+      "conf_stats_max_abs": 2.220446049250313e-16,
+      "correct_identical": true,
+      "n": 9487,
+      "ranking_identical": true,
+      "raw_score_max_abs": 0.0,
+      "scorer": "b3_seed2",
+      "stop_atol": 0.0001,
+      "tolerance": 1e-09
+    },
+    {
+      "cell": "rand5",
+      "conf_e1b_max_abs": 2.220446049250313e-16,
+      "conf_stats_max_abs": 2.220446049250313e-16,
+      "correct_identical": true,
+      "n": 9487,
+      "ranking_identical": true,
+      "raw_score_max_abs": 0.0,
+      "scorer": "b3_seed3",
+      "stop_atol": 0.0001,
+      "tolerance": 1e-09
+    },
+    {
+      "cell": "hard5",
+      "conf_e1b_max_abs": 2.220446049250313e-16,
+      "conf_stats_max_abs": 2.220446049250313e-16,
+      "correct_identical": true,
+      "n": 9487,
+      "ranking_identical": true,
+      "raw_score_max_abs": 0.0,
+      "scorer": "b3_seed1",
+      "stop_atol": 0.0001,
+      "tolerance": 1e-09
+    },
+    {
+      "cell": "hard5",
+      "conf_e1b_max_abs": 2.220446049250313e-16,
+      "conf_stats_max_abs": 2.220446049250313e-16,
+      "correct_identical": true,
+      "n": 9487,
+      "ranking_identical": true,
+      "raw_score_max_abs": 0.0,
+      "scorer": "b3_seed2",
+      "stop_atol": 0.0001,
+      "tolerance": 1e-09
+    },
+    {
+      "cell": "hard5",
+      "conf_e1b_max_abs": 2.220446049250313e-16,
+      "conf_stats_max_abs": 2.220446049250313e-16,
+      "correct_identical": true,
+      "n": 9487,
+      "ranking_identical": true,
+      "raw_score_max_abs": 0.0,
+      "scorer": "b3_seed3",
+      "stop_atol": 0.0001,
+      "tolerance": 1e-09
+    }
+  ],
+  "passed": true,
+  "protocol": "A11.10",
+  "schema_version": "a11-frozen-reliability-v1",
+  "seconds": 76.09,
+  "seeds": [
+    "b3_seed1",
+    "b3_seed2",
+    "b3_seed3"
+  ],
+  "stop_atol": 0.0001,
+  "tolerance": 1e-09
+}

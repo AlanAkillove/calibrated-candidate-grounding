@@ -1,0 +1,15 @@
+{
+  "schema_version": "manifests-v1",
+  "a11_schema": "a11-refcocog-candidate-v1",
+  "regime": "random",
+  "seed": 20260927,
+  "top_n": 64,
+  "iou_thresh": 0.5,
+  "gt_basis": "official_coco_train2014_non_crowd",
+  "row_key": "expr_id (RefCOCOg global sent_id); stored in ManifestEntry.ref_id",
+  "construction": "frozen manifests-v1 ordering: one numpy.default_rng([seed, row_key]) shuffle per expression, shared by every K as prefixes; same_category promotes same-COCO-category distractors first in ascending bank order",
+  "n_rows": 1890,
+  "n_images": 755,
+  "n_refs": 1890,
+  "primary_k": 5
+}

@@ -1,0 +1,81 @@
+{
+  "align_to_cache": false,
+  "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "inference_seconds": 17.08,
+  "n_images": 755,
+  "n_refs": 978,
+  "n_rows": 1890,
+  "peak_vram_mb": 13.8,
+  "protocol": "A11.6/A11.7/A11.36",
+  "regimes": [
+    "random",
+    "same_category"
+  ],
+  "rows": [
+    {
+      "acc": 0.8126984126984127,
+      "file": "external__b3_seed1__rand5.npz",
+      "mean_entropy": 0.43248174093282526,
+      "mean_margin": 4.647827185181871,
+      "n": 1890,
+      "regime": "random",
+      "scorer": "b3_seed1",
+      "temperature": 1.1153439683270872
+    },
+    {
+      "acc": 0.8137566137566138,
+      "file": "external__b3_seed2__rand5.npz",
+      "mean_entropy": 0.4380238865831388,
+      "mean_margin": 4.60346718360251,
+      "n": 1890,
+      "regime": "random",
+      "scorer": "b3_seed2",
+      "temperature": 1.116630407128927
+    },
+    {
+      "acc": 0.8185185185185185,
+      "file": "external__b3_seed3__rand5.npz",
+      "mean_entropy": 0.434431503719421,
+      "mean_margin": 4.517155783359335,
+      "n": 1890,
+      "regime": "random",
+      "scorer": "b3_seed3",
+      "temperature": 1.100524960810151
+    },
+    {
+      "acc": 0.7613756613756614,
+      "file": "external__b3_seed1__hard5.npz",
+      "mean_entropy": 0.5988541434579041,
+      "mean_margin": 4.75628368851369,
+      "n": 1890,
+      "regime": "same_category",
+      "scorer": "b3_seed1",
+      "temperature": 1.1153439683270872
+    },
+    {
+      "acc": 0.7597883597883598,
+      "file": "external__b3_seed2__hard5.npz",
+      "mean_entropy": 0.6049497286074006,
+      "mean_margin": 4.70477799377281,
+      "n": 1890,
+      "regime": "same_category",
+      "scorer": "b3_seed2",
+      "temperature": 1.116630407128927
+    },
+    {
+      "acc": 0.7513227513227513,
+      "file": "external__b3_seed3__hard5.npz",
+      "mean_entropy": 0.6181973050567919,
+      "mean_margin": 4.452288452595985,
+      "n": 1890,
+      "regime": "same_category",
+      "scorer": "b3_seed3",
+      "temperature": 1.100524960810151
+    }
+  ],
+  "seeds": [
+    "b3_seed1",
+    "b3_seed2",
+    "b3_seed3"
+  ]
+}

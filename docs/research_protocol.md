@@ -500,6 +500,7 @@ indices：ref_id/regime/K/hardness/target_present/candidate_indices/target_candi
 | A8 | 2026-09-28 | Phase 1F Hard-Competition Semantic Confirmation（confirmatory stress test；cohort 规则 / 冻结评分 / A8.4 复现校验 / A8.6 gate 数字在任何 hard-regime 结果前冻结；不修改任何既有条款） | A7 verdict = INCONCLUSIVE（random regime 下 semantic 增量不显著）；唯一待检验假设：semantic 信息在 GT same-category 竞争下是否实质性更有用 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A8” |
 | A9 | 2026-09-29 | FineCops-Ref External Semantic Confirmation（staged external validation；工程 gate §6/§7 + regime 规则 §10/§11 + external gate §17-20 数字在任何 FineCops 模型推断前冻结；不修改任何既有条款） | A8 verdict = CONFIRMED；架构升级路径关闭，只允许检验该效应能否迁移到独立数据集（不同 image source / annotation pipeline / 语言构造） | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A9” |
 | A10 | 2026-09-29 | RefCOCOg Image-Disjoint External Confirmation **Feasibility**（staged protocol；size / 工程 / same-category / 功效 / branch 五组数字在任何 RefCOCOg proposal 结果产生前冻结；不修改任何既有条款，**不改写 A9 的 EXTERNAL STOP 原因**） | A9 = EXTERNAL STOP（GQA 感知域偏移）；需一个保持 COCO image domain / COCO ontology / 冻结 proposal pipeline 可比性的外部候选，同时仍提供语言-标注分布 shift | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A10” |
+| A11 | 2026-09-29 | RefCOCOg Frozen External Semantic-Reliability Confirmation（staged protocol；Q1 semantic-transfer 与 Q2 hard-amplification 两套 gate 数字、bootstrap 参数、severe-failure 保护线在任何 RefCOCOg 模型预测产生前冻结；不修改任何既有条款、不放宽任何 tolerance） | A10 = Branch A CLEAN EXTERNAL（strict 子集零重叠、recall 0.972155、hard cohort 1,890/755 可构造）；只允许做零训练冻结外部确认 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A11” |
 
 ---
 
@@ -1370,6 +1371,299 @@ RefCOCOg labels 不进入 training / deterministic manifest / sample-size gate /
   正式 external confirmation 与全量 pytest 必须在与产生冻结 artifact 相同的解释器（python 3.10.19 /
   torch 2.5.1+cu121）与**全核 BLAS 线程数**下运行，并在 metadata 中记录线程数。本轮全量 pytest
   **668 collected / 668 passed / 0 failed（113 s）** 即在此条件下得到。
+
+---
+
+## Amendment A11 — 2026-09-29 — RefCOCOg Frozen External Semantic-Reliability Confirmation（staged protocol；两套 gate 数字在任何 RefCOCOg 模型预测产生前冻结）
+
+**staged 声明**：本 amendment 制定于 **A10 Branch A = CLEAN EXTERNAL 已知之后**，属 staged protocol
+而不是 initial preregistration。A10 的结论（strict 子集 2,909 expr / 1,102 imgs / 1,512 refs 与全部
+RefCOCO+ 图像零重叠；冻结 RPN recall@0.5 = 0.972155；same-category K5 eligible cohort
+1,890 expr / 755 imgs / 978 refs；matched random control 1,890/1,890）**不得在见到 A11 结果后被回头修改**，
+A9 的 FineCops EXTERNAL STOP 原因同样继续不得改写。
+
+**本文写作时的状态**：RefCOCOg 上 **不存在任何** B3 / Stats / E1b 输出，没有 AUROC、E-AURC、RER 数值被查看过。
+下列全部判据数字（A11.9–A11.12 的 gate 阈值、bootstrap 参数、severe-failure 解释保护线）
+在首个 RefCOCOg 模型预测落盘之前写入
+`results/phase1e_refcocog_external/a11_protocol.json` 的 `frozen_before_run` 块，时序可核验。
+
+### A11.1 本阶段只回答两个问题，且必须分别回答
+
+- **Q1 — semantic transfer**：在完全没见过 RefCOCOg 的条件下，RefCOCO+ 上冻结得到的
+candidate-semantic reliability information 是否仍能预测 grounding decision 是否正确，即
+\(\Delta AUROC_{hard} = AUROC(E1b_{hard}) - AUROC(Stats_{hard})\) 是否为正且显著。
+- **Q2 — hard-amplification replication**：该增量在 same-category hard competition 下是否仍强于 random
+candidates，即 \(Amplification = \Delta AUROC_{hard} - \Delta AUROC_{rand}\) 是否为正且显著。
+
+两者**不得合并成一个 YES/NO**。若 E1b > Stats 但 random 与 hard 提升一样大，则只能写
+“semantic features cross-dataset useful”，不能写“hard competition amplifies semantic reliability value”。
+
+### A11.2 数据轴：只用 strict 外部子集
+
+primary 固定为 `rg_external_strict`，运行前自动 assertion：RefCOCOg image_id ∩ 任一 RefCOCO+ image_id
+（train / val_select / val_calib / testA / testB 全集）= ∅。`rg_external_devdisjoint` **不得**作为主结果，
+只保留 A10 feasibility 记录。
+
+### A11.3 primary cohort 与 matched control
+
+主 cohort = A10 已冻结的 same-category K5 eligible 表（1,890 expressions / 755 images / 978 refs），
+逐表达式构造 Random-K5（target + 4 random distractors）与 SameCategory-K5（target + 4 same-category
+distractors），必须同 sentence / 同 image / 同 target proposal / 同 scorer seed / 同 K，**只改 distractor
+composition**；禁止两个 regime 使用不同 cohort。正式运行前验证
+`sentence_id / ref_id / image_id / target proposal identity` 逐项相等、`K == 5`、
+hard distractors 全部与 target 同 COCO 类别、且无 target-equivalent 泄漏。
+
+### A11.4 candidate manifest 的物化与冻结（A10 交付口径的如实记录）
+
+A10 交付的是**cohort 级**冻结表（`hard_cohort.csv`，逐表达式的 target IoU / 同类供给 / random 可构造性），
+**不含 bank 行号级的候选索引**（A10 未写任何 `.npz`，其决策只用聚合可用率）。因此 A11 在首次前向前
+一次性物化索引级 manifest，且必须使用与 RefCOCO+ **完全相同的冻结构造规则**：
+`MANIFEST_SEED = 20260927`、`manifests-v1` ordering（每行一次确定性 shuffle、全 K 共享前缀、禁止 per-K 重采样）、
+`assign_target`（argmax IoU ≥ 0.5 + target-equivalent 移除）、`assign_gt_category` + `same_category_counts`
+（IoU ≥ 0.5 才赋类别、unknown = −1 永不匹配）。唯一的协议增益记录在案：
+
+- 每行 shuffle 的键取 **expression 级唯一 id**（RefCOCOg 的全局 `sent_id`），因为 A11 的评估单位是表达式；
+  RefCOCO+ 侧对应键是 region `ref_id`（那里一个 region 只有一句），二者都是“每个被评估行一次 shuffle”。
+- same-category 的 GT 基线与 A10 一致 = 官方 `instances_train2014.json` 限图 + `non_crowd()`
+  （A10 冻结 cohort 就是在此基线下得到的）；RefCOCO+ 的 manifest 构造用的是含 crowd 的 GT 集，
+  该口径差异**如实登记**并给出敏感性数字（同一 cohort 在含 crowd 基线下同类供给的变化行数），
+  primary 不因此改变。
+
+manifest 落盘后其 sha256 写入 `a11_protocol.json` 与 `manifests/index.json`，A11 结果产生后不得重新 sample。
+
+### A11.5 冻结特征提取（唯一允许的新计算）
+
+允许为 RefCOCOg 新数据提取 OpenCLIP text / proposal crop embeddings，但模型完全冻结，且必须与 RefCOCO+
+逐项相同：`ViT-B-32` / `laion2b_s34b_b79k` / checkpoint sha256
+`1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad` / `SimpleTokenizer`(context 77) /
+224 shortest-side + center-crop 预处理 / CLIP mean-std / L2 归一化 / FP16 缓存。
+任一项 mismatch → **STOP**。缓存写入独立 namespace `cache/refcocog_external/`，
+绝不写入 `cache/semantic_phase1` 或 `cache/features`；provenance 记录 checkpoint identity、feature dim、
+dtype、normalisation、image ids、sentence ids。
+
+### A11.6 冻结 B3
+
+恢复 Phase 0B 的 3 个 scorer seeds（`b3_seed1/2/3`）独立运行；禁止 fit / fine-tune / recalibrate /
+early stopping；RefCOCOg 上 grounding 参数更新数 = **0**。
+
+### A11.7 冻结 reliability 模型：只 load + predict
+
+primary comparison `R1 = Stats Logistic`、`R2 = E1b Stats + Semantic Logistic`，全部恢复 RefCOCO+
+Phase 0.5 / Phase 1 artifacts：coefficients、intercept、feature ordering、normalization mean/std、
+temperature、semantic feature definition（16-d 定义 + 17-d 定义）。
+
+**生产路径禁止调用 `fit` / `fit_transform` / `calibrate`**（指令 §8）。既有 `recover_frozen_models`
+在恢复过程中会重拟合 lbfgs，因此 A11 不走该路径：系数由一次性导出步骤
+`tools/freeze_a11_reliability_artifacts.py` 在 **RefCOCO+ 冻结 train 行**上物化（不接触任何 RefCOCOg 数据），
+并与已落盘的 Phase 1 `e1_logistic/coefficients.csv`、Phase 0.5 `{scorer}_normalisation.json`、两个
+`selection.json` 的 tune AUROC、以及 Phase 1F 已存预测逐项对齐；A11 runner 只从该 artifact 目录读取系数，
+用闭式 `sigmoid(x·coef + b)` 前向。静态与运行时测试共同保证 runner 侧无拟合路径。
+该导出不引入任何新统计量：它把已在 A8/A9 冻结并被 5 项校验（`_TOL = 1e-9`）确认过的同一组系数落盘。
+
+### A11.8 前向之前的 checksum 清单
+
+正式前向前保存并逐项核对（与 Phase 1F artifact 一致，任何 mismatch → `FROZEN_ARTIFACT_FAILURE` + STOP）：
+B3 seed1/2/3 state hash、Stats Logistic coefficient hash、E1b coefficient hash、normalization hash、
+temperature hash、semantic feature config hash、OpenCLIP checkpoint hash。
+
+### A11.9 BLAS 数值处理
+
+A10 发现重拟合 lbfgs 的输出随 BLAS 线程数在 1e-9 量级以上浮动。A11 **不重拟合任何 logistic 模型**，
+从根源上避开该问题（load saved coefficients, do not reconstruct them by fitting）。运行环境固定并记录
+`OMP_NUM_THREADS` / `MKL_NUM_THREADS` / `OPENBLAS_NUM_THREADS`。**不修改任何既有 tolerance 以迁就环境。**
+
+### A11.10 RefCOCO+ frozen anchor recovery（前置于 external）
+
+在跑 RefCOCOg 之前，从 Phase 1F 抽一个 RefCOCO+ anchor 集，用当前加载的 B3 / Stats / E1b 重新前向，
+与已保存预测比较：要求 **candidate ranking 完全 identical**，且 prediction score 差处于既有浮点容差
+（B3 raw logits 沿用 `--stop-atol = 1e-4`；reliability 概率沿用 `_TOL = 1e-9`）。恢复失败 → STOP，
+不得继续 external。
+
+### A11.11 manipulation check 与 difficulty 检查
+
+即便 same-category 构造在规则上合法，仍须证明它在 RefCOCOg 上确实增加了 semantic ambiguity。
+matched Random-K5 vs SameCategory-K5 至少比较 `cand_vmax`（预期 ↑）、`cand_top12_sim`（预期 ↑）、
+`clip_margin12`（预期 ↓），用 image-cluster paired bootstrap 5000 reps。
+
+**manipulation validity gate**：3 个主要 ambiguity indicator 中**至少 2 个**显著朝预期方向移动且 95% CI 不跨 0；
+否则 `INVALID HARD MANIPULATION`，external hard-replication 结论无效。
+
+另报告冻结 B3 在两 regime 上的 Accuracy / MSP / margin / entropy（预期 same-category 更难）；
+accuracy drop 本身不是研究贡献，只用于确认这是 stress test。
+
+### A11.12 severe failure 解释保护线（不是预计结果）
+
+若 frozen B3 `Random-K5 accuracy < 0.40` 或 `SameCategory-K5 accuracy < 0.25` →
+标记 `SEVERE EXTERNAL MODEL FAILURE`：先汇报，可仍计算指标，但 verdict 降为 `EXTERNAL INCONCLUSIVE`，
+不作强复现 claim。
+
+### A11.13 gate 数字（本文写作时结果未查看，就此冻结）
+
+主表只放 `MSP`（reference）/ `Stats Logistic` / `E1b Stats + Semantic`；
+primary metrics `AUROC_correct`、`E-AURC`、`RER@50`；secondary `RER@80`、`ECE`、`Brier`、`NLL`。
+不重跑 E2 / E3 / ScoreDeepSets / Stats MLP。
+
+- **Q1 External Semantic Transfer Gate（SameCategory-K5）**：`SEMANTIC TRANSFER CONFIRMED` 当且仅当
+  \(\Delta AUROC_{hard} \ge 0.015\) 且 \(CI_{95\%,lower} > 0\)，并至少满足 E-AURC reduction ≥ 5% **或**
+  RER@50 gain ≥ 3 pp，且 3-seed mean 同方向、**≥ 2/3 seeds 单独为正**。
+  `STRONG EXTERNAL SEMANTIC TRANSFER`：\(\Delta AUROC_{hard} \ge 0.025\) 且
+  （E-AURC reduction ≥ 10% **或** RER50 gain ≥ 5 pp）。
+- **Q2 Hard-Amplification Replication Gate**：`HARD AMPLIFICATION REPLICATED` 当且仅当
+  \(Amplification_{AUROC} = \Delta AUROC_{hard} - \Delta AUROC_{rand} \ge 0.005\) 且 \(CI_{lower} > 0\)，
+  并至少一个 selective metric 的 hard gain 大于 random gain（EAURC amplification > 0 或 RER50 amplification > 0）
+  且其 paired bootstrap CI `lower > 0`。
+- **Full external verdict（两轴，不笼统）**：Case A = YES/YES → `FULL EXTERNAL CONFIRMATION`；
+  Case B = YES/NO → `PARTIAL EXTERNAL CONFIRMATION`；Case C = NO/NO → `EXTERNAL NOT CONFIRMED`；
+  Case D = 处于阈值附近 → `EXTERNAL INCONCLUSIVE`（**不修改 threshold**）。
+- `STRONG FULL EXTERNAL REPLICATION`（descriptive label only）：\(\Delta AUROC_{hard} \ge 0.025\) 且
+  \(Amplification_{AUROC} \ge 0.015\) 且 selective metrics 同方向显著。
+
+### A11.14 统计与诊断口径
+
+- **Bootstrap**：全部主要比较用 image-level clustered **paired** bootstrap，5000 reps，cluster = `image_id`；
+  Random 与 Hard 必须使用**同一批 draw**（共享 `_ClusterSampler` 抽出的 index 序列），才能直接估计
+  hard − rand 的增量差。
+- **3 scorer seeds**：逐 seed 计算，不得把三 seed 行拼接当独立样本；报告 `mean ± std`；
+  significance 仍基于 image-cluster paired bootstrap。
+- **K = 5 only**（A10 same-category ≥9 覆盖仅 0.2705，不足以做 external dose-response）；
+  RefCOCO+ 的 `m = 0/2/4/8` 仍保留为内部 dose-response evidence。
+- secondary diagnostics（**不入 gate**）：expression length 四分位 Q1–Q4 上的 \(\Delta AUROC(E1b-Stats)\)；
+  含/不含已冻结 absolute-position 词表的分组（B3 accuracy、Stats AUROC、E1b AUROC、ΔAUROC）；
+  person / non-person 分组（hard cohort person fraction RefCOCO+ ≈ 0.52 vs RefCOCOg ≈ 0.39，
+  需确认 external 结果不是仅由类别构成变化造成），每组 `n ≥ 300` 才报告。不得因此重训 geometry model。
+- target absence 不做：natural omission（≈2.8%）直接排除在 target-present primary cohort 之外并报告数量；
+  A11 不训练也不测试 NONE。
+
+### A11.15 禁止事项（与指令 §33 / §43 / §44 一致）
+
+禁止 RefCOCOg train / val、B3 / Stats / E1b 重训、normalization refit、temperature refit、feature selection、
+threshold tuning；整个 external 实验新训练参数 = 0。特征或冻结 artifact 恢复出错 → STOP，不得自行重训；
+结果不通过 → 如实报告负结果，不得改模型；gray zone → `INCONCLUSIVE`，不得加 Transformer。
+完成后停止，不自动进入 FineCops / target omission / reranking / Transformer / new backbone / model redesign。
+
+### A11.16 措辞边界
+
+RefCOCOg 与 RefCOCO+ 共享 COCO 图像域与 COCO ontology。允许的最高措辞是
+*cross-dataset external validation under a shared COCO visual domain*；
+**禁止** *cross-domain visual generalization* 一类表述。A11 检验的是 semantic reliability information 的
+跨数据集可迁移性与 hard-competition 放大效应的可复现性，不是视觉域泛化。
+
+### A11.17 Artifacts 与测试要求
+
+`results/phase1e_refcocog_external/`：`a11_protocol.json`（含 `frozen_before_run` 与全部 checksum）、
+`frozen_artifact_manifest.json`、`anchor_recovery.json`、`manifests/`（rand5 / hard5 + `index.json`）、
+`features_report.json`、`predictions/`（逐 seed × regime 原始行：sentence_id / ref_id / image_id / regime /
+grounding_correct / B3 scores / Stats / E1b / MSP / margin / entropy，不允许只存聚合表）、
+`manipulation_check.csv`、`grounding_difficulty.csv`、`reliability_metrics.csv`、`semantic_increment.csv`、
+`bootstrap.csv`、`paired_random_vs_hard.csv`、`verdict.json`、`main_replication_table.md`（RefCOCO+ 侧数字
+必须从已有 artifact 读取，不得硬编码）、`figures/`（核心图：ΔAUROC(E1b−Stats) 在 Random vs Same-category 上，
+RefCOCO+ vs RefCOCOg strict，带 95% CI；附加图：E-AURC reduction 与 RER@50 gain 同布局）、`metadata.json`
+（runtime / peak VRAM / 线程数 / git commit）。
+
+新增测试至少覆盖指令 §41 的 18 项（零重叠、manifest hash、cohort identity、checkpoint / B3 state /
+Stats / E1b / normalization 一致、runner 无 fit 路径、RefCOCOg train/val 从不加载、无校准拟合、K=5、
+matched bootstrap draws、manipulation check 正确性、reliability 模型不改动 raw grounding 判定、
+anchor 恢复、候选类别正确性、无 target-equivalent hard distractor），且全量 pytest `0 failed`。
+
+## A11.18 最终汇报（指令 §45，20 项）
+
+> 本汇报在任何 external 预测产生、threshold 冻结之后撰写。所有 RefCOCO+ 数字从
+> `results/phase1f_hard_semantic/` 冻结 artifact 读取，未硬编码；RefCOCOg 数字来自
+> `results/phase1e_refcocog_external/a11_results.json`（5000 reps，image-cluster paired bootstrap，
+> rand/hard 同 draws）。聚合口径与 Phase 1F `gate.json` 一致：逐 seed 值与 CI 端点的 3-seed mean。
+
+**主复制表（§37）**
+
+| Dataset | Regime | Stats AUROC | E1b AUROC | ΔAUROC | EAURC reduction | RER50 gain |
+|---|---|---:|---:|---:|---:|---:|
+| RefCOCO+ | Random-K5 | 0.8370 | 0.8383 | +0.0012 | −0.2% | −1.21pp |
+| RefCOCO+ | SameCat-K5 | 0.8128 | 0.8446 | +0.0318 | +15.4% | +4.64pp |
+| RefCOCOg strict | Random-K5 | 0.8537 | 0.8542 | +0.0006 | −0.3% | −1.13pp |
+| RefCOCOg strict | SameCat-K5 | 0.9176 | 0.9354 | +0.0178 | +20.4% | +1.02pp |
+
+1. **冻结 artifact 恢复**：`frozen_artifact_manifest.json` 中 bundle_verification 全部 max_abs=0.0
+   （e1b/stats 系数、stats17 normalization、temperature），stats_logistic_pred 偏差 2.2e-16；
+   sklearn 与闭合式孪生最大偏差 2.2e-16，均在 tol=1e-9 内。schema=`a11-frozen-reliability-v1`。
+2. **CLIP cache 完整性**：OpenCLIP checkpoint sha256 `1bd3c717…080ad` 与冻结值逐项一致（ViT-B-32 /
+   laion2b_s34b_b79k，512-d，fp16，224，SimpleTokenizer，identity `ok=true`）。缓存 52.6 MB，
+   48320 crops / 755 images + 1890 sentences，invalid crop = 0。
+3. **external grounding accuracy**：Random-K5 mean **0.8150 ± 0.0025**，SameCategory-K5 mean
+   **0.7575 ± 0.0044**；均远高于 severe 线（0.40 / 0.25），**无 severe failure**。
+4. **manipulation check**：**INVALID** — 3 个歧义指标在 3 个 seed 上 0/3 显著朝预期方向移动：
+   `cand_vmax` Δ=+0.002（CI 跨 0）、`cand_top12_sim` Δ=+0.010（CI 跨 0）、
+   `clip_margin12` Δ=+0.004（**方向相反**，预期 ↓）。已独立从原始 npz 复核：rand 基线与 Phase 1F 吻合
+   （cand_vmax rand 0.701 vs RefCOCO+ 0.714），hard/rand 确为不同候选集（mean|Δscore|≈5.1、sem 非同一），
+   故为**真实发现**而非计算 bug —— RefCOCOg 上 random 候选已接近 same-category 的视觉相似度水平，
+   random↔hard 的 CLIP 语义歧义动态范围塌陷（difficulty check 显示 same-category 对 B3 仍更难：
+   accuracy −5pp、entropy +0.17、MSP −0.06，失效仅发生在 CLIP 语义歧义轴）。
+5. **Stats AUROC**：random 0.8537 / hard 0.9176。
+6. **E1b AUROC**：random 0.8542 / hard 0.9354。
+7. **ΔAUROC random**：+0.0006（≈0，CI 跨 0），与 RefCOCO+ random（+0.0012）一致 —— random 下语义无增益。
+8. **ΔAUROC hard**：**+0.0178**（逐 seed +0.0193 / +0.0146 / +0.0195），3-seed 同向、3/3 单独为正，
+   逐 seed CI_low>0（seed1 [0.0150,0.0240]、seed2 [0.0104,0.0191]、seed3 [0.0147,0.0246]）。
+9. **hard − random 放大（diff-of-diffs）**：数值 +0.0175 / +0.0134 / +0.0209，CI_low 均 >0；
+   但因 §4 manipulation 失效，**不能**将其解释为 “hard-competition 放大”，仅作为未验证的点估计记录。
+10. **E-AURC reduction**：hard **+20.4%**（≥5%，满足 Q1 selective 分支），random −0.3%。
+11. **RER@50 / @80 gain**：RER@50 hard +1.02pp（< 3pp，未走该分支）、random −1.13pp；
+    RER@80 hard +5.54pp、random +0.84pp。
+12. **3-seed 一致性**：ΔAUROC_hard 正向 3/3；放大正向 3/3（但见 §9 解释限制）。
+13. **paired bootstrap CI**：5000 reps，cluster=`image_id`（755 clusters），rand/hard 共享同一批 draw。
+14. **expression-length 诊断**（secondary，seed-1 hard 点估计）：Q1 +0.0144 / Q2 +0.0286 / Q3 +0.0176 /
+    Q4 +0.0188，四组均为正 —— 语义增益不专属于长表达。
+15. **absolute-position 诊断**：含绝对位置词 n=313 ΔAUROC +0.0156，不含 n=1577 +0.0198，两组均正。
+16. **person / non-person 诊断**：person n=728 ΔAUROC +0.0122，non-person n=1162 +0.0243，两组均正
+    且 n≥300 可报告 —— external 结果非仅由类别构成造成。
+17. **Semantic Transfer verdict（Q1）**：**CONFIRMED（YES）**。ΔAUROC_hard=0.018 ≥ 0.015、CI_low>0、
+    E-AURC reduction 20.4% ≥ 5%、3-seed 同向且 3/3 为正 → 满足 A11.13 Q1 gate（未达 STRONG，因 <0.025）。
+18. **Hard Amplification verdict（Q2）**：**INVALID_MANIPULATION（不可评估，非 NO）**。前置 manipulation
+    check 未通过 → A11.13 Q2 gate 无法有效判定，hard-competition 放大效应能否跨数据集复现本轮不可下结论。
+19. **Full external verdict**：脚本归为 **Case D — EXTERNAL INCONCLUSIVE**（放大轴）。精确措辞：
+    **Q1 语义迁移跨数据集成立；Q2 hard-amplification 复现因 RefCOCOg manipulation 动态范围塌陷而不可评估**。
+    按 §43 如实保留该负结果，不修改模型 / threshold / 不加 Transformer。
+20. **runtime / tests / commit**：特征提取 230.9s（210.5 crops/s，peak VRAM 832 MB）；
+    frozen 推断 17.1s（peak 13.8 MB）；anchor recovery 76.1s；analysis 126.9s；
+    BLAS 线程 OMP/MKL/OPENBLAS/NUMEXPR=16。§41 18 项测试与全量 pytest 见 A11.19；commit 单独进行。
+
+**两个总问题的明确回答**
+
+> *Does the semantic reliability signal discovered on RefCOCO+ transfer to a completely image-disjoint
+> RefCOCOg test set under the same frozen COCO visual pipeline?*
+> **YES** — 在 image-disjoint RefCOCOg strict cohort 上，Stats→E1b 的 ΔAUROC_hard=+0.018（3/3 seeds 为正、
+> CI_low>0、E-AURC reduction 20.4%），语义可靠性信息完成跨数据集迁移。
+
+> *Does same-category hard competition amplify that semantic signal again on RefCOCOg?*
+> **本轮无法判定（NOT ASSESSABLE）** — RefCOCOg 上 same-category 构造未产生可测量的 CLIP 语义歧义增量
+> （manipulation 0/3 显著），因此不能把放大的正点估计归因于 hard-competition；该复现问题保持开放，
+> 不作 YES / NO 断言。
+
+## A11.19 测试（指令 §41，18 项）
+
+新增 `tests/test_a11_external_confirmation.py`（23 个测试覆盖 18 项，全部离线，不触 GPU / COCO JPEG）。
+分两类：**artifact pin**（从已提交的 `results/phase1e_refcocog_external/` 读回并重新校验，checksum 由磁盘真实文件重算，
+不信 manifest 自报值）与 **source / logic pin**（静态证明 load-and-predict 契约 + 用合成 cohort 触发校验函数）。
+
+| §41 项 | 测试 | 口径 |
+|---|---|---|
+| 1 strict 零 RefCOCO+ 重叠 | `test_a11_strict_cohort_is_a_subset_of_the_zero_overlap_strict_subset` | A11 cohort 图像 ⊆ A10 strict（strict 定义为 minus ALL RefCOCO+） |
+| 2 manifest 匹配 A10 hash | `test_a11_candidate_manifests_match_the_frozen_a10_cohort` | expr 集合 == A10 `hard_cohort.csv`；重算 sha256 == `cohort_report.persist.files` |
+| 3 Random/Hard cohort identity | `test_random_and_hard_manifests_describe_the_same_cohort` | 同 expr 同 image 同 target；候选组成确有差异 |
+| 4 OpenCLIP checkpoint 一致 | `test_openclip_checkpoint_identity_is_frozen` / `test_assert_openclip_identity_accepts_a_matching_checkpoint` | measured=recorded=frozen=字面量；合成 mismatch → `IdentityMismatch` |
+| 5 B3 state hash 一致 | `test_b3_state_hashes_match_the_manifest` | `verify_checksum_manifest` 对 `phase0b_independent/seed_{1,2,3}/model.npz` 重哈希 ok |
+| 6 Stats 权重一致 | `test_stats_weights_and_prediction_are_frozen` | coef 17-d；`stats_logistic_pred_max_abs` ≤ tol |
+| 7 E1b 权重一致 | `test_e1b_weights_are_identical_to_the_phase1_coefficients` | coef 33-d；`e1b_coefficients_max_abs == 0` |
+| 8 normalization 一致 | `test_normalization_is_identical_to_the_phase05_fit` / `test_bundle_checksum_is_enforced` | `stats17_normalisation_max_abs == 0`；改 bundle → checksum 拒绝 |
+| 9 runner 无 fit 路径 | `test_production_runner_contains_no_fit_path` | `assert_no_fit_path` 扫 6 个生产文件 |
+| 10 RefCOCOg train/val 从不加载 | `test_refcocog_train_and_val_are_never_loaded` / `test_build_manifest_defaults_to_the_test_split` | 默认 `eval_split="test"`；两 regime manifest 每行 split=="test" |
+| 11 无校准拟合 | `test_production_path_contains_no_calibration_fitting` / `test_fit_tripwire_blocks_a_refit` | 额外禁 calibrate/Scaler/partial_fit；运行时 tripwire 拦截 refit |
+| 12 K 固定为 5 | `test_k_is_frozen_to_five` / `test_every_cohort_row_carries_four_distractors` | `A11_K==PRIMARY_K==5`；每行 C_5 前缀恰 4 干扰项 |
+| 13 matched bootstrap draws | `test_bootstrap_is_matched_random_and_hard` | 5000 reps，CI 0.95，逐 seed rand/hard `n_clusters` 相同（=755） |
+| 14 manipulation 正确性 | `test_manipulation_check_significance_is_correct` | 从 per-seed CI 重算显著性 == `n_criterion_significant`；`valid` 与 ≥2/3 规则一致 |
+| 15 reliability 不改 raw grounding | `test_reliability_models_do_not_change_raw_grounding` | 6 个原始 npz：`correct == argmax(scores)==0`，conf∈[0,1] 独立于判定 |
+| 16 anchor 恢复 | `test_anchor_recovery_passed` | 6 cell 全 `ranking_identical`、`raw_score_max_abs==0`、conf ≤ 1e-9 |
+| 17 候选类别正确性 | `test_hard_distractors_must_share_the_target_category` | 合成 cohort：异类别 hard 干扰项 → `hard_same_category` 计数 +1；unknown 类别单列 |
+| 18 无 target-equivalent 干扰项 | `test_target_leak_and_distractor_shape_are_rejected` | target 混入干扰项 → `target_leak` +1；`RefCOCOGSample` 拒绝 target 自查 / 非 K-1 形状 |
+
+全量 pytest：**691 passed, 0 failed**（本环境 `deepminer`，约 142s）。
 
 
 

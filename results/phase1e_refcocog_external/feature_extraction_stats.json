@@ -1,0 +1,20 @@
+{
+  "batch_size": 128,
+  "cache_bytes": 52634509,
+  "checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+  "crops_per_second": 210.5,
+  "device": "cuda",
+  "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "invalid_crop_count": 0,
+  "max_images": 0,
+  "n_sentences": 1890,
+  "n_target_images": 755,
+  "peak_vram_mb": 832.2,
+  "precision": "fp16",
+  "region_crops_encoded": 48320,
+  "region_images_encoded": 755,
+  "region_seconds": 229.58,
+  "resumed": false,
+  "text_seconds": 1.33,
+  "wall_seconds": 230.94
+}

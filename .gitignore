@@ -33,6 +33,8 @@ results/*
 !results/phase1e_finecops/**
 !results/phase1e_refcocog_feasibility/
 !results/phase1e_refcocog_feasibility/**
+!results/phase1e_refcocog_external/
+!results/phase1e_refcocog_external/**
 experiments/**/outputs/
 
 # Local logs / scratch

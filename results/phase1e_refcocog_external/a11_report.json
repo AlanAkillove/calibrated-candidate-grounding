@@ -1,0 +1,165 @@
+{
+  "protocol": "A11",
+  "schema": "a11-report-v1",
+  "aggregation": "3-seed mean of per-seed paired-bootstrap rows and CI endpoints",
+  "q1_semantic_transfer": {
+    "confirmed": true,
+    "decision": "YES",
+    "gate": "Q1 semantic transfer",
+    "mean_delta_auroc_hard": 0.01783408069360452,
+    "mean_e_aurc_reduction_hard": 0.20421080043351983,
+    "mean_rer50_gain_pp_hard": 1.0218094614419508,
+    "n_seeds_ci_positive": 3,
+    "n_seeds_delta_positive": 3,
+    "per_seed_delta_auroc": {
+      "b3_seed1": 0.019348555984770144,
+      "b3_seed2": 0.014633158676205293,
+      "b3_seed3": 0.01952052741983812
+    },
+    "strong": false,
+    "thresholds": {
+      "q1_delta_auroc": 0.015,
+      "q1_delta_auroc_strong": 0.025,
+      "q1_e_aurc_reduction": 0.05,
+      "q1_rer50_gain_pp": 3.0,
+      "seed_sig_min": 2
+    }
+  },
+  "q2_hard_amplification": {
+    "decision": "INVALID_MANIPULATION",
+    "gate": "Q2 hard amplification",
+    "note": "INVALID HARD MANIPULATION - external hard-replication invalid",
+    "replicated": false,
+    "thresholds": {}
+  },
+  "full_verdict": {
+    "case": "D",
+    "full_verdict": "EXTERNAL INCONCLUSIVE",
+    "strong_full_replication": false
+  },
+  "manipulation": {
+    "valid": false,
+    "per_seed_significant": {
+      "b3_seed1": 0,
+      "b3_seed2": 0,
+      "b3_seed3": 0
+    }
+  },
+  "cells": {
+    "refcococo_plus": {
+      "rand5": {
+        "e1b_auroc": 0.8382684626126005,
+        "stats_auroc": 0.8370416816005984,
+        "delta_auroc": 0.0012267810120019467,
+        "delta_auroc_ci_low": -0.0016783747059641795,
+        "delta_auroc_ci_high": 0.004051882859216117,
+        "rer50_gain_pp": -1.2118351585644376,
+        "e_aurc_reduction": -0.0021998501854904105
+      },
+      "hard5": {
+        "e1b_auroc": 0.8446193242481784,
+        "stats_auroc": 0.8127708338733179,
+        "delta_auroc": 0.03184849037486052,
+        "delta_auroc_ci_low": 0.028588398320698583,
+        "delta_auroc_ci_high": 0.035301236139371785,
+        "rer50_gain_pp": 4.637289158812382,
+        "e_aurc_reduction": 0.15367059525131538
+      }
+    },
+    "refcocog_strict": {
+      "rand5": {
+        "accuracy_mean": 0.8149911816578483,
+        "accuracy_std": 0.0025313404046573788,
+        "delta_auroc": 0.000560188934799366,
+        "delta_auroc_std": 0.0013939142123275635,
+        "e1b_auroc": 0.8542490861017608,
+        "e_aurc_reduction": -0.002688832455942107,
+        "rer50_gain_pp": -1.1281840493186035,
+        "rer80_gain_pp": 0.844796999620162,
+        "stats_auroc": 0.8536888971669615,
+        "delta_auroc_ci_low": -0.003968731267521072,
+        "delta_auroc_ci_high": 0.005198614601594952
+      },
+      "hard5": {
+        "accuracy_mean": 0.7574955908289241,
+        "accuracy_std": 0.004412697002891308,
+        "delta_auroc": 0.01783408069360452,
+        "delta_auroc_std": 0.0022644822608745363,
+        "e1b_auroc": 0.9353897980589251,
+        "e_aurc_reduction": 0.20421080043351983,
+        "rer50_gain_pp": 1.0218094614419508,
+        "rer80_gain_pp": 5.540028071741792,
+        "stats_auroc": 0.9175557173653206,
+        "delta_auroc_ci_low": 0.013385970121974929,
+        "delta_auroc_ci_high": 0.02253849056255401
+      }
+    }
+  },
+  "diagnostics": {
+    "absolute_position": {
+      "contains_absolute": {
+        "accuracy": 0.6773162939297125,
+        "delta_auroc": 0.015645432467775056,
+        "e1b_auroc": 0.877265084999066,
+        "n": 313,
+        "stats_auroc": 0.8616196525312909
+      },
+      "no_absolute": {
+        "accuracy": 0.7780596068484464,
+        "delta_auroc": 0.01979042961928046,
+        "e1b_auroc": 0.942149260682268,
+        "n": 1577,
+        "stats_auroc": 0.9223588310629875
+      }
+    },
+    "category": {
+      "non_person": {
+        "accuracy": 0.7168674698795181,
+        "delta_auroc": 0.024254078531108503,
+        "e1b_auroc": 0.9137004345811273,
+        "n": 1162,
+        "stats_auroc": 0.8894463560500188
+      },
+      "person": {
+        "accuracy": 0.8324175824175825,
+        "delta_auroc": 0.012240978196180308,
+        "e1b_auroc": 0.9582183628198886,
+        "n": 728,
+        "stats_auroc": 0.9459773846237083
+      },
+      "reportable": true
+    },
+    "expression_length": {
+      "Q1": {
+        "accuracy": 0.7844202898550725,
+        "delta_auroc": 0.014380810060744875,
+        "e1b_auroc": 0.938343004638345,
+        "n": 552,
+        "stats_auroc": 0.9239621945776001
+      },
+      "Q2": {
+        "accuracy": 0.7306889352818372,
+        "delta_auroc": 0.028615725359911415,
+        "e1b_auroc": 0.9333776301218162,
+        "n": 479,
+        "stats_auroc": 0.9047619047619048
+      },
+      "Q3": {
+        "accuracy": 0.7461928934010152,
+        "delta_auroc": 0.017619047619047645,
+        "e1b_auroc": 0.9253061224489796,
+        "n": 394,
+        "stats_auroc": 0.9076870748299319
+      },
+      "Q4": {
+        "accuracy": 0.7784946236559139,
+        "delta_auroc": 0.018773802499597703,
+        "e1b_auroc": 0.9322265729764523,
+        "n": 465,
+        "stats_auroc": 0.9134527704768546
+      }
+    },
+    "note": "seed-1 SameCategory-K5 point estimates; secondary, never used for a gate"
+  },
+  "main_table_markdown": "| Dataset | Regime | Stats AUROC | E1b AUROC | dAUROC | EAURC reduction | RER50 gain |\n|---|---|---:|---:|---:|---:|---:|\n| RefCOCO+ | Random-K5 | 0.8370 | 0.8383 | +0.0012 | -0.2% | -1.21pp |\n| RefCOCO+ | SameCat-K5 | 0.8128 | 0.8446 | +0.0318 | +15.4% | +4.64pp |\n| RefCOCOg strict | Random-K5 | 0.8537 | 0.8542 | +0.0006 | -0.3% | -1.13pp |\n| RefCOCOg strict | SameCat-K5 | 0.9176 | 0.9354 | +0.0178 | +20.4% | +1.02pp |\n\nValues are 3-seed means of the per-seed image-cluster paired-bootstrap rows (5000 reps, 95% CI). RefCOCO+ rows are read from the frozen Phase-1F `bootstrap.csv`; RefCOCOg rows from `a11_results.json`.\n"
+}

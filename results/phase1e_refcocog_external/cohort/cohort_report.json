@@ -1,0 +1,53 @@
+{
+  "a10_pin": {
+    "a10_rows": 1890,
+    "a11_rows": 1890,
+    "n_extra": 0,
+    "n_missing": 0,
+    "ok": true,
+    "rows_only_in_a10": [],
+    "rows_only_in_a11": [],
+    "same_category_supply_mismatches": 0,
+    "target_iou_mismatches": 0,
+    "valid_distractor_count_mismatches": 0
+  },
+  "cohort": {
+    "K": 5,
+    "n_images": 755,
+    "n_refs": 978,
+    "n_rows": 1890
+  },
+  "matched_pair": {
+    "K": 5,
+    "failures": {
+      "bank_range": 0,
+      "duplicates": 0,
+      "eligible": 0,
+      "hard_same_category": 0,
+      "identity": 0,
+      "k": 0,
+      "target_leak": 0,
+      "unknown_category": 0
+    },
+    "gt_basis": "official_coco_train2014_non_crowd",
+    "mean_same_category_supply": 8.749206349206348,
+    "n_images": 755,
+    "n_refs": 978,
+    "n_rows": 1890,
+    "ok": true,
+    "random_distractors_sharing_target_category": 1203
+  },
+  "persist": {
+    "files": {
+      "cohort.csv": "ed84c7997d98308f685976fd12562932045f15bec00eefe0acca80c5f3391945",
+      "random_rg_external_strict.jsonl": "12862256d6799e34569f1506a1babf816a844796fcb278f5411508cc57b1e394",
+      "random_rg_external_strict.meta.json": "5ee35ba7222990beb8f02f850ceb5871ddeae6fb1a0c1192b4eea8a4b5a4a28f",
+      "same_category_rg_external_strict.jsonl": "e1d1d5f612b9c560353abcfc49fdf4ebcda37a55d5c2f4a66409b8039c6a52ca",
+      "same_category_rg_external_strict.meta.json": "589042b0228671fa62e633d8d84f35c1f007a2236a21203dddcbe67fbc41f136"
+    },
+    "manifests_schema": "manifests-v1",
+    "n_rows": 1890,
+    "root": "results\\phase1e_refcocog_external\\cohort",
+    "schema_version": "a11-refcocog-candidate-v1"
+  }
+}
