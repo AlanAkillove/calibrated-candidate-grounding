@@ -1,0 +1,73 @@
+{
+  "environment": {
+    "cuda_available": true,
+    "git_commit": "a3ee9a07d3f58d1c1f49e33b6f1dc9424c956e0f",
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.10.19",
+    "torch": "2.5.1+cu121"
+  },
+  "forbidden": [
+    "FineCops train/val labels",
+    "FineCops calibration or threshold fitting",
+    "detector swap / N re-selection / reranking / MLLM CRS",
+    "mixing negative (target-absent) rows into the positive gate"
+  ],
+  "frozen_before_run": {
+    "audit_images": 1000,
+    "audit_seed": 20260929,
+    "go_availability_min": 0.9,
+    "go_recall_min": 0.9,
+    "graph_iou_min": 0.9,
+    "invalid_crop_min_side": 4.0,
+    "min_group_for_tuple_type": 300,
+    "n_proposals": 64,
+    "primary_k": 5,
+    "recall_ious": [
+      0.5,
+      0.7
+    ],
+    "same_category_diagnostic_min_availability": 0.5,
+    "same_category_primary_min_availability": 0.9,
+    "secondary_k": 10,
+    "stop_recall_max": 0.8
+  },
+  "inputs": {
+    "annotation_dir": "data\\raw\\finecops",
+    "files": {
+      "dataset_card.json": {
+        "bytes": 2066,
+        "sha256_16": "b7f82f0b4de1734f"
+      },
+      "test_expression_all.json": {
+        "bytes": 12127597,
+        "sha256_16": "40ec6e596484bc59"
+      },
+      "test_expression_all_coco_format.json": {
+        "bytes": 21099434,
+        "sha256_16": "ed0fa31efd935291"
+      },
+      "test_expression_pos.json": {
+        "bytes": 3075530,
+        "sha256_16": "dec95f7360abf2b4"
+      },
+      "test_expression_pos_coco_format.json": {
+        "bytes": 5298930,
+        "sha256_16": "7d129f218ae5b807"
+      }
+    },
+    "scene_graph": {
+      "bytes": 44830665,
+      "path": "data\\raw\\gqa\\val_sceneGraphs.json",
+      "sha256_16": "3224baf1e87e56d0"
+    }
+  },
+  "model_pipeline_reused_unchanged": [
+    "torchvision fasterrcnn_resnet50_fpn RPN stage (COCO_V1, N=64)",
+    "OpenCLIP ViT-B/32 laion2b_s34b_b79k",
+    "B3 independent scorer seeds 1/2/3",
+    "Stats Logistic, E1b Stats+Semantic Logistic (RefCOCO+ frozen)"
+  ],
+  "phase": "1E",
+  "purpose": "FineCops-Ref external semantic confirmation - feasibility audit only (F0-F4)"
+}

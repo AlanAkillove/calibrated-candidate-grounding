@@ -1,0 +1,7 @@
+tuple_type,n_expressions,n_images,share_of_test,level1,level2,level3,reportable
+0_hop,2333,1980,0.242894,1864,469,0,True
+1_hop,2146,1801,0.223425,1078,997,71,True
+2_hop,2555,1737,0.266007,1071,1087,397,True
+and,1639,1299,0.17064,839,800,0,True
+same_attr,705,467,0.073399,663,42,0,True
+same_attr_two_hop,227,202,0.023634,215,9,3,False

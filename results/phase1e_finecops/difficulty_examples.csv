@@ -1,0 +1,16 @@
+level,expr_id,image_id,tuple_type,target_name,n_same_name,expression
+1,1,2414605,2_hop,boy,1,The boy riding the brown horse positioned ahead of the white truck.
+1,2,2394854,1_hop,camera,1,The tan-hued camera is attached to the red brick edifice.
+1,3,2394854,and,truck,1,"Next to the red, brick building and before the little tree resides the white truck."
+1,4,2394852,0_hop,woman,1,The woman filled with happiness and wearing a smile.
+1,5,2394852,2_hop,woman,1,"The joyful, smiling woman situated to the left of the young, happy, and smiling boy, who is, in turn, positioned to the left of the happy and smiling girl."
+2,6,2394852,2_hop,girl,2,"To the left of the young, happy, and smiling boy stands the young girl who, in turn, is positioned to the left of the white dishwasher."
+2,7,2394852,and,girl,2,Located to the boys' left and slightly past the grinning woman is another youthful girl.
+2,9,286099,and,girl,2,At the young boy's left side exists a girl nearby the blue collar.
+2,18,2341787,2_hop,ornament,2,"To the right of the statue, which is next to the tree trunk, lies the ornament."
+2,19,2341787,and,ornament,2,The ornament to the right of the statue and the white flowers.
+3,12,286099,2_hop,girl,2,The girl situated to the right of the dog adorned with the blue collar.
+3,20,2341787,2_hop,ornament,2,"On the right-hand side of the statue, past the vase, rests the ornament."
+3,25,2415552,2_hop,building,3,"Just before the sign attached to the post, one encounters the building."
+3,35,2383415,2_hop,snowboard,2,"The snowboard, longer than most, can be found resting to the right of the pair of skis, which themselves sit to the right of the standing man."
+3,64,2318011,2_hop,pole,2,"The pole set off to the right of the first building, which is itself situated to the right of the gray one."

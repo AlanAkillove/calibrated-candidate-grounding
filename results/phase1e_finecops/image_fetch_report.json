@@ -1,0 +1,23 @@
+{
+  "annotation_vs_actual_mismatch": 0,
+  "annotation_vs_graph_mismatch": 0,
+  "dims_source_of_truth": "actual JPEG",
+  "fetch": {
+    "bytes_transferred": 85047571,
+    "bytes_written": 84513451,
+    "failed": [],
+    "fetched": 642,
+    "missing_in_archive": [],
+    "n_failed": 0,
+    "n_missing_in_archive": 0,
+    "present_after_run": 1000,
+    "requested": 1000,
+    "requests": 642,
+    "seconds": 1441.16,
+    "skipped_existing": 358
+  },
+  "images_decoded": 1000,
+  "seconds": 1444.28,
+  "stage": "F0b_images",
+  "verdict": "IMAGE GEOMETRY OK"
+}

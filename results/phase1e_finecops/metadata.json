@@ -1,0 +1,43 @@
+{
+  "artifacts": [
+    "results\\phase1e_finecops\\audit_subset.csv",
+    "results\\phase1e_finecops\\candidate_availability.csv",
+    "results\\phase1e_finecops\\cohort_inventory.csv",
+    "results\\phase1e_finecops\\difficulty_distribution.csv",
+    "results\\phase1e_finecops\\difficulty_examples.csv",
+    "results\\phase1e_finecops\\external_branch_decision.json",
+    "results\\phase1e_finecops\\feasibility_protocol.json",
+    "results\\phase1e_finecops\\figures\\fig1_finecops_feasibility.png",
+    "results\\phase1e_finecops\\image_dims_check.csv",
+    "results\\phase1e_finecops\\image_fetch_report.json",
+    "results\\phase1e_finecops\\metadata.json",
+    "results\\phase1e_finecops\\metadata_audit.json",
+    "results\\phase1e_finecops\\negative_distribution.csv",
+    "results\\phase1e_finecops\\recall_by_target_size.csv",
+    "results\\phase1e_finecops\\rpn_audit.csv",
+    "results\\phase1e_finecops\\rpn_audit_summary.json",
+    "results\\phase1e_finecops\\tuple_type_distribution.csv"
+  ],
+  "audit_images": 1000,
+  "branch": "level_primary_only",
+  "environment": {
+    "cuda_available": true,
+    "git_commit": "a3ee9a07d3f58d1c1f49e33b6f1dc9424c956e0f",
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.10.19",
+    "torch": "2.5.1+cu121"
+  },
+  "figures": [
+    "results\\phase1e_finecops\\figures\\fig1_finecops_feasibility.png"
+  ],
+  "git_commit": "a3ee9a07d3f58d1c1f49e33b6f1dc9424c956e0f",
+  "phase": "1E_feasibility",
+  "seed": 20260929,
+  "stages_run": [
+    "rpn",
+    "decision"
+  ],
+  "total_wallclock_s": null,
+  "verdict": "EXTERNAL STOP"
+}

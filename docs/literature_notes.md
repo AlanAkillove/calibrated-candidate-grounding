@@ -50,7 +50,7 @@
 | **OMG-LLVA / "Not All Regions Are Paved With Gold"** (Ma et al.) | CVPR 2022（需查证） | 在区域选择任务中显式加入 "no-answer / 背景区域" 的处理 | 支撑 "NONE 是可建模的对象" 这一前提；我们的差别是区分 **synthetic omission vs natural proposal miss** |
 | **ViNoRe / "When and What: Image Region Selection for Grounded VQA"** (Schneider et al.) | EACL/NAACL 2021–2022（需查证） | 让模型同时决定 "选哪个区域" 与 "是否需要区域（no-region）" | 同上，属前序 "可弃权区域选择" 路线 |
 | **GRES / gRefCOCO** (Liu et al.) | CVPR 2023 | 把 referring 任务推广到 zero-target（无匹配）与 multi-target，并提供 GREC/GRES 评测 | 是 "scene-level 目标不存在" 的权威出处；本项目主线更关心 **candidate omission**（目标在图里但候选没提供），把 gRefCOCO 记为后续扩展 |
-| **FineCops-Ref** (Liu et al.) | EMNLP 2024 | 可控难度（object/attribute/multi-hop relation）+ 通过细粒度编辑/生成构造 negative text 与 negative images，专测 reject 能力（检索到的 test-set 规模：9,605 positive / 9,814 negative expressions / 8,507 negative images） | **本项目的 external stress test**；我们不参与其榜单，只借用其压力条件检验 reliability 结论是否迁移 |
+| **FineCops-Ref** (Liu et al.) | EMNLP 2024 | 可控难度（object/attribute/multi-hop relation）+ 通过细粒度编辑/生成构造 negative text 与 negative images，专测 reject 能力。**实测核实（2026-09-29）**：官方数据在 figshare article **26048050**，license **CC BY 4.0**；图像域为 **GQA / Visual Genome**（非 COCO）；positive test **9,605 表达 / 4,313 图**，level 1/2/3 = **5,730 / 3,404 / 471**；negative **9,814 text + 8,507 image**；官方 level 定义本身就以 **GQA 精确同名对象** 分层（L1 无同名 / L2 需 1 个 attribute-relation / L3 需 ≥2）；figshare 上**确有 train/val 标注**（故非 evaluation-only），本项目只下载 test | **本项目的 external confirmation 数据集**（Phase 1E / Amendment A9）；我们不参与其榜单、不用其 train/val、不用其官方 CRS 分数（Qwen2-VL/InternVL），只借用其压力条件检验 reliability 结论是否迁移。**F0–F4 可行性审计实测（2026-09-29）**：同一冻结 N=64 RPN 在 GQA 图上 target recall@0.5 仅 **0.7579**（< 0.80 停止线）、same-category K5 可用性仅 **0.1861** → 按指令 §6 判为 **EXTERNAL STOP**，正式 external 评测未获授权（A9.13） |
 | **Ref-L4** | 2024（**需查证**：作者、venue 与标注维度未二次确认） | 为 grounding 提供 reasoning length / 难度标签，用于评测 instruction-tuned LVLM | 仅记录为后续扩展候选（难度分层与我们 K/hardness 分层是正交的两种 "难度"） |
 | **"Faithful Query–Region Binding for Frozen-Detector Visual Grounding"** 一类工作 | 2026（检索到，**需查证** 具体出处与是否同行评审） | 在冻结检测器 + 语言绑定的设定下讨论 absent-referent 处理 | 说明 "冻结 detector + 后期决策 + 目标缺失" 已有关注；我们必须把自己的设定与之明确区分（我们聚焦 calibration/selective risk 与 gate 式终止） |
 | **Flat (K+1)-way NONE、max-confidence / margin threshold（本项目 N0/N1/N2）** | — | 简单弃权机制 | 作为 Phase 2 的 baseline 集合；不声称它们是新颖机制 |
@@ -116,6 +116,9 @@
 [ ] Nixon ACE、Karandikar SCE、Varma "All Errors Are Local"、MMCE、Guo TS 的 bib 精确字段
 [ ] El-Yousef & Vernick、Geifman & El-Yaniv、Wen et al.、Geissinger et al. 的 selective 文献准确性
 [ ] Rentschler et al. "CLIP accuracy is related to the number and size of candidate objects" 是否可核实
-[ ] FineCops-Ref 的下载方式、license、是否 test-only
+[x] FineCops-Ref 的下载方式、license、是否 test-only —— **已核实（2026-09-29）**：figshare
+    article 26048050（API 可直接拉取文件清单与 download_url）、license **CC BY 4.0**、
+    **非 test-only**（存在 train/val 标注文件），但本项目只使用官方 test split；详见
+    `docs/dataset_protocol.md` §2 与 `data/raw/finecops/dataset_card.json`
 [ ] COCO / RefCOCO 的官方 attribution 文本（README 引用块）
 ```

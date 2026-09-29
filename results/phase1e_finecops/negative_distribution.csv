@@ -1,0 +1,14 @@
+dimension,value,n_expressions
+negative_cate,None,9605
+negative_cate,image,8507
+negative_cate,text,9814
+negative_type,None,9605
+negative_type,attribute,3569
+negative_type,flip,1555
+negative_type,object,8122
+negative_type,order,2029
+negative_type,relation,1891
+negative_type,swap_attr,1155
+negative_level,1,12726
+negative_level,2,5595
+negative_level,None,9605

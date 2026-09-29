@@ -497,6 +497,8 @@ indices：ref_id/regime/K/hardness/target_present/candidate_indices/target_candi
 | A5 | 2026-09-28 | 度量有效性修正 + temperature 优化重做 + reliability GO replication criterion（**post-hoc amendment**：在 Phase 0A 结果可见后加入，*不构成 preregistration*；不修改任何原始 gate 数字） | Phase 0A 暴露三个统计问题：nested candidate sets 下 raw accuracy degradation 是结构性预期；raw AURC 与 base error rate 强耦合；temperature 最优解落在优化边界（T*=0.05 贴界）。后续 reliability GO 改为依赖 accuracy-normalized / base-rate-aware 指标（E-AURC / AUROC_correct / RER@c / corrected global-T reliability map） | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A5” |
 | A6 | 2026-09-28 | Phase 0.5 Score-Information Sufficiency Audit protocol 冻结（split seed / 模型 zoo / 选型指标 / sufficiency gate；**结果可见前冻结**；不修改任何既有条款） | 进入 score-only 可靠性信息充分性审计：需在结果前固定 reliability_train/tune 切分（image-level, seed=20260928, 70/30）、训练 K 约束（K∈{5,10}）、L0/L1/L2 模型 zoo 与 §24/25/26 sufficiency gate 判定语义 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A6” |
 | A7 | 2026-09-28 | Phase 1 Candidate Semantic Information Sufficiency Audit protocol 冻结（E1/E2/E3 模型 zoo / 统计与 gate §28-31 / P1-P4 比较；**GO/NO-GO 数字在任何 Phase 1 结果可见前冻结**；不修改任何既有条款） | Phase 0.5 已证 score-only 信息不足（GO_candidate_embeddings，4 OOD cells 双 Route）；检验唯一未使用信息源 candidate/query semantic representation 是否携带额外可靠性信息 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A7” |
+| A8 | 2026-09-28 | Phase 1F Hard-Competition Semantic Confirmation（confirmatory stress test；cohort 规则 / 冻结评分 / A8.4 复现校验 / A8.6 gate 数字在任何 hard-regime 结果前冻结；不修改任何既有条款） | A7 verdict = INCONCLUSIVE（random regime 下 semantic 增量不显著）；唯一待检验假设：semantic 信息在 GT same-category 竞争下是否实质性更有用 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A8” |
+| A9 | 2026-09-29 | FineCops-Ref External Semantic Confirmation（staged external validation；工程 gate §6/§7 + regime 规则 §10/§11 + external gate §17-20 数字在任何 FineCops 模型推断前冻结；不修改任何既有条款） | A8 verdict = CONFIRMED；架构升级路径关闭，只允许检验该效应能否迁移到独立数据集（不同 image source / annotation pipeline / 语言构造） | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A9” |
 
 ---
 
@@ -1035,4 +1037,159 @@ training new reliability models / retraining E1b / feature selection / E2-E3 tun
 ### A8.10 测试要求（§29 的 12 项，全部必须 0 failed）
 
 same-category candidates 与 target 同 GT category / no target-equivalent / matched random-hard cohorts identical / K fixed / frozen E1b coefficients unchanged / frozen Stats Logistic unchanged / no hard-regime labels enter training / same normalization reused / candidate ranking 不被 reliability model 改变 / paired bootstrap 同 image 簇 / deterministic manifest generation / manipulation features correctly computed。
+
+---
+
+## Amendment A9 — 2026-09-29 — FineCops-Ref External Semantic Confirmation（staged external validation；gate 数字在任何 FineCops 模型推断前冻结）
+
+**staged 声明**：本 amendment 制定于 Phase 1F **A8 verdict = CONFIRMED 已知之后**，属预注册的
+external confirmation 阶段；不修改任何既有条款，也不构成新的探索性主张。
+唯一被检验的假设：**A8 在 RefCOCO+ 上发现的 semantic incremental value 是否在一个
+完全独立的数据集（不同 image source、不同 annotation pipeline、不同语言构造）上仍然成立**。
+本阶段**不是**训练阶段：FineCops 上不存在任何可学习参数（0 个），A8 的架构升级路径在此关闭。
+
+**结果可见性**：F0/F1 的 metadata 事实（文件清单、counts、level/tuple_type 分布）与 F2 的
+proposal 工程审计数字按指令 §1/§5/§31 属 **feasibility audit 本身**，是本 amendment 的记录对象；
+**任何 reliability 模型的 FineCops 输出（B3 / Stats / E1b 分数、AUROC、E-AURC、RER）在本文写作时尚未被查看**，
+A9.5 的全部判据数字在 F5–F10 推断开始前冻结，且 `results/phase1e_finecops/feasibility_protocol.json`
+的 `frozen_before_run` 块在 F2 运行前已落盘（artifact 顺序可核验）。
+
+### A9.1 数据与许可（实测核实，非引用官方数字）
+
+- 来源：**FineCops-Ref 官方 repo** `liujunzhuo/FineCops-Ref` → **figshare article 26048050**；
+  license **CC BY 4.0**（论文正文声明，非推断）；底层图像来自 **GQA / Visual Genome**。
+- 本地只下载 **test split 标注**（4 个 json，`data/raw/finecops/`，逐文件 sha256 记录于
+  `data/raw/finecops/dataset_card.json`）+ **GQA `sceneGraphs.zip`**（42.7 MB，解压后只有
+  `train_sceneGraphs.json` / `val_sceneGraphs.json`）。
+- **实测 counts**（positive test）：**9,605 expressions / 4,313 unique images**，level 1/2/3 =
+  **5,730 / 3,404 / 471**；negative：**9,814 negative text + 8,507 negative image**
+  （`test_expression_all.json` 合计 27,926 行）。官方数字与实测一致，但协议只承认实测值。
+- 图像：**不下载 GQA 20.3 GB 整包**。`images.zip` 支持 HTTP `Range`，
+  `ccg/external/gqa_images.py` 用 zip 尾部索引按成员抽取，只取审计子集所需的 JPEG；
+  该 host 在并发下返回 **503**，故并发固定为 3 并带指数退避（不并行暴力拉取）。
+- `neg_images.tgz`（567 MB）**不下**；negative 只做 parse/count（A9.7）。
+
+### A9.2 冻结 pipeline（与 RefCOCO+ 完全同源，禁止任何为 FineCops 的适配）
+
+image → **frozen torchvision `fasterrcnn_resnet50_fpn`（COCO_V1）RPN stage** → class-agnostic
+**N = 64** proposals（top-64 by objectness；IoU≥0.5 等价 proposal 移除；target = argmax IoU）
+→ **frozen OpenCLIP ViT-B/32 `laion2b_s34b_b79k`** crop/text embeddings（checkpoint hash、preprocess、
+tokenizer、512-d、normalization 必须与 RefCOCO+ 侧一致，任一不符 → STOP）
+→ **frozen B3**（seeds 1/2/3，各自独立评估）→ **frozen Stats Logistic / E1b**（
+`ccg.semantic.frozen.recover_frozen_models` 的 A8.4 四重校验，`max|Δ| ≤ 1e-9`，任一 mismatch → STOP）。
+不使用官方 CRS（Qwen2-VL / InternVL），不使用其提供的任何分数。
+被复用的 RefCOCO+ 产物（selection.json / coefficients.csv / *_normalisation.json /
+predictions/stats_logistic.csv.gz / split_manifest.json）的 sha256 已在
+`feasibility_protocol.json.frozen_refcoco_artifacts` 中固定。
+
+### A9.3 工程 gate（指令 §6/§7；在 F2 前冻结）
+
+审计对象：**500–1000 张 positive test 图像的 deterministic subset**（本轮 1000 图，seed=20260929，
+`numpy.random.default_rng(seed)` over sorted unique image ids，`audit_subset.csv` 可字节级再生成）。
+
+- **GO**：target proposal **recall@0.5 ≥ 0.90** ∧ **K=5 availability ≥ 0.90**。
+- **STOP**：recall@0.5 **< 0.80**（此时测的是 COCO-RPN → GQA 的感知域偏移，不可解读，只汇报）。
+- **ENGINEERING GRAY ZONE**：0.80 ≤ recall@0.5 < 0.90 → 先汇报，不得更换 detector / 加大模型 /
+  fine-tune RPN / 换 Grounding DINO / 把 N 改成 128（N=64 不因 FineCops 表现而改）。
+  若 K=5 根本无法构造 → STOP and report，禁止 post-hoc 改 K。
+
+### A9.4 candidate regime 规则（指令 §10/§11；在 F2 前冻结）
+
+- FineCops 来自 GQA，**不存在也不允许人为构造 COCO category mapping**。
+  same-category 的外部等价量是 **GQA scene-graph object `name` 的精确同名**
+  （FineCops 官方 level 定义本身就以此区分：level 1 = 图中无同名对象；level 2 = 有同名对象、
+  需 1 个 attribute/relation 区分；level 3 = 需 ≥2 个 relation/attribute）。
+- 判据（与随机 cohort 使用**同一道 0.90 门槛**，非按结果调整）：
+  - same-name K=5 availability **≥ 0.90** → **primary = same-name hard cohort**；
+  - **0.50 ≤ 值 < 0.90** → **primary = 官方 level（2/3 vs 1）+ random K=5**，same-name 子集只作 diagnostic；
+  - **< 0.50** → **primary = 官方 level**，same-name 子集连 diagnostic 都不再扩张（禁止用假的类别标签补齐）。
+- secondary：level × tuple_type 分层；CLIP-hard 仅 optional diagnostic（constructor/evaluator coupling），不作 primary。
+
+### A9.5 external gate（指令 §17–§20；正式评估前冻结，结果后禁止微调）
+
+主统计量 **ΔAUROC = AUROC(E1b) − AUROC(Stats)**（同一 regime、同一 cohort；RefCOCO+ 上 ≈ **+0.032**）。
+primary regime 由 A9.4 决定；三 seed 独立报告，**不拼接 seeds**。
+
+- **CONFIRMED**：ΔAUROC ≥ **0.015** ∧ image-cluster paired bootstrap **95% CI lower > 0**
+  ∧ (**E-AURC reduction ≥ 5%** ∨ **RER@50 ≥ +3 pp**) ∧ **3 seeds 方向一致** ∧ **≥2/3 seeds individually positive**。
+- **STRONG**：ΔAUROC ≥ **0.025** ∧ (E-AURC reduction ≥ **10%** ∨ RER@50 ≥ **+5 pp**)。
+- **NOT CONFIRMED**（有效结论，非失败）：ΔAUROC < **0.005** ∧ reduction < **3%** ∧ RER@50 < **2 pp**
+  → 写法：A8 的 semantic-increment 效应未能在独立数据集上复现，说明该效应可能依赖 RefCOCO+/
+  COCO 的候选构成，而不是 candidate semantics 的普适性质。
+- 其余 = **INCONCLUSIVE**；不得据此微调模型 / 改 feature / 调阈值 / 重训，也不得回滚去升级架构。
+
+### A9.6 metadata 与分层报告（指令 §13/§21/§22）
+
+- `results/phase1e_finecops/difficulty_distribution.csv` **必须存在**，按**官方原始 level** 分组，
+  禁止按效果重新合并（unexpected level 单独成行，不并入 1/2/3、不退出 `all` 分母）。
+- 按 level 报告 B3 Acc / Stats AUROC / E1b AUROC / ΔAUROC，观察 gain 是否随 difficulty 增大
+  （**很重要但不作硬 gate**）。
+- tuple_type 仅当组内 **n ≥ 300** 才报告（`tuple_type_distribution.csv` 的 `reportable` 列）；
+  不得自造 taxonomy。
+
+### A9.7 negative / abstention 边界（指令 §2/§23/§24）
+
+negative text（9,814）与 negative image（8,507）**全部 deferred**：不进入任何 gate、不训练 NONE head、
+不与 positive reliability 混合评估；本轮只 download/parse/count
+（`negative_distribution.csv`：negative_type / negative_level / negative_cate），作为 Phase-2 abstention
+feasibility 的前置证据。positive 与 negative 在代码路径上物理分离（`load_test_expressions` 只读
+positive test 文件，遇到 `neg_`/非数字 image id 直接 raise）。
+
+### A9.8 domain-shift sanity（指令 §15/§28）
+
+- 先描述性报告 B3 accuracy / MSP / margin / entropy，与 RefCOCO+ Random-K5 / SameCat-K5 对照；
+  **B3 accuracy < 30% → 标记 SEVERE DOMAIN SHIFT 并先汇报**，不得把绝对分数下降解读为 signal 未迁移。
+- 必须区分 **cross-dataset degradation**（绝对水平下降）与 **semantic incremental value**
+  （ΔAUROC 等相对量）；后者才是本阶段的检验对象。
+- absolute ECE 只作 descriptive（指令 §27）：**禁止**任何 temperature / Platt / isotonic / threshold 拟合。
+
+### A9.9 指标与统计（指令 §16/§26）
+
+primary：AUROC_correct / E-AURC / RER@50；secondary：RER@80 / ECE / Brier / NLL；
+**image-level clustered paired bootstrap，5000 reps**（cluster key = GQA image id）。
+外部复现表（指令 §29）固定 4 行：RefCOCO+ random-K5 / RefCOCO+ same-cat-K5 / FineCops easy /
+FineCops hard × {Stats AUROC, E1b AUROC, ΔAUROC, E-AURC reduction, RER@50 gain}；
+核心图（指令 §30）横轴 candidate/compositional difficulty、纵轴 ΔAUROC。
+
+### A9.10 禁止事项（与指令 §35 一致）
+
+FineCops training / calibration / threshold fitting / retrain B3 / retrain Stats-E1b /
+semantic feature redesign / Transformer / reranking / Grounding DINO 替代 frozen RPN /
+MLLM CRS inference / target absence 与 positive reliability 混合 / 依据 FineCops test 结果改任何阈值 /
+FineCops train+val 标注进入任何训练、调参或校准环节。
+
+### A9.11 预注册顺序与产物
+
+`F0 download/parse → F1 metadata → F2 500–1000 图 RPN audit → F3 candidate availability →`
+**`F4 protocol branch 判定（本轮终点：停下汇报）`** `→ F5 full proposal extraction → F6 CLIP features →`
+`F7 frozen B3 → F8 frozen Stats/E1b → F9 bootstrap → F10 gate`。
+产物目录 `results/phase1e_finecops/`：`feasibility_protocol.json`、`metadata_audit.json`、
+`difficulty_distribution.csv`、`tuple_type_distribution.csv`、`negative_distribution.csv`、
+`audit_subset.csv`、`cohort_inventory.csv`、`difficulty_examples.csv`、`image_dims_check.csv`（逐图
+标注尺寸 / 实际像素 / scene-graph 尺寸三方比对）、`image_fetch_report.json`、`rpn_audit.csv`、
+`rpn_audit_summary.json`、`recall_by_target_size.csv`（仅诊断用，不参与 gate）、`candidate_availability.csv`、
+`external_branch_decision.json`、`figures/`、`metadata.json`。
+
+### A9.12 测试要求（指令 §33 的 12 项，全部必须 0 failed）
+
+`tests/test_finecops_external.py`：xywh→xyxy / image ID mapping（含 `neg_` 与非数字 id 被拒）/
+target assignment 与等价 proposal 移除 / 冻结 N=64（driver 必须传 `top_n=fe.N_PROPOSALS`，禁止 128 默认）/
+audit manifest 确定性 / train+val 标注不可达 / RefCOCO+ normalization 复用且不重拟合 /
+frozen coefficient 与 artifact checksum 落盘 / external 代码不含任何 fit 调用 /
+difficulty metadata 原样保留（含 unexpected level）/ bootstrap 以 image 为 cluster /
+positive 与 negative 路径分离；另加 IoU key 命名规则、engineering gate 边界、regime 分支规则与
+aggregate 算术一致性检查。
+
+### A9.13 F0–F4 执行结论（2026-09-29 实测；**未修改本 amendment 任何阈值**）
+
+冻结 COCO-pretrained RPN 在 1,000 图 / 2,235 条 FineCops positive test 上：
+`target proposal recall@0.5 = 0.7579`（Wilson 95% CI 0.7398–0.7752，上界仍低于 0.80）、
+`recall@0.7 = 0.6376`、`K5 availability = 0.7579`、`same-name K5 availability = 0.1861`。
+按 A9 工程 gate（§6）判为 **EXTERNAL STOP**；按 §7 例外条件（K5 同类根本无法构造）判为
+**STOP and report**，因此 **不**调整 N、**不**换 detector、**不** fine-tune、**不**用 Grounding DINO 替换。
+regime 分支 = `level_primary_only`（same-name 供给连 0.50 诊断线都未达）。
+F5–F10 未获授权：需一次由用户作出的**新的协议决策**才能继续；本轮从未查看任何 FineCops 模型结果，
+不存在结果后调参。详见 `docs/experiment_log.md` 条目
+`p1e-finecops-external-feasibility-audit-20260929-01` 与 `results/phase1e_finecops/external_branch_decision.json`。
+
 

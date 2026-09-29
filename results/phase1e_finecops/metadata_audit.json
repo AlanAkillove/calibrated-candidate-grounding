@@ -1,0 +1,108 @@
+{
+  "audit_subset": {
+    "n_expressions": 2235,
+    "n_images": 1000,
+    "rule": "numpy default_rng(seed) over the sorted unique image ids",
+    "seed": 20260929
+  },
+  "coco_vs_vanilla": {
+    "ids_identical": true,
+    "level_mismatch": 0,
+    "n_coco": 9605,
+    "n_vanilla": 9605,
+    "objects_id_mismatch": 0,
+    "text_mismatch": 0,
+    "tuple_type_mismatch": 0
+  },
+  "level_vs_scene_graph_agreement": {
+    "1": {
+      "mean_same_name_objects": 1.004,
+      "n": 5730,
+      "share_graph_says_no_same_name": 0.997033,
+      "share_graph_says_some_same_name": 0.002967
+    },
+    "2": {
+      "mean_same_name_objects": 2.4116,
+      "n": 3404,
+      "share_graph_says_no_same_name": 0.061986,
+      "share_graph_says_some_same_name": 0.938014
+    },
+    "3": {
+      "mean_same_name_objects": 2.4586,
+      "n": 471,
+      "share_graph_says_no_same_name": 0.023355,
+      "share_graph_says_some_same_name": 0.976645
+    }
+  },
+  "n_images_without_graph": 0,
+  "n_positive_images": 4313,
+  "n_positive_test": 9605,
+  "negative_feasibility": {
+    "n_all": 27926,
+    "n_images_negative_image": 8507,
+    "n_images_positive": 4313,
+    "n_negative_image": 8507,
+    "n_negative_text": 9814,
+    "n_positive": 9605,
+    "negative_cate": {
+      "None": 9605,
+      "image": 8507,
+      "text": 9814
+    },
+    "negative_level": {
+      "1": 12726,
+      "2": 5595,
+      "None": 9605
+    },
+    "negative_type": {
+      "None": 9605,
+      "attribute": 3569,
+      "flip": 1555,
+      "object": 8122,
+      "order": 2029,
+      "relation": 1891,
+      "swap_attr": 1155
+    },
+    "positive_level": {
+      "1": 5730,
+      "2": 3404,
+      "3": 471
+    },
+    "positive_tuple_type": {
+      "0_hop": 2333,
+      "1_hop": 2146,
+      "2_hop": 2555,
+      "and": 1639,
+      "same_attr": 705,
+      "same_attr_two_hop": 227
+    }
+  },
+  "same_image_targets": {
+    "expressions_per_image_mean": 2.227,
+    "n_identical_target_pairs": 4203,
+    "n_images": 4313,
+    "n_overlapping_target_pairs": 4443,
+    "n_same_image_pairs": 12620
+  },
+  "scene_graph_coverage": 1.0,
+  "scene_graph_file": "data\\raw\\gqa\\val_sceneGraphs.json",
+  "scene_graph_images": 10696,
+  "seconds": 4.96,
+  "stage": "F0_F1_parse",
+  "target_geometry": {
+    "box_area_share_median": 0.08448,
+    "box_side_px_median": 127.33813254481157,
+    "box_side_px_p10": 57.57603668193913,
+    "box_side_px_p90": 285.5541973844044,
+    "image_area_px_median": 187500.0,
+    "n_expressions": 9605,
+    "share_box_outside_frame": 0.000521,
+    "share_side_lt_4px": 0.0
+  },
+  "target_name_resolution": {
+    "from_graph_box": 9411,
+    "from_objects_id_fallback": 194,
+    "iou_min_for_graph_match": 0.9,
+    "unresolved": 0
+  }
+}

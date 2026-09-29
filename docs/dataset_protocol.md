@@ -109,26 +109,73 @@ split 的样本成员定义；若为了对齐 baseline 需要引用 `.mats`，�
    val_select = val 池按 seed+1 permutation 前半；抽样 seed 20260927）；冻结复现：
    `scripts/build_audit_subset.py` 已实现字节级一致再生成（详见 §10.1）。
 
-## 2. External stress test：FineCops-Ref（已核实）
+## 2. External stress test：FineCops-Ref（**已实测核实 2026-09-29**）
 
 - Liu, Yang, Li, Wang. "FineCops-Ref: A new Dataset and Task for Fine-Grained Compositional
   Referring Expression Comprehension." **EMNLP 2024 main**（arXiv:2409.14750，v2 2025-01-11）。
-- 检索到的构成（**test set**）：**9,605 positive expressions、9,814 negative expressions、
-  8,507 negative images**；特点是可控难度分级（object category / attribute / multi-hop
-  relation）以及通过**细粒度编辑与生成**构造 negative text 与 negative images，用于测试模型
-  在目标不可见时的 **reject** 能力。
+- **官方分发渠道（实测）**：figshare article **26048050**（`api.figshare.com/v2/articles/26048050`），
+  license 字段 **CC BY 4.0**（`creativecommons.org/licenses/by/4.0`，非推断）。该 article 共 15 个文件：
+  test（`test_expression_pos.json` 3,075,530 B / `test_expression_all.json` 12,127,597 B + 两个
+  `*_coco_format.json`）、train/val 标注（`expression_all_train_set.json` 74,999,544 B、
+  `expression_all_val_set.json` 8,429,891 B 及各 coco_format / pos_only 版本）、`neg_images.tgz`
+  567,178,672 B。本地只下载 **test 的 4 个 json** + GQA `sceneGraphs.zip`（44,824,862 B，含
+  `train_sceneGraphs.json` / `val_sceneGraphs.json` 两个 entry），逐文件 sha256 见
+  `data/raw/finecops/dataset_card.json`。
+- **实测 counts（positive test，官方数字已被本地重核）**：**9,605 expressions / 4,313 unique images**；
+  level 1/2/3 = **5,730 / 3,404 / 471**（59.66% / 35.44% / 4.90%）；
+  tuple_type = 0_hop 2,333 / 1_hop 2,146 / 2_hop 2,555 / and 1,639 / same_attr 705 /
+  **same_attr_two_hop 227**（< 300，按指令 §22 不可单独报告）。
+  negative：**9,814 negative text + 8,507 negative image**（`test_expression_all.json` 合计
+  27,926 行；negative_type = object 8,122 / attribute 3,569 / order 2,029 / relation 1,891 /
+  flip 1,555 / swap_attr 1,155）。以上均为**解析实测值**，见
+  `results/phase1e_finecops/metadata_audit.json`。
 - 论文自述结论之一：specialist models 与 MLLMs 在该数据集上仍有明显差距（我们只引用其
   数据集动机，不引用性能结论）。
-- **对本项目的意义与限制**：
+- **对本项目的意义与限制（原 `[待下载后验证]` 三项已关闭）**：
   - 它承担 prompt 中 "relation confusion / compositional difficulty / negative selection" 的
     stress test 角色，因此本项目**不**人工生成 relation negatives。
-  - 检索显示其规模是 **test-set** 描述；是否为 **evaluation-only（无 train split）**
-    **`[待下载后验证]`**。若是 evaluation-only，则它只能做 zero-shot 外部压力测试（与本项目
-    "不参与任何 model/calibration 选择" 的协议一致）。
-  - 其 negative images 来自 **AI 编辑/生成**，与 RefCOCO+ 的真实 COCO 照片存在明显 domain
-    gap；同时其图像是否落在 COCO train2014/val2014 之内（能否复用 proposal bank）**`[待下载后验证]`**。
-    若不在 COCO 图像域内，则外部 stress test 必须用同一冻结 detector 重新生成 proposal bank
-    （允许，因为 generator 冻结且 query-independent），并单独报告其 proposal recall。
+  - ~~是否为 evaluation-only（无 train split）~~ → **实测：不是 evaluation-only**，figshare 上确有
+    train/val 标注文件。但本项目按指令 §3 **只用官方 test split**，train/val 标注**刻意不下载**
+    （记录于 `dataset_card.json` 的 `deliberately_not_fetched`），因此不存在任何用 FineCops
+    train/val 训练/调参/校准的可能路径；FineCops 角色仍是 frozen external evaluation。
+  - ~~图像是否落在 COCO 图像域内（能否复用 proposal bank）~~ → **实测：不在 COCO 域内**。
+    标注的 `file_name` 为 `<gqa_image_id>.jpg`，4,313 个 image id **100% 可在 GQA
+    `val_sceneGraphs.json` 中解析**（`n_images_without_graph = 0`），即图像域为 **GQA / Visual Genome**。
+    因此必须用**同一冻结** COCO-pretrained RPN 重新生成 proposal bank（generator 冻结且
+    query-independent，允许），并单独报告其 proposal recall —— 该 recall 与 RefCOCO+ 侧的差值
+    本身就是要披露的 **COCO-RPN → GQA 感知域偏移**。
+  - 图像获取：不下载 GQA **21,817,965,542 B**（148,855 members）`images.zip` 整包；该 host 支持
+    HTTP `Range`，`ccg/external/gqa_images.py` 只读一次 zip 尾部中心目录，再按成员定位抽取。
+    实测两个约束：(a) host **按 IP 限流**（额外并行流立即返回 **503**），因此并发固定 3 +
+    指数退避 + 幂等 skip-existing；(b) 旧 `zipfile` 路径每图平均读回 **3.5 MB**（≈23× 读放大），
+    改为「每线程一条 keep-alive HTTPS 连接 + 每图单个合并 Range + raw-deflate（`zlib wbits=-15`）
+    解码 + CRC32/长度校验」后 **wire == payload**（实测 642 图 = 642 请求，
+    85,047,571 B out / 84,513,451 B in，比值 1.006）。
+  - 类别信息：COCO-format 标注的 `categories` 只有 1 个占位条目（无真实类别），因此外部
+    same-category 的等价量只能是 **GQA scene-graph object `name` 的精确同名**；禁止自造
+    COCO category mapping（见 `research_protocol.md` Amendment A9.4）。
+  - negative images 来自 **AI 编辑/生成**；本轮只 download/parse/count，不建模、不训练 NONE
+    head（指令 §2/§23/§24）。
+
+- **F2/F3 实测结果（2026-09-29，冻结 N=64 RPN + 1,000 图 / 2,235 条 positive test 审计）**
+  数据源：`results/phase1e_finecops/{rpn_audit_summary.json,recall_by_target_size.csv,external_branch_decision.json}`。
+
+  | 量 | FineCops-Ref（GQA 域） | RefCOCO+（COCO 域，同一冻结 RPN） |
+  |---|---|---|
+  | target proposal recall@0.5 | **0.7579** [0.7398, 0.7752] | 0.9859 |
+  | target proposal recall@0.7 | **0.6376** [0.6174, 0.6573] | 0.8998 |
+  | natural omission@0.5 | **0.2421** | 0.0141 |
+  | same-category K5 availability | **0.1861**（GQA 精确同名口径） | 0.9003（COCO GT 类别口径） |
+  | GT/对象口径 recall@0.5 | 0.4313（全部 VG 对象） | 0.8085 |
+
+  其它实测：bank 恒 64（min 64）、mean valid distractors 59.73、invalid crop 1.54%、
+  冗余（pair IoU>0.7）0.12%、几何 0 例外（RELEASED BOXES IN JPEG PIXEL SPACE）。
+  recall 随目标尺寸单调上升（<32px 0.227 → ≥256px 0.903，49.1% 目标边长 <128px），
+  但最大桶仍不及 RefCOCO+ 总体水平 → 尺寸只解释部分缺口，余下为全局感知/域差距；
+  且 recall 缺口与官方 level 无关（L1 0.776 / L2 0.729 / L3 0.770）。
+  **判定：EXTERNAL STOP（§6 recall < 0.80）+ regime `level_primary_only`**；详见
+  `docs/research_protocol.md` **A9.13** 与 `docs/experiment_log.md`
+  条目 `p1e-finecops-external-feasibility-audit-20260929-01`。
 
 ## 3. 后续扩展数据集（仅记录，不进入 Phase 0）
 
@@ -232,7 +279,7 @@ split 的样本成员定义；若为了对齐 baseline 需要引用 `.mats`，�
 | R11 | **Crop context 丢失 / CLIP 空间弱** | 存在：candidate 用 crop embedding，丢失全局上下文；CLIP 对空间与小目标弱 | Phase 0 冻结为 **crop-only embedding**；不做 context-expansion、不加 image-level 特征融合（属于 protocol 变更，需 amendment）；把 CLIP 空间弱点作为**解释性限制**写入结论段，并允许 FineCops-Ref 作为外部压力测试来暴露该限制 |
 | R12 | **同图表达在 evaluation 中的统计相关性** | 存在（RefCOCO+ 每对象平均 ~2.8 条表达） | 与 R2 相同：image-level bootstrap + 报告 per-image 聚合的敏感性分析（次要、不改判据） |
 | R13 | **官方直链失效 / 镜像可信度** | **已确认（2026-09-27）**：官方 UNC 直链 SSL 失败（refer issue #14 已知）；改用 Wayback 存档成功（45,613,210 bytes，URL 见 §1.4）；COCO annotations 官方 SCDN 正常（252,872,794 bytes） | 优先官方链接；若不可达，选用可校验镜像并把文件 sha256 写入 `data/MANIFEST.json`；禁止使用无法追溯来源的第三方打包（实际执行：Wayback 存档，可追溯官方 URL；文件字节数已记录于 §1.4） |
-| R14 | **License 合规** | COCO 图像逐图 CC（含 NC/ND 变体）；RefCOCO 需遵守其引用要求；FineCops-Ref license **`[待下载后验证]`** | 仓库不分发图像/原始标注；README 与 `data/README.md` 写明注册要求与 attribution（Yu et al. ECCV 2016、Kazemzadeh et al. EMNLP 2014、COCO、FineCops-Ref/EMNLP 2024） |
+| R14 | **License 合规** | COCO 图像逐图 CC（含 NC/ND 变体）；RefCOCO 需遵守其引用要求；FineCops-Ref license **已核实（2026-09-29）**：figshare article 26048050 的 `license` 字段 = **CC BY 4.0**（API 实测，非网页推断）；底层 GQA/Visual Genome 图像另受其自身条款约束（GQA 为 Scene Graph API 公开数据集） | 仓库不分发图像/原始标注；README 与 `data/README.md` 写明注册要求与 attribution（Yu et al. ECCV 2016、Kazemzadeh et al. EMNLP 2014、COCO、FineCops-Ref/EMNLP 2024） |
 
 ## 8. 本文件的最终决定摘要
 
@@ -242,7 +289,11 @@ split 的样本成员定义；若为了对齐 baseline 需要引用 `.mats`，�
 3. **Proposal generator**：**冻结的 torchvision Faster R-CNN R50-FPN（COCO_V1，159.7 MB）**，
    **N = 64（2026-09-27 按 A2.4 预注册规则选定：N=64 支持 K=50 比例 0.9912046908315565 ≥ 90%；见 `research_protocol.md` Amendment A3）**，取 RPN NMS 后按 objectness top-64；IoU ≥ 0.5 的等价 proposal 移除，target 为唯一
    max-IoU proposal。
-4. **External stress test**：FineCops-Ref（EMNLP 2024，test-only 特征待验证）。
+4. **External stress test**：FineCops-Ref（EMNLP 2024；**实测**：figshare 26048050 / CC BY 4.0 /
+   test 9,605 pos + 9,814 neg text + 8,507 neg image / 图像域为 GQA-Visual Genome 而非 COCO /
+   存在 train-val 标注但刻意不下载，详见 §2）→ **F0–F4 可行性审计已完成并判为 EXTERNAL STOP**：
+   同一冻结 N=64 RPN 在 GQA 上 target recall@0.5 仅 **0.7579**（< 0.80 停止线），
+   same-category K5 可用性仅 **0.1861** → F5–F10 未获授权（见 **A9.13**）。
 5. **预算**：feature cache 约 1.3 GB region embeddings (FP16) + ~0.15 GB query embeddings，
    总 **< 3 GB**；提取 FP16 batch 64 起步、OOM 降 32。
 6. **Gate 前置条件**：proposal quality audit（recall、natural miss rate、IoU 分布、

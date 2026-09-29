@@ -29,6 +29,8 @@ results/*
 !results/phase1_semantic_sufficiency/**
 !results/phase1f_hard_semantic/
 !results/phase1f_hard_semantic/**
+!results/phase1e_finecops/
+!results/phase1e_finecops/**
 experiments/**/outputs/
 
 # Local logs / scratch

@@ -1064,4 +1064,110 @@ notes: >
   实质更有用（相对 random 控制放大约 26 倍，CI 全程排除 0，且随同类竞争者数量单调增强）。按 A8.8/§23，下一步只做
   external confirmation（FineCops-Ref）可行性评估，不直接进入更复杂模型；本轮未实现任何新模型、reranking 或 Transformer。
   本阶段到此停止。
+
+# ===== FORMAL ENTRY — REAL RESULT（非示例）=====
+experiment_id: p1e-finecops-external-feasibility-audit-20260929-01
+git_commit: "a3ee9a07d3f58d1c1f49e33b6f1dc9424c956e0f"   # parse/images stage 运行时的 HEAD（feasibility_protocol.json 记录）
+dirty: true                    # src/ccg/external/{finecops,gqa_images,feasibility}.py、scripts/run_phase1e_feasibility.py、
+                               # tests/test_finecops_external.py、协议 A9、results/phase1e_finecops/ 运行时尚未提交
+timestamp: "2026-09-29"
+stage: "F0–F4 ONLY —— external feasibility audit + protocol branch 判定；F5–F10（full proposals / CLIP / B3 / Stats-E1b / bootstrap / gate）未启动，本轮不含任何 FineCops 模型推断"
+verdict: "EXTERNAL STOP（A9/指令 §6 工程 gate：target proposal recall@0.5 = 0.7579 < 0.80 停止线；GO 需 ≥0.90）"
+branch: "level_primary_only（same-name K5 availability 0.1861 < 诊断线 0.50，更低于 primary 线 0.90）"
+dataset: >
+  FineCops-Ref（EMNLP 2024, arXiv:2409.14750）test split；figshare article 26048050，license **CC BY 4.0**（API 实测字段）。
+  image 域 = **GQA / Visual Genome**（非 COCO）；对象与 same-name 关系来自 GQA val_sceneGraphs.json（10,696 graphs，覆盖率 1.000）。
+  官方同时分发 train/val 标注（expression_all_train_set.json 74,999,544 B / val 8,429,891 B）→ **该数据集并非 evaluation-only**，
+  但本轮刻意不下载 train/val，A9 明令其不得进入任何训练、调参或校准环节。
+inputs:
+  annotations: "test_expression_all.json (12,127,597 B) / _coco_format (21,099,434 B) / test_expression_pos.json (3,075,530 B) / _coco_format (5,298,930 B) / dataset_card.json"
+  scene_graph: "data/raw/gqa/val_sceneGraphs.json（44,830,665 B，sha256_16 3224baf1e87e56d0）"
+  images: "GQA images.zip（21,817,965,542 B / 148,855 members）经 HTTP Range 抽取审计子集，未下载整库"
+  hashes_recorded: "results/phase1e_finecops/feasibility_protocol.json（逐文件 bytes + sha256_16）"
+code: "新增 src/ccg/external/finecops.py（annotation/scene-graph 解析、xywh→xyxy、target 解析、level/tuple_type/negative 分布、审计子集选取）、gqa_images.py（Range 抽取）、feasibility.py（冻结原语：name code table、graph boxes、per-expression audit、summarise、engineering_verdict、candidate_regime_decision）、scripts/run_phase1e_feasibility.py（parse/images/rpn/decision 四 stage）"
+frozen_constants: "N=64（不因 FineCops 改 128）、primary K=5 / secondary K=10、recall IoU {0.5,0.7}、GO 0.90 / STOP 0.80、same-category primary 0.90 / diagnostic 0.50、tuple_type 可报最小群 300、invalid crop 最小边 4.0、audit 1000 图 seed 20260929、graph 匹配 IoU≥0.9"
+f1_metadata_facts:
+  positive_test: "9,605 expressions / 4,313 images（官方口径实测；实测重核，非引用论文数字）"
+  level: "L1 5,730（59.66%）/ L2 3,404（35.44%）/ L3 471（4.90%）"
+  tuple_type: "0_hop 2,333 / 2_hop 2,555 / 1_hop 2,146 / and 1,639 / same_attr 705 / same_attr_two_hop 227（<300 → 不单独报告）"
+  negatives: "18,321 行 = negative_text 9,814 + negative_image 8,507；negative_type object 8,122 / attribute 3,569 / order 2,029 / relation 1,891 / flip 1,555 / swap_attr 1,155；negative_level L1 12,726 / L2 5,595"
+  geometry: "目标边长 median 127.34 px（p10 57.58 / p90 285.55）、图像面积 median 187,500 px²、box 越界 0.0521%、边长 <4px 0 例"
+  format_cross_check: "coco_format 与 vanilla 9,605 条 id 完全一致，text/level/tuple_type/objects_id 不一致数均为 0"
+  target_name: "97.98% 由 scene-graph box（IoU≥0.9）解析、2.02% 回落 objects_id[0]、0 未解析（313 个不同目标名）"
+  level_mechanism: "官方 level 与图内精确同名对象数高度吻合：L1 99.70% 无同名、L2 93.80% 有同名、L3 97.66% 有同名 → level 本身就是同类竞争强度分层"
+  same_name_supply: "但 ≥5 个同名对象的表达仅占 2.10%（L2 5.17% / L3 5.52%）；GQA categories 只有 1 个占位条目 → 外部 same-category 只能等于 GQA 精确同名"
+f0b_images_acquisition:
+  result: "1000/1000 就绪：本次 fetch 642 + 已在盘 358，failed 0、missing_in_archive 0；1,000 张 JPEG 全部可解码，标注尺寸与实际像素 0 处不一致（verdict IMAGE GEOMETRY OK）"
+  efficiency: "requests 642 == images 642（每图 1 个请求）；wire 85,047,571 B vs payload 84,513,451 B → 比值 1.006；1,441.16 s（≈27 图/分钟，workers=3）"
+  incident: >
+    (a) 初始 zipfile 路径实测 3.5 MB wire/图（≈23× 读放大，12 requests 只换回 6 张图），吞吐 ~7 图/分钟、ETA 110 分钟；
+    (b) 追加并行流未提升吞吐并触发 host 按 IP 限流（HTTP 503，探针 206 成功后续请求即 503）→ 立即杀并行流，改为测量定位；
+    (c) 基准实测：每图新建 TLS 连接 5.47 s、keep-alive 单请求 1.52 s、keep-alive 两请求 0.90 s → 真因是 TLS 握手 + 读放大，不是请求数；
+    (d) 重写为「中心目录只读一次 + 每线程一条持久 HTTPS 连接 + 每图单个合并 Range + span 不足时增长重试」，
+        解码校验局部头签名/method/长度/CRC32；两个踩坑：zip 局部文件头是 30 字节 `<IHHHHHIIIHH`（局部 extra 长度可与中心目录不同 28 vs 24），
+        且 zip 内 DEFLATE 是 **raw deflate（RFC 1951）→ 必须 zlib.decompressobj(-15)**，用默认 zlib 包装会 incorrect header check；
+    (e) 结论：吞吐 7 → 23–45 图/分钟，且路径由「盲写文件」升级为「CRC 验证 + 原子 replace + 幂等补漏」。
+f2_frozen_rpn_audit:
+  cohort: "1,000 图像 / 2,235 positive test expressions（冻结 COCO-pretrained fasterrcnn_resnet50_fpn RPN，top_n=64，与 RefCOCO+ 完全同一原语与常量）"
+  runtime: "本次新提取 205 banks + 复用 795 cached banks = 10.2 s；首轮 795 banks 28.9 s；GPU 峰值显存 664 MB"
+  bank: "mean/min proposals = 64/64；mean valid distractors 59.73；mean equivalent 4.27；invalid crop rate 0.015408；冗余（pair IoU>0.7 占比）0.001224"
+  recall_at_05: "0.757942 [Wilson 0.739751, 0.775248]（1,694/2,235）"
+  recall_at_07: "0.637584 [0.617434, 0.657261]"
+  target_max_iou: "mean 0.6492 / median 0.7714 / p10 0.1303 / p25 0.5277 / p75 0.8475 / p90 0.8942"
+  natural_omission_at_05: "0.242058（冻结口径：target 在 N=64 bank 中无可达 proposal）"
+  gt_object_recall: "全 VG 对象口径 @0.5 0.431315 / @0.7 0.303736（含大量小/遮挡/紧密对象，仅作对照不作 gate）"
+  geometry_verdict: "RELEASED BOXES IN JPEG PIXEL SPACE（n_dimension_violations = 0）"
+  by_level_recall05: "L1 0.77594（1,272 行）/ L2 0.72879（837）/ L3 0.76984（126）→ 缺口与官方难度无关"
+  by_tuple_type_recall05: "0_hop 0.75183（548）/ 1_hop 0.75534（515）/ 2_hop 0.73898（590）/ and 0.78272（382）/ same_attr 0.800（150）/ same_attr_two_hop 0.760（50）—— 后两项 < 300 行不单独报告"
+  dims_check: "image_dims_check.csv 1,000 行：标注尺寸 vs 实际 JPEG vs scene-graph 尺寸，三方 0 处不一致（184 种尺寸，宽 281–1229 px）"
+f3_candidate_availability:
+  k5_random: "0.757942 —— 与 recall@0.5 逐位相等：bank 恒为 64，故 K5/K10 的结构瓶颈全部来自 target 是否可被 proposal 覆盖，而非候选数量"
+  k10_random: "0.757942"
+  k5_same_name: "0.186130 [0.170537, 0.202800]"
+  k10_same_name: "0.059508 [0.050435, 0.070092]"
+  same_name_distractors: "mean 1.628 / median 0 / p90 6 / max 42；share ≥1 0.2752、≥4（K5 所需）0.1861、≥9（K10 所需）0.0595"
+  by_level_k5_same_name: "L1 0.00943 / L2 0.41577 / L3 0.44444 —— 即便只看官方 L2/L3，same-name K5 也构造不出 ≥90% 的 cohort"
+  refcoco_plus_reference: "同一冻结 RPN、同一 N=64 在 RefCOCO+（results/proposal_audit/，读盘不硬编码）：ref_target_recall@0.5 0.985874、@0.7 0.899787、gt_object_recall@0.5 0.808520、COCO-GT same-category K5 availability 0.900320"
+  delta_vs_refcoco: "recall@0.5 −0.2279pp；同类可用性 0.1861 vs 0.9003（口径差异已在 comparison_caveat 中披露：RefCOCO+ 用 COCO GT 类别，FineCops 用 GQA 精确同名）"
+  size_stratification: "recall@0.5 随目标边长单调上升：<32px 0.2273（22 行, 0.98%）/ <64px 0.5606（289, 12.93%）/ <128px 0.6910（809, 36.20%）/ <256px 0.8539（794, 35.53%）/ ≥256px 0.9034（321, 14.36%）；49.13% 目标边长 <128px → 小目标解释相当一部分缺口，但最大桶仍只有 0.903（< RefCOCO+ 全体 0.986）→ 余下是全局感知/域差距，不能仅归因于尺寸"
+b3_pipeline_compatibility: "接口兼容：所有 1,000 图产出恰好 64 proposals、crop 解码全部通过尺寸校验、RefCOCO+ 归一化与冻结系数可直接复用（10 个产物 sha256 + recovery_tolerance 1e-9 已入协议）；但『接口能跑』≠『统计可用』，recall 未达 gate 故 F5–F10 未获授权"
+domain_shift_status: "PENDING_MODEL_INFERENCE —— B3 accuracy / MSP / margin / entropy 属 F7/F8，本轮从未查看任何 FineCops 模型结果，§15 的 30% SEVERE DOMAIN SHIFT 判读未触发"
+gate_computation:
+  criteria: "GO 需 recall@0.5 ≥ 0.90 且 K5 availability ≥ 0.90；recall < 0.80 → STOP；0.80–0.90 → GRAY ZONE（先汇报）"
+  measured: "recall@0.5 0.757942、K5 availability 0.757942"
+  verdict: "EXTERNAL STOP"
+  regime_branch: "level_primary_only（same-name K5 0.1861 < 诊断线 0.50 → 连 diagnostic cohort 也不成立；不因 GQA 缺失而虚构 COCO 类别映射）"
+  §7_handling: "指令 §7 的例外条件（feasibility 显示 K5 根本无法构造）确实成立 → 按该条要求 STOP and report，**不**把 N 由 64 改成 128、**不**换 detector、**不** fine-tune RPN、**不**用 Grounding DINO 替代冻结 pipeline"
+uncertainty: {resampling_unit: "GQA image id（bootstrap cluster key，与审计一致）", note: "本轮未做 bootstrap，正式 external 阶段才需要"}
+tests: >
+  tests/test_finecops_external.py = 49 项通过；全量 pytest **622 collected / 622 passed / 0 failed**。
+  指令 §33 十二项映射：xywh→xyxy / image ID mapping 含 neg_ 与非数字 id 被拒 /
+  target assignment 与等价 proposal 移除 / 冻结 N=64 / candidate manifest 确定性 / train+val 标注不可达 /
+  RefCOCO+ normalization 复用 / frozen coefficients + checksum / external 代码无 fit 调用 / difficulty metadata 保留 /
+  bootstrap 以 image 为 cluster / positive 与 negative 路径分离。本轮新增覆盖 range reader 的：中心目录只读一次、
+  fetch_member 单请求返回精确字节、span 不足时增长重试且有界失败、错 offset→bad local header signature、
+  翻转字节→CRC mismatch、截断→ValueError、空 body→shorter than a local header、拒绝非 https、
+  fetch_images 端到端幂等（含 missing_in_archive 不伪造）、_refcoco_reference 按 k{threshold+1} 取行（不得误取最易阈值）、
+  size bucket 对审计行做无重叠全覆盖划分。
+artifacts:
+  root: results/phase1e_finecops/
+  files: [feasibility_protocol.json, metadata_audit.json, audit_subset.csv, cohort_inventory.csv,
+          difficulty_distribution.csv, difficulty_examples.csv, tuple_type_distribution.csv, negative_distribution.csv,
+          image_dims_check.csv, image_fetch_report.json, rpn_audit.csv, rpn_audit_summary.json,
+          recall_by_target_size.csv, candidate_availability.csv, external_branch_decision.json, metadata.json,
+          figures/fig1_finecops_feasibility.png]
+notes: >
+  Phase 1E F0–F4（指令全文 + Amendment A9）：在**未做任何 FineCops 模型推断**的前提下完成 external 可行性审计，结论是负向的——
+  (1) 数据集本身可用且元数据干净（license CC BY 4.0、9,605/4,313 positive test、几何零越界异常、scene graph 100% 覆盖、
+  双格式逐条一致、level 与图内同名机制吻合），
+  (2) 但冻结 COCO-RPN 在 GQA 图像上的 target recall@0.5 只有 0.7579（Wilson 上界 0.7752，仍 < 0.80），
+  按 §6 该实验将主要在测「COCO-trained RPN → GQA domain shift」而非 candidate-semantic reliability → **EXTERNAL STOP**，
+  (3) 且 same-category 强竞争 cohort 在外部数据集上不可构造（same-name K5 0.1861、K10 0.0595，均低于 0.50 诊断线；
+  RefCOCO+ 同量纲基线为 0.9003），故 §36 第二问的答案是 **official FineCops difficulty levels（L2/L3 vs L1）+ matched random K5**，
+  same-name 竞争连 diagnostic 维度都不应保留；
+  (4) §36 第一问的答案是 **NO / 有条件**：FineCops-Ref 在技术上可解析、工程上可复现，但统计上不适合作为「与 RefCOCO+ 同等条件」的
+  独立 external test——proposal 覆盖差 22.8pp 会把 A8 效应与感知域偏移混在一起。若要继续，需要一次**新的协议决策**
+  （例如显式把 recall 缺口作为 pre-registered 分层协变量、或改以 COCO 域的外部数据集验证），
+  该决策不在本轮自行作出：A9 阈值未改、N 未改、未查看任何 FineCops 结果，因此不存在结果后 tuning。
+  本阶段到此停止（指令 §31「在 F4 前停止一次并汇报」+ §36「不要正式运行完整 FineCops external result」）。
 ```

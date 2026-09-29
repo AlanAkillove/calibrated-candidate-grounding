@@ -1,0 +1,315 @@
+{
+  "answers": {
+    "q_is_finecops_suitable": "NO / CONDITIONAL - engineering gate says EXTERNAL STOP",
+    "q_primary_regime": "FineCops official level (2/3 vs 1), random K=5"
+  },
+  "audit_subset": {
+    "n_expressions": 2235,
+    "n_images": 1000,
+    "rule": "numpy default_rng(seed) over the sorted unique image ids",
+    "seed": 20260929
+  },
+  "b3_input_pipeline_compatible": {
+    "criterion": "N=64 frozen RPN produces >=64 proposals and >=90% of targets are proposable",
+    "measured_mean_bank_size": 64.0,
+    "measured_min_bank_size": 64,
+    "recall_at_05": 0.757942
+  },
+  "candidate_regime": {
+    "branch": "level_primary_only",
+    "measured": {
+      "n_distinct_target_names": 313,
+      "same_name_k5_availability": 0.18613,
+      "same_name_k5_availability_wilson_low": 0.170537,
+      "share_rows_ge_4_same_name_distractors": 0.18613
+    },
+    "primary_hard_regime": "FineCops official level (2/3 vs 1), random K=5",
+    "rationale": "same-name distractor supply decides constructibility; no COCO category mapping is invented for a GQA benchmark",
+    "secondary": "level + tuple_type stratification",
+    "thresholds": {
+      "diagnostic_min_availability": 0.5,
+      "primary_min_availability": 0.9
+    }
+  },
+  "domain_shift": {
+    "note": "B3 accuracy / MSP / margin / entropy on FineCops are measured in F7/F8, not in the feasibility round; recorded here as pending",
+    "severe_domain_shift_threshold_b3_accuracy": 0.3,
+    "status": "PENDING_MODEL_INFERENCE"
+  },
+  "engineering_gate": {
+    "conditions": {
+      "k5_availability_ge_0.90": false,
+      "recall_at_05_ge_0.90": false
+    },
+    "criteria": {
+      "go_availability_min": 0.9,
+      "go_recall_min": 0.9,
+      "n_proposals": 64,
+      "primary_k": 5,
+      "stop_recall_max": 0.8
+    },
+    "measured": {
+      "k5_availability": 0.757942,
+      "recall_at_05": 0.757942
+    },
+    "note": "proposal-generator changes are forbidden as a response to this verdict (instruction sections 6/7)",
+    "verdict": "EXTERNAL STOP"
+  },
+  "environment": {
+    "cuda_available": true,
+    "git_commit": "a3ee9a07d3f58d1c1f49e33b6f1dc9424c956e0f",
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.10.19",
+    "torch": "2.5.1+cu121"
+  },
+  "metadata_facts": {
+    "coco_vs_vanilla": {
+      "ids_identical": true,
+      "level_mismatch": 0,
+      "n_coco": 9605,
+      "n_vanilla": 9605,
+      "objects_id_mismatch": 0,
+      "text_mismatch": 0,
+      "tuple_type_mismatch": 0
+    },
+    "difficulty_distribution": {
+      "1": {
+        "graph_coverage": "1.0",
+        "level": "1",
+        "mean_target_box_iou": "0.976675",
+        "n_expressions": "5730",
+        "n_images": "3183",
+        "name_from_graph_box": "0.968063",
+        "name_from_objects_id": "0.031937",
+        "same_name_objects_max": "4",
+        "same_name_objects_mean": "1.004",
+        "same_name_objects_median": "1.0",
+        "share_ge2_same_name": "0.002967",
+        "share_ge5_same_name": "0.0",
+        "share_ge9_same_name": "0.0",
+        "share_no_same_name": "0.997033",
+        "share_of_test": "0.596564"
+      },
+      "2": {
+        "graph_coverage": "1.0",
+        "level": "2",
+        "mean_target_box_iou": "0.997091",
+        "n_expressions": "3404",
+        "n_images": "1524",
+        "name_from_graph_box": "0.996769",
+        "name_from_objects_id": "0.003231",
+        "same_name_objects_max": "17",
+        "same_name_objects_mean": "2.4116",
+        "same_name_objects_median": "2.0",
+        "share_ge2_same_name": "0.938014",
+        "share_ge5_same_name": "0.051704",
+        "share_ge9_same_name": "0.003231",
+        "share_no_same_name": "0.061986",
+        "share_of_test": "0.354399"
+      },
+      "3": {
+        "graph_coverage": "1.0",
+        "level": "3",
+        "mean_target_box_iou": "1.0",
+        "n_expressions": "471",
+        "n_images": "310",
+        "name_from_graph_box": "1.0",
+        "name_from_objects_id": "0.0",
+        "same_name_objects_max": "8",
+        "same_name_objects_mean": "2.4586",
+        "same_name_objects_median": "2.0",
+        "share_ge2_same_name": "0.976645",
+        "share_ge5_same_name": "0.055202",
+        "share_ge9_same_name": "0.0",
+        "share_no_same_name": "0.023355",
+        "share_of_test": "0.049037"
+      },
+      "all": {
+        "graph_coverage": "1.0",
+        "level": "all",
+        "mean_target_box_iou": "0.985054",
+        "n_expressions": "9605",
+        "n_images": "4313",
+        "name_from_graph_box": "0.979802",
+        "name_from_objects_id": "0.020198",
+        "same_name_objects_max": "17",
+        "same_name_objects_mean": "1.5742",
+        "same_name_objects_median": "1.0",
+        "share_ge2_same_name": "0.382093",
+        "share_ge5_same_name": "0.021031",
+        "share_ge9_same_name": "0.001145",
+        "share_no_same_name": "0.617907",
+        "share_of_test": "1.0"
+      }
+    },
+    "level_vs_scene_graph_agreement": {
+      "1": {
+        "mean_same_name_objects": 1.004,
+        "n": 5730,
+        "share_graph_says_no_same_name": 0.997033,
+        "share_graph_says_some_same_name": 0.002967
+      },
+      "2": {
+        "mean_same_name_objects": 2.4116,
+        "n": 3404,
+        "share_graph_says_no_same_name": 0.061986,
+        "share_graph_says_some_same_name": 0.938014
+      },
+      "3": {
+        "mean_same_name_objects": 2.4586,
+        "n": 471,
+        "share_graph_says_no_same_name": 0.023355,
+        "share_graph_says_some_same_name": 0.976645
+      }
+    },
+    "n_positive_images": 4313,
+    "n_positive_test": 9605,
+    "negative_feasibility_counts": {
+      "n_all": 27926,
+      "n_images_negative_image": 8507,
+      "n_images_positive": 4313,
+      "n_negative_image": 8507,
+      "n_negative_text": 9814,
+      "n_positive": 9605
+    },
+    "rpn_audit": {
+      "geometry_verdict": "RELEASED BOXES IN JPEG PIXEL SPACE",
+      "invalid_crop_rate": 0.015408,
+      "k10_availability": {
+        "rate": 0.757942,
+        "same_name_rate": 0.059508,
+        "same_name_wilson_high": 0.070092,
+        "same_name_wilson_low": 0.050435,
+        "wilson_high": 0.775248,
+        "wilson_low": 0.739751
+      },
+      "k5_availability": {
+        "rate": 0.757942,
+        "same_name_rate": 0.18613,
+        "same_name_wilson_high": 0.2028,
+        "same_name_wilson_low": 0.170537,
+        "wilson_high": 0.775248,
+        "wilson_low": 0.739751
+      },
+      "n_images_audited": 1000,
+      "n_images_requested": 1000,
+      "n_rows": 2235,
+      "natural_omission_at_05": 0.242058,
+      "recall_at_05": {
+        "rate": 0.757942,
+        "wilson_high": 0.775248,
+        "wilson_low": 0.739751
+      },
+      "recall_at_07": {
+        "rate": 0.637584,
+        "wilson_high": 0.657261,
+        "wilson_low": 0.617434
+      },
+      "redundancy_frac_pairs_gt_07": 0.001224,
+      "same_name_distractors": {
+        "max": 42,
+        "mean": 1.6277,
+        "median": 0.0,
+        "p90": 6.0,
+        "share_ge_1": 0.275168,
+        "share_ge_4": 0.18613,
+        "share_ge_9": 0.059508
+      }
+    },
+    "same_image_targets": {
+      "expressions_per_image_mean": 2.227,
+      "n_identical_target_pairs": 4203,
+      "n_images": 4313,
+      "n_overlapping_target_pairs": 4443,
+      "n_same_image_pairs": 12620
+    },
+    "scene_graph_coverage": 1.0,
+    "scene_graph_images": 10696,
+    "target_geometry": {
+      "box_area_share_median": 0.08448,
+      "box_side_px_median": 127.33813254481157,
+      "box_side_px_p10": 57.57603668193913,
+      "box_side_px_p90": 285.5541973844044,
+      "image_area_px_median": 187500.0,
+      "n_expressions": 9605,
+      "share_box_outside_frame": 0.000521,
+      "share_side_lt_4px": 0.0
+    },
+    "target_name_resolution": {
+      "from_graph_box": 9411,
+      "from_objects_id_fallback": 194,
+      "iou_min_for_graph_match": 0.9,
+      "unresolved": 0
+    }
+  },
+  "refcoco_plus_reference": {
+    "availability": {
+      "k10": {
+        "N": "64",
+        "ci_high": "0.6809592621841112",
+        "ci_low": "0.6507906177895277",
+        "frac": "0.6660447761194029",
+        "num_available": "2499",
+        "num_expressions": "3752",
+        "num_target_category_unknown": "0",
+        "threshold": "9"
+      },
+      "k2": {
+        "N": "64",
+        "ci_high": "0.9797232131903861",
+        "ci_low": "0.9697310981948437",
+        "frac": "0.9752132196162047",
+        "num_available": "3659",
+        "num_expressions": "3752",
+        "num_target_category_unknown": "0",
+        "threshold": "1"
+      },
+      "k3": {
+        "N": "64",
+        "ci_high": "0.9673104651975908",
+        "ci_low": "0.9549861513583364",
+        "frac": "0.9616204690831557",
+        "num_available": "3608",
+        "num_expressions": "3752",
+        "num_target_category_unknown": "0",
+        "threshold": "2"
+      },
+      "k5": {
+        "N": "64",
+        "ci_high": "0.9094999908417274",
+        "ci_low": "0.8903207470722463",
+        "frac": "0.900319829424307",
+        "num_available": "3378",
+        "num_expressions": "3752",
+        "num_target_category_unknown": "0",
+        "threshold": "4"
+      }
+    },
+    "comparison_caveat": "RefCOCO+ same-category counts come from COCO GT categories, the FineCops side from exact GQA scene-graph name equality (A9.4); the recall columns are directly comparable because both used the same frozen COCO-pretrained RPN at N=64 with target = argmax-IoU proposal.",
+    "primary_k": 5,
+    "recall": {
+      "N": "64",
+      "gt_object_recall@0.5": "0.8085217277998566",
+      "gt_object_recall@0.5_ci_high": "0.8146689750424029",
+      "gt_object_recall@0.5_ci_low": "0.8022200834625711",
+      "gt_object_recall@0.7": "0.6793276434946902",
+      "gt_object_recall@0.7_ci_high": "0.6866658951510576",
+      "gt_object_recall@0.7_ci_low": "0.6718996488326698",
+      "num_gt_objects": "15349",
+      "num_gt_recalled@0.5": "12410",
+      "num_gt_recalled@0.7": "10427",
+      "num_ref_target_recalled@0.5": "3699",
+      "num_ref_target_recalled@0.7": "3376",
+      "num_ref_targets": "3752",
+      "ref_target_recall@0.5": "0.9858742004264393",
+      "ref_target_recall@0.5_ci_high": "0.989183965855167",
+      "ref_target_recall@0.5_ci_low": "0.9815704983373593",
+      "ref_target_recall@0.7": "0.8997867803837953",
+      "ref_target_recall@0.7_ci_high": "0.9089901820316281",
+      "ref_target_recall@0.7_ci_low": "0.889765548241981"
+    },
+    "source_dir": "results/proposal_audit"
+  },
+  "stage": "F3_F4_decision"
+}

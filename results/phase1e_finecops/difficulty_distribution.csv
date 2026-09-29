@@ -1,0 +1,5 @@
+level,n_expressions,n_images,share_of_test,graph_coverage,name_from_graph_box,name_from_objects_id,mean_target_box_iou,same_name_objects_mean,same_name_objects_median,same_name_objects_max,share_no_same_name,share_ge2_same_name,share_ge5_same_name,share_ge9_same_name
+1,5730,3183,0.596564,1.0,0.968063,0.031937,0.976675,1.004,1.0,4,0.997033,0.002967,0.0,0.0
+2,3404,1524,0.354399,1.0,0.996769,0.003231,0.997091,2.4116,2.0,17,0.061986,0.938014,0.051704,0.003231
+3,471,310,0.049037,1.0,1.0,0.0,1.0,2.4586,2.0,8,0.023355,0.976645,0.055202,0.0
+all,9605,4313,1.0,1.0,0.979802,0.020198,0.985054,1.5742,1.0,17,0.617907,0.382093,0.021031,0.001145
