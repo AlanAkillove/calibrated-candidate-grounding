@@ -1,0 +1,8 @@
+refcocog_split,refcocog_images,refcoco_plus_set,refcoco_plus_images,overlapping_images,non_overlapping_images,overlap_rate,expressions_remaining,refs_remaining,expressions_total,refs_total
+test,2600,train,16992,1257,1343,0.483462,3979,2075,9602,5023
+test,2600,val_select,750,65,2535,0.025,9323,4876,9602,5023
+test,2600,val_calib,750,58,2542,0.022308,9350,4891,9602,5023
+test,2600,development,18492,1380,1220,0.530769,3448,1796,9602,5023
+test,2600,testA,750,47,2553,0.018077,9374,4906,9602,5023
+test,2600,testB,750,71,2529,0.027308,9291,4856,9602,5023
+test,2600,all_refcoco_plus,19992,1498,1102,0.576154,2909,1512,9602,5023

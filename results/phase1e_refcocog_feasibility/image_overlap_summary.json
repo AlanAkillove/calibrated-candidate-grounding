@@ -1,0 +1,109 @@
+{
+  "development_sets": {
+    "all_refcoco_plus": 19992,
+    "development": 18492,
+    "testA": 750,
+    "testB": 750,
+    "train": 16992,
+    "val_calib": 750,
+    "val_select": 750
+  },
+  "development_sets_source": "cache\\manifests",
+  "max_overlap": 1498,
+  "refcocog_test_images": 2600,
+  "rows": [
+    {
+      "expressions_remaining": 3979,
+      "expressions_total": 9602,
+      "non_overlapping_images": 1343,
+      "overlap_rate": 0.483462,
+      "overlapping_images": 1257,
+      "refcoco_plus_images": 16992,
+      "refcoco_plus_set": "train",
+      "refcocog_images": 2600,
+      "refcocog_split": "test",
+      "refs_remaining": 2075,
+      "refs_total": 5023
+    },
+    {
+      "expressions_remaining": 9323,
+      "expressions_total": 9602,
+      "non_overlapping_images": 2535,
+      "overlap_rate": 0.025,
+      "overlapping_images": 65,
+      "refcoco_plus_images": 750,
+      "refcoco_plus_set": "val_select",
+      "refcocog_images": 2600,
+      "refcocog_split": "test",
+      "refs_remaining": 4876,
+      "refs_total": 5023
+    },
+    {
+      "expressions_remaining": 9350,
+      "expressions_total": 9602,
+      "non_overlapping_images": 2542,
+      "overlap_rate": 0.022308,
+      "overlapping_images": 58,
+      "refcoco_plus_images": 750,
+      "refcoco_plus_set": "val_calib",
+      "refcocog_images": 2600,
+      "refcocog_split": "test",
+      "refs_remaining": 4891,
+      "refs_total": 5023
+    },
+    {
+      "expressions_remaining": 3448,
+      "expressions_total": 9602,
+      "non_overlapping_images": 1220,
+      "overlap_rate": 0.530769,
+      "overlapping_images": 1380,
+      "refcoco_plus_images": 18492,
+      "refcoco_plus_set": "development",
+      "refcocog_images": 2600,
+      "refcocog_split": "test",
+      "refs_remaining": 1796,
+      "refs_total": 5023
+    },
+    {
+      "expressions_remaining": 9374,
+      "expressions_total": 9602,
+      "non_overlapping_images": 2553,
+      "overlap_rate": 0.018077,
+      "overlapping_images": 47,
+      "refcoco_plus_images": 750,
+      "refcoco_plus_set": "testA",
+      "refcocog_images": 2600,
+      "refcocog_split": "test",
+      "refs_remaining": 4906,
+      "refs_total": 5023
+    },
+    {
+      "expressions_remaining": 9291,
+      "expressions_total": 9602,
+      "non_overlapping_images": 2529,
+      "overlap_rate": 0.027308,
+      "overlapping_images": 71,
+      "refcoco_plus_images": 750,
+      "refcoco_plus_set": "testB",
+      "refcocog_images": 2600,
+      "refcocog_split": "test",
+      "refs_remaining": 4856,
+      "refs_total": 5023
+    },
+    {
+      "expressions_remaining": 2909,
+      "expressions_total": 9602,
+      "non_overlapping_images": 1102,
+      "overlap_rate": 0.576154,
+      "overlapping_images": 1498,
+      "refcoco_plus_images": 19992,
+      "refcoco_plus_set": "all_refcoco_plus",
+      "refcocog_images": 2600,
+      "refcocog_split": "test",
+      "refs_remaining": 1512,
+      "refs_total": 5023
+    }
+  ],
+  "seconds": 3.64,
+  "stage": "G1_image_overlap"
+}

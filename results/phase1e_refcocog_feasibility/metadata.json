@@ -1,0 +1,51 @@
+{
+  "artifacts": [
+    "results\\phase1e_refcocog_feasibility\\audit_expressions.csv",
+    "results\\phase1e_refcocog_feasibility\\branch_decision.json",
+    "results\\phase1e_refcocog_feasibility\\candidate_availability.csv",
+    "results\\phase1e_refcocog_feasibility\\category_distribution.csv",
+    "results\\phase1e_refcocog_feasibility\\dataset_summary.json",
+    "results\\phase1e_refcocog_feasibility\\expression_distribution.csv",
+    "results\\phase1e_refcocog_feasibility\\external_subsets.json",
+    "results\\phase1e_refcocog_feasibility\\feasibility_protocol.json",
+    "results\\phase1e_refcocog_feasibility\\figures\\fig1_refcocog_feasibility.png",
+    "results\\phase1e_refcocog_feasibility\\figures\\fig2_language_shift.png",
+    "results\\phase1e_refcocog_feasibility\\hard_cohort.csv",
+    "results\\phase1e_refcocog_feasibility\\hard_cohort_summary.json",
+    "results\\phase1e_refcocog_feasibility\\image_dims_check.csv",
+    "results\\phase1e_refcocog_feasibility\\image_fetch_report.json",
+    "results\\phase1e_refcocog_feasibility\\image_overlap.csv",
+    "results\\phase1e_refcocog_feasibility\\image_overlap_summary.json",
+    "results\\phase1e_refcocog_feasibility\\metadata.json",
+    "results\\phase1e_refcocog_feasibility\\rpn_audit.csv",
+    "results\\phase1e_refcocog_feasibility\\rpn_summary.json"
+  ],
+  "branch": "A",
+  "engineering_verdict": "EXTERNAL GO",
+  "environment": {
+    "cuda_available": true,
+    "git_commit": "cab89c365e8b0c9f07b16f13e8ec05befb38960d",
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.10.19",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121"
+  },
+  "figures": [
+    "results\\phase1e_refcocog_feasibility\\figures\\fig1_refcocog_feasibility.png"
+  ],
+  "git_commit": "cab89c365e8b0c9f07b16f13e8ec05befb38960d",
+  "phase": "1E_A10_refcocog_feasibility",
+  "primary_subset": "rg_external_strict",
+  "size_decision": "STRICT PRIMARY",
+  "stages_run": [
+    "parse",
+    "overlap",
+    "subsets",
+    "images",
+    "rpn",
+    "candidates",
+    "decision"
+  ],
+  "total_wallclock_s": null
+}

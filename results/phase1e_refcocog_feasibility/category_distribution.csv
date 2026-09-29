@@ -1,0 +1,5 @@
+group,n_expressions,n_images,n_categories,category_entropy_bits,top_category_share,person_fraction,top_categories
+refcoco_plus::phase1f_hard_cohort,3369,1424,66,2.532919,0.52241,0.52241,"person:1760, bowl:68, donut:66, giraffe:66, chair:59, teddy bear:57, motorcycle:55, sandwich:55, elephant:54, suitcase:54"
+refcocog_umd_test::hard_cohort,1890,755,69,2.921009,0.385185,0.385185,"person:728, chair:115, giraffe:90, car:79, zebra:67, airplane:63, horse:51, cow:43, truck:39, boat:32"
+refcocog_umd_test::rg_external_devdisjoint,3448,1220,75,3.209334,0.331206,0.331206,"person:1142, chair:230, car:131, giraffe:109, airplane:91, zebra:85, horse:76, bus:71, couch:69, truck:68"
+refcocog_umd_test::rg_external_strict,2909,1102,74,3.193892,0.323823,0.323823,"person:942, chair:212, car:129, giraffe:96, airplane:87, horse:74, truck:68, zebra:67, dining table:57, boat:56"

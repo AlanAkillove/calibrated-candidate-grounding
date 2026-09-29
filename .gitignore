@@ -31,6 +31,8 @@ results/*
 !results/phase1f_hard_semantic/**
 !results/phase1e_finecops/
 !results/phase1e_finecops/**
+!results/phase1e_refcocog_feasibility/
+!results/phase1e_refcocog_feasibility/**
 experiments/**/outputs/
 
 # Local logs / scratch

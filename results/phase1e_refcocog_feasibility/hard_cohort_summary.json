@@ -1,0 +1,46 @@
+{
+  "counts": {
+    "n_candidate_rows": 1890,
+    "n_categories": 69,
+    "n_expressions": 1890,
+    "n_images": 755,
+    "n_refs": 978
+  },
+  "definition": "expression is hard-eligible when a K=5 set exists whose target is the argmax-IoU proposal (IoU >= 0.5), whose 4 distractors are COCO same-category objects (proposal -> highest-IoU COCO GT with IoU >= 0.5) and whose target-equivalent proposals were removed - the A8 rule verbatim",
+  "matched_control": {
+    "criterion": "every hard-eligible expression must also admit the random K=5 view of the same sentence/image/target (section 17)",
+    "identity_ok": true,
+    "n_matched_random_available": 1890
+  },
+  "mean_same_category_distractors": 8.7492,
+  "power_gate": {
+    "criteria": {
+      "min_expressions": 1000,
+      "min_images": 300
+    },
+    "eligible": true,
+    "measured": {
+      "n_expressions": 1890,
+      "n_images": 755
+    },
+    "verdict": "HARD COHORT OK"
+  },
+  "primary_subset": "rg_external_strict",
+  "refcoco_plus_phase1f_reference": {
+    "base": {
+      "cutoff": 0,
+      "n_images": 1490,
+      "n_refs": 3647,
+      "n_rows": 10286
+    },
+    "same4": {
+      "cutoff": 4,
+      "n_images": 1424,
+      "n_refs": 3369,
+      "n_rows": 9487
+    },
+    "source": "results\\phase1f_hard_semantic\\cohort_summary.json"
+  },
+  "seconds": 4.5,
+  "stage": "G4_hard_cohort"
+}

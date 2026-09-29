@@ -1,0 +1,123 @@
+{
+  "amendment": "A10",
+  "boundary": "cross-dataset external confirmation under a shared COCO visual domain and a shared COCO object ontology; NOT cross-visual-domain generalisation (instruction section 24)",
+  "branch": {
+    "branch": "A",
+    "inputs": {
+      "engineering_verdict": "EXTERNAL GO",
+      "hard_cohort_verdict": "HARD COHORT OK",
+      "same_category_branch": "same_category_primary",
+      "size_decision": "rg_external_strict"
+    },
+    "next_stage_allowed": true,
+    "reason": "strict-disjoint subset, GO recall, hard regime constructible",
+    "report_only": false
+  },
+  "engineering_gate": {
+    "conditions": {
+      "k5_availability_ge_0.95": true,
+      "recall_at_05_ge_0.90": true
+    },
+    "criteria": {
+      "go_random_k5_min": 0.95,
+      "go_recall_min": 0.9,
+      "gray_recall_min": 0.85
+    },
+    "measured": {
+      "k5_random_availability": 0.972155,
+      "recall_at_05": 0.972155
+    },
+    "note": "same COCO image domain as RefCOCO+, so a recall shortfall here points at annotation / target-definition / split plumbing and must be debugged, not dodged by changing the generator (instruction sections 10/11)",
+    "verdict": "EXTERNAL GO"
+  },
+  "hard_cohort_gate": {
+    "criteria": {
+      "min_expressions": 1000,
+      "min_images": 300
+    },
+    "eligible": true,
+    "measured": {
+      "n_expressions": 1890,
+      "n_images": 755
+    },
+    "verdict": "HARD COHORT OK"
+  },
+  "measured": {
+    "frozen_generator": {
+      "model": "fasterrcnn_resnet50_fpn",
+      "n_proposals": 64,
+      "note": "identical to the RefCOCO+ audit; nothing was re-selected for RefCOCOg",
+      "stage": "class-agnostic RPN, post-NMS top-64",
+      "target_iou_thresh": 0.5,
+      "weights": "COCO_V1"
+    },
+    "gt_object_recall_at_05": 0.913232,
+    "hard_cohort": {
+      "n_candidate_rows": 1890,
+      "n_categories": 69,
+      "n_expressions": 1890,
+      "n_images": 755,
+      "n_refs": 978
+    },
+    "k10_random_availability": 0.972155,
+    "k5_random_availability": 0.972155,
+    "k5_same_category_availability": 0.649708,
+    "n_banks_extracted_this_run": 0,
+    "n_banks_reused_from_frozen_refcoco_bank": 118,
+    "n_images_audited": 1102,
+    "n_rows_audited": 2909,
+    "natural_omission_at_05": 0.027845,
+    "primary_subset": "rg_external_strict",
+    "recall_at_05": 0.972155,
+    "recall_at_07": 0.88484,
+    "same_category_coverage": {
+      "max": 28,
+      "mean": 6.2118,
+      "median": 5.0,
+      "p90": 13.0,
+      "share_ge_1": 0.913029,
+      "share_ge_4": 0.649708,
+      "share_ge_9": 0.27054
+    }
+  },
+  "next_stage_allowed": true,
+  "not_run_this_round": [
+    "CLIP / OpenCLIP feature extraction",
+    "B3 inference",
+    "Stats Logistic / E1b inference",
+    "bootstrap of any external model statistic",
+    "any FineCops (A9) continuation",
+    "any training or calibration of any kind"
+  ],
+  "refcoco_plus_comparison": {
+    "delta_recall_at_05": -0.013719,
+    "delta_same_category_k5_availability": -0.250612,
+    "note": "loaded from results/proposal_audit at run time (section 12); ref_target_recall@* is the referred-target recall the A10 gate uses, gt_object_recall@* is recall over every COCO GT object",
+    "refcoco_plus_gt_object_recall_at_05": 0.8085217277998566,
+    "refcoco_plus_same_category_k5_availability": 0.900319829424307,
+    "refcoco_plus_target_recall_at_05_frozen_reference": 0.9858742004264393,
+    "refcoco_plus_target_recall_at_07": 0.8997867803837953,
+    "refcocog_external_same_category_k5_availability": 0.649708,
+    "refcocog_external_target_recall_at_05": 0.972155,
+    "refcocog_external_target_recall_at_07": 0.88484,
+    "source": "results\\proposal_audit"
+  },
+  "same_category_gate": {
+    "criteria": {
+      "good_min": 0.75,
+      "primary_min": 0.6,
+      "stop_below": 0.5
+    },
+    "hard_regime_branch": "same_category_primary",
+    "measured": {
+      "k5_same_category_availability": 0.649708
+    },
+    "verdict": "SAME-CATEGORY PRIMARY"
+  },
+  "seconds": 0.01,
+  "size_gate": {
+    "decision": "STRICT PRIMARY",
+    "primary_subset": "rg_external_strict"
+  },
+  "stage": "G5_decision"
+}

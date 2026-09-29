@@ -1,0 +1,13 @@
+group,distractor_level,cohort_size,n_rows,n_at_least,availability,wilson_low,wilson_high,mean_same_category,median_same_category,distractor_pool_availability,same_category_availability
+rg_external_strict,1,K2,2909,2656,0.913029,0.902236,0.922732,6.2118,5.0,1.0,
+rg_external_strict,2,K3,2909,2410,0.828463,0.814333,0.841727,6.2118,5.0,1.0,
+rg_external_strict,4,K5,2909,1890,0.649708,0.632184,0.666836,6.2118,5.0,1.0,
+rg_external_strict,9,K10,2909,787,0.27054,0.254707,0.286978,6.2118,5.0,1.0,
+dev_disjoint_only_extra,1,K2,539,522,0.96846,0.950073,0.980217,9.7774,9.0,1.0,
+dev_disjoint_only_extra,2,K3,539,508,0.942486,0.91952,0.959189,9.7774,9.0,1.0,
+dev_disjoint_only_extra,4,K5,539,459,0.851577,0.819078,0.8791,9.7774,9.0,1.0,
+dev_disjoint_only_extra,9,K10,539,293,0.543599,0.501388,0.585194,9.7774,9.0,1.0,
+rg_external_strict::overall,,recall_at_05,2909,,0.972155,0.965525,0.97754,,,,
+rg_external_strict::overall,,recall_at_07,2909,,0.88484,0.872729,0.895936,,,,
+rg_external_strict::overall,,k5_availability,2909,,0.972155,0.965525,0.97754,,,,0.649708
+rg_external_strict::overall,,k10_availability,2909,,0.972155,0.965525,0.97754,,,,0.27054

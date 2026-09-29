@@ -1,0 +1,6 @@
+group,n_expressions,tokens_mean,tokens_p10,tokens_median,tokens_p75,tokens_p90,tokens_min,tokens_max,mean_characters,vocabulary_size,hapax_legomena,spatial_token_expressions,spatial_token_rate,absolute_position_expressions,absolute_position_rate
+refcoco_plus_testA_testB::all_sentences,10615,3.5348,1.0,3.0,5.0,6.0,1.0,22.0,18.4564,2942,1523,4530,0.426755,350,0.032972
+refcoco_plus_testA_testB::first_sentence_per_region,3773,3.666,1.0,3.0,5.0,7.0,1.0,22.0,19.1558,1762,947,1635,0.433342,114,0.030215
+refcocog_umd_test::all,9602,8.3875,4.0,8.0,11.0,14.0,1.0,32.0,41.0192,4038,1905,7554,0.786711,1784,0.185795
+refcocog_umd_test::rg_external_devdisjoint,3448,8.3242,4.0,8.0,11.0,14.0,1.0,31.0,40.7451,2365,1150,2682,0.777842,573,0.166183
+refcocog_umd_test::rg_external_strict,2909,8.2499,4.0,8.0,10.0,13.0,1.0,31.0,40.3352,2144,1050,2231,0.76693,461,0.158474

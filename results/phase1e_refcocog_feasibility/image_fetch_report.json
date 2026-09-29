@@ -1,0 +1,21 @@
+{
+  "dimension_mismatches": 0,
+  "fetch": {
+    "bytes_written": 178258375,
+    "failed_sample": [],
+    "failure_reasons": {},
+    "fetched": 1102,
+    "n_failed": 0,
+    "present": 1102,
+    "requested": 1102,
+    "skipped_existing": 0
+  },
+  "frozen_bank_note": "RefCOCOg UMD test images that are also RefCOCO+ testA/testB images keep their frozen proposal bank; only the disjoint remainder is fetched and re-extracted with the same model (instruction section 10)",
+  "images_downloaded": 1102,
+  "images_missing": 0,
+  "images_required": 1220,
+  "images_reused_from_frozen_bank": 118,
+  "seconds": 126.61,
+  "stage": "images",
+  "verdict": "IMAGE GEOMETRY OK"
+}

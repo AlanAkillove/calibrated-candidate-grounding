@@ -177,6 +177,54 @@ split 的样本成员定义；若为了对齐 baseline 需要引用 `.mats`，�
   `docs/research_protocol.md` **A9.13** 与 `docs/experiment_log.md`
   条目 `p1e-finecops-external-feasibility-audit-20260929-01`。
 
+## 2B. External confirmation 候选：RefCOCOg — UMD split（**已实测核实 2026-09-29**）
+
+A9 EXTERNAL STOP 后的替代候选。目的不是找一个“更不同的视觉域”，而是在**保持 COCO 图像域 /
+COCO object ontology / 冻结 proposal pipeline 可比性**的前提下引入**语言与标注协议 shift**。
+因此它的合法定位是 **cross-dataset external validation under a shared COCO visual domain**，
+**不是** cross-visual-domain generalization（指令 §24）。
+
+- **来源与指纹**：与 RefCOCO+ 同一分发点 `bvisionweb1.cs.unc.edu/licheng/referit/data/refcocog.zip`；
+  官方直链已失效（SSL failure，与 `refcoco+.zip` 上已经历过的同一故障），因此改取 Internet Archive
+  对**同一官方 URL** 的快照 `20220413012904id_`（`id_` 修饰符返回未经改写的原始字节；
+  zip 56,712,951 B，sha256 `3d1f7e5b2ff22059…`；CDX `response_length` 56,715,268 含 HTTP 头部，
+  故只作下限校验，完整性以响应自身的 Content-Length 为准）。解压后逐文件记录：
+  `refs(umd).p` 33,853,676 B / sha256_16 `0331c7533537b67c`，`refs(google).p` 33,853,786 B /
+  `e4d8320dfd15fc21`（**仅用于证明未误用 Google object split**），`instances.json` 124,416,571 B /
+  `96c89b426c657f2f`。见 `data/raw/refcocog/dataset_card.json`。
+- **G0 实测（不引用网络文献数字）**：image-level split 确认（`refer.py` 的 `splitBy='umd'` 口径；
+  本文只记录实测文件事实，该 split 的原始论文出处列在 `docs/literature_notes.md` §8 待核对）。`image_level_split: true`，
+  三个 split 间 **0** 图重叠。test **9,602 expr / 5,023 refs / 5,023 objects / 2,600 imgs / 76 类**；
+  train 80,512 / 42,226 / 42,224 / 21,899；val 4,896 / 2,573 / 2,573 / 1,300；合计 95,010 / 49,822 / 49,820 / 25,799。
+  test 每 ref 句数：1 句 452 / 2 句 4,563 / 3 句 8。
+- **目标框来源（必须审计而非假定）**：UMD refs **不携带 box**，target 由 `ann_id` join `instances.json`。
+  archive 侧 vs 官方 `instances_train2014.json` 逐 ref 比较：n=5,023、IoU **min=mean=max=1.0**、
+  n_identical **5,023**、类别不一致 **0**、未匹配 **0** → **ARCHIVE AND OFFICIAL BOXES IDENTICAL**。
+  GT 对象集（same-category 候选池）同 RefCOCO+ 侧 `run_proposal_audit.py` 先例，取官方 train2014 注解。
+- **G1 image overlap（本数据集最大的风险）**：RefCOCOg UMD test 与 RefCOCO+ 共用 COCO 图像，
+  重叠 train **1,257** / val_select 65 / val_calib 58 / **development 1,380** / testA 47 / testB 71 /
+  **ALL RefCOCO+ 1,498**（共 2,600）。→ RefCOCOg test **本身不是** external。
+- **G2 image-disjoint 子集**：
+  `rg_external_strict`（减 ALL RefCOCO+，含已被反复查看的 testA/testB）= **2,909 expr / 1,102 imgs / 1,512 refs**；
+  `rg_external_devdisjoint`（减 train ∪ val_select ∪ val_calib）= **3,448 expr / 1,220 imgs / 1,796 refs**
+  （cumulative，dev-only extra 539 行 / 118 图）。size gate：**STRICT PRIMARY**（≥ 1500 expr / ≥ 500 imgs）。
+  图像获取：strict 所需 1,102 张全部下载（178,258,375 B / 126.6 s / failed 0），dev-only 118 张已在盘且
+  其 proposals **直接复用冻结 RefCOCO+ bank**（同域、同模型、同 N，不是重提）。
+- **G3 冻结 proposal 审计（参数一字未改）**：recall@0.5 **0.972155**、recall@0.7 **0.884840**、
+  natural omission **0.027845**、K5 = K10 random availability **0.972155**、gt_object_recall@0.5 0.913232
+  → **EXTERNAL GO**（同域 gate：recall ≥ 0.90 ∧ K5 availability ≥ 0.95）。
+  RefCOCO+ 冻结参照（读盘）0.9858742 → Δ **−0.013719**（对比 FineCops 的 −0.2279）。
+- **G4 same-category（A8 规则逐字复用）**：≥1 **0.913029** / ≥2 0.828463 / ≥4（K5）**0.649708**
+  [0.632184, 0.666836] / ≥9 0.270540；hard cohort **1,890 expr / 755 imgs / 978 refs / 69 类**（功效门通过）。
+  **不要求**复制 RefCOCO+ 的 0.9003（Δ −0.250612 作为 external shift 记录，第一版不 reweight）。
+- **G4 分布 shift（external value 的来源）**：tokens mean 3.5348 → 8.3875、vocab 2,942 → 4,038、
+  spatial rate 0.4268 → 0.7867、absolute-position rate 0.0330 → 0.1858；
+  hard-cohort 类别 entropy 2.5329 → 2.9210、person fraction 0.5224 → 0.3852。
+- **G5 判定：Branch A — CLEAN EXTERNAL**（`next_stage_allowed = true`）。本轮**未前向任何模型**：
+  无 CLIP extraction / B3 / Stats / E1b / bootstrap，RefCOCOg train 完全未用（0 个新训练参数）。
+  详见 `docs/research_protocol.md` **A10.13** 与 `docs/experiment_log.md` 条目
+  `p1e-refcocog-external-feasibility-audit-20260929-01`。
+
 ## 3. 后续扩展数据集（仅记录，不进入 Phase 0）
 
 - **gRefCOCO**：来自 **GRES: Generalized Referring Expression Segmentation, CVPR 2023**

@@ -116,9 +116,39 @@
 [ ] Nixon ACE、Karandikar SCE、Varma "All Errors Are Local"、MMCE、Guo TS 的 bib 精确字段
 [ ] El-Yousef & Vernick、Geifman & El-Yaniv、Wen et al.、Geissinger et al. 的 selective 文献准确性
 [ ] Rentschler et al. "CLIP accuracy is related to the number and size of candidate objects" 是否可核实
+[ ] RefCOCOg / UMD split 的原始论文出处与 venue（本文只引用**实测文件事实**，不写具体引用字段，待核对）
 [x] FineCops-Ref 的下载方式、license、是否 test-only —— **已核实（2026-09-29）**：figshare
     article 26048050（API 可直接拉取文件清单与 download_url）、license **CC BY 4.0**、
     **非 test-only**（存在 train/val 标注文件），但本项目只使用官方 test split；详见
     `docs/dataset_protocol.md` §2 与 `data/raw/finecops/dataset_card.json`
+[ ] RefCOCO+ 与 RefCOCOg 的 image overlap 比例是否已被其他工作显式讨论过（本项目自行实测）
+[ ] RefCOCOg UMD split 的官方下载源可用性（本项目已实测 refs(umd).p / refs(google).p 两文件并存，
+    仅使用 UMD；Google split 只用于证明未误用）
 [ ] COCO / RefCOCO 的官方 attribution 文本（README 引用块）
 ```
+
+## 9. External benchmark selection（Amendment A9/A10 的候选比较）
+
+本节只记录 **benchmark-selection rationale**，不展开成相关工作综述。目标量只有一个：
+在检验 A8/Phase 1F 的 candidate-semantic reliability 效应能否**外部复现**时，
+不得把该效应与 **perception / proposal / detector-domain shift** 混在一起。
+
+| 候选 | 图像域 / ontology | 不选（或选）的理由 |
+|---|---|---|
+| **FineCops-Ref**（A9） | GQA / Visual Genome，非 COCO | 实测：冻结 COCO-RPN 上 target recall@0.5 仅 **0.7579**（−22.8pp vs RefCOCO+），
+    且 GQA 无 COCO 类别映射可用（same-name K5 仅 **0.1861**）。该实验主要在测感知域偏移 → **EXTERNAL STOP** |
+| **Cops-Ref / Ref-Reasoning** | 同属 GQA 系 | 与 FineCops 同因：引入明显的 frozen-RPN 感知域 shift，不能隔离语义/语言效应 |
+| **Ref-L4** | 大量/主要新样本来自 **Objects365** 等更广 ontology | 会重新引入 **detector-domain confound**（类别体系与 COCO 不同，
+    冻结 RPN 的类别分配与 same-category 构造失去可比性） |
+| **PACO-LVIS** | COCO/LVIS 图像域**兼容** | 但任务主要是 **object-part-attribute query / zero-shot instance detection**，
+    不是直接的 REC replication；part 层级不属于 COCO 80 类 ontology，same-category 操纵含义会变 |
+| **RefCOCOg — UMD split**（A10） | **COCO 图像 + COCO instance ontology** | ✅ 选定。保留 COCO image domain / object ontology /
+    冻结 proposal pipeline 的可比性，同时提供明显的**语言与标注协议 shift**（实测 mean 3.53 → 8.39 tokens，
+    spatial 标记 0.43 → 0.79，绝对位置表述 0.03 → 0.19）；UMD 为 **image-level split**，因此可以做真正的
+    image-disjoint 子集扣除 |
+
+**边界声明（必须保留在论文里）**：RefCOCOg 与 RefCOCO+ 共用 COCO 图像，所以 RefCOCOg test **本身不是** external；
+本文的 "external" 地位完全靠 image-disjoint 构造挣得（strict：减去 ALL RefCOCO+ 图像，包括已被反复查看过的
+ testA/testB）。因此合法描述只有 **cross-dataset external validation under a shared COCO visual domain**；
+**不得**写 cross-domain / cross-visual-domain generalization。控制视觉 proposal 域是优势而非缺陷：
+它使外部检验更接近对 **language / candidate-semantic effect 的 replication**。

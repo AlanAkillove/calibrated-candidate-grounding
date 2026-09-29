@@ -499,6 +499,7 @@ indices：ref_id/regime/K/hardness/target_present/candidate_indices/target_candi
 | A7 | 2026-09-28 | Phase 1 Candidate Semantic Information Sufficiency Audit protocol 冻结（E1/E2/E3 模型 zoo / 统计与 gate §28-31 / P1-P4 比较；**GO/NO-GO 数字在任何 Phase 1 结果可见前冻结**；不修改任何既有条款） | Phase 0.5 已证 score-only 信息不足（GO_candidate_embeddings，4 OOD cells 双 Route）；检验唯一未使用信息源 candidate/query semantic representation 是否携带额外可靠性信息 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A7” |
 | A8 | 2026-09-28 | Phase 1F Hard-Competition Semantic Confirmation（confirmatory stress test；cohort 规则 / 冻结评分 / A8.4 复现校验 / A8.6 gate 数字在任何 hard-regime 结果前冻结；不修改任何既有条款） | A7 verdict = INCONCLUSIVE（random regime 下 semantic 增量不显著）；唯一待检验假设：semantic 信息在 GT same-category 竞争下是否实质性更有用 | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A8” |
 | A9 | 2026-09-29 | FineCops-Ref External Semantic Confirmation（staged external validation；工程 gate §6/§7 + regime 规则 §10/§11 + external gate §17-20 数字在任何 FineCops 模型推断前冻结；不修改任何既有条款） | A8 verdict = CONFIRMED；架构升级路径关闭，只允许检验该效应能否迁移到独立数据集（不同 image source / annotation pipeline / 语言构造） | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A9” |
+| A10 | 2026-09-29 | RefCOCOg Image-Disjoint External Confirmation **Feasibility**（staged protocol；size / 工程 / same-category / 功效 / branch 五组数字在任何 RefCOCOg proposal 结果产生前冻结；不修改任何既有条款，**不改写 A9 的 EXTERNAL STOP 原因**） | A9 = EXTERNAL STOP（GQA 感知域偏移）；需一个保持 COCO image domain / COCO ontology / 冻结 proposal pipeline 可比性的外部候选，同时仍提供语言-标注分布 shift | 原始条款与 gate 判据全文保留于上方；全文见文件末 “Amendment A10” |
 
 ---
 
@@ -1191,5 +1192,184 @@ regime 分支 = `level_primary_only`（same-name 供给连 0.50 诊断线都未�
 F5–F10 未获授权：需一次由用户作出的**新的协议决策**才能继续；本轮从未查看任何 FineCops 模型结果，
 不存在结果后调参。详见 `docs/experiment_log.md` 条目
 `p1e-finecops-external-feasibility-audit-20260929-01` 与 `results/phase1e_finecops/external_branch_decision.json`。
+
+---
+
+## Amendment A10 — 2026-09-29 — RefCOCOg Image-Disjoint External Confirmation Feasibility（staged protocol；全部阈值在 proposal 结果产生前冻结）
+
+**staged 声明**：本 amendment 制定于 **A9 verdict = EXTERNAL STOP 已知之后**，属 staged protocol
+而不是 initial preregistration。A9 的 stop 原因（冻结 COCO-RPN 在 GQA 图像上
+target proposal recall@0.5 = 0.7579 < 0.80 停止线；same-name K5 availability = 0.1861）
+**不得被本 amendment 改写、稀释或重新解释**：FineCops F5–F10 永久不获授权，除非另有一次由用户作出的
+新的协议决策。本 amendment 不降低 FineCops gate、不换 detector、不改 N、不做“弱形式 external result”。
+
+**本轮范围**：只做 G0–G5 可行性审计（parse / overlap / subsets / frozen-RPN audit /
+same-category availability / branch decision）。**任何 reliability 模型的 RefCOCOg 输出
+（B3 / Stats / E1b 分数、AUROC、E-AURC、RER）在本文写作时尚未被查看**，本轮甚至未前向模型。
+A10.4–A10.8 的全部判据数字在首个 proposal 产物落盘前已写入
+`results/phase1e_refcocog_feasibility/feasibility_protocol.json` 的 `frozen_before_run` 块
+（artifact 时序可核验：protocol 13:26 早于首个 RPN 产物 13:40）。
+
+### A10.1 边界措辞（不可越界）
+
+RefCOCOg — UMD split 与 RefCOCO+ **共用 COCO 图像域与 COCO object ontology**。因此本外部检验的
+合法描述只有一种：
+
+> **cross-dataset external validation under a shared COCO visual domain**
+
+禁止写 `cross-domain visual generalization`（或任何等价说法）。优势恰恰在于控制了视觉/proposal 域，
+使外部检验更接近对 **language / candidate-semantic effect** 的 replication 而非感知域检验；
+代价是它**不能**声称跨视觉域泛化。论文与日志必须保持这条边界。
+
+### A10.2 数据完整性与 split 类型（G0，实测非引用）
+
+- 来源：RefCOCOg **UMD split**（`refs(umd).p`），**不是** Google object-level split；
+  逐文件 sha256 与实测 counts 记录于 `dataset_summary.json`（`image_level_split: true`、
+  `shared_images_between_splits: {}` 为硬校验）。
+- 目标框来源：UMD refs 文件本身不携带 box；target box 由 `ann_id` join COCO instances 得到。
+  本 amendment 要求先把该 join 做成**可证伪的审计**：archive 侧 `instances.json` 与官方
+  `instances_train2014.json` 逐 ref 比 IoU，实测 **n=5,023 / IoU min=mean=max=1.0 /
+  n_identical=5,023** → verdict `ARCHIVE AND OFFICIAL BOXES IDENTICAL`，两源可互换。
+  此证据落盘于 `dataset_summary.json.target_box_source`，因为目标框定义直接决定 recall 的含义。
+- GT object 集合（same-category 的候选池）来自官方 `instances_train2014.json`，
+  与 RefCOCO+ 侧 `run_proposal_audit.py` 完全同一先例、同一文件。
+
+### A10.3 exposed images 与两个 image-disjoint 子集（G1/G2）
+
+RefCOCOg UMD test **本身不是** external。必须显式减去研究过程中暴露过的图像：
+
+| 子集 | 排除集 | 定义对象 |
+|---|---|---|
+| `rg_external_devdisjoint` | RefCOCO+ train + val_select + val_calib | 所有参与 B3 training / reliability training / tuning / normalization / calibration / 架构与超参选择的图像 |
+| `rg_external_strict` | **ALL** RefCOCO+ images（train + val_select + val_calib + testA + testB） | testA/testB 虽未参与训练，但研究过程反复查看其结果；论文最干净的 external 应优先用 strict |
+
+实现义务：`subset_membership` 返回的是**分区**（strict 优先），故 dev 侧数字是 cumulative，
+dev-only extra 单独成组报告；val_select/val_calib 已属 val，不得重复计入；
+断言 `strict ∩ dev_only = ∅` 与 `strict_without_development = 0`（strict ⊆ dev）。
+
+**size gate（§9）**：strict ≥ 1500 expressions ∧ ≥ 500 images → `PRIMARY = strict-disjoint`；
+strict 不足但 dev ≥ 2000 / ≥ 700 → `EXTERNAL GRAY ZONE`（先汇报，不自动跑）；两者都太小 →
+`REFCOCOG EXTERNAL STOP`。
+
+### A10.4 冻结 proposal 系统（§10/§11，逐字复用 RefCOCO+）
+
+`torchvision fasterrcnn_resnet50_fpn`（COCO_V1）RPN stage → class-agnostic →
+post-NMS **top-64**（Amendment A2 选定，不因 RefCOCOg 表现而改）→ target = argmax IoU，
+IoU **≥ 0.5** 才视为覆盖，target-equivalent proposals 移除。**不为 RefCOCOg 重选 N、
+不重训、不 fine-tune、不替换 detector。** 统计量：target recall@0.5 / @0.7、natural omission、
+K5/K10 random availability。
+
+**工程 gate（比 A9 更严，因为这是同 COCO 域）**：
+- **GO**：recall@0.5 ≥ **0.90** ∧ K5 availability ≥ **0.95**；
+- **GRAY**：0.85 ≤ recall@0.5 < 0.90 → 先汇报，不自动跑；
+- **STOP**：recall@0.5 < 0.85。
+
+同域 recall 若仍低，说明 annotation / target definition / split plumbing 有问题，**必须先 debug**，
+不得靠改生成器绕过。对照侧 RefCOCO+ 数值一律**读盘**自 `results/proposal_audit/`，禁止硬编码。
+
+### A10.5 same-category regime（§13–§16，逐字复用 A8 规则）
+
+proposal → highest-IoU COCO GT object（**IoU ≥ 0.5 才赋类别**）→ same-category K5 =
+target + 4 个同类 distractor。报告 ≥1 / ≥2 / ≥4 / ≥9 distractor 覆盖率（含 Wilson CI）。
+
+- availability ≥ **0.60** → same-category 可作 primary external hard regime（≥ 0.75 更好）；
+- availability < **0.50** → same-category external confirmation 不成立 → **STOP hard-regime branch**。
+
+**不要求复制 RefCOCO+ 的 90%**：图像与 target 分布不同，外部基准只需 cohort 足够大且统计功效足够；
+但必须同时报告 eligible expressions / images / refs 三个量。
+**功效 gate**：sameCat-K5 cohort 需 n_expressions ≥ **1000** ∧ n_images ≥ **300**，
+否则 `HARD EXTERNAL UNDERPOWERED`，不进入正式 evaluation。
+
+### A10.6 matched random control（§17）
+
+对每一个 hard-eligible expression 同时构建 random-K5 与 sameCat-K5，二者在
+sentence/ref、image、target、scorer seed 上**逐字段相同**，只改 distractor composition
+（沿用 Phase 1F matched design）。identity 校验必须显式通过，否则 matched comparison 作废。
+
+### A10.7 分布审计（§18/§19：external value 的来源）
+
+RefCOCOg 与 RefCOCO+ 的外部价值主要来自**语言/标注分布 shift**，因此必须证明这不是同一标注分布的重复：
+
+- 语言：expression length 的 mean / median / quantiles、vocabulary size、spatial / relation token prevalence
+  （annotation 提供时才报告；**禁止**设计复杂 NLP taxonomy）。比较对象固定为
+  RefCOCO+ test（testA+testB，读盘）vs RefCOCOg external。
+- 类别：target-category 频率比较 RefCOCO+ Phase 1F hard cohort vs RefCOCOg external hard cohort，
+  至少输出 top categories / category entropy / person fraction。
+  分布差异**记录为 external shift**，第一版**不做 reweighting**、不强行拉平。
+
+### A10.8 零训练、零重校准（§20/§21）
+
+RefCOCOg train split 即使存在也**完全不使用**；本 external experiment 有 **0 个新训练参数**。
+所有 B3 / temperature / Stats Logistic / E1b / normalization / coefficients 在未来正式 evaluation 时
+必须**直接恢复** RefCOCO+ 冻结 artifact（A8.4 四重校验，`max|Δ| ≤ 1e-9`，任一 mismatch → STOP）。
+本轮不重校准、不前向模型。
+
+### A10.9 G5 branch 判定规则（只能三选一）
+
+- **Branch A — CLEAN EXTERNAL**：strict-disjoint 规模达标 ∧ RPN recall ≥ 0.90 ∧
+  same-cat K5 availability ≥ 0.60 ∧ hard cohort ≥ 1000 expr / 300 images → 下一阶段允许
+  frozen external confirmation。
+- **Branch B — LIMITED EXTERNAL**：strict 不足但 dev-disjoint 达标，或 recall ∈ 0.85–0.90 →
+  `EXTERNAL LIMITED`，先汇报，不自动运行。
+- **Branch C — EXTERNAL STOP**：recall < 0.85 ∨ same-cat availability < 0.50 ∨ hard cohort 功效不足。
+
+Branch A 通过后，**下一轮**才复现 A8 的 Random-K5 vs SameCat-K5 比较（frozen Stats Logistic vs E1b，
+primary statistic ΔAUROC(E1b − Stats)，并检验 Δ_hard − Δ_random）；本轮不运行。
+
+### A10.10 禁止事项（与指令 §29 一致）
+
+CLIP / OpenCLIP feature extraction / B3 inference / Stats-E1b inference / bootstrap 任何 external
+模型统计量 / FineCops（A9）continuation / 任何形式的 retrain 或 calibration 拟合 /
+RefCOCOg train 标注进入任何环节 / 依据本轮 feasibility 数字修改 A9 或 A8 的既有 gate。
+
+### A10.11 Artifacts
+
+``results/phase1e_refcocog_feasibility/``：`feasibility_protocol.json`、`dataset_summary.json`、
+`image_overlap.csv`（+ `image_overlap_summary.json`）、`external_subsets.json`、
+`expression_distribution.csv`、`category_distribution.csv`、`audit_expressions.csv`、
+`rpn_audit.csv`、`rpn_summary.json`、`candidate_availability.csv`、`hard_cohort.csv`、
+`hard_cohort_summary.json`、`image_dims_check.csv`、`image_fetch_report.json`、
+`branch_decision.json`、`metadata.json`、`figures/`。
+
+### A10.12 测试要求（指令 §26 的 15 项，全部必须 0 failed）
+
+`tests/test_refcocog_external.py`：UMD split parser / image ID canonicalization /
+overlap exclusion / dev-disjoint construction / strict-disjoint construction /
+zero-overlap assertion / 冻结 N=64 RPN（driver 必须传 `top_n=fe.N_PROPOSALS`，且不得出现 `Ks=` /
+`iou_thresh=` 覆盖）/ COCO category assignment / same-category candidates /
+no target-equivalent proposals / matched random-hard cohort identity /
+RefCOCOg labels 不进入 training / deterministic manifest / sample-size gate / external branch logic；
+另加 GQA-domain 模块不复用（以 **ast import graph** 断言，prose 提及不构成依赖）。
+
+### A10.13 G0–G5 执行结论（2026-09-29 实测；**未修改本 amendment 任何阈值**）
+
+- **G0**：UMD image-level split 确认；test **9,602 expressions / 5,023 refs / 5,023 objects / 2,600 images / 76 类**，
+  train 80,512 / 42,226 / 42,224 / 21,899，val 4,896 / 2,573 / 2,573 / 1,300；
+  target box 与 COCO instances 逐 ref IoU = 1.0（5,023/5,023 完全一致），unmatched rate 0.0。
+- **G1**：RefCOCOg UMD test 与 RefCOCO+ 的 image 重叠 —— train **1,257**、val_select 65、val_calib 58、
+  development **1,380**、testA 47、testB 71、ALL RefCOCO+ **1,498**（∴ 必须做 image-disjoint 才配称 external）。
+- **G2**：`rg_external_strict` **2,909 expr / 1,102 images / 1,512 refs**，
+  `rg_external_devdisjoint` **3,448 expr / 1,220 images / 1,796 refs**（cumulative，dev-only extra 539 行）；
+  size gate = **STRICT PRIMARY**。
+- **G3（§11/§12）**：recall@0.5 **0.972155**、@0.7 **0.884840**、natural omission **0.027845**、
+  K5 = K10 random availability **0.972155**、gt_object_recall@0.5 0.913232 → **EXTERNAL GO**；
+  RefCOCO+ 冻结参照（读盘）0.9858742 → Δ **−0.013719**（同域 gap 仅 1.37pp，与 FineCops 的 −22.8pp 形成量级对比）。
+- **G4（§14–§19）**：same-cat ≥1 **0.913029** / ≥2 0.828463 / ≥4 **0.649708** [0.632184, 0.666836] /
+  ≥9 0.270540 → **SAME-CATEGORY PRIMARY**（≥0.60，未达 0.75“更好”线，如实记为 limited headroom）；
+  hard cohort **1,890 expr / 755 images / 978 refs / 69 类** → **HARD COHORT OK**，matched identity 校验通过；
+  语言 shift：tokens mean **3.5348 → 8.3875**（strict 8.2499）、vocab 2,942 → 4,038、
+  spatial rate 0.4268 → 0.7867、absolute-position rate 0.0330 → 0.1858；
+  类别 shift：entropy 2.5329 → 2.9210、person fraction 0.5224 → 0.3852（hard cohort 对 hard cohort）。
+- **G5**：**Branch A — CLEAN EXTERNAL**，`next_stage_allowed = true`。
+- 本轮从未前向任何模型：不存在 RefCOCOg 的 B3 / Stats / E1b 输出，因此不可能发生结果后调参。
+  F5–F10（FineCops）与 A10 之后的正式 external confirmation 是**两个独立的授权决定**，本结论只授权后者进入下一步。
+- **可复现性登记（不放宽任何阈值）**：A8.4 校验中的两项 lbfgs 重拟合输出对 **BLAS 线程数**敏感
+  （归约顺序非结合）：本机上 T=16 给出 `stats_logistic_pred_max_abs = 2.220e-16` / `e1b_coefficients_max_abs = 0.0`
+  （与 A8 当时逐位一致），而线程数被限制到 8/4/1 时该值漂到 2e-08…3.6e-08。三项结构校验（tune AUROC /
+  normalisation）恒为 0.0，即**冻结输入本身 bit-identical**。因此 `_TOL = 1e-9` **保持不变**，而是把环境归位：
+  正式 external confirmation 与全量 pytest 必须在与产生冻结 artifact 相同的解释器（python 3.10.19 /
+  torch 2.5.1+cu121）与**全核 BLAS 线程数**下运行，并在 metadata 中记录线程数。本轮全量 pytest
+  **668 collected / 668 passed / 0 failed（113 s）** 即在此条件下得到。
+
 
 

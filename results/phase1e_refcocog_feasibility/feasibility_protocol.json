@@ -1,0 +1,101 @@
+{
+  "amendment": "A10",
+  "environment": {
+    "cuda_available": true,
+    "git_commit": "cab89c365e8b0c9f07b16f13e8ec05befb38960d",
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.10.19",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1+cu121"
+  },
+  "forbidden": [
+    "RefCOCOg train / val annotations (0 training parameters this round)",
+    "any B3 / CLIP / Stats Logistic / E1b forward pass or re-calibration",
+    "detector swap / N re-selection / reranking / threshold re-tuning",
+    "weakening or revisiting the A9 FineCops stop",
+    "describing the result as cross-visual-domain generalisation"
+  ],
+  "frozen_before_run": {
+    "dev_min_expressions": 2000,
+    "dev_min_images": 700,
+    "distractor_coverage_levels": [
+      1,
+      2,
+      4,
+      9
+    ],
+    "go_random_k5_min": 0.95,
+    "go_recall_min": 0.9,
+    "gray_recall_min": 0.85,
+    "hard_min_expressions": 1000,
+    "hard_min_images": 300,
+    "n_proposals": 64,
+    "primary_k": 5,
+    "recall_ious": [
+      0.5,
+      0.7
+    ],
+    "same_category_good_min": 0.75,
+    "same_category_primary_min": 0.6,
+    "same_category_stop_max": 0.5,
+    "secondary_k": 10,
+    "strict_min_expressions": 1500,
+    "strict_min_images": 500,
+    "target_iou_thresh": 0.5,
+    "umd_eval_split": "test"
+  },
+  "frozen_refcoco_artifacts": {
+    "files": {
+      "cache\\manifests\\random_testA.jsonl": "35bfd08298df560c",
+      "cache\\manifests\\random_testB.jsonl": "32de6c535df1b967",
+      "cache\\manifests\\random_train.jsonl": "fbe750c04371ebd6",
+      "cache\\proposals.h5": "de0c769fa4266d1b",
+      "results\\phase05_score_sufficiency\\split_manifest.json": "badd94bc88c1f0ba",
+      "results\\phase05_score_sufficiency\\stats_logistic\\selection.json": "e911a95fe227cba2",
+      "results\\phase1_semantic_sufficiency\\e1_logistic\\coefficients.csv": "3241d0c34a129ada",
+      "results\\phase1f_hard_semantic\\manifests\\hard5_candidates.npz": "1ffbdbbaa8fd8338",
+      "results\\proposal_audit\\recall_by_N.csv": "c6a501cb0c4aa556",
+      "results\\proposal_audit\\same_category_availability.csv": "af555882aa79cbc3"
+    },
+    "model_pipeline_reused_unchanged": [
+      "torchvision fasterrcnn_resnet50_fpn RPN stage (COCO_V1, class-agnostic, N=64)",
+      "ccg.data.proposals.assign_target (IoU >= 0.5, argmax target, equivalent removal)",
+      "ccg.data.audit.assign_gt_category + same_category_counts (A8 rule)",
+      "ccg.external.feasibility.audit_expression / summarise_rows"
+    ],
+    "n_files": 10,
+    "note": "read-only inputs of the feasibility round; A10 forwards no reliability model, so these hashes exist to prove that a later frozen external run consumes the identical artifacts (instruction sections 21/23)"
+  },
+  "inputs": {
+    "annotation_dir": "data\\raw\\refcocog\\refcocog",
+    "dataset_card": "data\\raw\\refcocog\\dataset_card.json",
+    "files": {
+      "data\\raw\\annotations\\instances_train2014.json": {
+        "bytes": 332556225,
+        "sha256_16": "777ef504abfeba34"
+      },
+      "data\\raw\\refcocog\\refcocog\\instances.json": {
+        "bytes": 124416571,
+        "sha256_16": "96c89b426c657f2f"
+      },
+      "data\\raw\\refcocog\\refcocog\\refs(umd).p": {
+        "bytes": 33853676,
+        "sha256_16": "0331c7533537b67c"
+      }
+    }
+  },
+  "phase": "1E",
+  "predecessor": {
+    "amendment": "A9",
+    "dataset": "FineCops-Ref",
+    "decision": "EXTERNAL STOP",
+    "frozen_reason": {
+      "same_name_k5_availability": 0.1861,
+      "stop_threshold": 0.8,
+      "target_proposal_recall_at_05": 0.7579
+    },
+    "note": "A9's stop stands unchanged; A10 does not lower, reinterpret or continue it (instruction preamble).  RefCOCOg was chosen because it removes the GQA perception shift that caused it while keeping a language / annotation distribution shift to test"
+  },
+  "purpose": "RefCOCOg (UMD split) image-disjoint external confirmation - feasibility only (G0-G5); cross-dataset replication under a SHARED COCO visual domain, not cross-domain visual generalisation (instruction section 24)"
+}

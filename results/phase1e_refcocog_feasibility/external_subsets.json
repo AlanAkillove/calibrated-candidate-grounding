@@ -1,0 +1,52 @@
+{
+  "cumulative": true,
+  "definitions": {
+    "rg_external_devdisjoint": "RefCOCOg UMD test minus the development-exposed images (train, val_select, val_calib); reported as the superset it is",
+    "rg_external_strict": "RefCOCOg UMD test minus ALL RefCOCO+ images (train, val_select, val_calib, testA, testB) - the study has looked at testA/testB results even though it never trained on them"
+  },
+  "excluded_by_development": 1380,
+  "excluded_by_strict": 1498,
+  "external_expressions_total": 3448,
+  "membership_disjoint_check": {
+    "expressions_outside_both_subsets": 6154,
+    "membership_values_outside_the_two_subsets": [],
+    "strict_without_development": 0
+  },
+  "seconds": 42.2,
+  "size_gate": {
+    "criteria": {
+      "dev_min_expressions": 2000,
+      "dev_min_images": 700,
+      "strict_min_expressions": 1500,
+      "strict_min_images": 500
+    },
+    "decision": "STRICT PRIMARY",
+    "measured": {
+      "rg_external_devdisjoint": {
+        "excluded_images": 1380,
+        "meets_dev_criterion": true,
+        "meets_strict_criterion": true,
+        "n_expressions": 3448,
+        "n_images": 1220,
+        "n_objects": 1796,
+        "n_refs": 1796,
+        "name": "rg_external_devdisjoint"
+      },
+      "rg_external_strict": {
+        "excluded_images": 1498,
+        "meets_dev_criterion": true,
+        "meets_strict_criterion": true,
+        "n_expressions": 2909,
+        "n_images": 1102,
+        "n_objects": 1512,
+        "n_refs": 1512,
+        "name": "rg_external_strict"
+      }
+    },
+    "note": "strict-disjoint reaches 2909 expressions / 1102 images, above the 1500/500 floor",
+    "primary_subset": "rg_external_strict"
+  },
+  "stage": "G2_external_subsets",
+  "test_expressions_total": 9602,
+  "test_images_total": 2600
+}

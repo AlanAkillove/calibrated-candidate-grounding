@@ -1,0 +1,108 @@
+{
+  "annotation_file": {
+    "annotations": 208960,
+    "categories": 80,
+    "images": 25799
+  },
+  "image_identity": {
+    "coco_folders": [
+      "train2014"
+    ],
+    "n_dims_mismatch_vs_official_coco": 0,
+    "n_file_name_mismatch_vs_official_coco": 0,
+    "rule": "RefCOCOg's per-object ``file_name`` -> the real COCO file name."
+  },
+  "provenance": {
+    "dataset_card": "data\\raw\\refcocog\\dataset_card.json",
+    "files": {
+      "instances.json": {
+        "bytes": 124416571,
+        "sha256": "96c89b426c657f2f32247c16848ba67c3cb61fca74945da16c19e1027575c924"
+      },
+      "refs(google).p": {
+        "bytes": 33853786,
+        "sha256": "e4d8320dfd15fc213b2f23f877608e22db6ab8c8b417185b1d1d95f0a951b546"
+      },
+      "refs(umd).p": {
+        "bytes": 33853676,
+        "sha256": "0331c7533537b67c2f7ac8c8bab0da2d379d1754c6f5c110fd79f70e17e7bddb"
+      }
+    }
+  },
+  "records": {
+    "image_level_split": true,
+    "n_expressions_total": 95010,
+    "n_images_total": 25799,
+    "n_objects_total": 49820,
+    "n_refs_total": 49822,
+    "shared_images_between_splits": {},
+    "split_labels": [
+      "test",
+      "train",
+      "val"
+    ],
+    "splits": {
+      "test": {
+        "n_categories": 76,
+        "n_expressions": 9602,
+        "n_images": 2600,
+        "n_objects": 5023,
+        "n_refs": 5023,
+        "sentences_per_ref": {
+          "1": 452,
+          "2": 4563,
+          "3": 8
+        }
+      },
+      "train": {
+        "n_categories": 78,
+        "n_expressions": 80512,
+        "n_images": 21899,
+        "n_objects": 42224,
+        "n_refs": 42226,
+        "sentences_per_ref": {
+          "1": 4005,
+          "2": 38156,
+          "3": 65
+        }
+      },
+      "val": {
+        "n_categories": 72,
+        "n_expressions": 4896,
+        "n_images": 1300,
+        "n_objects": 2573,
+        "n_refs": 2573,
+        "sentences_per_ref": {
+          "1": 257,
+          "2": 2309,
+          "3": 7
+        }
+      }
+    }
+  },
+  "target_box_join": {
+    "n_boxes_available": 208960,
+    "n_refs_unmatched_in_coco": 0,
+    "unmatched_rate": 0.0
+  },
+  "target_box_source": {
+    "iou": {
+      "max": 1.0,
+      "mean": 1.0,
+      "median": 1.0,
+      "min": 1.0,
+      "p10": 1.0,
+      "p75": 1.0,
+      "p90": 1.0
+    },
+    "n": 5023,
+    "n_below_05": 0,
+    "n_below_09": 0,
+    "n_category_mismatch_vs_official_coco": 0,
+    "n_identical": 5023,
+    "n_refs_missing_in_official_coco": 0,
+    "official_gt_file": "data\\raw\\annotations\\instances_train2014.json",
+    "precedent": "scripts/run_proposal_audit.py: RefCOCO+ joins the *target* box from its own instances.json and takes the GT *object set* (for category assignment) from the official instances_train2014.json; A10 does the same",
+    "verdict": "ARCHIVE AND OFFICIAL BOXES IDENTICAL"
+  }
+}
