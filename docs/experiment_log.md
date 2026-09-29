@@ -949,4 +949,119 @@ notes: >
   （方向一致、CI 全部排除 0），但幅度处于「证据存在、阈值未达」的 gray zone，需下一阶段先做 error analysis
   （本条目不自动推进，未实现任何 Transformer / reranking）。Q2 —— 有用信息集中在最强竞争者的几何关系中，
   full candidate set 不增加进一步价值。本阶段到此停止（§44）。
+
+# ===== FORMAL ENTRY — REAL RESULT（非示例）=====
+experiment_id: p1f-hard-competition-semantic-confirmation-20260929-01
+git_commit: "0a654b04e47eebb1767800e2435f7f81b74a535c"   # 全量运行时的 HEAD；本条目与代码随收尾 commit 入库
+dirty: true                    # src/ccg/semantic/{hard,hard_scores,frozen,hard_eval}.py、scripts/run_phase1f.py、
+                               # tests/test_hard_competition.py、协议 A8、results/phase1f_hard_semantic/ 运行时尚未提交
+timestamp: "2026-09-29"
+dataset: refcoco+              # 与 p0/p0a1/p0b/p05/p1 完全相同的 common cohort（testA+testB 10,286 行 / 1,490 images / 3,647 refs）
+split: [testA, testB]          # pooled test 行集；未重划；A6.2 切分仅用于冻结模型的恢复校验，不用于本轮任何拟合
+candidate_protocol: "manifests-v1（frozen，seed 20260927）；本轮唯一改变的是候选组成（matched random → GT same-category），target/image/ref 逐行严格配对，未重采样"
+K: [5, 10]                     # 冻结模型只在 K∈{5,10} 上训练/选型；K20/K50 不进入本轮（无 OOD 外推）
+hardness: "random（matched control）vs same_category（primary）vs level m∈{0,2,4,8}（ExpB 剂量-响应）"
+target_presence: target-present only（与 Phase 0/0.5/1 相同的 common cohort 规则）
+backbone: "OpenCLIP ViT-B/32 laion2b_s34b_b79k（frozen cached z_q/z_i，L2-normalized 512-d；本轮不重新前向）"
+model: >
+  Phase 1F 冻结推断 zoo（协议 Amendment A8；无任何新训练）：grounding = B3 independent MLP
+  （results/phase0b_independent/seed_{1,2,3}/model_best.pt 权重逐字加载，不重训）；
+  reliability = MSP（R0 参考）、Stats Logistic（A6 17-d score statistics，3-seed 恢复 max|Δ|=2.2e-16）、
+  E1b = 17-d stats ⊕ 16-d semantic（A7 33-d，系数 max|Δ|=0.0）。
+  冻结量：B3 权重与 per-seed corrected temperature（1.115344/1.116630/1.100525）、
+  Stats/E1b 系数、train-only 17-d 与 16-d 归一化（features/{scorer}_normalisation.json、Phase 0.5/1 产物）。
+  禁止事项（A8.8）：训练新 reliability 模型 / 重训 E1b / feature selection / E2-E3 tuning /
+  candidate-aware grounding / reranking / Transformer / attention / FineCops / CLIP-hard primary / backbone 改动。
+seed: [1, 2, 3]                # B3 scorer seeds，各自独立报告；significance 从不把三 seed 预测拼接为独立样本
+treatment_design:
+  samecat_k5: "C_5 = [target] + 4 个 GT same-category distractors（same_category manifest 的同类前缀）"
+  matched_random_k5: "C_5 = [target] + 同一 manifest sorted order 的前 4 个 random distractors（逐行同 target/同 image 簇）"
+  samecat_k10: "C_10 = [target] + 9 个 same-category distractors（same9 cohort）"
+  expb_levels: "K=10，same8 cohort，m∈{0,2,4,8} 个同类 + 其余来自 manifest 尾部 shuffle（确定性、可复现）"
+  cohort_feasibility: "per-ref 可用同类 distractor 数：min 0 / median 11 / mean 13.7 / max 46 → same4 9,487 行、same8 7,410 行、same9 6,765 行"
+integrity_checks:
+  a8_4_raw_score_stop: "random regime 重新打分必须复现冻结 raw_scores/K{5,10}.npz；实测 max|Δ| ≤ 1.29e-5（阈值 1e-4，float16 存储精度量级）"
+  a8_4_frozen_recovery: "5 项恢复校验 max|Δ|：stats_logistic 预测 2.22e-16、E1b 系数 0.0、stats/E1b tune AUROC 0.0、stats17 归一化 0.0（阈值 1e-9）"
+  matched_pairing: "hard/rand 单元逐行同 sentence_id（_dod_rows 断言）；cohort 级 per-ref target/sorted-order/n_same 相等在 load_hard_cohort 内断言"
+  manifest_dump: "manifests/ 8 个 *_candidates.npz（逐行 C_K bank 索引 + index.json provenance + sha256）"
+uncertainty: {bootstrap_replicates: 5000, resampling_unit: image cluster, ci_level: 0.95, rng_seed: 0,
+              pairing: "hard/rand 四块预测共享同一次 cluster 抽样（diff-of-diffs）"}
+results:
+  cohort_sizes: {pooled: 10286, samecat_k5_matched_pair: 9487, samecat_k10_matched_pair: 6765, expb_same8: 7410,
+                 images: {pooled: 1490, same4: 1424, same8: 1189, same9: 1085}}
+  manipulation_check:   # K5 paired image-cluster bootstrap，3/3 seeds 通过（A8.7 criterion：cand_vmax 与 cand_top12_sim 位移 CI_low>0）
+    cand_vmax:      "hard 0.7678 vs rand 0.7138，shift +0.0540 [CI_low ≈ +0.049]（3/3 seeds）"
+    cand_top12_sim: "hard 0.7185 vs rand 0.6660，shift +0.0525 [CI_low ≈ +0.047]（3/3 seeds）"
+    clip_margin12:  "hard 0.0251 vs rand 0.0312，shift -0.0061 [CI_high < 0]（竞争更激烈 → CLIP margin 收窄，方向符合预期）"
+    manipulation_ok: true
+  grounding_difficulty: # 3-seed mean；accuracy shift 为 paired bootstrap CI
+    b3_accuracy: "rand5 0.7850±0.0024 → hard5 0.6169±0.0038（shift -0.1681 [-0.1818,-0.1549]）；rand10 0.6597 → hard10 0.5425（shift -0.1171 [-0.1318,-0.1026]）"
+    score_margin: "3.427 → 1.758（K5）/ 2.000 → 1.403（K10）"
+    msp: "0.7832 → 0.6274（K5）/ 0.6443 → 0.5120（K10）"
+    entropy: "0.5357 → 0.9228（K5）/ 0.9495 → 1.3597（K10）"
+  stats_logistic_auroc: "rand5 0.8370±0.0017 / hard5 0.8128±0.0011 / rand10 0.8001±0.0052 / hard10 0.8202±0.0027"
+  e1b_auroc:            "rand5 0.8383±0.0023 / hard5 0.8446±0.0030 / rand10 0.8067±0.0048 / hard10 0.8543±0.0058"
+  msp_auroc:            "rand5 0.8368±0.0018 / hard5 0.8122±0.0013 / rand10 0.7999±0.0048 / hard10 0.8203±0.0034"
+  semantic_increment:   # E1b vs Stats Logistic，per-cell paired bootstrap（3-seed mean of per-seed values/CI endpoints）
+    rand5: "ΔAUROC +0.0012 [-0.0017,+0.0041]（n.s.）；E-AURC reduction -0.22% [-2.19,+1.71]；RER@50 -1.21pp [-2.33,+0.95]；RER@80 +0.49pp"
+    hard5: "ΔAUROC +0.0318 [+0.0286,+0.0353]；E-AURC reduction +15.37% [+13.56,+17.24]；RER@50 +4.64pp [+3.25,+6.02]；RER@80 +5.25pp [+4.22,+6.28]"
+    rand10: "ΔAUROC +0.0066 [+0.0034,+0.0098]；E-AURC reduction +3.52% [+1.73,+5.28]；RER@50 +0.77pp [-0.91,+2.30]；RER@80 +1.20pp"
+    hard10: "ΔAUROC +0.0341 [+0.0302,+0.0381]；E-AURC reduction +17.84% [+15.69,+20.01]；RER@50 +5.96pp [+4.50,+7.48]；RER@80 +3.53pp"
+    expb_dose_m0_m2_m4_m8: "ΔAUROC -0.0007 / +0.0106 / +0.0182 / +0.0299（单调，m0 n.s.）；E-AURC reduction -1.21% / +4.43% / +8.11% / +15.17%；RER@50 -1.47 / +2.05 / +3.55 / +5.40pp"
+  diff_of_diffs:        # A8.5 primary：Δ^hard - Δ^rand，四块共享同一 cluster 抽样
+    k5_delta_auroc: "+0.03062 [+0.02662,+0.03482]（per-seed 0.03280 / 0.02865 / 0.03042）"
+    k5_e_aurc_reduction_relative: "+0.15587 [+0.13217,+0.18133]"
+    k5_rer50_gain_pp: "+5.849pp [+3.270,+7.459]"
+    k10_delta_auroc: "+0.02750 [+0.02307,+0.03212]"
+  seed_consistency: "SameCat-K5 ΔAUROC CI_low：0.03153 / 0.02623 / 0.02801 → 3/3 seeds 显著（要求 ≥2/3）；3-seed mean ΔAUROC +0.03185 > 0；跨 seed std 0.00231"
+  error_concentration:  # SameCat-K5 quartile（secondary diagnostic，3-seed mean ΔAUROC / E-AURC reduction）
+    by_cand_vmax: "Q1 +0.0093/2.65% · Q2 +0.0116/5.22% · Q3 +0.0266/9.72% · Q4 +0.0158/4.35%（acc 0.905→0.227）"
+    by_cand_top12_sim: "Q1 +0.0347/16.33% · Q2 +0.0253/11.59% · Q3 +0.0307/11.38% · Q4 +0.0101/3.55%（acc 0.809→0.305）"
+    reading: "增益在语义上中等模糊（vmax Q3 / top12_sim Q1-Q3）处最大，在极端组（vmax Q4、top12_sim Q4：B3 几乎全错、conf 无区分力）回落 → 与 Phase 1「信息集中在胜者 vs 最强竞争者几何关系」一致"
+  a8_6_gate:
+    verdict: CONFIRMED
+    label: "CONFIRMED HARD-REGIME SEMANTIC SIGNAL"
+    conditions_passed: "ΔAUROC ≥0.02 且 CI_low>0；E-AURC reduction ≥10% 且 CI_low>0（branch）；seed 一致性 3/3；diff-of-diffs ≥0.005；mean>0"
+    conditions_failed: "RER@50 +4.64pp < 5.0pp（branch 由 E-AURC 满足，故仍 CONFIRMED）；STRONG 未达（E-AURC 15.37%<20%、RER@50<10pp，虽 ΔAUROC 0.0318≥0.03）"
+    thresholds_frozen_before_results: true
+run:
+  command: "E:\conda\envs\deepminer\python.exe scripts/run_phase1f.py --out results/phase1f_hard_semantic --bootstrap-replicates 5000 --log-file logs_phase1f_driver.txt（先 --smoke 冒烟：1 seed / 100 reps → results/phase1f_hard_semantic_smoke，不参与正式 gate 判读）"
+  device: "cuda（B3 冻结权重打分，torch 2.5.1+cu121，RTX 4060 Laptop）/ cpu（特征、bootstrap、指标，numpy）"
+  step_seconds: "total 1175.2s（19.6 min）：load 42.9（B3Corpus preload + 冻结恢复）/ stop_check 16.9 / protocol 0.2 / score 25.8（8 变体 × 3 seed 打分）/ metrics 0.5 / bootstrap 1073.0（5000 reps；bootstrap.csv 114 行 = pairwise 48 + expb_pairwise 24 + diff-of-diffs 18 + ratio 12 + expb_ratio 12）/ analyses 13.3 / gate 0.0 / figures+dumps 2.6"
+  incident: >
+    (a) driver 初稿 4 轮缺陷修复（base 变体未建 cell、rand 单元缺 bootstrap、expb 单元缺 rer_at_80/e_aurc 导致 KeyError、
+    gate/figures 键名），全部为工程缺陷，不涉及冻结量或阈值。(b) 首次 3-seed 运行在 bootstrap 阶段（尚未产生任何
+    gate/figures/增量结果，仅 point metrics 落盘）被主动中止并重启：补丁仅**新增**分析维度（subgroup 增加
+    cand_top12_sim 分组、gate.json 增加跨 seed std），未改动 A8.6 阈值、cohort 规则或任何冻结模型。(c) 冻结恢复
+    校验发现 Phase 1 e1_logistic/coefficients.csv 无 intercept 行 → 只比较 33-d 系数向量（记录于 protocol.json，
+    max|Δ|=0.0）。(d) STOP 校验 max|Δ|≈1e-5 源于冻结 raw_scores 以 float16 存储，量级即存储精度，非打分路径差异。
+artifacts:
+  root: results/phase1f_hard_semantic/          # 14 顶层产物 + 3 子目录
+  top_level: [protocol.json, cohort_summary.json, reliability_metrics.csv, semantic_increment.csv,
+              paired_random_vs_hard.csv, bootstrap.csv, manipulation_check.csv, grounding_difficulty.csv,
+              subgroup_analysis.csv, gate.json, metadata.json]
+  manifests: "manifests/（8 个 *_candidates.npz + index.json，逐行 C_K bank 索引与 sha256 provenance）"
+  predictions: "predictions/{cell}__{scorer}.npz（24 文件：8 cell × 3 seed，含 raw scores、correct、三模型 conf、16-d 语义、17-d stats、margin/msp/entropy）"
+  figures: [figures/fig1_grounding_accuracy_random_vs_hard.png, figures/fig2_delta_auroc_random_vs_hard.png,
+            figures/fig3_reduction_and_rer50.png, figures/fig4_cand_vmax_distribution.png]
+code: "新增 src/ccg/semantic/hard.py（cohort/manifest 构造）、hard_scores.py（冻结 B3 权重打分）、frozen.py（冻结模型恢复+5 项校验）、hard_eval.py（diff-of-diffs / shift bootstrap / quartile / A8.6 gate）、scripts/run_phase1f.py；tests/test_hard_competition.py（§29 12 项）"
+tests: "全量 pytest 573 passed / 0 failed（132.5s，deepminer 环境）；新增 12 项 hard-competition 测试全部通过"
+notes: >
+  Phase 1F hard-competition semantic confirmation（指令全文 + Amendment A8）。目的：在 Phase 1 A7 INCONCLUSIVE 之后，
+  用**完全冻结**的 B3 / Stats Logistic / E1b 模型，只改变候选组成（matched random → GT same-category），检验语义可靠性
+  信息在受控强竞争下是否变得**实质更有用**。关键观测：
+  (1) 压力测试成立：B3 accuracy 0.785→0.617（K5，shift -16.8pp CI 排除 0），cand_vmax +0.054、cand_top12_sim +0.053
+  （CI_low 均 >0，3/3 seeds），clip_margin12 收窄（CI_high<0）→ 语义模糊度确实被操纵成功。
+  (2) 主结果（SameCat-K5，E1b vs Stats）：ΔAUROC +0.0318 [+0.0286,+0.0353]，E-AURC reduction +15.37% [+13.56,+17.24]，
+  RER@50 +4.64pp、RER@80 +5.25pp；而**同一模型对**在 matched random 控制下 ΔAUROC 仅 +0.0012 [-0.0017,+0.0041]（不显著）。
+  (3) 配对差（A8.5 primary）：diff-of-diffs ΔAUROC +0.0306 [+0.0266,+0.0348]，E-AURC reduction 差 +0.156 [+0.132,+0.181]，
+  RER@50 gain 差 +5.85pp —— 全部 CI 排除 0，3/3 seeds 一致（std 0.0023）。
+  (4) 剂量-响应（ExpB，m=0/2/4/8 同类竞争者数）：ΔAUROC -0.0007→+0.0106→+0.0182→+0.0299 单调上升，m0（纯 random）
+  与 Phase 1 的 gray-zone 结论吻合 → 增益来自竞争者**类别组成**而非样本筛选。
+  (5) K10 同向且更强（ΔAUROC +0.0341、E-AURC reduction 17.84%、RER@50 +5.96pp）。
+  (6) A8.6 gate = **CONFIRMED**（非 STRONG：RER@50 4.64pp 略低于 5pp 门槛，branch 由 E-AURC 满足；STRONG 需 E-AURC ≥20%）。
+  (7) 结论（回答 §32 最终问题）：**YES** —— 当模型必须在同 GT 类别的竞争者中选择时，candidate semantic 信息变得
+  实质更有用（相对 random 控制放大约 26 倍，CI 全程排除 0，且随同类竞争者数量单调增强）。按 A8.8/§23，下一步只做
+  external confirmation（FineCops-Ref）可行性评估，不直接进入更复杂模型；本轮未实现任何新模型、reranking 或 Transformer。
+  本阶段到此停止。
 ```

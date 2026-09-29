@@ -27,11 +27,15 @@ results/*
 !results/phase05_score_sufficiency/**
 !results/phase1_semantic_sufficiency/
 !results/phase1_semantic_sufficiency/**
+!results/phase1f_hard_semantic/
+!results/phase1f_hard_semantic/**
 experiments/**/outputs/
 
 # Local logs / scratch
 logs_*.txt
 pytest_*.txt
+*_console.txt
+/_*.py
 logs_night/
 _launch_detached.py
 

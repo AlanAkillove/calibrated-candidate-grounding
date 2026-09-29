@@ -1,0 +1,49 @@
+{
+  "completed_utc": "2026-09-29T02:22:31Z",
+  "runtime_seconds": 1175.2291173000121,
+  "stage_seconds": {
+    "load": 42.914507799985586,
+    "stop_check": 16.909853800025303,
+    "protocol": 0.18554409997886978,
+    "score": 25.833962500008056,
+    "metrics": 0.46618640000815503,
+    "bootstrap": 1072.964047699992,
+    "analyses": 13.324028700008057,
+    "gate": 0.00346839998383075,
+    "figures_dumps": 2.6265954000118654
+  },
+  "smoke": false,
+  "seeds": [
+    "b3_seed1",
+    "b3_seed2",
+    "b3_seed3"
+  ],
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95
+  },
+  "gate_verdict": "CONFIRMED",
+  "gate_label": "CONFIRMED HARD-REGIME SEMANTIC SIGNAL",
+  "manipulation_ok": true,
+  "figures": [
+    "results\\phase1f_hard_semantic\\figures\\fig1_grounding_accuracy_random_vs_hard.png",
+    "results\\phase1f_hard_semantic\\figures\\fig2_delta_auroc_random_vs_hard.png",
+    "results\\phase1f_hard_semantic\\figures\\fig3_reduction_and_rer50.png",
+    "results\\phase1f_hard_semantic\\figures\\fig4_cand_vmax_distribution.png"
+  ],
+  "n_manifest_files": 8,
+  "n_prediction_files": 24,
+  "files": [
+    "protocol.json",
+    "cohort_summary.json",
+    "reliability_metrics.csv",
+    "semantic_increment.csv",
+    "paired_random_vs_hard.csv",
+    "bootstrap.csv",
+    "manipulation_check.csv",
+    "grounding_difficulty.csv",
+    "subgroup_analysis.csv",
+    "gate.json"
+  ]
+}

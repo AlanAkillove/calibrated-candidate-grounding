@@ -1,0 +1,104 @@
+{
+  "protocol": "A8.6 (frozen before any hard-regime result)",
+  "comparison": "stats_logistic -> e1b_stats_semantic on SameCat-K5 (matched random control)",
+  "cell_samecat_k5": {
+    "delta_auroc": 0.03184849037486052,
+    "delta_auroc_ci_low": 0.028588398320698583,
+    "delta_auroc_ci_high": 0.035301236139371785,
+    "e_aurc_reduction": 0.15367059525131538,
+    "e_aurc_reduction_ci_low": 0.13564769066160953,
+    "e_aurc_reduction_ci_high": 0.1724334771747662,
+    "rer50_gain_pp": 4.637289158812382,
+    "rer50_gain_pp_ci_low": 3.2530841535400015,
+    "rer50_gain_pp_ci_high": 6.024494715716006
+  },
+  "cell_samecat_k5_seed_std": {
+    "delta_auroc": 0.0023119148754879863,
+    "delta_auroc_ci_low": 0.0022001936621535976,
+    "delta_auroc_ci_high": 0.00242544158608271,
+    "e_aurc_reduction": 0.010341481926132217,
+    "e_aurc_reduction_ci_low": 0.009636938643823095,
+    "e_aurc_reduction_ci_high": 0.011448339060320849,
+    "rer50_gain_pp": 0.6638250356004984,
+    "rer50_gain_pp_ci_low": 0.6230733805127824,
+    "rer50_gain_pp_ci_high": 0.6747802355507306
+  },
+  "diff_of_diffs_auroc": {
+    "diff": 0.030621709362858573,
+    "ci_low": 0.02661669347776996,
+    "ci_high": 0.0348208116344742,
+    "per_seed": {
+      "b3_seed1": 0.0327959534693999,
+      "b3_seed2": 0.028653022006987605,
+      "b3_seed3": 0.03041615261218822
+    }
+  },
+  "per_seed_delta_ci_low_k5": [
+    0.03152659788612992,
+    0.02623244132752251,
+    0.02800615574844332
+  ],
+  "seed_mean_delta_k5": 0.03184849037486052,
+  "verdict": {
+    "verdict": "CONFIRMED",
+    "verdict_label": "CONFIRMED HARD-REGIME SEMANTIC SIGNAL",
+    "strong": false,
+    "confirmed": true,
+    "no_confirmation": false,
+    "stop_architecture_exploration": false,
+    "conditions": {
+      "delta_auroc_ge_thr": true,
+      "delta_auroc_ci_low_gt0": true,
+      "e_aurc_reduction_ge_thr": true,
+      "e_aurc_reduction_ci_low_gt0": true,
+      "rer50_gain_ge_thr": false,
+      "rer50_gain_ci_low_gt0": true,
+      "branch_e_aurc": true,
+      "branch_rer50": false,
+      "branch": true,
+      "seed_consistency": true,
+      "seed_mean_positive": true,
+      "diff_of_diffs_ge_min": true,
+      "confirmed_core": true,
+      "strong_core": false
+    },
+    "n_seed_significant": 3,
+    "seed_sig_required": 2,
+    "seed_mean_delta": 0.03184849037486052,
+    "diff_of_diffs": 0.030621709362858573,
+    "thresholds": {
+      "auroc_gain": 0.02,
+      "auroc_gain_strong": 0.03,
+      "e_aurc_reduction": 0.1,
+      "e_aurc_reduction_strong": 0.2,
+      "rer50_gain_pp": 5.0,
+      "rer50_gain_pp_strong": 10.0,
+      "diff_of_diffs_min": 0.005,
+      "seed_sig_min": 2,
+      "seed_total": 3
+    }
+  },
+  "k10_cell_informational": {
+    "delta_auroc": 0.03411294657975339,
+    "e_aurc_reduction": 0.1784341130015069,
+    "rer50_gain_pp": 5.9629244988494134
+  },
+  "manipulation": {
+    "criterion": "cand_vmax and cand_top12_sim shifts positive with CI_low > 0",
+    "per_seed_pass": {
+      "b3_seed1": true,
+      "b3_seed2": true,
+      "b3_seed3": true
+    },
+    "n_pass": 3,
+    "n_seeds": 3,
+    "manipulation_ok": true
+  },
+  "notes": [
+    "cell values are 3-seed means of per-seed paired-bootstrap rows (values and CI endpoints).",
+    "cell_samecat_k5_seed_std is the across-seed standard deviation of those per-seed values (A8.5 mean +/- std).",
+    "diff_of_diffs = dAUROC^hard - dAUROC^rand, same image-cluster draw (A8.5).",
+    "per-seed significance = per-seed SameCat-K5 dAUROC bootstrap CI_low > 0.",
+    "never read without the manipulation-check block: a failed check invalidates the stress test (A8.7)."
+  ]
+}

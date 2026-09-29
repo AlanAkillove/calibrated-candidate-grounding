@@ -970,3 +970,69 @@ changing grounding scores / reranking / candidate-aware grounding training / Set
 ### A7.10 测试要求（§41 的 15 项，全部必须 0 failed）
 
 frozen ranking 不变 / reliability model 不可改分数 / 无 GT metadata / 无 geometry·objectness / 候选投影共享 / E3 置换不变 / 变 K 支持 / top1 身份在置换下保持 / E3-top5 恰为 B3 分数前 5 / K20·K50 不入训练·选型 / 切分与 Phase 0.5 完全一致 / scorer seed 隔离 / bootstrap 同 image 簇 / semantic stats 确定性 / matched-score 不使用 correctness。
+
+---
+
+## Amendment A8 — 2026-09-28 — Phase 1F Hard-Competition Semantic Confirmation（confirmatory stress test；gate 数字在任何 hard-regime 结果前冻结）
+
+**staged 声明**：本 amendment 制定于 Phase 1 A7 verdict = INCONCLUSIVE 已知之后；属 staged confirmatory follow-up，**不是**初始 preregistration；不修改任何既有条款。只验证一个假设：semantic reliability information 是否在 GT same-category hard candidate composition 下实质性更有用。
+
+### A8.1 固定与披露
+
+- 冻结：B3 seeds 1-3（仅用于对新候选集推断性打分，不重训）；Stats Logistic 与 E1b 的系数与标准化完全继承 random regime（reliability_train∩K∈{5,10}）；semantic 16-d 定义冻结；不得用 hard-regime labels 训练/校准任何东西。
+- 披露：GT same-category 为 **GT-assisted diagnostic stress test**（proposal→最高 IoU GT object，IoU≥0.5；unknown 不匹配），非 deployment-realistic；CLIP-hard 因 constructor/evaluator coupling 不做 primary（本轮不运行）。
+
+### A8.2 Cohorts（规则冻结；执行前实测附注 2026-09-28）
+
+- base = Phase 0.5 canonical cohort ∩ {testA, testB}（pooled test；n=10286 行 / 1490 images）。
+- **SameCat-K5（primary）** = base ∩ {n_same_category_available ≥ 4}；实测 9487 行 / 1424 images / 3369 refs（hard_fraction[K5]=1.0）。
+- **SameCat-K10（secondary）** = base ∩ {n_same ≥ 9}；实测 6765 行 / 1085 images → 满足 §7 门槛（≥1000 expressions ∧ ≥300 images），执行。
+- **Exp B（hard-fraction curve）** = base ∩ {n_same ≥ 8}，K=10，levels n_samecat ∈ {0,2,4,8}（levels 不因结果调整）；实测 7410 行 / 1189 images → 执行；若 cohort 过小则取消。
+- 配对：每行 random 与 same-category 用同一 ref/image/target/K；random 版本在同一 cohort 上重新评价（matched control）。runtime 断言两 manifest 的 target_index / valid pool / n_same 逐 ref 一致。
+
+### A8.3 候选构造（冻结）
+
+- ``C_K^regime = [target_index] + order_regime[:K-1]``，order 来自冻结 manifests（manifests-v1，seed=20260927）；不重采样。
+- same_category ordering = 全部 same-cat（ascending bank index）+ rest shuffle；n_same≥K−1 时前缀全 same-cat（实测 K5/K10 全 1.0，driver 断言）。
+- Exp B level m（K=10）：``C = [target] + same_order[:m] + same_order[n_avail : n_avail + (9-m)]``。
+
+### A8.4 冻结评分与模型恢复（含 STOP 校验）
+
+- B3 打分：``load_b3_model``（model.npz + training.json）冻结权重前向；输入组装与训练一致（z_q, z_i, z_q⊙z_i, cos, geometry 6-d centered）。
+- **复现校验（STOP 条件）**：Random-K5/K10 重打分 vs phase0b raw_scores：max|Δ| ≤ 1e-4（预期 ~1e-6）；失败则中止本阶段。
+- Stats Logistic（17-d stats_logK）×3 seeds 与 E1b（17-d stats ⊕ semantic 16-d）×3 seeds：在冻结 train 行上**重拟合（同超参）** 以恢复冻结模型，并用三重校验确认与 phase05/phase1 完全一致：(a) stats_logistic 预测 vs phase05 ``predictions/*/stats_logistic.csv.gz``（行级多重集 / 每 (K,split) AUROC 差异 ≤1e-9）；(b) E1b 系数 vs phase1 ``e1_logistic/coefficients.csv``（max|Δ| ≤1e-9）；(c) E1b tune mean AUROC vs phase1 metadata selections（≤1e-9）。
+- normalization：stats17 与 semantic 均 train-only 重拟合（确定性）；重拟合的 stats17 与 phase05 ``features/*_normalisation.json``（stats_logK）对照 max|Δ| ≤1e-9。
+
+### A8.5 指标与统计
+
+- Primary：AUROC_correct / E-AURC / RER@50；Secondary：RER@80 / ECE / Brier / NLL。grounding accuracy 只作为 stress 真实性证据，不作为 semantic 成功度量。
+- 全部对比：image-cluster paired bootstrap 5000 reps（seed=0, ci=0.95）；3 seeds 独立 + mean±std；**不拼接 seeds**。
+- 关键量：``ΔAUROC^regime = AUROC(E1b) − AUROC(Stats)``（同 regime 同 cohort）；主判量 ``Δ^hard − Δ^rand``（同一 cluster 重采样内配对计算 diff-of-diffs + CI）。
+- ``E-AURC reduction = (E_stats − E_e1b) / E_stats``；``RER@50 gain = 100 × (RER_e1b − RER_stats)`` pp。
+
+### A8.6 A8 Gate（冻结）
+
+- **CONFIRMED**：SameCat-K5 cohort：ΔAUROC^hard ≥ 0.02 ∧ CI_lo>0 ∧ (E-AURC reduction ≥ 10% ∨ RER@50 gain ≥ 5pp，所选分支 CI_lo>0) ∧ ≥2/3 seeds ΔAUROC CI_lo>0 ∧ 3-seed mean 方向为正 ∧ (Δ^hard − Δ^rand) ≥ 0.005。
+- **STRONG**：ΔAUROC^hard ≥ 0.03 ∧ (reduction ≥ 20% ∨ RER@50 ≥ 10pp) ∧ CI_lo>0。
+- **NO-CONFIRMATION**：ΔAUROC^hard < 0.02 ∧ reduction < 10% ∧ RER@50 < 5pp → STOP candidate-semantic architecture exploration（负结论有效）。
+- 优先级：**STRONG > CONFIRMED > NO-CONFIRMATION > INCONCLUSIVE-HARD**（gray zone 不触发任何 escalation，不自动加 Transformer）。
+
+### A8.7 操作检查与辅助分析（§19-22）
+
+- Manipulation check（paired，K5）：cand_vmax / cand_top12_sim / clip_margin12 的 random→hard shift + bootstrap CI；不成立 → INVALID STRESS TEST（不得解读 reliability 结果）。
+- Grounding difficulty：B3 accuracy / score margin / MSP / entropy 的 random→hard shift。
+- Error-concentration：SameCat-K5 按 cand_vmax quartile 分组的 ΔAUROC / E-AURC improvement（secondary）。
+- 系数稳定性：不重拟合；仅报 hard regime 的 feature 分布 shift。
+
+### A8.8 禁止事项（与指令 §31 一致）
+
+training new reliability models / retraining E1b / feature selection / E2-E3 tuning / candidate-aware grounding / reranking / Transformer / attention / FineCops / CLIP-hard primary / backbone changes / target omission。FineCops external confirmation 仅在 CONFIRMED 之后由下一指令决定。
+
+### A8.9 Artifacts
+
+``results/phase1f_hard_semantic/``：protocol.json、cohort_summary.json、manifests/（各 regime 的逐行 C_K bank 索引表 + provenance）、manipulation_check.csv、grounding_difficulty.csv、reliability_metrics.csv、semantic_increment.csv、paired_random_vs_hard.csv、bootstrap.csv、subgroup_analysis.csv、gate.json、figures/（§28 的 4 张）、predictions/（逐行 raw predictions，含 regime 列）。
+
+### A8.10 测试要求（§29 的 12 项，全部必须 0 failed）
+
+same-category candidates 与 target 同 GT category / no target-equivalent / matched random-hard cohorts identical / K fixed / frozen E1b coefficients unchanged / frozen Stats Logistic unchanged / no hard-regime labels enter training / same normalization reused / candidate ranking 不被 reliability model 改变 / paired bootstrap 同 image 簇 / deterministic manifest generation / manipulation features correctly computed。
+

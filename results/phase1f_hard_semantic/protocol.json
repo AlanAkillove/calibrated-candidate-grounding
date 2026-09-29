@@ -1,0 +1,236 @@
+{
+  "phase": "1F",
+  "amendment": "A8 - Hard-Competition Semantic Confirmation",
+  "stage_declaration": "staged confirmatory follow-up created after the Phase 1 A7 verdict was known (INCONCLUSIVE); not part of the original preregistration; A8 gate frozen before any hard-regime result existed",
+  "created_utc": "2026-09-29T02:03:56Z",
+  "frozen_models": {
+    "scorers": [
+      "b3_seed1",
+      "b3_seed2",
+      "b3_seed3"
+    ],
+    "temperature_source": "results/phase0b_independent/seed_{i}/eval_metadata.json",
+    "verification": {
+      "b3_seed1": {
+        "stats_logistic_pred_max_abs": 2.220446049250313e-16,
+        "e1b_coefficients_max_abs": 0.0,
+        "stats_tune_auroc_max_abs": 0.0,
+        "e1b_tune_auroc_max_abs": 0.0,
+        "stats17_normalisation_max_abs": 0.0
+      },
+      "b3_seed2": {
+        "stats_logistic_pred_max_abs": 1.6653345369377348e-16,
+        "e1b_coefficients_max_abs": 0.0,
+        "stats_tune_auroc_max_abs": 0.0,
+        "e1b_tune_auroc_max_abs": 0.0,
+        "stats17_normalisation_max_abs": 0.0
+      },
+      "b3_seed3": {
+        "stats_logistic_pred_max_abs": 1.6653345369377348e-16,
+        "e1b_coefficients_max_abs": 0.0,
+        "stats_tune_auroc_max_abs": 0.0,
+        "e1b_tune_auroc_max_abs": 0.0,
+        "stats17_normalisation_max_abs": 0.0
+      },
+      "all": {
+        "stats_logistic_pred_max_abs": 2.220446049250313e-16,
+        "e1b_coefficients_max_abs": 0.0,
+        "stats_tune_auroc_max_abs": 0.0,
+        "e1b_tune_auroc_max_abs": 0.0,
+        "stats17_normalisation_max_abs": 0.0
+      }
+    }
+  },
+  "cohort": {
+    "n_rows": 10286,
+    "n_images": 1490,
+    "n_refs": 3647,
+    "splits": {
+      "testA": 5646,
+      "testB": 4640
+    },
+    "cohorts": {
+      "base": {
+        "cutoff": 0,
+        "n_rows": 10286,
+        "n_images": 1490,
+        "n_refs": 3647
+      },
+      "same4": {
+        "cutoff": 4,
+        "n_rows": 9487,
+        "n_images": 1424,
+        "n_refs": 3369
+      },
+      "same8": {
+        "cutoff": 8,
+        "n_rows": 7410,
+        "n_images": 1189,
+        "n_refs": 2643
+      },
+      "same9": {
+        "cutoff": 9,
+        "n_rows": 6765,
+        "n_images": 1085,
+        "n_refs": 2419
+      }
+    },
+    "n_same_category_available": {
+      "min": 0,
+      "mean": 13.674509041415517,
+      "median": 11.0,
+      "max": 46
+    }
+  },
+  "stop_checks": {
+    "base_r5/b3_seed1": 1.1444091796875e-05,
+    "base_r5/b3_seed2": 1.2874603271484375e-05,
+    "base_r5/b3_seed3": 1.239776611328125e-05,
+    "base_r10/b3_seed1": 9.5367431640625e-06,
+    "base_r10/b3_seed2": 9.5367431640625e-06,
+    "base_r10/b3_seed3": 8.58306884765625e-06
+  },
+  "cells": [
+    {
+      "cell": "rand5",
+      "regime": "random",
+      "K": 5,
+      "cohort": "same4",
+      "level": null,
+      "hard_fraction": 0.0,
+      "construction": "random regime C_5 = [target] + order[:4] (frozen random manifest)"
+    },
+    {
+      "cell": "hard5",
+      "regime": "same_category",
+      "K": 5,
+      "cohort": "same4",
+      "level": null,
+      "hard_fraction": 1.0,
+      "construction": "same_category regime C_5 = [target] + same-cat prefix (frozen same_category manifest)"
+    },
+    {
+      "cell": "rand10",
+      "regime": "random",
+      "K": 10,
+      "cohort": "same9",
+      "level": null,
+      "hard_fraction": 0.0,
+      "construction": "random regime C_10 = [target] + order[:9] (frozen random manifest)"
+    },
+    {
+      "cell": "hard10",
+      "regime": "same_category",
+      "K": 10,
+      "cohort": "same9",
+      "level": null,
+      "hard_fraction": 1.0,
+      "construction": "same_category regime C_10 = [target] + same-cat prefix (frozen same_category manifest)"
+    },
+    {
+      "cell": "expb_m0",
+      "regime": "level",
+      "K": 10,
+      "cohort": "same8",
+      "level": 0,
+      "hard_fraction": 0.0,
+      "construction": "level m=0: [target] + 0 same-cat + first 9 of the manifest rest shuffle"
+    },
+    {
+      "cell": "expb_m2",
+      "regime": "level",
+      "K": 10,
+      "cohort": "same8",
+      "level": 2,
+      "hard_fraction": 0.2222222222222222,
+      "construction": "level m=2: [target] + first 2 same-cat + first 7 of the manifest rest shuffle"
+    },
+    {
+      "cell": "expb_m4",
+      "regime": "level",
+      "K": 10,
+      "cohort": "same8",
+      "level": 4,
+      "hard_fraction": 0.4444444444444444,
+      "construction": "level m=4: [target] + first 4 same-cat + first 5 of the manifest rest shuffle"
+    },
+    {
+      "cell": "expb_m8",
+      "regime": "level",
+      "K": 10,
+      "cohort": "same8",
+      "level": 8,
+      "hard_fraction": 0.8888888888888888,
+      "construction": "level m=8: [target] + first 8 same-cat + first 1 of the manifest rest shuffle"
+    }
+  ],
+  "gate_thresholds": {
+    "auroc_gain": 0.02,
+    "auroc_gain_strong": 0.03,
+    "e_aurc_reduction": 0.1,
+    "e_aurc_reduction_strong": 0.2,
+    "rer50_gain_pp": 5.0,
+    "rer50_gain_pp_strong": 10.0,
+    "diff_of_diffs_min": 0.005,
+    "seed_sig_min": 2,
+    "seed_total": 3
+  },
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "unit": "image cluster"
+  },
+  "manifests": "cache/manifests (manifests-v1, seed 20260927; frozen)",
+  "reference_hashes": {
+    "cache\\manifests\\random_testA.jsonl": "35bfd08298df560c7042ec8ebac3c6e6daf115b410d4cffc100d24dee937a1dd",
+    "cache\\manifests\\random_testB.jsonl": "32de6c535df1b9679a931e131baef74483cdd06cdf959c23cc0d13a394782259",
+    "cache\\manifests\\same_category_testA.jsonl": "c5425b202ddb9a82db0715255a10e2c6b59e6dd66662dfd1c3c8caebcf67a8ee",
+    "cache\\manifests\\same_category_testB.jsonl": "876d671dab5174532ff5799506bfffe32fdee95ac63d1bfdafcfd6616e2ead5e",
+    "results\\phase05_score_sufficiency\\split_manifest.json": "badd94bc88c1f0ba87c7136e2b33cb5b427a73fe0e112dc39d4260cb62b5b7c0",
+    "results\\phase05_score_sufficiency\\stats_logistic\\selection.json": "e911a95fe227cba2374183f56d96561ac272f9ce9502171d46ea469dbcb7938f",
+    "results\\phase1_semantic_sufficiency\\e1_logistic\\coefficients.csv": "3241d0c34a129ada356267224f960140d8de53d66e9bf275ca93e6371933a077",
+    "results\\phase1_semantic_sufficiency\\e1_logistic\\selection.json": "f1ddfce3484b76f21f0851ff906f57368457a473cb7e6c81b0527395a8c3a560",
+    "results\\phase0b_independent\\seed_1\\raw_scores\\K5.npz": "0ad5f53bd1302bdcbd94435553a6fb338b165e32029d8d1672d1431e0cf3451b",
+    "results\\phase0b_independent\\seed_1\\raw_scores\\K10.npz": "d032f76f04fa51c466ca91089023406eacf3c924b4a55234b68fe2640616de62",
+    "results\\phase0b_independent\\seed_2\\raw_scores\\K5.npz": "bed62714b0fc1bb1eb579154f7c8d90e46fe21c0d536274a57a240eebf4d3724",
+    "results\\phase0b_independent\\seed_2\\raw_scores\\K10.npz": "ed60530e2d655e36b624194f80a8ab201768763e70655e3687d0ebbe0283b55d",
+    "results\\phase0b_independent\\seed_3\\raw_scores\\K5.npz": "5a96fd8bd62e6dd704c72f75b9fc1e1a537dc1743e6dec05bf4e872dd0e0077c",
+    "results\\phase0b_independent\\seed_3\\raw_scores\\K10.npz": "e556dc7b15418072ccdd7f7515e4436ba237f24a902d1d1520a66a15c68c91b8"
+  },
+  "prohibited": [
+    "training new reliability models",
+    "retraining E1b",
+    "feature selection",
+    "E2/E3 tuning",
+    "candidate-aware grounding",
+    "reranking",
+    "Transformer",
+    "attention",
+    "FineCops",
+    "CLIP-hard primary analysis",
+    "backbone changes",
+    "target omission"
+  ],
+  "artifacts": [
+    "protocol.json",
+    "cohort_summary.json",
+    "manifests/",
+    "manipulation_check.csv",
+    "grounding_difficulty.csv",
+    "reliability_metrics.csv",
+    "semantic_increment.csv",
+    "paired_random_vs_hard.csv",
+    "bootstrap.csv",
+    "subgroup_analysis.csv",
+    "gate.json",
+    "figures/",
+    "predictions/",
+    "metadata.json"
+  ],
+  "environment": {
+    "python": "3.10.19",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "device": "cuda"
+  }
+}

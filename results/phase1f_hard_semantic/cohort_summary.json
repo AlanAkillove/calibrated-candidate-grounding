@@ -1,0 +1,80 @@
+{
+  "n_rows": 10286,
+  "n_images": 1490,
+  "n_refs": 3647,
+  "splits": {
+    "testA": 5646,
+    "testB": 4640
+  },
+  "cohorts": {
+    "base": {
+      "cutoff": 0,
+      "n_rows": 10286,
+      "n_images": 1490,
+      "n_refs": 3647
+    },
+    "same4": {
+      "cutoff": 4,
+      "n_rows": 9487,
+      "n_images": 1424,
+      "n_refs": 3369
+    },
+    "same8": {
+      "cutoff": 8,
+      "n_rows": 7410,
+      "n_images": 1189,
+      "n_refs": 2643
+    },
+    "same9": {
+      "cutoff": 9,
+      "n_rows": 6765,
+      "n_images": 1085,
+      "n_refs": 2419
+    }
+  },
+  "n_same_category_available": {
+    "min": 0,
+    "mean": 13.674509041415517,
+    "median": 11.0,
+    "max": 46
+  },
+  "stop_checks_max_abs_delta": {
+    "base_r5/b3_seed1": 1.1444091796875e-05,
+    "base_r5/b3_seed2": 1.2874603271484375e-05,
+    "base_r5/b3_seed3": 1.239776611328125e-05,
+    "base_r10/b3_seed1": 9.5367431640625e-06,
+    "base_r10/b3_seed2": 9.5367431640625e-06,
+    "base_r10/b3_seed3": 8.58306884765625e-06
+  },
+  "frozen_verification": {
+    "b3_seed1": {
+      "stats_logistic_pred_max_abs": 2.220446049250313e-16,
+      "e1b_coefficients_max_abs": 0.0,
+      "stats_tune_auroc_max_abs": 0.0,
+      "e1b_tune_auroc_max_abs": 0.0,
+      "stats17_normalisation_max_abs": 0.0
+    },
+    "b3_seed2": {
+      "stats_logistic_pred_max_abs": 1.6653345369377348e-16,
+      "e1b_coefficients_max_abs": 0.0,
+      "stats_tune_auroc_max_abs": 0.0,
+      "e1b_tune_auroc_max_abs": 0.0,
+      "stats17_normalisation_max_abs": 0.0
+    },
+    "b3_seed3": {
+      "stats_logistic_pred_max_abs": 1.6653345369377348e-16,
+      "e1b_coefficients_max_abs": 0.0,
+      "stats_tune_auroc_max_abs": 0.0,
+      "e1b_tune_auroc_max_abs": 0.0,
+      "stats17_normalisation_max_abs": 0.0
+    },
+    "all": {
+      "stats_logistic_pred_max_abs": 2.220446049250313e-16,
+      "e1b_coefficients_max_abs": 0.0,
+      "stats_tune_auroc_max_abs": 0.0,
+      "e1b_tune_auroc_max_abs": 0.0,
+      "stats17_normalisation_max_abs": 0.0
+    }
+  },
+  "matched_control": "per-ref target / sorted-order / n_same equality asserted in load_hard_cohort"
+}
