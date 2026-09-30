@@ -445,6 +445,20 @@ class B3Corpus:
             self._cache = FeatureCache.open(self.features_root)
         return self._cache
 
+    @property
+    def feature_dim(self) -> int:
+        """Joint embedding width of the backing feature cache (512 or 768, ...).
+
+        Resolved from the opened datasets (or the RAM-resident preloaded store
+        when :meth:`preload` ran), never from the frozen V1 module constant, so
+        a SigLIP cache trains a 768-d B3 without any caller override.
+        """
+        if self._text_full is not None:
+            return int(np.asarray(self._text_full).shape[-1])
+        if self._region_full is not None:
+            return int(np.asarray(self._region_full).shape[-1])
+        return int(self._feature_cache().feature_dim)
+
     def _sizes(self) -> Dict[int, Tuple[int, int]]:
         if self._image_sizes is None:
             self._image_sizes = load_image_sizes(self.image_sizes_path)

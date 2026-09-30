@@ -36,7 +36,6 @@ from .clip_encoder import (
     DEFAULT_BATCH_SIZE,
     DEFAULT_MODEL_NAME,
     DEFAULT_PRETRAINED,
-    FEATURE_DIM,
     ClipEncoder,
     build_encoder,
     load_rgb_image,
@@ -113,10 +112,10 @@ def run_global_extraction(
         if not batch_images:
             return
         features = encoder.encode_images(batch_images, batch_size=batch_size)
-        if features.shape != (len(batch_images), FEATURE_DIM):
+        if features.shape != (len(batch_images), encoder.feature_dim):
             raise RuntimeError(
                 f"encoder returned {features.shape} for {len(batch_images)} images; "
-                f"expected {(len(batch_images), FEATURE_DIM)}"
+                f"expected {(len(batch_images), encoder.feature_dim)}"
             )
         for row, image_id in enumerate(batch_ids):
             writer.append(image_id, features[row])

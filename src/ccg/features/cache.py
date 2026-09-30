@@ -3,16 +3,24 @@
 Cache layout (paths relative to the cache *root* directory, e.g.
 ``cache/features``)::
 
-    region_features.h5   "features"          [total_crops, 512] float16
+    region_features.h5   "features"          [total_crops, D] float16
                          "image_offsets"     [M, 3] int64  (image_id, start, count)
                          attr: "cache_version" (per-image counts live in image_offsets)
-    text_features.h5     "features"          [n_sentences, 512] float16
+                         attr: "feature_dim"  (D; written by every cache builder)
+    text_features.h5     "features"          [n_sentences, D] float16
                          "sentence_offsets"  [n_sentences, 2] int64 (sentence_id, row)
                          "texts"             variable-length utf-8 (one per row)
-    global_features.h5   "features"          [n_images, 512] float16
+    global_features.h5   "features"          [n_images, D] float16
                          "image_ids"         [n_images] int64
     metadata.json        provenance + extraction stats (frozen schema, §5 brief)
     text_index.csv       sentence_id, ref_id, sent_id, image_id, split, text
+
+``D`` is the embedding width of the *backbone that produced the cache*: 512 for
+OpenCLIP ViT-B/32 and ViT-B/16 (the V1 layout, where ``D`` was the module
+constant ``FEATURE_DIM``), 768 for SigLIP base (V2-G B2).  Every writer takes
+the width from the arrays it is given (or an explicit ``feature_dim`` for an
+empty cache) and every reader takes it from the opened dataset, so a cache can
+never be read with the wrong width (V2-A1 amendment, protocol §42).
 
 Design rules (frozen multi-agent interface, 2026-09-27):
 
@@ -39,10 +47,10 @@ from typing import Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 import numpy as np
 
 from ..utils.io import read_json, write_json
-from .clip_encoder import FEATURE_DIM
 
 __all__ = [
     "CACHE_VERSION",
+    "FEATURE_DIM",
     "REGION_FILENAME",
     "TEXT_FILENAME",
     "GLOBAL_FILENAME",
@@ -69,6 +77,11 @@ __all__ = [
 
 #: Frozen cache schema version (Phase 0a).
 CACHE_VERSION = "phase0a-v1"
+
+#: Embedding width of the *V1* cache (OpenCLIP ViT-B/32).  Kept as the default
+#: for every optional ``feature_dim`` argument so V1 call sites and V1 caches
+#: behave exactly as before; new caches always carry their own width.
+FEATURE_DIM = 512
 
 REGION_FILENAME = "region_features.h5"
 TEXT_FILENAME = "text_features.h5"
@@ -138,21 +151,52 @@ def write_csv_atomic(path: str | Path, fieldnames: Sequence[str], rows: Iterable
     return atomic_replace(tmp, path)
 
 
-def _feature_matrix(value, name: str) -> np.ndarray:
-    """Validate one ``[K, FEATURE_DIM]`` block and cast to float16 (storage dtype)."""
+def _resolve_feature_dim(values: Iterable, explicit: Optional[int], where: str) -> int:
+    """The single embedding width of a write batch (``[K, D]`` / ``[D]`` blocks).
+
+    ``explicit`` (when given) must agree with every non-empty block; without it
+    the width has to be *unique* among the blocks.  An empty batch with no
+    explicit width is an error - the writer must not guess a layout.
+    """
+    dims = set()
+    for value in values:
+        arr = np.asarray(value)
+        if arr.ndim == 1:
+            arr = arr.reshape(1, -1)
+        if arr.ndim != 2:
+            raise ValueError(f"{where}: expected 1-d or 2-d feature blocks, got shape {arr.shape}")
+        dims.add(int(arr.shape[1]))
+    if explicit is not None:
+        want = int(explicit)
+        if want <= 0:
+            raise ValueError(f"{where}: feature_dim must be positive, got {want}")
+        if dims and dims != {want}:
+            raise ValueError(f"{where}: arrays of width(s) {sorted(dims)} given for feature_dim={want}")
+        return want
+    if len(dims) == 1:
+        return int(dims.pop())
+    if not dims:
+        raise ValueError(
+            f"{where}: cannot infer the feature width of an empty cache; pass feature_dim explicitly"
+        )
+    raise ValueError(f"{where}: mixed feature widths {sorted(dims)}; one cache holds one backbone")
+
+
+def _feature_matrix(value, name: str, feature_dim: int) -> np.ndarray:
+    """Validate one ``[K, feature_dim]`` block and cast to float16 (storage dtype)."""
     arr = np.asarray(value)
     if arr.ndim != 2:
         raise ValueError(f"{name}: expected a 2-d array, got shape {arr.shape}")
-    if arr.shape[1] != FEATURE_DIM:
-        raise ValueError(f"{name}: expected {FEATURE_DIM} columns, got {arr.shape[1]}")
+    if arr.shape[1] != feature_dim:
+        raise ValueError(f"{name}: expected {feature_dim} columns, got {arr.shape[1]}")
     return np.ascontiguousarray(arr, dtype=np.float16)
 
 
-def _feature_row(value, name: str) -> np.ndarray:
-    """Validate one ``[FEATURE_DIM]`` vector and cast to float16."""
+def _feature_row(value, name: str, feature_dim: int) -> np.ndarray:
+    """Validate one ``[feature_dim]`` vector and cast to float16."""
     arr = np.asarray(value)
-    if arr.ndim != 1 or arr.shape[0] != FEATURE_DIM:
-        raise ValueError(f"{name}: expected shape ({FEATURE_DIM},), got {arr.shape}")
+    if arr.ndim != 1 or arr.shape[0] != feature_dim:
+        raise ValueError(f"{name}: expected shape ({feature_dim},), got {arr.shape}")
     return np.ascontiguousarray(arr, dtype=np.float16)
 
 
@@ -168,10 +212,15 @@ def _int_key(key, name: str) -> int:
 # ---------------------------------------------------------------------------
 
 
-def _write_region_file(path_tmp: Path, region: Mapping[int, np.ndarray]) -> np.ndarray:
+def _write_region_file(
+    path_tmp: Path,
+    region: Mapping[int, np.ndarray],
+    feature_dim: Optional[int] = None,
+) -> np.ndarray:
     h5py = _h5py()
+    feature_dim = _resolve_feature_dim(region.values(), feature_dim, "region_features.h5")
     items = sorted(((int(k), v) for k, v in region.items()), key=lambda kv: kv[0])
-    blocks = [_feature_matrix(v, f"region[{k}]") for k, v in items]
+    blocks = [_feature_matrix(v, f"region[{k}]", feature_dim) for k, v in items]
     counts = np.asarray([b.shape[0] for b in blocks], dtype=np.int64)
     offsets = np.zeros((len(items), 3), dtype=np.int64)
     if len(items):
@@ -179,23 +228,30 @@ def _write_region_file(path_tmp: Path, region: Mapping[int, np.ndarray]) -> np.n
         offsets[:, 1] = np.concatenate([[0], np.cumsum(counts)[:-1]])
         offsets[:, 2] = counts
     features = (
-        np.concatenate(blocks, axis=0) if blocks else np.zeros((0, FEATURE_DIM), np.float16)
+        np.concatenate(blocks, axis=0) if blocks else np.zeros((0, feature_dim), np.float16)
     )
     path_tmp.parent.mkdir(parents=True, exist_ok=True)
     with h5py.File(str(path_tmp), "w") as handle:
         handle.create_dataset("features", data=features.astype(np.float16, copy=False))
         handle.create_dataset("image_offsets", data=offsets)
         handle.attrs["cache_version"] = CACHE_VERSION
+        handle.attrs["feature_dim"] = int(feature_dim)
     return counts
 
 
 def _write_text_file(
-    path_tmp: Path, text: Mapping[int, np.ndarray], texts: Optional[Sequence[str]] = None
+    path_tmp: Path,
+    text: Mapping[int, np.ndarray],
+    texts: Optional[Sequence[str]] = None,
+    feature_dim: Optional[int] = None,
 ) -> None:
     h5py = _h5py()
+    feature_dim = _resolve_feature_dim(text.values(), feature_dim, "text_features.h5")
     items = sorted(((int(k), v) for k, v in text.items()), key=lambda kv: kv[0])
-    rows = np.asarray([_feature_row(v, f"text[{k}]") for k, v in items], dtype=np.float16)
-    features = rows if rows.size else np.zeros((0, FEATURE_DIM), np.float16)
+    rows = np.asarray(
+        [_feature_row(v, f"text[{k}]", feature_dim) for k, v in items], dtype=np.float16
+    )
+    features = rows if rows.size else np.zeros((0, feature_dim), np.float16)
     offsets = np.zeros((len(items), 2), dtype=np.int64)
     if len(items):
         offsets[:, 0] = [k for k, _ in items]
@@ -216,29 +272,42 @@ def _write_text_file(
             dtype=h5py.string_dtype(encoding="utf-8"),
         )
         handle.attrs["cache_version"] = CACHE_VERSION
+        handle.attrs["feature_dim"] = int(feature_dim)
 
 
-def _write_global_file(path_tmp: Path, global_: Mapping[int, np.ndarray]) -> None:
+def _write_global_file(
+    path_tmp: Path,
+    global_: Mapping[int, np.ndarray],
+    feature_dim: Optional[int] = None,
+) -> None:
     h5py = _h5py()
+    feature_dim = _resolve_feature_dim(global_.values(), feature_dim, "global_features.h5")
     items = sorted(((int(k), v) for k, v in global_.items()), key=lambda kv: kv[0])
-    rows = np.asarray([_feature_row(v, f"global[{k}]") for k, v in items], dtype=np.float16)
-    features = rows if rows.size else np.zeros((0, FEATURE_DIM), np.float16)
+    rows = np.asarray(
+        [_feature_row(v, f"global[{k}]", feature_dim) for k, v in items], dtype=np.float16
+    )
+    features = rows if rows.size else np.zeros((0, feature_dim), np.float16)
     image_ids = np.asarray([k for k, _ in items], dtype=np.int64)
     path_tmp.parent.mkdir(parents=True, exist_ok=True)
     with h5py.File(str(path_tmp), "w") as handle:
         handle.create_dataset("features", data=features.astype(np.float16, copy=False))
         handle.create_dataset("image_ids", data=image_ids)
         handle.attrs["cache_version"] = CACHE_VERSION
+        handle.attrs["feature_dim"] = int(feature_dim)
 
 
 def write_region_cache(
-    root: str | Path, region: Mapping[int, np.ndarray], metadata_updates: Optional[dict] = None
+    root: str | Path,
+    region: Mapping[int, np.ndarray],
+    metadata_updates: Optional[dict] = None,
+    *,
+    feature_dim: Optional[int] = None,
 ) -> Path:
-    """Atomically write ``region_features.h5`` from ``{image_id -> [K, 512]}``."""
+    """Atomically write ``region_features.h5`` from ``{image_id -> [K, D]}``."""
     root = Path(root)
     root.mkdir(parents=True, exist_ok=True)
     final = root / REGION_FILENAME
-    _write_region_file(_tmp_path(final), region)
+    _write_region_file(_tmp_path(final), region, feature_dim)
     atomic_replace(_tmp_path(final), final)
     if metadata_updates:
         update_metadata(root, metadata_updates)
@@ -250,8 +319,10 @@ def write_text_cache(
     text: Mapping[int, np.ndarray],
     texts: Optional[Sequence[str]] = None,
     metadata_updates: Optional[dict] = None,
+    *,
+    feature_dim: Optional[int] = None,
 ) -> Path:
-    """Atomically write ``text_features.h5`` from ``{sentence_id -> [512]}``.
+    """Atomically write ``text_features.h5`` from ``{sentence_id -> [D]}``.
 
     ``texts`` (if given) must be aligned with the *sorted* sentence ids and is
     stored in the ragged-string dataset of the same file.
@@ -259,7 +330,7 @@ def write_text_cache(
     root = Path(root)
     root.mkdir(parents=True, exist_ok=True)
     final = root / TEXT_FILENAME
-    _write_text_file(_tmp_path(final), text, texts)
+    _write_text_file(_tmp_path(final), text, texts, feature_dim)
     atomic_replace(_tmp_path(final), final)
     if metadata_updates:
         update_metadata(root, metadata_updates)
@@ -267,13 +338,17 @@ def write_text_cache(
 
 
 def write_global_cache(
-    root: str | Path, global_: Mapping[int, np.ndarray], metadata_updates: Optional[dict] = None
+    root: str | Path,
+    global_: Mapping[int, np.ndarray],
+    metadata_updates: Optional[dict] = None,
+    *,
+    feature_dim: Optional[int] = None,
 ) -> Path:
-    """Atomically write ``global_features.h5`` from ``{image_id -> [512]}``."""
+    """Atomically write ``global_features.h5`` from ``{image_id -> [D]}``."""
     root = Path(root)
     root.mkdir(parents=True, exist_ok=True)
     final = root / GLOBAL_FILENAME
-    _write_global_file(_tmp_path(final), global_)
+    _write_global_file(_tmp_path(final), global_, feature_dim)
     atomic_replace(_tmp_path(final), final)
     if metadata_updates:
         update_metadata(root, metadata_updates)
@@ -286,15 +361,20 @@ def write_feature_cache(
     text: Dict[int, np.ndarray],
     global_: Dict[int, np.ndarray],
     metadata: dict,
+    *,
+    feature_dim: Optional[int] = None,
 ) -> None:
     """Frozen entry point: write the whole cache layout at once (tests / small data).
 
-    * ``region``: ``{image_id -> [K, 512]}``, row order == proposal bank order;
-    * ``text``: ``{sentence_id -> [512]}``;
-    * ``global_``: ``{image_id -> [512]}``;
+    * ``region``: ``{image_id -> [K, D]}``, row order == proposal bank order;
+    * ``text``: ``{sentence_id -> [D]}``;
+    * ``global_``: ``{image_id -> [D]}``;
     * ``metadata``: provenance dict; ``cache_version`` is injected when absent
       and the counts (``n_images``, ``n_crops``, ``n_sentences``) are always
       recomputed from the arrays so the json cannot drift from the files.
+
+    ``D`` is resolved once over all three mappings (or given explicitly, which
+    an all-empty cache requires) and recorded as ``metadata["feature_dim"]``.
 
     ``text_index.csv`` is created header-only here: the real rows are written
     by :func:`write_text_index` (the CLI always does).
@@ -304,17 +384,25 @@ def write_feature_cache(
     region = dict(region or {})
     text = dict(text or {})
     global_ = dict(global_ or {})
+    feature_dim = _resolve_feature_dim(
+        list(region.values()) + list(text.values()) + list(global_.values()),
+        feature_dim,
+        "feature cache",
+    )
 
     meta = dict(metadata or {})
     meta.setdefault("cache_version", CACHE_VERSION)
-    n_crops = int(sum(np.asarray(v).reshape(-1).size // FEATURE_DIM for v in region.values()))
+    meta["feature_dim"] = int(feature_dim)
+    n_crops = int(
+        sum(np.asarray(v).reshape(-1).size // feature_dim for v in region.values())
+    )
     meta["n_crops"] = n_crops
     meta["n_images"] = int(len(region) if region else len(global_))
     meta["n_sentences"] = int(len(text))
 
-    _write_region_file(_tmp_path(root / REGION_FILENAME), region)
-    _write_text_file(_tmp_path(root / TEXT_FILENAME), text, None)
-    _write_global_file(_tmp_path(root / GLOBAL_FILENAME), global_)
+    _write_region_file(_tmp_path(root / REGION_FILENAME), region, feature_dim)
+    _write_text_file(_tmp_path(root / TEXT_FILENAME), text, None, feature_dim)
+    _write_global_file(_tmp_path(root / GLOBAL_FILENAME), global_, feature_dim)
     write_text_index(root, [])
     for final in (REGION_FILENAME, TEXT_FILENAME, GLOBAL_FILENAME):
         atomic_replace(_tmp_path(root / final), root / final)
@@ -438,12 +526,19 @@ def feature_health(features) -> dict:
 
 
 class _StreamingBase:
-    """Shared append-only machinery: features [rows, 512] + an own id index."""
+    """Shared append-only machinery: features [rows, D] + an own id index."""
 
     #: dataset name of the per-row id index written by :meth:`flush`
     index_name = ""
 
-    def __init__(self, path: str | Path, *, resume: bool = False, flush_every: int = 64) -> None:
+    def __init__(
+        self,
+        path: str | Path,
+        *,
+        resume: bool = False,
+        flush_every: int = 64,
+        feature_dim: Optional[int] = None,
+    ) -> None:
         self.path = Path(path)
         self.tmp_path = _tmp_path(self.path)
         self.flush_every = max(1, int(flush_every))
@@ -452,17 +547,52 @@ class _StreamingBase:
         self.processed: Dict[int, Tuple[int, int]] = {}
         self._append_order: List[int] = []
         self.source = "fresh"
+        #: embedding width of *this* file; resolved from the resumed file when
+        #: there is one, else the explicit argument (V1 default 512).
+        self._requested_feature_dim = None if feature_dim is None else int(feature_dim)
+        self.feature_dim = self._requested_feature_dim or FEATURE_DIM
+        if self.feature_dim <= 0:
+            raise ValueError(f"feature_dim must be positive, got {self.feature_dim}")
 
         if resume and self.tmp_path.exists():
             self._open_tmp_for_append()
             self.source = "tmp"
         elif resume and self.path.exists():
+            self.feature_dim = self._adopt_width(self._read_feature_dim(self.path))
             self.processed = self._read_index(self.path)
             self.source = "final"
         else:
+            if self.path.exists():
+                # a fresh run overwrites the file; keep its width so a rebuild
+                # of a 768-d cache cannot silently become a 512-d one
+                self.feature_dim = self._adopt_width(self._read_feature_dim(self.path))
             if self.tmp_path.exists():
                 self.tmp_path.unlink()
             self._create_tmp()
+
+    def _adopt_width(self, stored: int) -> int:
+        """Reconcile an existing file's width with the requested one."""
+        if self._requested_feature_dim is not None and self._requested_feature_dim != stored:
+            raise ValueError(
+                f"{self.path}: stored feature width {stored} != requested "
+                f"{self._requested_feature_dim}"
+            )
+        return int(stored)
+
+    @staticmethod
+    def _read_feature_dim(file_path: Path) -> int:
+        """The stored width of an existing file (``features.shape[1]``)."""
+        with _h5py().File(str(file_path), "r") as handle:
+            shape = handle["features"].shape
+        if len(shape) != 2 or int(shape[1]) <= 0:
+            raise ValueError(f"{file_path}: features dataset has no usable width: {tuple(shape)}")
+        return int(shape[1])
+
+    def _check_resume_width(self, handle) -> None:
+        shape = handle["features"].shape
+        if len(shape) != 2 or int(shape[1]) <= 0:
+            raise ValueError(f"{self.path}: features dataset has no usable width: {tuple(shape)}")
+        self.feature_dim = self._adopt_width(int(shape[1]))
 
     # -- index layout ------------------------------------------------------
     def _read_index(self, file_path: Path) -> Dict[int, Tuple[int, int]]:
@@ -485,13 +615,14 @@ class _StreamingBase:
         handle = h5py.File(str(self.tmp_path), "w")
         handle.create_dataset(
             "features",
-            shape=(0, FEATURE_DIM),
-            maxshape=(None, FEATURE_DIM),
+            shape=(0, self.feature_dim),
+            maxshape=(None, self.feature_dim),
             dtype=np.float16,
-            chunks=(8192, FEATURE_DIM),
+            chunks=(8192, self.feature_dim),
         )
         self._create_index_dataset(handle)
         handle.attrs["cache_version"] = CACHE_VERSION
+        handle.attrs["feature_dim"] = int(self.feature_dim)
         self._tmp_handle = handle
 
     def _create_index_dataset(self, handle) -> None:
@@ -500,6 +631,7 @@ class _StreamingBase:
     def _open_tmp_for_append(self) -> None:
         h5py = _h5py()
         handle = h5py.File(str(self.tmp_path), "r+")
+        self._check_resume_width(handle)
         processed = self._read_index_from_handle(handle)
         committed = 0
         for image_id, (start, count) in processed.items():
@@ -630,7 +762,7 @@ class StreamingRegionWriter(_StreamingBase):
             return _offsets_to_index(handle["image_offsets"][...])
 
     def _validate_rows(self, image_id: int, rows) -> np.ndarray:
-        return _feature_matrix(rows, f"region[{image_id}]")
+        return _feature_matrix(rows, f"region[{image_id}]", self.feature_dim)
 
     def _mark_written(self, image_id: int, count: int) -> None:  # index rebuilt from processed
         return None
@@ -663,8 +795,10 @@ class StreamingGlobalWriter(_StreamingBase):
         arr = np.asarray(rows, dtype=np.float16)
         if arr.ndim == 1:
             arr = arr.reshape(1, -1)
-        if arr.shape != (1, FEATURE_DIM):
-            raise ValueError(f"global[{image_id}]: expected one ({FEATURE_DIM},) row, got {arr.shape}")
+        if arr.shape != (1, self.feature_dim):
+            raise ValueError(
+                f"global[{image_id}]: expected one ({self.feature_dim},) row, got {arr.shape}"
+            )
         return np.ascontiguousarray(arr, dtype=np.float16)
 
     def _mark_written(self, image_id: int, count: int) -> None:
@@ -705,6 +839,7 @@ class FeatureCache:
         self._region_index: Dict[int, Tuple[int, int]] = {}
         self._sentence_index: Dict[int, int] = {}
         self._global_index: Dict[int, int] = {}
+        self._feature_dim: Optional[int] = None
 
     # -- construction ------------------------------------------------------
     @classmethod
@@ -722,6 +857,7 @@ class FeatureCache:
         if region_path.exists():
             handle = _h5py().File(str(region_path), "r")
             cache._h5_files["region"] = handle
+            cache._note_feature_dim(region_path, int(handle["features"].shape[1]))
             offsets = np.asarray(handle["image_offsets"][...], dtype=np.int64).reshape(-1, 3)
             cache._region_index = _offsets_to_index(offsets)
             _validate_region_offsets(offsets, int(handle["features"].shape[0]), region_path)
@@ -729,12 +865,14 @@ class FeatureCache:
         if text_path.exists():
             handle = _h5py().File(str(text_path), "r")
             cache._h5_files["text"] = handle
+            cache._note_feature_dim(text_path, int(handle["features"].shape[1]))
             offsets = np.asarray(handle["sentence_offsets"][...], dtype=np.int64).reshape(-1, 2)
             cache._sentence_index = _sentences_to_index(offsets, int(handle["features"].shape[0]))
         global_path = root / GLOBAL_FILENAME
         if global_path.exists():
             handle = _h5py().File(str(global_path), "r")
             cache._h5_files["global"] = handle
+            cache._note_feature_dim(global_path, int(handle["features"].shape[1]))
             ids = np.asarray(handle["image_ids"][...], dtype=np.int64).reshape(-1)
             if ids.size != int(handle["features"].shape[0]):
                 raise ValueError(
@@ -745,6 +883,18 @@ class FeatureCache:
             if len(cache._global_index) != ids.size:
                 raise ValueError(f"{global_path}: duplicate image_ids")
         return cache
+
+    def _note_feature_dim(self, path: Path, dim: int) -> None:
+        """Record one part's embedding width; all parts of a cache must agree."""
+        if dim <= 0:
+            raise ValueError(f"{path}: non-positive feature width {dim}")
+        if self._feature_dim is None:
+            self._feature_dim = int(dim)
+        elif self._feature_dim != int(dim):
+            raise ValueError(
+                f"{path}: feature width {dim} disagrees with the other parts of "
+                f"{self.root} ({self._feature_dim}) - one cache holds one backbone"
+            )
 
     def _file(self, part: str, filename: str):
         handle = self._h5_files.get(part)
@@ -769,6 +919,15 @@ class FeatureCache:
         return len(self._sentence_index)
 
     @property
+    def feature_dim(self) -> int:
+        """Embedding width of this cache (from the opened datasets).
+
+        An empty cache root reports the V1 width 512 - it carries no evidence
+        of its own, and no accessor can be called on it anyway.
+        """
+        return int(self._feature_dim) if self._feature_dim is not None else FEATURE_DIM
+
+    @property
     def region_offsets(self) -> np.ndarray:
         handle = self._file("region", REGION_FILENAME)
         return np.asarray(handle["image_offsets"][...], dtype=np.int64).reshape(-1, 3)
@@ -785,7 +944,7 @@ class FeatureCache:
 
     # -- random access (O(1)) ---------------------------------------------
     def region_features(self, image_id: int) -> np.ndarray:
-        """``[N_img, 512]`` float16 rows of one image, in proposal-bank order."""
+        """``[N_img, D]`` float16 rows of one image, in proposal-bank order."""
         handle = self._file("region", REGION_FILENAME)
         image_id = int(image_id)
         if image_id not in self._region_index:
@@ -794,7 +953,7 @@ class FeatureCache:
         return np.asarray(handle["features"][start : start + count], dtype=np.float16)
 
     def text_features(self, sentence_id: int) -> np.ndarray:
-        """``[512]`` float16 embedding of one sentence."""
+        """``[D]`` float16 embedding of one sentence."""
         handle = self._file("text", TEXT_FILENAME)
         sentence_id = int(sentence_id)
         if sentence_id not in self._sentence_index:
@@ -803,7 +962,7 @@ class FeatureCache:
         return np.asarray(handle["features"][row], dtype=np.float16)
 
     def global_feature(self, image_id: int) -> np.ndarray:
-        """``[512]`` float16 whole-image embedding."""
+        """``[D]`` float16 whole-image embedding."""
         handle = self._file("global", GLOBAL_FILENAME)
         image_id = int(image_id)
         if image_id not in self._global_index:

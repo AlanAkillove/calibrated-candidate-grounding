@@ -48,7 +48,6 @@ from .clip_encoder import (
     DEFAULT_BATCH_SIZE,
     DEFAULT_MODEL_NAME,
     DEFAULT_PRETRAINED,
-    FEATURE_DIM,
     ClipEncoder,
     build_encoder,
     crop_image_at_boxes,
@@ -352,10 +351,10 @@ def run_region_extraction(
         while len(pending_crops) >= batch_size or (force and pending_crops):
             take = min(batch_size, len(pending_crops))
             features = encoder.encode_images(pending_crops[: take], batch_size=batch_size)
-            if features.shape != (take, FEATURE_DIM):
+            if features.shape != (take, encoder.feature_dim):
                 raise RuntimeError(
                     f"encoder returned {features.shape} for {take} crops; "
-                    f"expected {(take, FEATURE_DIM)}"
+                    f"expected {(take, encoder.feature_dim)}"
                 )
             for row in range(take):
                 image_id, box_index = pending_meta[row]
@@ -403,7 +402,7 @@ def run_region_extraction(
             image = load_rgb_image(path)
             crops, valid, int_boxes = crop_image_at_boxes(image, boxes)
             k = int(int_boxes.shape[0])
-            buffers[image_id] = np.zeros((k, FEATURE_DIM), dtype=np.float16)
+            buffers[image_id] = np.zeros((k, encoder.feature_dim), dtype=np.float16)
             invalid_rows = [
                 (int(i), *[int(v) for v in int_boxes[i]]) for i in np.flatnonzero(~valid)
             ]

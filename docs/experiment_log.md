@@ -1298,3 +1298,66 @@ notes: >
   cross-dataset external validation under a shared COCO visual domain。本阶段到 G5 停止，等待下一轮正式
   frozen external confirmation 的单独授权。FineCops 结果未删除、未重解读。
 ```
+
+```yaml
+# ===== FORMAL ENTRY — REAL RESULT（非示例）=====
+experiment_id: v2g-cross-backbone-generalization-20260930-01
+git_commit: "72d86d0ee16cbb116c4ebdf6dae76d0ce226c07e"   # 运行时 HEAD（= B1/B2 phase0b 产物 metadata 记录的 commit）
+dirty: true                    # V2-A1 协议（research_protocol.md）、scripts/run_v2g_{reliability,hard}.py、
+                               # scripts/{analyze_v2g_cardinality,audit_v2g_final}.py、tests/test_v2g_regression.py、
+                               # cache/v2_backbones/*、results/v2_backbone_generalization/* 运行时尚未提交
+timestamp: "2026-09-30"
+stage: "G1–G5（V2-A1 cross-backbone generalization）：B1 OpenCLIP B/16 + B2 SigLIP B/16 全链（feature extraction → phase0b reliability → G3 cardinality → G4 Phase A/B hard-semantic → G5 overall gate）；B0 只读 V1 frozen artifacts"
+boundary_wording: "允许：replicated across three tested backbones spanning two vision-language model families and two patch resolutions；**禁止** universal across all vision-language models。不含 Grounding DINO / BLIP-style cross-encoder / 不同 proposal 家族"
+question_numbering: "Q1 = candidate-cardinality reliability degradation（G1/G3）；Q2 = hard-competition semantic amplification（G2/G4）；Q3 = whether local-competition method development is justified（G5）。G4/G5 为 Q2 的决定性证据；勿与 V1 Gate Q1/Q2/Q3 或 A11 外部确认混用"
+verdict: "Q1 YES（3/3 CARDINALITY_REPLICATED）/ Q2 YES（3/3 HARD_SEMANTIC_REPLICATED，manipulation 全有效，3 seed 一致）/ Q3 YES（>=2/3 规则，实际 3/3）；STRONG_CROSS_BACKBONE_GENERALITY = YES；V2_METHOD_DEVELOPMENT_AUTHORIZED = YES"
+backbones:
+  B0_openclip_b32: "frozen reference（V1 读取）：K5 acc 0.790743 / K50 0.431992 / AUROC 0.842606→0.790445；E-AURC 恶化 2.2568x；RER50 −46.596 pp；Δrand +0.001227 / Δhard +0.031848 / A +0.030622。provenance caveat：hard/manipulation 沿用 V1 A8 定义（stats_logistic→e1b_stats_semantic；cand_vmax/cand_top12_sim），与 V2-G 的 R1→R2 + 三指标定义不同；dose 在 V1 未运行（NA）"
+  B1_openclip_b16: "K5 acc 0.778066 / K50 0.421591 / AUROC 0.837350→0.783358；E-AURC 2.1288x；RER50 −45.929 pp；Δrand −0.001233 / Δhard +0.021047 / A +0.022280 / dose rho 1.000"
+  B2_siglip_b16: "K5 acc 0.708047 / K50 0.287113 / AUROC 0.793050→0.717934；E-AURC 1.6853x；RER50 −46.770 pp；Δrand +0.004531 / Δhard +0.035617 / A +0.031086 / dose rho 1.000"
+cardinality_gate: >
+  G3：K5→K50 ΔAUROC B1 **0.053992**（per-seed 0.0598/0.0552/0.0471，CI 全排除 0）、B2 **0.075115**
+  （0.0761/0.0803/0.0689，CI 全排除 0），均 ≥0.03 → Route A 通过；E-AURC 恶化 B1 2.1288x / B2 1.6853x（≥20%），
+  RER50 drop B1 45.93 pp / B2 46.77 pp（≥10pp，CI 全排除 0）→ Route B 通过；两 backbone CARDINALITY_REPLICATED。
+hard_semantic_gate: >
+  G4 Phase B（3 scorer seeds，全长 484.0 s）：B1 Δhard **0.021047** / A **0.022280**；B2 Δhard **0.035617** /
+  A **0.031086**（image-clustered paired bootstrap，共享 draw，5000 reps / seed 0 / ci 0.95，cluster=image_id）；
+  manipulation（winner_competitor_max_cos↑ / winner_top2_cos↑ / q_margin12↓，≥2/3 方向正确且 ≥1 CI 排除 0）
+  两 backbone 全有效；dose-response m∈{0,2,4,8} Spearman rho = 1.000（secondary，不入总 gate）→ 两 backbone HARD_SEMANTIC_REPLICATED。
+overall_gate: "G5：n_backbones=3 / n_both_replicated=3 → authorized=true；B0 按 V1 frozen replication 计入"
+protocol_history: >
+  (1) thresholds 在任何 B1/B2 结果产生前冻结（V2-A1 修正案 + g4_protocol_freeze.json，frozen_before_phase_a=true）；
+  (2) G1→G5 未修改任何 primary gate（回归测试断言 gate.thresholds == freeze item 9）；
+  (3) semantic feature 定义在 G4 前冻结（14 个 backbone-neutral primary，列序冻结）；
+  (4) random（Phase A）出数后未改动 hard config；(5) dose-response 仅 secondary；(6) **LCR 尚未实现**。
+  manipulation 具体化说明：V2-A1.6（2 指标、≥1 显著）→ 冻结 item 7（3 指标、≥2/3 + ≥1 CI），属收紧而非放松。
+runtime: >
+  B1 特征提取 wall 11537.6 s（region 8755.6 s / text 114.7 s；1,279,488 region crops；peak VRAM 1099 MB）；
+  B2 特征提取 wall 4497.4 s（region 4026.8 s；peak VRAM 1449 MB）；phase0b reliability B1 7986.8 s / B2 6384.0 s（各 3 seed × 21,373 records）；
+  G4 Phase B 484.0 s；全量 pytest 107.6 s。环境：deepminer（python 3.10.19 / torch 2.5.1+cu121 / cuda 12.1 / RTX 4060 Laptop）。
+tests: >
+  新增 tests/test_v2g_regression.py = **50 collected（item31：18 协议项 + 8 项 G4/G5 专项）**，覆盖 feature banks 完整性
+  （19992 img / 1,279,488 region / 141,564 text / 0 invalid）、512/768 维、manifest identity、B3 candidate independence
+  （score_invariance 0 violations）、参数预算 214,273 / 312,577 < 500k、3 seed 隔离、K20/K50 不进 selection、global T 仅用
+  val_calib K5/K10、T interior、温度不跨 backbone/seed、无 OpenCLIP-specific 假设、primary continuous/rank、R1/R2 不读 raw
+  embeddings、cohort identity、shared bootstrap draws、manipulation 仅 backbone-neutral primary、3-seed independence、gate
+  deterministic；专项：系数/normalization 跨 backbone 隔离、selected C 可复推、reliability train 无 hard 行（7,372 < 10,286）、
+  Random/Hard 行 identity、amplification=Δhard−Δrand 共享 cluster draw、dose manifests 不可变（n=7,410）、Phase-A 不能改
+  Phase-B config。全量 pytest：**774 collected / 774 passed / 0 failed / 0 error / 107.6 s**。
+audit: "scripts/audit_v2g_final.py 从 raw G3/G4/G5 artifacts 重算全部 headline 并逐项核对 gate/metadata/final_summary.csv：82 checks / 0 failures（AUDIT_OK），B0 行由 V1 frozen artifacts 载入（非硬编码）"
+artifacts: >
+  results/v2_backbone_generalization/：protocol.json、g0_provenance.json、backbone_metadata.json、feasibility.csv、
+  b1_phase0b/、b2_phase0b/、g3_cardinality_gate.json、g4_protocol_freeze.json、g4_phaseA/、g4_phaseB/（gate.json /
+  amplification.csv / manipulation_check.csv / dose_response.csv / g5_overall_gate.json / metadata.json）、
+  final_summary.csv、v2a1_result_record.json；cache/v2_backbones/{openclip_b16,siglip_b16}/（独立 namespace，未动 V1 cache）；
+  协议：docs/research_protocol.md（V2-A1 + Result Record）；脚本：run_v2g_reliability.py / run_v2g_hard.py /
+  analyze_v2g_cardinality.py / audit_v2g_final.py。
+observation: >
+  SigLIP（B2）absolute grounding quality 最弱（K5 acc 0.708 / K5 AUROC 0.793，为三 backbone 最低），但 cardinality
+  degradation（ΔAUROC 0.0751，最强）与 hard-semantic amplification（A 0.0311，新 backbone 中最强）反而最大 →
+  支持 "absolute grounding performance != reliability robustness under candidate-set shift"。仅作观察，**不解释为因果机制**。
+notes: >
+  V2-A1 的正式执行结果（含 V2-A1.10 的 G0 BLOCKED→后补实测历史，feasibility/dims 由真实 checkpoint introspection 落实）。
+  B0 数字全部从 V1 frozen artifacts 载入；rer50_drop 在 g3 内为 fraction（0.4593=45.93 pp），主表统一为 pp。本轮完成后停止；
+  下一轮（单独设计）：V2-M Local Competition Reliability Module——protocol 必须建立在当前 frozen V2-G 结果之上。
+```

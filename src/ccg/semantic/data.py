@@ -78,10 +78,13 @@ class EmbeddingStore:
         Row identities, aligned 1:1 with the Phase 0.5 canonical cohort
         (``sentence_id`` ascending, unique).
     z_q:
-        ``[n, 512]`` float16 query embeddings (L2-normalised, cached values).
+        ``[n, feature_dim]`` float16 query embeddings (L2-normalised, cached values).
     z_i:
-        ``[n, K, 512]`` float16 candidate embeddings; local index 0 is the
-        target (frozen ``C_K`` layout).
+        ``[n, K, feature_dim]`` float16 candidate embeddings; local index 0 is
+        the target (frozen ``C_K`` layout).
+    feature_dim:
+        Joint embedding width of the backing cache (512 for the CLIP backbones,
+        768 for SigLIP); defaults to the V1 width for legacy archives.
     """
 
     k: int
@@ -92,6 +95,7 @@ class EmbeddingStore:
     target_local: np.ndarray
     z_q: np.ndarray
     z_i: np.ndarray
+    feature_dim: int = FEATURE_DIM
 
     def __len__(self) -> int:
         return int(self.sentence_id.shape[0])
@@ -327,6 +331,7 @@ def build_embedding_store(
         )
     splits = tuple(phase0a.PRIMARY_SPLITS)
     records = corpus.eval_records(splits, (k,))
+    feature_dim = int(corpus.feature_dim)
     by_sid: Dict[int, Any] = {int(rec.sentence_id): rec for rec in records}
     missing = [int(s) for s in cohort["sentence_id"] if int(s) not in by_sid]
     if missing:
@@ -335,8 +340,8 @@ def build_embedding_store(
             f"(first few: {missing[:5]})"
         )
 
-    z_q = np.empty((n, FEATURE_DIM), dtype=np.float16)
-    z_i = np.empty((n, k, FEATURE_DIM), dtype=np.float16)
+    z_q = np.empty((n, feature_dim), dtype=np.float16)
+    z_i = np.empty((n, k, feature_dim), dtype=np.float16)
     target_local = np.zeros(n, dtype=np.int32)
 
     try:
@@ -356,9 +361,9 @@ def build_embedding_store(
             raise AssertionError(f"K={k} row {i}: eval_split mismatch vs cohort ({sid})")
         example = corpus.example_for(record, k)
         candidates = np.asarray(example.candidate_features, dtype=np.float16)
-        if candidates.shape != (k, FEATURE_DIM):
+        if candidates.shape != (k, feature_dim):
             raise AssertionError(
-                f"K={k} row {i}: candidate block {candidates.shape} != {(k, FEATURE_DIM)}"
+                f"K={k} row {i}: candidate block {candidates.shape} != {(k, feature_dim)}"
             )
         z_q[i] = np.asarray(example.query_feature, dtype=np.float16)
         z_i[i] = candidates
@@ -393,7 +398,7 @@ def build_embedding_store(
         "z_i_sha256": _sha256_array(z_i),
         "sentence_id_sha256": _sha256_array(cohort["sentence_id"]),
         "dtype": "float16",
-        "feature_dim": FEATURE_DIM,
+        "feature_dim": feature_dim,
         "source": {
             "features_root": str(features_root),
             "manifests_root": str(manifests_root),
@@ -419,6 +424,8 @@ def load_embedding_store(k: int, *, out_root: Path = DEFAULT_OUT_ROOT) -> Embedd
             f"embedding archive {path} not found; build it with build_embedding_store()"
         )
     with np.load(path) as data:
+        z_q = np.asarray(data["z_q"], dtype=np.float16)
+        z_i = np.asarray(data["z_i"], dtype=np.float16)
         store = EmbeddingStore(
             k=int(k),
             sentence_id=np.asarray(data["sentence_id"], dtype=np.int64),
@@ -426,12 +433,13 @@ def load_embedding_store(k: int, *, out_root: Path = DEFAULT_OUT_ROOT) -> Embedd
             image_id=np.asarray(data["image_id"], dtype=np.int64),
             eval_split=np.asarray(data["eval_split"]),
             target_local=np.asarray(data["target_local"], dtype=np.int32),
-            z_q=np.asarray(data["z_q"], dtype=np.float16),
-            z_i=np.asarray(data["z_i"], dtype=np.float16),
+            z_q=z_q,
+            z_i=z_i,
+            feature_dim=int(z_q.shape[-1]) if z_q.ndim == 2 else FEATURE_DIM,
         )
-    if store.z_q.shape != (len(store), FEATURE_DIM):
+    if store.z_q.ndim != 2 or store.z_q.shape[0] != len(store):
         raise ValueError(f"{path}: z_q shape {store.z_q.shape} inconsistent with n={len(store)}")
-    if store.z_i.shape != (len(store), int(k), FEATURE_DIM):
+    if store.z_i.shape != (len(store), int(k), store.feature_dim):
         raise ValueError(f"{path}: z_i shape {store.z_i.shape} inconsistent with K={k}")
     if not np.all(np.diff(store.sentence_id) > 0):
         raise ValueError(f"{path}: sentence_id not strictly ascending")

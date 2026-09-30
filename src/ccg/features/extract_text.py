@@ -44,7 +44,6 @@ from .clip_encoder import (
     DEFAULT_BATCH_SIZE,
     DEFAULT_MODEL_NAME,
     DEFAULT_PRETRAINED,
-    FEATURE_DIM,
     ClipEncoder,
     build_encoder,
 )
@@ -211,10 +210,10 @@ def run_text_extraction(
             features = encoder.encode_texts(texts, batch_size=batch_size)
     finally:
         bar.close()
-    if features.shape != (len(rows), FEATURE_DIM):
+    if features.shape != (len(rows), encoder.feature_dim):
         raise RuntimeError(
             f"encoder returned {features.shape} for {len(rows)} texts; expected "
-            f"({len(rows)}, {FEATURE_DIM})"
+            f"({len(rows)}, {encoder.feature_dim})"
         )
     seconds = time.perf_counter() - started
 
@@ -227,7 +226,7 @@ def run_text_extraction(
     if n_truncated:
         log(
             f"WARNING: {n_truncated} sentence(s) exceed the {encoder.context_length}-token "
-            "context and were encoded truncated (open_clip SimpleTokenizer behaviour)"
+            "context of this backbone's tokenizer and were encoded truncated"
         )
     stats = {
         "n_sentences": len(rows),

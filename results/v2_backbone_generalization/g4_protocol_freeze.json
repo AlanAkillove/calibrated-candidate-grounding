@@ -1,0 +1,109 @@
+{
+  "artifact": "v2g_g4_g5_protocol_freeze",
+  "protocol": "V2-A1",
+  "round": "V2-G",
+  "branch": "v2-backbone-generalization",
+  "created_utc": "2026-09-30T00:00:00Z",
+  "frozen_before_phase_a": true,
+  "note": "All ten items below are frozen BEFORE any Phase A result is produced. After Phase A results exist, NONE of these may be modified (item 1). Ground-truth verified this session by fresh runtime introspection (_g4_introspect) + source reads, NOT by remembered APIs.",
+  "backbones": {
+    "B1": {
+      "tag": "openclip_b16",
+      "features_root": "cache/v2_backbones/openclip_b16",
+      "b3_root": "results/v2_backbone_generalization/b1_phase0b",
+      "feature_dim": 512,
+      "geo_dim": 6,
+      "b3_params": 214273,
+      "corrected_global_T": {"1": 1.1711449916929477, "2": 1.0707236210403277, "3": 1.057321688843383}
+    },
+    "B2": {
+      "tag": "siglip_b16",
+      "features_root": "cache/v2_backbones/siglip_b16",
+      "b3_root": "results/v2_backbone_generalization/b2_phase0b",
+      "feature_dim": 768,
+      "geo_dim": 6,
+      "b3_params": 312577,
+      "corrected_global_T": {"1": 1.1485137178238147, "2": 1.1414395774313528, "3": 1.103372614452891}
+    }
+  },
+  "frozen_items": {
+    "1_semantic_feature_list": {
+      "module": "ccg.v2.semantic_features",
+      "function": "v2_primary_semantic_stats(z_q, z_i, scores) -> [n, 14] float64",
+      "names": [
+        "q_top1_cos", "q_top2_cos", "q_top3_cos", "q_margin12", "q_margin13", "q_margin23",
+        "winner_competitor_max_cos", "winner_competitor_mean_cos", "winner_competitor_std_cos",
+        "winner_top2_cos", "winner_top3_cos", "winner_top5_mean_cos",
+        "winner_rank_under_query_similarity", "query_cos_spread"
+      ],
+      "n_features": 14,
+      "backbone_neutral": true,
+      "forbidden_in_primary": ["CLIP_TEMPERATURE 0.01", "density_070", "density_080", "raw 512/768d embeddings", "new/removed features"]
+    },
+    "2_feature_order": "The V2_PRIMARY_SEMANTIC_NAMES tuple order above is the exact column order (column_stack). stats block order = ccg.reliability.features.stat_feature_names() (17 cols). R2 = hstack(stats17_std, sem14_std).",
+    "3_normalization_procedure": {
+      "method": "train-only standardization (mirror run_phase1._standardised_blocks / protocol A6.3/A7.3)",
+      "fit": "normalize_fit(concat(stats|sem over K5+K10 reliability_TRAIN rows), fit_rows=all, keys=feature names)",
+      "apply": "normalize_apply to every K block; (x-mean)/(std+1e-8), ddof=0",
+      "isolation": "separate fit per backbone / per scorer_seed / per model family; never shared across backbone or seed"
+    },
+    "4_c_grid": {"values": [0.1, 1.0, 10.0], "selection": "_tune_mean_auroc over Random K5+K10 on reliability_TUNE rows", "tie_break": "within SELECTION_TIE=0.002 prefer the smaller (earlier) C", "applies_to": "both R1 (stats) and R2 (stats+semantic); fitted fresh per backbone/seed (NOT apply_frozen / NOT V1 phase05 chosen C)"},
+    "5_selection_split": {
+      "train": "reliability_train (val_calib images, train_frac 0.70, seed 20260928) Random K5/K10",
+      "tune_select_C": "reliability_tune (val_calib images) Random K5/K10",
+      "forbidden_in_train_or_select": ["K20", "K50", "same_category", "testA", "testB"]
+    },
+    "6_random_hard_manifests": {
+      "manifests_root": "cache/manifests (manifests-v1, seed 20260927, frozen)",
+      "random": "random_testA.jsonl / random_testB.jsonl",
+      "same_category": "same_category_testA.jsonl / same_category_testB.jsonl",
+      "cohort": "ccg.semantic.hard.load_hard_cohort (pooled-test testA+testB); reuse_frozen_construction; same sentence/ref/image/target across backbones",
+      "matched_cells": {"rand5": "random regime C5=same4 cohort", "hard5": "same_category C5=same4 cohort", "rand10": "random C10=same9", "hard10": "same_category C10=same9"},
+      "primary_pair": "rand5 vs hard5 (K5)"
+    },
+    "7_manipulation_metrics": {
+      "source": "ccg.v2.semantic_features.MANIPULATION_METRICS (backbone-neutral continuous cosine only)",
+      "metrics": [["winner_competitor_max_cos", "up"], ["winner_top2_cos", "up"], ["q_margin12", "down"]],
+      "bootstrap": "image-clustered paired shift (hard vs rand), ccg.semantic.hard_eval.paired_shift_bootstrap, 5000 reps, seed 0, ci 0.95",
+      "validity_rule": ">=2/3 metrics correct direction AND >=1 metric CI excludes 0",
+      "on_invalid": "MANIPULATION_INVALID -> that backbone hard-amplification NOT_ASSESSABLE (never FAIL, never REPLICATED)"
+    },
+    "8_bootstrap_seed_draw_policy": {
+      "cluster_unit": "image_id",
+      "replicates": 5000,
+      "bootstrap_seed": 0,
+      "ci": 0.95,
+      "amplification": "ccg.semantic.hard_eval.paired_diff_of_diffs_bootstrap with the SAME cluster_ids + SAME seed for rand and hard -> shared draws across the four SampleStats blocks",
+      "seed_handling": "per-seed reported separately + 3-seed mean+-std; never concatenate seeds into one pool"
+    },
+    "9_g4_gate_thresholds": {
+      "delta_hard_min": 0.015,
+      "delta_hard_ci_low_gt": 0.0,
+      "amplification_min": 0.01,
+      "amplification_ci_low_gt": 0.0,
+      "requires_manipulation_valid": true,
+      "pass_verdict": "HARD_SEMANTIC_REPLICATED",
+      "fail_verdict": "NOT_REPLICATED",
+      "unassessable_verdict": "NOT_ASSESSABLE",
+      "instability_flag": "mean passes gate but only 1/3 seeds same direction -> mark INSTABILITY (report per-seed, not pooled-only)"
+    },
+    "10_dose_response_cohort": {
+      "levels": [0, 2, 4, 8],
+      "cell_source": "ccg run_phase1f expb_m0/2/4/8 level_sample on same8 cohort, k=10",
+      "metric": "delta AUROC(R2-R1) by m",
+      "test": "Spearman rho > 0.8 -> DOSE_RESPONSE_REPLICATED",
+      "role": "secondary only, NOT in the overall gate",
+      "monotonicity_required": false,
+      "note": "reuse frozen cohort; never redefine cohort to chase a trend"
+    }
+  },
+  "r1_r2_definition": {
+    "R1": "Stats Logistic = LogisticModel(C in grid) on stat_features(scores, temperature=corrected_global_T) [n,17]",
+    "R2": "Stats+V2 Semantic Logistic = LogisticModel(C in grid) on hstack(stats17_std, v2_primary_semantic_stats(z_q,z_i,scores)_std) [n,31]",
+    "models": "2 backbone x 3 seeds x 2 models = 12 fitted fresh",
+    "no_sharing": ["coefficients", "normalization", "selected C", "temperature"]
+  },
+  "score_feature_temperature": "all probability/entropy-bearing stats use the backbone+seed's OWN corrected global T (from eval_metadata.temperature_corrected); cosine semantic features are T-independent; native logit scale (100 / 117.331) is provenance only, never used as T",
+  "headline_comparison": "Stats Logistic (R1) vs Stats+V2 Semantic Logistic (R2); MSP is secondary, not the headline",
+  "overall_gate": "B0(B/32) Cardinality=YES & HardSemantic=YES (V1 frozen). >=2/3 backbones with BOTH cardinality AND hard-semantic replicated -> V2_METHOD_DEVELOPMENT_AUTHORIZED=YES. 3/3 with cardinality+valid-manipulation+hard-amplification -> STRONG CROSS-BACKBONE GENERALITY."
+}

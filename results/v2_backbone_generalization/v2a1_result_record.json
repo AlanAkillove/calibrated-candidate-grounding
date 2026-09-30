@@ -1,0 +1,66 @@
+{
+  "artifact": "v2g_v2a1_result_record",
+  "protocol": "V2-A1",
+  "round": "V2-G",
+  "branch": "v2-backbone-generalization",
+  "recorded_utc": "2026-09-30T00:00:00Z",
+  "note": "Append-only result record. Does NOT modify any frozen V2-A1 clause or gate threshold, nor any V1 claim. Every headline value is recomputed from raw artifacts by scripts/audit_v2g_final.py (82 checks, 0 inconsistencies).",
+  "question_numbering": {
+    "Q1": "candidate-cardinality reliability degradation (internal gate G1)",
+    "Q2": "hard-competition semantic amplification (internal gate G2)",
+    "Q3": "whether local-competition method development is justified (overall gate)",
+    "warning": "G4/G5 are decisive evidence for Q2, NOT Q1. Do not conflate with V1 research_protocol Gate Q1/Q2/Q3 or A11 external-confirmation Q1/Q2."
+  },
+  "verdicts": {
+    "Q1_cardinality_generality": {"verdict": "YES", "evidence": "3/3 backbones CARDINALITY_REPLICATED"},
+    "Q2_hard_semantic_generality": {"verdict": "YES", "evidence": "3/3 backbones HARD_SEMANTIC_REPLICATED, valid manipulation, 3/3 seed consistency"},
+    "Q3_method_development": {"verdict": "YES", "rule": ">=2/3 backbones replicate BOTH Q1 and Q2 same direction", "actual": "3/3"},
+    "STRONG_CROSS_BACKBONE_GENERALITY": "YES",
+    "V2_METHOD_DEVELOPMENT_AUTHORIZED": "YES"
+  },
+  "accepted": {
+    "B0_openclip_b32": {"Q1": "YES", "Q2": "YES"},
+    "B1_openclip_b16": {"Q1": "YES", "Q2": "YES"},
+    "B2_siglip_b16": {"Q1": "YES", "Q2": "YES"}
+  },
+  "headline_recomputed": {
+    "B0_openclip_b32": {"K5_acc": 0.790743, "K50_acc": 0.431992, "K5_auroc": 0.842606, "K50_auroc": 0.790445, "e_aurc_worsening": 2.256772, "rer50_drop_pp": 46.596023, "delta_rand": 0.001227, "delta_hard": 0.031848, "amplification": 0.030622, "manipulation_ok": true, "dose_rho": null},
+    "B1_openclip_b16": {"K5_acc": 0.778066, "K50_acc": 0.421591, "K5_auroc": 0.837350, "K50_auroc": 0.783358, "e_aurc_worsening": 2.128776, "rer50_drop_pp": 45.928953, "delta_rand": -0.001233, "delta_hard": 0.021047, "amplification": 0.022280, "manipulation_ok": true, "dose_rho": 1.0},
+    "B2_siglip_b16": {"K5_acc": 0.708047, "K50_acc": 0.287113, "K5_auroc": 0.793050, "K50_auroc": 0.717934, "e_aurc_worsening": 1.685343, "rer50_drop_pp": 46.769942, "delta_rand": 0.004531, "delta_hard": 0.035617, "amplification": 0.031086, "manipulation_ok": true, "dose_rho": 1.0}
+  },
+  "provenance_caveats": {
+    "B0_hard_source": "V1 A8 comparison stats_logistic->e1b_stats_semantic with manipulation cand_vmax/cand_top12_sim; structurally different from V2-G R1->R2 + three-metric manipulation. B0 is a frozen reference row; cross-backbone claims rest on B1/B2.",
+    "B0_dose": "V1 did not run the frozen dose protocol; recorded as NA (null), never fabricated.",
+    "units": {"e_aurc_worsening": "relative-worsening ratio (dimensionless)", "rer50_drop_pp": "percentage points"}
+  },
+  "protocol_history": {
+    "thresholds_frozen_before_results": true,
+    "primary_gates_unmodified_G1_to_G5": true,
+    "semantic_feature_definition_frozen_before_G4": true,
+    "hard_config_unchanged_after_random_results": true,
+    "dose_response_secondary_only": true,
+    "LCR_implemented": false,
+    "manipulation_operationalization": "V2-A1.6 described 2 metrics (>=1 significant); frozen item 7 operationalizes 3 backbone-neutral metrics (winner_competitor_max_cos up / winner_top2_cos up / q_margin12 down; rule >=2/3 direction AND >=1 CI excludes 0) - a tightening, not a post-hoc relaxation."
+  },
+  "interpretation_limits": {
+    "forbidden_phrase": "universal across all vision-language models",
+    "allowed_phrase": "replicated across three tested backbones spanning two vision-language model families and two patch resolutions",
+    "covered": ["OpenCLIP B/32", "OpenCLIP B/16", "SigLIP B/16"],
+    "not_covered": ["Grounding DINO", "BLIP-style cross-encoder", "different proposal family"]
+  },
+  "scientific_observation": {
+    "statement": "SigLIP (B2) has the weakest absolute grounding quality (K5 acc 0.708 / K5 AUROC 0.793) yet the strongest cardinality reliability degradation (delta AUROC K5->K50 = 0.0751) and the strongest hard-semantic amplification among new backbones (A = 0.0311).",
+    "supports": "absolute grounding performance != reliability robustness under candidate-set shift",
+    "causal_claim": false
+  },
+  "verification": {
+    "audit_script": "scripts/audit_v2g_final.py",
+    "audit_checks": 82,
+    "audit_failures": 0,
+    "regression_tests": "tests/test_v2g_regression.py",
+    "regression_items": "18 protocol items + 8 G4/G5 supplements",
+    "full_pytest": {"collected": 774, "passed": 774, "failed": 0, "error": 0, "runtime_seconds": 113, "python": "3.10.19", "torch": "2.5.1+cu121", "cuda": "12.1", "device": "NVIDIA GeForce RTX 4060 Laptop GPU"}
+  },
+  "main_table": "results/v2_backbone_generalization/final_summary.csv",
+  "next_round": "V2-M (Local Competition Reliability Module) - separate design round; protocol must build on these frozen V2-G results. Not started here."
+}

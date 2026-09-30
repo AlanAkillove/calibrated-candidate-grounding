@@ -62,7 +62,10 @@ __all__ = [
     "load_rgb_image",
 ]
 
-#: ViT-B/32 (laion2b_s34b_b79k) joint embedding dimensionality.
+#: Embedding width of the *default* (V1) OpenCLIP ViT-B/32 backbone.  Kept as a
+#: module constant for backward-compatible call sites; the authoritative width
+#: of a built encoder is ``ClipEncoder.feature_dim`` (probed from the live model
+#: so ViT-B/16 and any other open_clip checkpoint report its true dimensionality).
 FEATURE_DIM = 512
 DEFAULT_MODEL_NAME = "ViT-B-32"
 DEFAULT_PRETRAINED = "laion2b_s34b_b79k"
@@ -354,6 +357,9 @@ class ClipEncoderConfig:
     hf_endpoint_source: Optional[str] = None
     tokenizer_name: str = ""
     tokenizer_context_length: int = 77
+    #: joint embedding width of the built backbone (512 for ViT-B/32 and ViT-B/16,
+    #: probed from the model when a different open_clip checkpoint is loaded).
+    feature_dim: int = FEATURE_DIM
     preprocessing: dict = field(default_factory=dict)
 
 
@@ -395,6 +401,11 @@ class ClipEncoder:
         return self.config.precision
 
     @property
+    def feature_dim(self) -> int:
+        """Joint embedding width of *this* backbone (probed at build time)."""
+        return int(self.config.feature_dim)
+
+    @property
     def logit_scale(self) -> float:
         """``model.logit_scale.exp()`` - the native CLIP temperature (1/scale)."""
         return float(self.model.logit_scale.exp().item())
@@ -414,7 +425,7 @@ class ClipEncoder:
         torch = self._torch()
         pil_images = list(images)
         if not pil_images:
-            return np.zeros((0, FEATURE_DIM), dtype=np.float16)
+            return np.zeros((0, self.feature_dim), dtype=np.float16)
         bs = int(batch_size or self.config.batch_size)
         if bs <= 0:
             raise ValueError(f"batch_size must be positive, got {bs}")
@@ -444,7 +455,7 @@ class ClipEncoder:
         boxes_arr = np.asarray(boxes, dtype=np.float32).reshape(-1, 4)
         self._torch()  # fail early without torch, before touching pixels
         crops, valid, _ = crop_image_at_boxes(image, boxes_arr)
-        features = np.zeros((boxes_arr.shape[0], FEATURE_DIM), dtype=np.float16)
+        features = np.zeros((boxes_arr.shape[0], self.feature_dim), dtype=np.float16)
         if valid.any():
             features[valid] = self.encode_images(crops, batch_size=batch_size)
         return features, valid
@@ -454,7 +465,7 @@ class ClipEncoder:
         torch = self._torch()
         texts = [str(t) for t in texts]
         if not texts:
-            return np.zeros((0, FEATURE_DIM), dtype=np.float16)
+            return np.zeros((0, self.feature_dim), dtype=np.float16)
         bs = int(batch_size or self.config.batch_size)
         if bs <= 0:
             raise ValueError(f"batch_size must be positive, got {bs}")
@@ -492,7 +503,7 @@ class ClipEncoder:
             "pretrained": self.config.pretrained,
             "checkpoint_path": self.config.checkpoint_path,
             "checkpoint_sha256": self.config.checkpoint_sha256,
-            "embedding_dim": FEATURE_DIM,
+            "embedding_dim": self.feature_dim,
             "precision": self.config.precision,
             "resolution": int(self.config.resolution),
             "preprocessing": dict(self.config.preprocessing),
@@ -508,6 +519,27 @@ def _as_rgb(image):
     if not isinstance(image, Image.Image):
         raise TypeError(f"expected a PIL.Image, got {type(image).__name__}")
     return image if image.mode == "RGB" else image.convert("RGB")
+
+
+def _probe_feature_dim(model, preprocess, device, torch, fallback: int) -> int:
+    """Run one tiny dummy image through the *live* model to read its width.
+
+    open_clip exposes the joint dimensionality inconsistently across versions
+    (``model.embed_dim`` is absent on some), so the only backbone-agnostic
+    source of truth is the output shape of ``encode_image``.  Any failure falls
+    back to the documented V1 width so a probe never blocks encoder creation.
+    """
+    try:
+        Image = _pil()
+        tensor = preprocess(Image.new("RGB", (32, 32))).unsqueeze(0).to(device)
+        with torch.no_grad():
+            out = model.encode_image(tensor)
+        dim = int(out.shape[-1])
+        if dim > 0:
+            return dim
+    except Exception:  # pragma: no cover - defensive; a probe must not be fatal
+        pass
+    return int(fallback)
 
 
 def build_encoder(
@@ -568,13 +600,18 @@ def build_encoder(
 
     model, _preprocess_train, preprocess_val = open_clip.create_model_and_transforms(
         model_name,
-        pretrained=pretrained,
-        cache_dir=None if cache_dir is None else str(cache_dir),
+        # load the audited weights directly from the resolved local file so the
+        # offline target machine never re-resolves the ``pretrained`` tag over
+        # the network; open_clip accepts a checkpoint path here (verified).
+        pretrained=str(resolved_checkpoint),
     )
     model = model.to(torch_device).eval()
     for parameter in model.parameters():
         parameter.requires_grad_(False)
     tokenize = open_clip.get_tokenizer(model_name)
+    feature_dim = _probe_feature_dim(
+        model, preprocess_val, torch_device, torch, fallback=FEATURE_DIM
+    )
 
     config = ClipEncoderConfig(
         model_name=model_name,
@@ -590,6 +627,7 @@ def build_encoder(
         hf_endpoint_source=endpoint_source,
         tokenizer_name=type(tokenize).__name__,
         tokenizer_context_length=int(getattr(tokenize, "context_length", 77)),
+        feature_dim=int(feature_dim),
         preprocessing=describe_preprocessing(preprocess_val),
     )
     return ClipEncoder(model=model, preprocess=preprocess_val, tokenize=tokenize, config=config)

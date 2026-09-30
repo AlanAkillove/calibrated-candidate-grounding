@@ -1,0 +1,85 @@
+{
+  "status": "complete",
+  "model": "b3_independent_mlp",
+  "seed": 1,
+  "lr": 0.001,
+  "best_lr_from_grid": 0.001,
+  "epochs_run": 8,
+  "best_epoch": 5,
+  "best_val_select_nll": 0.7506975999952507,
+  "val_select_nll_curve": [
+    0.7846691633392789,
+    0.7651673409301868,
+    0.7581775333655458,
+    0.7521887344518281,
+    0.7506975999952507,
+    0.78061925049491,
+    0.7685929776929443,
+    0.7738629382083959
+  ],
+  "val_select_nll_by_k": {
+    "5": [
+      0.5896716715131212,
+      0.5732064631068408,
+      0.5706509614028872,
+      0.5644181851112654,
+      0.5599720745909912,
+      0.5889095053618826,
+      0.5773321132413767,
+      0.5805990627302453
+    ],
+    "10": [
+      0.9796666551654368,
+      0.9571282187535329,
+      0.9457041053282045,
+      0.9399592837923907,
+      0.9414231253995101,
+      0.9723289956279374,
+      0.9598538421445119,
+      0.9671268136865466
+    ]
+  },
+  "val_select_n_rows_by_k": {
+    "5": 5325,
+    "10": 5325
+  },
+  "train_loss_curve": [
+    0.8498104550004713,
+    0.7150499494685982,
+    0.6662541065067374,
+    0.6325360551862685,
+    0.6064115348422888,
+    0.5853208535175859,
+    0.5669963333281018,
+    0.55243593547644
+  ],
+  "wall_seconds": 195.89241671562195,
+  "num_parameters": 214273,
+  "feature_dim": 512,
+  "hidden_dim": 128,
+  "geo_dim": 6,
+  "param_budget": 500000,
+  "temperature": 1.0,
+  "epochs": 15,
+  "patience": 3,
+  "batch_size": 64,
+  "weight_decay": 0.0001,
+  "train_ks": [
+    5,
+    10
+  ],
+  "eval_ks": [
+    5,
+    10
+  ],
+  "selection_metric": "val_select_mean_nll_K5_K10",
+  "torch_version": "2.5.1+cu121",
+  "cuda_version": "12.1",
+  "device": "cuda",
+  "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "git_commit": "72d86d0ee16cbb116c4ebdf6dae76d0ce226c07e",
+  "bank_fingerprint": "ebd2690e4b1c1d524fbee80e6ba48dbfadd9f2f5e58b08566228d409afd55747",
+  "manifest_meta": "random_train.meta.json",
+  "model_path": "seed_1/model.npz",
+  "created_utc": "2026-09-30T03:18:20.079244+00:00"
+}

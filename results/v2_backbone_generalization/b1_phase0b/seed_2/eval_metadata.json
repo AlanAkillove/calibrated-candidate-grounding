@@ -1,0 +1,277 @@
+{
+  "artifact": "phase0b_independent_seed",
+  "seed": 2,
+  "status": "complete",
+  "created_utc": "2026-09-30T04:45:30Z",
+  "git_commit": "72d86d0ee16cbb116c4ebdf6dae76d0ce226c07e",
+  "device": "cuda",
+  "ks": [
+    5,
+    10,
+    20,
+    50
+  ],
+  "n_rows_common": {
+    "5": 20799,
+    "10": 20799,
+    "20": 20799,
+    "50": 20799
+  },
+  "n_rows_common_pooled": 20799,
+  "temperature_corrected": 1.0707236210403277,
+  "corrected_fit": {
+    "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+    "temperature": 1.0707236210403277,
+    "u_opt": 0.06833470124473424,
+    "bounds": [
+      1e-05,
+      1000.0
+    ],
+    "bounds_initial": [
+      0.001,
+      10.0
+    ],
+    "bounds_expanded": true,
+    "n_expansions": 1,
+    "interior": true,
+    "decades_to_low": 5.0296773836730955,
+    "decades_to_high": 2.9703226163269045,
+    "warning": null,
+    "warning_detail": null,
+    "objective": 0.732936048119545,
+    "n_sets": 10566,
+    "nll_before": 0.7342382665560714,
+    "nll_after": 0.732936048119545
+  },
+  "oracle_fits": {
+    "5": {
+      "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+      "temperature": 1.0858299725375793,
+      "u_opt": 0.08234464621356843,
+      "bounds": [
+        1e-05,
+        1000.0
+      ],
+      "bounds_initial": [
+        0.001,
+        10.0
+      ],
+      "bounds_expanded": true,
+      "n_expansions": 1,
+      "interior": true,
+      "decades_to_low": 5.035761825464828,
+      "decades_to_high": 2.9642381745351716,
+      "warning": null,
+      "warning_detail": null,
+      "objective": 0.5441460366147562,
+      "n_sets": 5283,
+      "nll_before": 0.5456092217760213,
+      "nll_after": 0.5441460366147562
+    },
+    "10": {
+      "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+      "temperature": 1.0612516004547177,
+      "u_opt": 0.059448966726822434,
+      "bounds": [
+        1e-05,
+        1000.0
+      ],
+      "bounds_initial": [
+        0.001,
+        10.0
+      ],
+      "bounds_expanded": true,
+      "n_expansions": 1,
+      "interior": true,
+      "decades_to_low": 5.025818358204309,
+      "decades_to_high": 2.974181641795691,
+      "warning": null,
+      "warning_detail": null,
+      "objective": 0.921657706594822,
+      "n_sets": 5283,
+      "nll_before": 0.9228673113361215,
+      "nll_after": 0.921657706594822
+    },
+    "20": {
+      "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+      "temperature": 1.0301508048927988,
+      "u_opt": 0.029705204041558117,
+      "bounds": [
+        1e-05,
+        1000.0
+      ],
+      "bounds_initial": [
+        0.001,
+        10.0
+      ],
+      "bounds_expanded": true,
+      "n_expansions": 1,
+      "interior": true,
+      "decades_to_low": 5.012900806199059,
+      "decades_to_high": 2.9870991938009412,
+      "warning": null,
+      "warning_detail": null,
+      "objective": 1.3742714315487046,
+      "n_sets": 5283,
+      "nll_before": 1.3746877109966442,
+      "nll_after": 1.3742714315487046
+    },
+    "50": {
+      "method": "scipy.optimize.minimize_scalar(bounded) on u=lnT",
+      "temperature": 0.9953220914703019,
+      "u_opt": -0.004688884185924707,
+      "bounds": [
+        0.001,
+        10.0
+      ],
+      "bounds_initial": [
+        0.001,
+        10.0
+      ],
+      "bounds_expanded": false,
+      "n_expansions": 0,
+      "interior": true,
+      "decades_to_low": 2.9979636434717696,
+      "decades_to_high": 1.0020363565282306,
+      "warning": null,
+      "warning_detail": null,
+      "objective": 2.078770061529924,
+      "n_sets": 5231,
+      "nll_before": 2.0787839675008493,
+      "nll_after": 2.078770061529924
+    }
+  },
+  "training": {
+    "status": "complete",
+    "model": "b3_independent_mlp",
+    "seed": 2,
+    "lr": 0.001,
+    "best_lr_from_grid": 0.001,
+    "epochs_run": 5,
+    "best_epoch": 2,
+    "best_val_select_nll": 0.7742678358212315,
+    "val_select_nll_curve": [
+      0.7956804873814813,
+      0.7742678358212315,
+      0.7743580980118119,
+      0.7802768748335834,
+      0.7812152903983766
+    ],
+    "val_select_nll_by_k": {
+      "5": [
+        0.6015175009318477,
+        0.5846122516605017,
+        0.588036166107284,
+        0.593393477120082,
+        0.5951547249611772
+      ],
+      "10": [
+        0.9898434738311148,
+        0.9639234199819612,
+        0.9606800299163396,
+        0.967160272547085,
+        0.9672758558355758
+      ]
+    },
+    "val_select_n_rows_by_k": {
+      "5": 5325,
+      "10": 5325
+    },
+    "train_loss_curve": [
+      0.8560261671827627,
+      0.7228300511290174,
+      0.6798038455872891,
+      0.651207679210806,
+      0.6258732504885217
+    ],
+    "wall_seconds": 117.84978127479553,
+    "num_parameters": 214273,
+    "feature_dim": 512,
+    "hidden_dim": 128,
+    "geo_dim": 6,
+    "param_budget": 500000,
+    "temperature": 1.0,
+    "epochs": 15,
+    "patience": 3,
+    "batch_size": 64,
+    "weight_decay": 0.0001,
+    "train_ks": [
+      5,
+      10
+    ],
+    "eval_ks": [
+      5,
+      10
+    ],
+    "selection_metric": "val_select_mean_nll_K5_K10",
+    "torch_version": "2.5.1+cu121",
+    "cuda_version": "12.1",
+    "device": "cuda",
+    "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "git_commit": "72d86d0ee16cbb116c4ebdf6dae76d0ce226c07e",
+    "bank_fingerprint": "ebd2690e4b1c1d524fbee80e6ba48dbfadd9f2f5e58b08566228d409afd55747",
+    "manifest_meta": "random_train.meta.json",
+    "model_path": "seed_2/model.npz",
+    "created_utc": "2026-09-30T03:20:17.941925+00:00"
+  },
+  "hard_checks": {
+    "score_invariance": {
+      "check": "score_invariance",
+      "status": "passed",
+      "atol": 0.0,
+      "n_candidate_pairs": 1148625,
+      "n_violations": 0,
+      "max_abs_diff": 0.0
+    },
+    "rank_monotonic": {
+      "check": "rank_monotonic",
+      "status": "passed",
+      "n_sentences": 20799,
+      "pairs": [
+        {
+          "K_lo": 5,
+          "K_hi": 10,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 5,
+          "K_hi": 20,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 5,
+          "K_hi": 50,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 10,
+          "K_hi": 20,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 10,
+          "K_hi": 50,
+          "n_violations": 0
+        },
+        {
+          "K_lo": 20,
+          "K_hi": 50,
+          "n_violations": 0
+        }
+      ],
+      "n_violations": 0
+    },
+    "accuracy_monotonic": {
+      "check": "accuracy_monotonic",
+      "status": "passed",
+      "accuracies": {
+        "5": 0.775902687629213,
+        "10": 0.6608490792826578,
+        "20": 0.5489206211837108,
+        "50": 0.41689504303091496
+      },
+      "n_violations": 0,
+      "note": "confidence monotonicity in K is explicitly NOT checked (protocol section 20)"
+    }
+  }
+}

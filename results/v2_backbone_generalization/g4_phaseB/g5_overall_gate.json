@@ -1,0 +1,31 @@
+{
+  "artifact": "v2g_g5_overall_gate",
+  "cross_backbone": [
+    {
+      "backbone": "B0_v1_b32",
+      "cardinality_replicated": true,
+      "hard_semantic_replicated": true,
+      "source": "V1 (frozen)"
+    },
+    {
+      "backbone": "B1_openclip_b16",
+      "cardinality_replicated": true,
+      "hard_semantic_replicated": true,
+      "hard_verdict": "HARD_SEMANTIC_REPLICATED",
+      "manipulation_ok": true
+    },
+    {
+      "backbone": "B2_siglip_b16",
+      "cardinality_replicated": true,
+      "hard_semantic_replicated": true,
+      "hard_verdict": "HARD_SEMANTIC_REPLICATED",
+      "manipulation_ok": true
+    }
+  ],
+  "n_backbones": 3,
+  "n_both_replicated": 3,
+  "authorized_rule": ">=2/3 backbones with BOTH cardinality AND hard-semantic replicated",
+  "V2_METHOD_DEVELOPMENT_AUTHORIZED": true,
+  "STRONG_CROSS_BACKBONE_GENERALITY": true,
+  "note": "B0 counts as the V1 B/32 frozen replication; B1/B2 come from this G4 Phase B."
+}

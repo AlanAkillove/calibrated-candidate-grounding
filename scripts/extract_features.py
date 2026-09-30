@@ -57,6 +57,10 @@ from ccg.features.clip_encoder import (  # noqa: E402
     DEFAULT_BATCH_SIZE,
     DEFAULT_MODEL_NAME,
     DEFAULT_PRETRAINED,
+)
+from ccg.features.backbone import (  # noqa: E402
+    BACKEND_OPEN_CLIP,
+    BACKEND_SIGLIP,
     build_encoder,
 )
 from ccg.utils.logging import utc_now_iso  # noqa: E402
@@ -160,6 +164,12 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--model-name", default=DEFAULT_MODEL_NAME, help="FROZEN: ViT-B/32")
     parser.add_argument("--pretrained", default=DEFAULT_PRETRAINED, help="FROZEN: laion2b_s34b_b79k")
+    parser.add_argument(
+        "--backend",
+        default=BACKEND_OPEN_CLIP,
+        choices=(BACKEND_OPEN_CLIP, BACKEND_SIGLIP),
+        help="encoder backend: open_clip (V1 default) or siglip (transformers)",
+    )
     parser.add_argument("--checkpoint", type=Path, default=None, help="local weights (skip download)")
     parser.add_argument(
         "--hf-cache-dir", type=Path, default=Path("cache/hf_hub"), help="huggingface cache dir"
@@ -226,6 +236,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             device=args.device,
             precision=args.precision,
             cache_dir=args.hf_cache_dir,
+            backend=args.backend,
             model_name=args.model_name,
             pretrained=args.pretrained,
             checkpoint_path=args.checkpoint,
@@ -234,8 +245,9 @@ def main(argv: Optional[List[str]] = None) -> int:
             download_attempts=args.download_attempts,
         )
         log(
-            f"encoder: open_clip {encoder.config.library_version}, "
-            f"{encoder.config.model_name}/{encoder.config.pretrained} on {encoder.config.device}"
+            f"encoder: {args.backend} {encoder.config.library_version}, "
+            f"{encoder.config.model_name}/{encoder.config.pretrained} on {encoder.config.device} "
+            f"(feature_dim={encoder.feature_dim})"
         )
         log(f"checkpoint: {encoder.config.checkpoint_path}")
         log(f"checkpoint sha256: {encoder.config.checkpoint_sha256}")
@@ -258,9 +270,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     }
     if encoder is not None:
         stats["backbone_config"] = {
+            "backend": args.backend,
             "model_name": encoder.config.model_name,
             "pretrained": encoder.config.pretrained,
             "library_version": encoder.config.library_version,
+            "feature_dim": int(encoder.feature_dim),
             "checkpoint_sha256": encoder.config.checkpoint_sha256,
             "hf_endpoint": encoder.config.hf_endpoint,
             "hf_endpoint_source": encoder.config.hf_endpoint_source,
@@ -300,7 +314,8 @@ def main(argv: Optional[List[str]] = None) -> int:
             log("region phase needs the encoder - skipped")
         else:
             region_writer = StreamingRegionWriter(
-                out_root / REGION_FILENAME, resume=args.resume, flush_every=args.flush_every
+                out_root / REGION_FILENAME, resume=args.resume, flush_every=args.flush_every,
+                feature_dim=encoder.feature_dim,
             )
             cached = sorted(region_writer.processed)
             missing = extract_regions.resume_missing_ids(cached, target_ids)
@@ -376,7 +391,8 @@ def main(argv: Optional[List[str]] = None) -> int:
             log("global phase needs the encoder - skipped")
         else:
             global_writer = StreamingGlobalWriter(
-                out_root / GLOBAL_FILENAME, resume=args.resume, flush_every=args.flush_every
+                out_root / GLOBAL_FILENAME, resume=args.resume, flush_every=args.flush_every,
+                feature_dim=encoder.feature_dim,
             )
             cached = sorted(global_writer.processed)
             missing = extract_regions.resume_missing_ids(cached, target_ids)

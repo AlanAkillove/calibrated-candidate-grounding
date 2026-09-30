@@ -172,7 +172,8 @@ def run_extraction(args: argparse.Namespace, log) -> Dict[str, Any]:
     # ---- 2: region crops (bank proposals of the cohort images) -------------
     bank = Path(args.bank)
     started = time.perf_counter()
-    writer = StreamingRegionWriter(out_root / REGION_FILENAME, resume=args.resume)
+    writer = StreamingRegionWriter(out_root / REGION_FILENAME, resume=args.resume,
+                                   feature_dim=encoder.feature_dim)
     cached = sorted(writer.processed)
     missing = extract_regions.resume_missing_ids(cached, target_ids)
     log(f"[region] cached={len(cached)} to_process={len(missing)}")

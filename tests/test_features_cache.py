@@ -35,6 +35,7 @@ from ccg.features.cache import (  # noqa: E402
     update_metadata,
     write_feature_cache,
     write_global_cache,
+    write_region_cache,
     write_text_cache,
     write_text_index,
 )
@@ -449,6 +450,7 @@ class _FakeEncoder:
     batching/ordering/invalid-stash logic of the ``run_*_extraction`` helpers."""
 
     context_length = 77
+    feature_dim = FEATURE_DIM
 
     def __init__(self):
         self.image_batches = []
@@ -595,3 +597,152 @@ def test_run_global_and_text_extraction_roundtrip(tmp_path):
     )
     assert resumed["skipped"] is True
     assert encoder.text_calls == calls_before_resume  # nothing re-encoded on resume
+
+
+# ---------------------------------------------------------------------------
+# dynamic feature_dim (V2-G): a cache carries its backbone's own width (768 etc.)
+# ---------------------------------------------------------------------------
+D768 = 768
+
+
+def _synth_dim(root: Path, dim: int, *, seed=0):
+    rng = np.random.default_rng(seed)
+    region = {1: _unit(rng, 5, dim), 2: _unit(rng, 3, dim)}
+    region[2][0] = 0.0
+    text = {0: _unit(rng, 1, dim)[0], 1: _unit(rng, 1, dim)[0]}
+    global_ = {1: _unit(rng, 1, dim)[0], 2: _unit(rng, 1, dim)[0]}
+    metadata = {"backbone": {"model_name": "siglip-base-patch16-224"}}
+    write_feature_cache(root, region, text, global_, metadata)
+    return region, text, global_
+
+
+def test_write_and_read_768_feature_cache(tmp_path):
+    region, text, global_ = _synth_dim(tmp_path, D768)
+    with FeatureCache.open(tmp_path) as cache:
+        assert cache.feature_dim == D768
+        assert read_metadata(tmp_path)["feature_dim"] == D768
+        for image_id, block in region.items():
+            got = cache.region_features(image_id)
+            assert got.shape == (block.shape[0], D768)
+            assert np.array_equal(got, np.asarray(block, dtype=np.float16))
+        for sid, vector in text.items():
+            assert cache.text_features(sid).shape == (D768,)
+        for image_id in global_:
+            assert cache.global_feature(image_id).shape == (D768,)
+
+
+def test_feature_dim_written_to_every_h5_attr(tmp_path):
+    import h5py
+
+    _synth_dim(tmp_path, D768)
+    for name in (REGION_FILENAME, TEXT_FILENAME, GLOBAL_FILENAME):
+        with h5py.File(str(tmp_path / name), "r") as handle:
+            assert int(handle.attrs["feature_dim"]) == D768
+            assert int(handle["features"].shape[1]) == D768
+
+
+def test_v1_512_cache_still_reports_512(synth):
+    root, _region, _text, _global = synth
+    with FeatureCache.open(root) as cache:
+        assert cache.feature_dim == FEATURE_DIM
+
+
+def test_mixed_width_blocks_are_rejected(tmp_path):
+    rng = np.random.default_rng(1)
+    region = {1: _unit(rng, 2, FEATURE_DIM), 2: _unit(rng, 2, D768)}
+    with pytest.raises(ValueError, match="mixed feature widths"):
+        write_region_cache(tmp_path, region)
+
+
+def test_explicit_feature_dim_conflicts_with_arrays(tmp_path):
+    rng = np.random.default_rng(2)
+    region = {1: _unit(rng, 2, D768)}
+    with pytest.raises(ValueError, match="given for feature_dim"):
+        write_region_cache(tmp_path, region, feature_dim=FEATURE_DIM)
+
+
+def test_empty_cache_requires_explicit_feature_dim(tmp_path):
+    with pytest.raises(ValueError, match="empty cache"):
+        write_feature_cache(tmp_path, {}, {}, {}, {})
+    write_feature_cache(tmp_path, {}, {}, {}, {"backbone": {}}, feature_dim=D768)
+    assert read_metadata(tmp_path)["feature_dim"] == D768
+    with FeatureCache.open(tmp_path) as cache:
+        # the empty datasets still carry the explicit width, so the reader sees it
+        assert cache.feature_dim == D768
+
+
+def test_cross_part_width_mismatch_rejected_on_open(tmp_path):
+    rng = np.random.default_rng(3)
+    write_region_cache(tmp_path, {1: _unit(rng, 2, D768)})
+    write_text_cache(tmp_path, {0: _unit(rng, 1, FEATURE_DIM)[0]}, ["s0"])
+    update_metadata(tmp_path, {"cache_version": CACHE_VERSION})
+    with pytest.raises(ValueError, match="disagrees with the other parts"):
+        FeatureCache.open(tmp_path)
+
+
+def test_streaming_writer_768_roundtrip_and_resume(tmp_path):
+    rng = np.random.default_rng(4)
+    blocks = {1: _unit(rng, 2, D768), 2: _unit(rng, 3, D768), 3: _unit(rng, 1, D768)}
+    path = tmp_path / REGION_FILENAME
+    writer = StreamingRegionWriter(path, resume=False, feature_dim=D768)
+    assert writer.feature_dim == D768
+    writer.append(1, blocks[1])
+    writer.flush()
+    writer.abandon()
+
+    resumed = StreamingRegionWriter(path, resume=True, feature_dim=D768)
+    assert resumed.feature_dim == D768
+    resumed.append(2, blocks[2])
+    resumed.append(3, blocks[3])
+    resumed.finish()
+    update_metadata(tmp_path, {"cache_version": CACHE_VERSION})
+    with FeatureCache.open(tmp_path) as cache:
+        assert cache.feature_dim == D768
+        for image_id, block in blocks.items():
+            assert np.array_equal(cache.region_features(image_id), np.asarray(block, dtype=np.float16))
+
+
+def test_streaming_resume_rejects_width_change(tmp_path):
+    rng = np.random.default_rng(7)
+    path = tmp_path / REGION_FILENAME
+    writer = StreamingRegionWriter(path, resume=False, feature_dim=D768)
+    writer.append(1, _unit(rng, 2, D768))
+    writer.finish()
+    with pytest.raises(ValueError, match="stored feature width"):
+        StreamingRegionWriter(path, resume=True, feature_dim=FEATURE_DIM)
+
+
+class _FakeEncoder768(_FakeEncoder):
+    """Same content-addressed fake at the SigLIP width (proves the a4 wiring)."""
+
+    feature_dim = D768
+
+    @staticmethod
+    def _vector(seed: int) -> np.ndarray:
+        rng = np.random.default_rng(abs(int(seed)) % (2**31 - 1))
+        return _unit(rng, 1, D768)[0].astype(np.float16)
+
+
+def test_run_region_extraction_768_through_encoder_dim(tmp_path):
+    from ccg.features.clip_encoder import crop_image_at_boxes, load_rgb_image
+
+    img_a = _make_jpeg(tmp_path / "a.jpg", 64, 48, 1)
+    boxes_a = np.asarray(
+        [[2.0, 3.0, 33.0, 20.0], [10.0, 10.0, 10.0, 30.0], [0.0, 0.0, 64.0, 48.0]],
+        dtype=np.float32,
+    )
+    encoder = _FakeEncoder768()
+    writer = StreamingRegionWriter(
+        tmp_path / REGION_FILENAME, resume=False, feature_dim=encoder.feature_dim
+    )
+    run_region_extraction(encoder, [(11, boxes_a, img_a)], writer, batch_size=2, log=lambda _m: None)
+    writer.finish()
+    update_metadata(tmp_path, {"cache_version": CACHE_VERSION})
+    with FeatureCache.open(tmp_path) as cache:
+        assert cache.feature_dim == D768
+        stored = cache.region_features(11)
+        assert stored.shape == (3, D768)
+        # the invalid middle box is a zero row; the two valid ones match the encoder
+        assert np.array_equal(stored[1], np.zeros(D768, dtype=np.float16))
+        crops, valid, _ = crop_image_at_boxes(load_rgb_image(img_a), boxes_a)
+        assert np.array_equal(stored[valid], encoder.encode_images(crops))

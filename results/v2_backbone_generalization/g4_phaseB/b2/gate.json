@@ -1,0 +1,110 @@
+{
+  "protocol": "V2-G G4 item 9 (frozen before Phase A)",
+  "comparison": "R1_stats -> R2_stats_sem on SameCat-K5 (matched random control)",
+  "delta_hard_mean": 0.03561693692452742,
+  "delta_hard_ci_low_mean": 0.031073619223607112,
+  "amplification_mean": 0.031086021237940836,
+  "amplification_ci_low_mean": 0.025654738522104318,
+  "per_seed_delta_hard": {
+    "b3_seed1": 0.03335349931804077,
+    "b3_seed2": 0.030283585493803722,
+    "b3_seed3": 0.04321372596173778
+  },
+  "per_seed_delta_hard_ci_low": {
+    "b3_seed1": 0.028912312422835332,
+    "b3_seed2": 0.025671716904987082,
+    "b3_seed3": 0.038636828342998926
+  },
+  "per_seed_amplification": {
+    "b3_seed1": 0.029649959761173905,
+    "b3_seed2": 0.02547044638492313,
+    "b3_seed3": 0.03813765756772547
+  },
+  "per_seed_amplification_ci_low": {
+    "b3_seed1": 0.024371265137194245,
+    "b3_seed2": 0.019931806992075075,
+    "b3_seed3": 0.03266114343704364
+  },
+  "pass_delta_hard": true,
+  "pass_amplification": true,
+  "n_seed_same_direction": 3,
+  "n_seeds": 3,
+  "instability": false,
+  "manipulation_ok": true,
+  "verdict": "HARD_SEMANTIC_REPLICATED",
+  "thresholds": {
+    "delta_hard_min": 0.015,
+    "delta_hard_ci_low_gt": 0.0,
+    "amplification_min": 0.01,
+    "amplification_ci_low_gt": 0.0,
+    "requires_manipulation_valid": true
+  },
+  "seed_mean_delta_reference": 0.03561693692452742,
+  "seed_ci_low_reference": [
+    0.028912312422835332,
+    0.025671716904987082,
+    0.038636828342998926
+  ],
+  "manipulation": {
+    "metrics": [
+      [
+        "winner_competitor_max_cos",
+        "up"
+      ],
+      [
+        "winner_top2_cos",
+        "up"
+      ],
+      [
+        "q_margin12",
+        "down"
+      ]
+    ],
+    "per_seed": {
+      "b3_seed1": {
+        "metrics_dir_ok": 2,
+        "metrics_ci_excl": 2,
+        "seed_valid": true
+      },
+      "b3_seed2": {
+        "metrics_dir_ok": 2,
+        "metrics_ci_excl": 2,
+        "seed_valid": true
+      },
+      "b3_seed3": {
+        "metrics_dir_ok": 2,
+        "metrics_ci_excl": 2,
+        "seed_valid": true
+      }
+    },
+    "n_seed_valid": 3,
+    "n_seeds": 3,
+    "rule": "per-seed: >=2/3 metrics correct dir AND >=1 CI excludes 0; backbone ok = >=2/3 seeds valid",
+    "manipulation_ok": true
+  },
+  "dose": {
+    "levels": [
+      0,
+      2,
+      4,
+      8
+    ],
+    "delta_mean_by_level": {
+      "0": 0.0077607906894100465,
+      "2": 0.01954015330142252,
+      "4": 0.026310587301564065,
+      "8": 0.043134814896656416
+    },
+    "spearman_rho": 1.0,
+    "replicated": true,
+    "role": "secondary (not in the overall gate)"
+  },
+  "stop_checks_max_abs_delta": {
+    "base_r5/b3_seed1": 1.9073486328125e-05,
+    "base_r5/b3_seed2": 1.6689300537109375e-05,
+    "base_r5/b3_seed3": 1.621246337890625e-05,
+    "base_r10/b3_seed1": 1.9073486328125e-05,
+    "base_r10/b3_seed2": 1.8596649169921875e-05,
+    "base_r10/b3_seed3": 1.7642974853515625e-05
+  }
+}

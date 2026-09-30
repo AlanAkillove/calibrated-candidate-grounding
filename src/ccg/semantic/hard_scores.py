@@ -25,7 +25,7 @@ from typing import Callable, Dict, Mapping, Optional, Sequence, Tuple
 import numpy as np
 
 from ..experiment import phase0b
-from ..models.b3_data import FEATURE_DIM, GEO_DIM, B3Corpus, geometry_features_centered
+from ..models.b3_data import GEO_DIM, B3Corpus, geometry_features_centered
 from ..models.independent import IndependentMLPScorer
 from ..reliability import data as rdata
 
@@ -100,8 +100,9 @@ def materialise_examples(
     """
     k = int(k)
     n = len(samples)
-    z_q = np.empty((n, FEATURE_DIM), dtype=np.float32)
-    z_i = np.empty((n, k, FEATURE_DIM), dtype=np.float32)
+    feature_dim = int(corpus.feature_dim)
+    z_q = np.empty((n, feature_dim), dtype=np.float32)
+    z_i = np.empty((n, k, feature_dim), dtype=np.float32)
     geometry = np.empty((n, k, GEO_DIM), dtype=np.float32)
     cache = {} if text_cache is None else text_cache
     for i, sample in enumerate(samples):

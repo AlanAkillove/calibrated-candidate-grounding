@@ -105,7 +105,11 @@ from ccg.models.b3_data import (
     IMAGE_SIZES_FILENAME,
     build_image_sizes,
 )
-from ccg.models.independent import IndependentMLPScorer, build_candidate_inputs
+from ccg.models.independent import (
+    PARAM_BUDGET,
+    IndependentMLPScorer,
+    build_candidate_inputs,
+)
 
 __all__ = [
     "B3_VARIANTS",
@@ -482,9 +486,9 @@ def load_b3_model(
     """Rebuild one B3 checkpoint from ``seed_{s}/model.npz`` + ``training.json``.
 
     ``training.json`` carries ``feature_dim`` / ``hidden_dim`` / ``geo_dim`` /
-    ``temperature`` (written by ``scripts/train_b3.py``); the state dict alone
-    cannot restore ``geo_dim``, so the config is authoritative.  A missing or
-    incomplete checkpoint raises instead of being silently defaulted.
+    ``temperature`` / ``param_budget`` (written by ``scripts/train_b3.py``); the
+    state dict alone cannot restore ``geo_dim``, so the config is authoritative.  A
+    missing or incomplete checkpoint raises instead of being silently defaulted.
     """
     seed_dir = Path(seed_dir)
     model_path = seed_dir / MODEL_FILENAME
@@ -499,6 +503,11 @@ def load_b3_model(
     geo_dim = int(payload.get("geo_dim", GEO_DIM))
     temperature = float(payload.get("temperature", 1.0))
     seed = int(payload.get("seed", 0))
+    # The V2-G round froze its own decision-module cap (protocol.json scorers.layerB
+    # "params < 0.5M") that is looser than the V1 Phase-0 code default, so the
+    # budget used at training time is persisted and read back here; V1 checkpoints
+    # that predate the field fall back to the original PARAM_BUDGET constant.
+    param_budget = int(payload.get("param_budget", PARAM_BUDGET))
     model = IndependentMLPScorer(
         feature_dim=feature_dim,
         hidden_dim=hidden_dim,
@@ -506,6 +515,7 @@ def load_b3_model(
         temperature=temperature,
         device=device,
         seed=seed,
+        param_budget=param_budget,
     )
     model.load(model_path)
     return model, payload

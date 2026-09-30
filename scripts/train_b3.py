@@ -51,7 +51,6 @@ if str(_SRC) not in sys.path:
 
 from ccg.models.b3_data import (  # noqa: E402
     EVAL_KS,
-    FEATURE_DIM,
     GEO_DIM,
     TARGET_LOCAL_INDEX,
     TRAIN_KS,
@@ -64,6 +63,15 @@ from ccg.models.independent import IndependentMLPScorer, build_candidate_inputs 
 __all__ = ["build_parser", "main", "train_seed", "evaluate_nll", "run_grid"]
 
 HIDDEN_DIM = 128
+# V2-G: protocol.json (scorers.layerB) froze this round's trainable decision
+# module at "params < 0.5M" with the first-layer width auto-adjusting to
+# embed_dim.  The 768-d SigLIP backbone yields 312,577 params, which the stricter
+# V1 Phase-0 code default (ccg.models.independent.PARAM_BUDGET = 300_000) would
+# reject even though it satisfies this round's frozen cap.  The V2-G run therefore
+# uses the round's own cap uniformly for every backbone, while hidden_dim stays
+# frozen at 128 so the decision module is architecturally identical across
+# B0/B1/B2.  The V1 constant itself is left untouched.
+PARAM_BUDGET_V2 = 500_000
 DEFAULT_LR_GRID: Tuple[float, ...] = (1e-4, 3e-4, 1e-3)
 DEFAULT_SEEDS: Tuple[int, ...] = (1, 2, 3)
 GRID_SEED = 0
@@ -205,7 +213,8 @@ def train_seed(
     seed = int(seed)
     torch.manual_seed(seed)
     model = IndependentMLPScorer(
-        feature_dim=FEATURE_DIM, hidden_dim=HIDDEN_DIM, geo_dim=GEO_DIM, device=str(device), seed=seed
+        feature_dim=corpus.feature_dim, hidden_dim=HIDDEN_DIM, geo_dim=GEO_DIM,
+        device=str(device), seed=seed, param_budget=PARAM_BUDGET_V2
     )
     optimizer = torch.optim.Adam(
         model.net.parameters(), lr=float(lr), weight_decay=float(weight_decay)
@@ -373,9 +382,10 @@ def run_grid(
         "batch_size": int(args.batch_size),
         "weight_decay": float(args.weight_decay),
         "train_ks": list(TRAIN_KS),
-        "feature_dim": FEATURE_DIM,
+        "feature_dim": int(corpus.feature_dim),
         "hidden_dim": HIDDEN_DIM,
         "geo_dim": GEO_DIM,
+        "param_budget": PARAM_BUDGET_V2,
         "torch_version": torch.__version__,
         "cuda_version": torch.version.cuda,
         "device": str(device),
@@ -532,9 +542,10 @@ def main(argv: Optional[List[str]] = None) -> int:
                 "train_loss_curve": summary["train_loss_curve"],
                 "wall_seconds": summary["wall_seconds"],
                 "num_parameters": summary["num_parameters"],
-                "feature_dim": FEATURE_DIM,
+                "feature_dim": int(model.feature_dim),
                 "hidden_dim": HIDDEN_DIM,
                 "geo_dim": GEO_DIM,
+                "param_budget": PARAM_BUDGET_V2,
                 "temperature": 1.0,
                 "epochs": int(args.epochs),
                 "patience": int(args.patience),

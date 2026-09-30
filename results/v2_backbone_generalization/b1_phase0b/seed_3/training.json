@@ -1,0 +1,73 @@
+{
+  "status": "complete",
+  "model": "b3_independent_mlp",
+  "seed": 3,
+  "lr": 0.001,
+  "best_lr_from_grid": 0.001,
+  "epochs_run": 5,
+  "best_epoch": 2,
+  "best_val_select_nll": 0.7711852621823972,
+  "val_select_nll_curve": [
+    0.7943493886291871,
+    0.7711852621823972,
+    0.7870165269232571,
+    0.777878616368022,
+    0.7978495256733578
+  ],
+  "val_select_nll_by_k": {
+    "5": [
+      0.6005948501974346,
+      0.5841328218451924,
+      0.5920970563442327,
+      0.5888029608561949,
+      0.6029962093532382
+    ],
+    "10": [
+      0.9881039270609395,
+      0.9582377025196019,
+      0.9819359975022816,
+      0.966954271879849,
+      0.9927028419934776
+    ]
+  },
+  "val_select_n_rows_by_k": {
+    "5": 5325,
+    "10": 5325
+  },
+  "train_loss_curve": [
+    0.8484012308021601,
+    0.7162307809959922,
+    0.6709564696699702,
+    0.6381432314660185,
+    0.6093138053136713
+  ],
+  "wall_seconds": 124.07165765762329,
+  "num_parameters": 214273,
+  "feature_dim": 512,
+  "hidden_dim": 128,
+  "geo_dim": 6,
+  "param_budget": 500000,
+  "temperature": 1.0,
+  "epochs": 15,
+  "patience": 3,
+  "batch_size": 64,
+  "weight_decay": 0.0001,
+  "train_ks": [
+    5,
+    10
+  ],
+  "eval_ks": [
+    5,
+    10
+  ],
+  "selection_metric": "val_select_mean_nll_K5_K10",
+  "torch_version": "2.5.1+cu121",
+  "cuda_version": "12.1",
+  "device": "cuda",
+  "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "git_commit": "72d86d0ee16cbb116c4ebdf6dae76d0ce226c07e",
+  "bank_fingerprint": "ebd2690e4b1c1d524fbee80e6ba48dbfadd9f2f5e58b08566228d409afd55747",
+  "manifest_meta": "random_train.meta.json",
+  "model_path": "seed_3/model.npz",
+  "created_utc": "2026-09-30T03:22:22.025623+00:00"
+}

@@ -1,0 +1,32 @@
+{
+  "completed_utc": "2026-09-30T12:16:15Z",
+  "runtime_seconds": 484.0467112000333,
+  "smoke": false,
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95
+  },
+  "per_backbone": {
+    "b1": {
+      "verdict": "HARD_SEMANTIC_REPLICATED",
+      "delta_hard_mean": 0.02104694112147909,
+      "amplification_mean": 0.022279642839616143,
+      "manipulation_ok": true,
+      "dose_replicated": true
+    },
+    "b2": {
+      "verdict": "HARD_SEMANTIC_REPLICATED",
+      "delta_hard_mean": 0.03561693692452742,
+      "amplification_mean": 0.031086021237940836,
+      "manipulation_ok": true,
+      "dose_replicated": true
+    }
+  },
+  "authorized": true
+}

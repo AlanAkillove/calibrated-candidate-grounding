@@ -1,0 +1,88 @@
+{
+  "purpose": "G0 feasibility probe provenance. The large HDF5 region_features files in g0_probe/ subdirectories are superseded by the full G1 extraction and are deleted; this JSON preserves all measurement context.",
+  "generated_utc": "2026-09-30T03:00:00+00:00",
+  "probe_config": {
+    "max_images": 300,
+    "batch_size": 128,
+    "precision": "fp16",
+    "device": "cuda",
+    "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "crops_per_image": 64,
+    "total_crops_encoded": 19200
+  },
+  "B1_openclip_b16": {
+    "checkpoint": "cache/hf_local/openclip_b16/open_clip_pytorch_model.bin",
+    "checkpoint_sha256": "1f16b1274ca25493b1f36225efe81d05f66a3f33c487acd1a07c5ba87920de6f",
+    "embedding_dimension": 512,
+    "library": "open_clip_torch",
+    "library_version": "3.3.0",
+    "model_name": "ViT-B-16",
+    "pretrained": "laion2b_s34b_b88k",
+    "native_logit_scale": 100.0,
+    "preprocess_identity": {
+      "crop_policy": "exact proposal crop (round->clamp), no context padding",
+      "resize_mode": "shortest",
+      "center_crop": [224, 224],
+      "interpolation": "bicubic",
+      "mean": [0.48145466, 0.4578275, 0.40821073],
+      "std": [0.26862954, 0.26130258, 0.27577711],
+      "min_crop_px": 1
+    },
+    "probe_image_count": 300,
+    "region_throughput_crops_s": 139.6,
+    "region_extract_seconds": 137.494,
+    "text_throughput_sent_s": null,
+    "text_note": "text stage not exercised in G0 probe (max_images=300, no sentences requested)",
+    "peak_vram_mb": 1099.3,
+    "cache_bytes_probe": 25193621,
+    "started_utc": "2026-09-29T12:55:30+00:00",
+    "finished_utc": "2026-09-29T12:58:03+00:00",
+    "failure_events": [],
+    "status": "G0_PASS -> G1_EXTRACTED"
+  },
+  "B2_siglip_b16": {
+    "checkpoint": "cache/hf_local/siglip_b16_224",
+    "checkpoint_sha256": "2c63cb7d1f2e95ba501893cbb8faeb4ea9a3af295498d35097126228659c2af8",
+    "embedding_dimension": 768,
+    "library": "transformers",
+    "library_version": "4.57.6",
+    "model_name": "google/siglip-base-patch16-224",
+    "pretrained": "google/siglip-base-patch16-224",
+    "native_logit_scale": 117.33076477050781,
+    "native_logit_bias": -12.9324369430542,
+    "objective": "sigmoid",
+    "l2_normalized": true,
+    "preprocess_identity": {
+      "crop_policy": "exact proposal crop (round->clamp), no context padding",
+      "resize_mode": "square (fixed resize, no center crop)",
+      "resize_size": [224, 224],
+      "interpolation": "bicubic",
+      "mean": [0.5, 0.5, 0.5],
+      "std": [0.5, 0.5, 0.5],
+      "rescale_factor": 0.00392156862745098,
+      "min_crop_px": 1
+    },
+    "probe_image_count": 300,
+    "region_throughput_crops_s": 183.7,
+    "region_extract_seconds": 104.519,
+    "text_throughput_sent_s": null,
+    "text_note": "text stage not exercised in G0 probe (max_images=300, no sentences requested)",
+    "peak_vram_mb": 1448.9,
+    "cache_bytes_probe": 37776533,
+    "started_utc": "2026-09-29T12:58:15+00:00",
+    "finished_utc": "2026-09-29T13:00:18+00:00",
+    "failure_events": [
+      {
+        "event": "G1-first-run crash at image 8095/19992",
+        "error": "TypeError: Cannot handle this data type: (1, 1, 217), '|u1'",
+        "root_cause": "HF slow SiglipImageProcessor mis-infers channels-first for degenerate-batch crops via image_transforms.resize -> to_pil_image",
+        "fix": "src/ccg/features/backbone.py encode_images: explicit input_data_format='channels_last'",
+        "behaviour_preserving": true,
+        "re_extract_needed": false,
+        "resolution_utc": "2026-09-30T01:31:23+00:00",
+        "note": "First 8000 images already in .tmp are valid (unambiguous HWC); resumed via --resume"
+      }
+    ],
+    "status": "G0_PASS -> G1_EXTRACTED (after crash fix)"
+  }
+}

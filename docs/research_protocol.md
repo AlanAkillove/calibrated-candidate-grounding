@@ -1719,5 +1719,83 @@ G0 feasibility 需**实测**两个新 backbone 的 checkpoint 加载 / 维度 / 
 ## V2-A1.11 本轮禁止（与指令 §34 / §43 一致）
 禁止实现 LCR、新 semantic module、Grounding DINO、RefCOCO、Ref-L4、reviewed annotations、FineCops、reranking、target omission、Transformer；禁止改动 V1 结果。禁止在无真实 checkpoint / 无 GPU 实测的情况下编造 V2-G 数字。
 
+---
+
+# Amendment V2-A1 — Result Record（V2-G 执行完成，2026-09-30）
+
+> 本节为**追加结果记录**，不修改上方任何 V2-A1 冻结条款或 gate 判据。所有数字由
+> `scripts/audit_v2g_final.py` 从 raw artifacts 重算并通过 82 项一致性检查（0 不一致），
+> 主表见 `results/v2_backbone_generalization/final_summary.csv`。**禁止把下方任何数字当作 V1 claim 的改写。**
+
+## 问题编号（V2-G 专用，勿与 V1 §Gate Q1/Q2/Q3 或 A11 外部确认 Q1/Q2 混用）
+- **Q1 = candidate-cardinality reliability degradation**（协议内部门禁 **G1**）
+- **Q2 = hard-competition semantic amplification**（协议内部门禁 **G2**）
+- **Q3 = whether local-competition method development is justified**（总体 gate）
+
+G3/G4/G5 是 **Q2** 的决定性证据；G3 单独构成 Q1 证据。**不得**把 G4/G5 写成 Q1。
+
+## Q1 / Q2 / Q3 正式判定
+```text
+Q1 (cardinality):
+  Candidate-cardinality reliability degradation is backbone-general.
+  Verdict = YES    Evidence = 3/3 backbones (B0/B1/B2 CARDINALITY_REPLICATED).
+
+Q2 (hard-semantic amplification):
+  Hard-competition amplification of semantic reliability information is backbone-general.
+  Verdict = YES    Evidence = 3/3 backbones, valid manipulation, 3/3 seed consistency,
+                   dose-response monotone (B1/B2 Spearman rho = 1.0, secondary).
+
+Q3 (method development):
+  Local-competition reliability method development is justified.
+  Verdict = YES    (>=2/3 backbones replicate BOTH Q1 and Q2 in the same direction; actual = 3/3)
+
+STRONG_CROSS_BACKBONE_GENERALITY = YES
+V2_METHOD_DEVELOPMENT_AUTHORIZED = YES
+```
+
+## 主表（recomputed from raw artifacts；B0 由 V1 frozen artifacts 载入，非硬编码）
+| Backbone | K5 Acc | K50 Acc | K5 AUROC | K50 AUROC | E-AURC worsening | RER50 drop (pp) | Q1 | Δ_rand | Δ_hard | Amplification | Manipulation | Dose rho | Q2 |
+|---|---:|---:|---:|---:|---:|---:|---|---:|---:|---:|---|---:|---|
+| B0 OpenCLIP B/32 | 0.7907 | 0.4320 | 0.8426 | 0.7904 | 2.257 | 46.60 | YES | +0.00123 | +0.03185 | +0.03062 | YES | NA (V1) | YES |
+| B1 OpenCLIP B/16 | 0.7781 | 0.4216 | 0.8374 | 0.7834 | 2.129 | 45.93 | YES | −0.00123 | +0.02105 | +0.02228 | YES | 1.000 | YES |
+| B2 SigLIP B/16   | 0.7080 | 0.2871 | 0.7930 | 0.7179 | 1.685 | 46.77 | YES | +0.00453 | +0.03562 | +0.03109 | YES | 1.000 | YES |
+
+单位注：E-AURC worsening 为相对恶化比值；RER50 drop 为百分点。B0 hard 来自 V1 **A8** 比较
+（`stats_logistic → e1b_stats_semantic`，manipulation = `cand_vmax`/`cand_top12_sim`），其定义与 V2-G
+的 `R1 → R2` + 三指标 manipulation **不同**；B0 行仅作 frozen reference，跨 backbone 主张以 B1/B2 为准。
+B0 dose-response 在 V1 未运行冻结协议，记 NA。
+
+## 协议执行历史（先冻结后执行，全链可追溯）
+- **thresholds 在任何 B1/B2 结果产生前冻结**：V2-A1 修正案（上方）+ `results/v2_backbone_generalization/g4_protocol_freeze.json`（`frozen_before_phase_a=true`）均早于 `g4_phaseB/metadata.json.completed_utc`。
+- **G1→G5 全过程未修改任何 primary gate**：G3 cardinality gate、G4 hard gate、G5 overall gate 判据与冻结值逐项一致（`test_phaseA_cannot_alter_phaseB_config` 断言 gate.thresholds == freeze item 9）。
+- **semantic feature 定义在 G4 前冻结**：14 个 backbone-neutral primary 特征名与列序固定（freeze item 1/2）。
+- **random 结果产生后未改变 hard config**：Phase A（Δ_rand）出数后，Phase B 直接复用冻结契约，未回看 hard 阈值（回归测试覆盖）。
+- **dose-response 仅为 secondary**：不入总 gate（freeze item 10；`_g5_overall` 不读取 dose）。
+- **LCR 尚未实现**：本轮只验证 generality，V2-M 未开始。
+- manipulation 的操作化：V2-A1.6 描述为「winner-vs-competitor sim ↑ 与 query ambiguity ↑ 中 ≥1 显著」；冻结 item 7 将其落地为**三个**连续 backbone-neutral 指标（`winner_competitor_max_cos↑` / `winner_top2_cos↑` / `q_margin12↓`，规则 ≥2/3 方向正确且 ≥1 CI 排除 0）。这是对已冻结 gate 的**收紧性具体化**，非事后放松。
+
+## 解释限制（Interpretation limits）
+- **禁止**表述为 “universal across all vision-language models”。当前证据仅覆盖三个 backbone：OpenCLIP B/32、OpenCLIP B/16、SigLIP B/16——跨**两个视觉-语言模型家族**与**两种 patch 分辨率**，但**不含** Grounding DINO、BLIP-style cross-encoder、或不同 proposal 家族。
+- 允许表述：**“replicated across three tested backbones spanning two vision-language model families and two patch resolutions.”**
+- proposal 家族、数据集（RefCOCO+ / COCO 视觉域）、cohort 构造均冻结复用 V1，不随之主张 generality。
+
+## 一项科学观察（保留，供后续 Discussion；不作因果解释）
+> SigLIP（B2）的 **absolute grounding quality 最弱**（K5 Acc 0.708、K5 AUROC 0.793，均低于 B0/B1），
+> 但其 **candidate-cardinality reliability degradation 反而最强**（ΔAUROC K5→K50 = 0.0751 > B1 0.0540 > B0 0.0517），
+> 且 **hard-semantic amplification 在新 backbone 中最强**（A = 0.0311 > B1 0.0223）。
+
+该结果支持：
+```text
+absolute grounding performance  !=  reliability robustness under candidate-set shift
+```
+即定位精度与「候选集分布漂移下可靠性是否可信」是两个可分离的维度。**不将其解释为因果机制**（无中介/消融证据），仅作为跨 backbone 观察记录。
+
+## Provenance
+- 分支 `v2-backbone-generalization`（不 merge main）。
+- 产物：`results/v2_backbone_generalization/{protocol.json,g3_cardinality_gate.json,g4_protocol_freeze.json,g4_phaseA/,g4_phaseB/,final_summary.csv,v2a1_result_record.json}`。
+- 回归：`tests/test_v2g_regression.py`（item31，18 协议项 + 8 G4/G5 专项）。
+- 一致性审计：`scripts/audit_v2g_final.py` → 82 checks / 0 failures。
+- 全量测试：**774 passed, 0 failed, 0 error**（`deepminer`，python 3.10.19 / torch 2.5.1+cu121 / cuda 12.1 / RTX 4060 Laptop，约 113s）。
+
 
 

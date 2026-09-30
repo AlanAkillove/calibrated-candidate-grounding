@@ -242,6 +242,9 @@ def _pack_e3(per_k: Mapping[int, Mapping[str, np.ndarray]], ks: Sequence[int]) -
     k_list = [int(k) for k in ks]
     widths = {k: int(np.asarray(per_k[k]["z_i"]).shape[1]) for k in k_list}
     width = max(widths.values())
+    #: embedding width shared by every K of this backbone (512 CLIP / 768 SigLIP);
+    #: read from the data, never from the frozen V1 module constant.
+    d = int(np.asarray(per_k[k_list[0]]["z_q"]).shape[-1]) if k_list else int(sdata.FEATURE_DIM)
     z_q_parts, z_i_parts, mask_parts, score_parts, prob_parts, log_k_parts = [], [], [], [], [], []
     for k in k_list:
         data = per_k[k]
@@ -250,15 +253,15 @@ def _pack_e3(per_k: Mapping[int, Mapping[str, np.ndarray]], ks: Sequence[int]) -
         for key in ("z_q", "z_i", "score", "prob"):
             block = np.asarray(data[key])
             if key == "z_i":
-                expected = (n, cols, sdata.FEATURE_DIM)
+                expected = (n, cols, d)
             elif key == "z_q":
-                expected = (n, sdata.FEATURE_DIM)
+                expected = (n, d)
             else:
                 expected = (n, cols)
             if block.shape != expected:
                 raise ValueError(f"_pack_e3: K={k} key {key!r} has shape {block.shape}, expected {expected}")
         z_q_parts.append(np.asarray(data["z_q"], dtype=np.float32))
-        z_i = np.zeros((n, width, sdata.FEATURE_DIM), dtype=np.float32)
+        z_i = np.zeros((n, width, d), dtype=np.float32)
         z_i[:, :cols, :] = np.asarray(data["z_i"], dtype=np.float32)
         z_i_parts.append(z_i)
         mask = np.zeros((n, width), dtype=bool)

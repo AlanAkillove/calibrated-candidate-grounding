@@ -1,0 +1,156 @@
+{
+  "artifact": "v2g_g3_cardinality_gate",
+  "protocol": "V2-A1 (frozen)",
+  "bootstrap": "image-clustered paired, 5000 reps, ci=0.95",
+  "thresholds": {
+    "route_a_auc_drop_min": 0.03,
+    "route_b_eaurc_worsen_min": 0.2,
+    "route_b_rer50_drop_min": 0.1
+  },
+  "route_a": "Route_A_ΔAUROC>=0.03 & CI excludes 0",
+  "route_b": "Route_B_E-AURC_worsen>=20% & RER50_drop>=10pp & CIs exclude 0",
+  "backbones": {
+    "B1_openclip_b16": {
+      "primary_comparison": "K5_vs_K50",
+      "variant": "global_T_corrected",
+      "split": "__pooled__",
+      "auc_drop_K5_K50": {
+        "effect_mean": 0.05399230853520295,
+        "effect_std": 0.005249170558071359,
+        "per_seed_effects": [
+          0.059759354825815736,
+          0.05515681826192609,
+          0.04706075251786701
+        ],
+        "per_seed_ci_low": [
+          0.05005968570009818,
+          0.04529782575436119,
+          0.03689812607239608
+        ],
+        "per_seed_ci_high": [
+          0.06962653521039534,
+          0.06509026519532529,
+          0.05657104518580316
+        ],
+        "all_seeds_ci_exclude_0": true,
+        "direction": "positive"
+      },
+      "eaurc_worsening_K5_K50": {
+        "effect_mean": 2.128776300487893,
+        "effect_std": 0.09386850486224564,
+        "per_seed_effects": [
+          2.238015150667455,
+          2.1394799151023056,
+          2.008833835693919
+        ],
+        "per_seed_ci_low": [
+          2.0004789081304786,
+          1.912892459105394,
+          1.791376386999239
+        ],
+        "per_seed_ci_high": [
+          2.494217927690467,
+          2.381454956606838,
+          2.242964493121575
+        ],
+        "all_seeds_ci_exclude_0": true,
+        "direction": "positive"
+      },
+      "rer50_drop_K5_K50": {
+        "effect_mean": 0.4592895277646913,
+        "effect_std": 0.012312974757811302,
+        "per_seed_effects": [
+          0.47584420513381204,
+          0.4556888346710421,
+          0.4463355434892198
+        ],
+        "per_seed_ci_low": [
+          0.4540257659066453,
+          0.43069281727044784,
+          0.4227495920643103
+        ],
+        "per_seed_ci_high": [
+          0.5003922931877173,
+          0.47839774169245186,
+          0.47024601967014573
+        ],
+        "all_seeds_ci_exclude_0": true,
+        "direction": "positive"
+      },
+      "route_a_passed": true,
+      "route_b_passed": true,
+      "CARDINALITY_REPLICATED": true
+    },
+    "B2_siglip_b16": {
+      "primary_comparison": "K5_vs_K50",
+      "variant": "global_T_corrected",
+      "split": "__pooled__",
+      "auc_drop_K5_K50": {
+        "effect_mean": 0.075115395490859,
+        "effect_std": 0.0046958587626383915,
+        "per_seed_effects": [
+          0.07610760345446743,
+          0.08030596688186142,
+          0.06893261613624813
+        ],
+        "per_seed_ci_low": [
+          0.06355731955320801,
+          0.06784325385670018,
+          0.056821683208711005
+        ],
+        "per_seed_ci_high": [
+          0.08859247573636682,
+          0.09243122848250603,
+          0.08119168335539634
+        ],
+        "all_seeds_ci_exclude_0": true,
+        "direction": "positive"
+      },
+      "eaurc_worsening_K5_K50": {
+        "effect_mean": 1.6853432353541364,
+        "effect_std": 0.052049072297129705,
+        "per_seed_effects": [
+          1.7092991908678452,
+          1.7336416463167188,
+          1.613088868877845
+        ],
+        "per_seed_ci_low": [
+          1.5144740364019236,
+          1.5372684725920027,
+          1.42670231747527
+        ],
+        "per_seed_ci_high": [
+          1.9183593241531178,
+          1.9427836059674923,
+          1.8159823541896098
+        ],
+        "all_seeds_ci_exclude_0": true,
+        "direction": "positive"
+      },
+      "rer50_drop_K5_K50": {
+        "effect_mean": 0.4676994243733727,
+        "effect_std": 0.007405137290672504,
+        "per_seed_effects": [
+          0.4684167530382979,
+          0.4763888629984599,
+          0.4582926570833604
+        ],
+        "per_seed_ci_low": [
+          0.4400576592616567,
+          0.44843105997293026,
+          0.42795242218887214
+        ],
+        "per_seed_ci_high": [
+          0.4958106012603976,
+          0.5007048425454079,
+          0.4867412828137823
+        ],
+        "all_seeds_ci_exclude_0": true,
+        "direction": "positive"
+      },
+      "route_a_passed": true,
+      "route_b_passed": true,
+      "CARDINALITY_REPLICATED": true
+    }
+  }
+}

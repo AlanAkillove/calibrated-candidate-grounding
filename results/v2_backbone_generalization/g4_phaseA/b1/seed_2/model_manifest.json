@@ -1,0 +1,75 @@
+{
+  "backbone": "b1",
+  "seed": 2,
+  "feature_dim": 512,
+  "T_corrected": 1.0707236210403277,
+  "R1": {
+    "chosen_C": 0.1,
+    "tune_mean_auroc": 0.8215350683021589,
+    "n_params": 18,
+    "grid": [
+      0.1,
+      1.0,
+      10.0
+    ],
+    "values": [
+      0.8215350683021589,
+      0.8213822696925358,
+      0.8213696824294536
+    ]
+  },
+  "R2": {
+    "chosen_C": 0.1,
+    "tune_mean_auroc": 0.8265116550768462,
+    "n_params": 32,
+    "grid": [
+      0.1,
+      1.0,
+      10.0
+    ],
+    "values": [
+      0.8265116550768462,
+      0.8269896813643164,
+      0.8274645953286757
+    ]
+  },
+  "stats_fit_rows": 7372,
+  "feature_names": {
+    "stats17": [
+      "log_k",
+      "top1",
+      "top2",
+      "top3",
+      "margin_12",
+      "margin_23",
+      "mean",
+      "std",
+      "msp",
+      "entropy",
+      "entropy_over_logk",
+      "logsumexp",
+      "z_top1",
+      "z_margin",
+      "q25",
+      "q50",
+      "q75"
+    ],
+    "sem14": [
+      "q_top1_cos",
+      "q_top2_cos",
+      "q_top3_cos",
+      "q_margin12",
+      "q_margin13",
+      "q_margin23",
+      "winner_competitor_max_cos",
+      "winner_competitor_mean_cos",
+      "winner_competitor_std_cos",
+      "winner_top2_cos",
+      "winner_top3_cos",
+      "winner_top5_mean_cos",
+      "winner_rank_under_query_similarity",
+      "query_cos_spread"
+    ]
+  },
+  "grounding_failure_K5": false
+}
