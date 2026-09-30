@@ -1,0 +1,316 @@
+{
+  "artifact": "v2m_protocol_freeze",
+  "stage": "V2-M (Local Competition Reliability, LCR)",
+  "created_utc": "2026-10-01T00:00:00Z",
+  "branch": "v2-local-competition-reliability",
+  "base_commit": "0aaa29d",
+  "note": "This file freezes the M0/M1 protocol and PREREGISTERS M2 before any M1 result exists. It must not be modified after M1 results are seen. M1 numbers are reported against this file; its sha256 is recorded in the M1 metadata.",
+
+  "accepted_v2g_conclusions": {
+    "source_branch": "v2-backbone-generalization",
+    "source_commit": "0aaa29d",
+    "Q1_cardinality_reliability_degradation": "YES (3/3 backbones)",
+    "Q2_hard_competition_semantic_amplification": "YES (3/3 backbones)",
+    "STRONG_CROSS_BACKBONE_GENERALITY": "YES",
+    "V2_METHOD_DEVELOPMENT_AUTHORIZED": "YES",
+    "empirical_basis": [
+      "semantic reliability increment under random composition ~ 0 (delta_semantic_random approx 0)",
+      "semantic reliability increment under same-category competition > 0 (delta_semantic_hard > 0)",
+      "replicated across B0 (V1 B/32, frozen), B1 (OpenCLIP B/16), B2 (SigLIP B/16)"
+    ]
+  },
+
+  "objective": {
+    "target": "P(c_hat = c* | q, C, frozen grounding decision)",
+    "meaning": "estimate the probability that the candidate currently selected by the FROZEN grounding scorer is correct",
+    "explicitly_out_of_scope": [
+      "modifying grounding prediction / candidate scores / candidate ranking / top-1 candidate",
+      "improving visual grounding accuracy",
+      "solving candidate-set shift in the grounding scorer"
+    ]
+  },
+
+  "hypothesis_frozen": {
+    "text_en": "Reliability correction should focus on the local competition geometry around the current winner rather than modeling the full candidate set indiscriminately.",
+    "text_zh": "真正需要额外修正的不是所有候选，而是当前赢家附近那些'分数高、语义相似、足以构成威胁'的竞争者。",
+    "evidence_backing": "V2-G: delta_semantic_random approx 0 vs delta_semantic_hard > 0, 3/3 backbones"
+  },
+
+  "method": {
+    "internal_name": "Local Competition Reliability",
+    "short_name": "LCR",
+    "paper_name": "NOT_DECIDED",
+    "first_version_prohibitions": [
+      "no Transformer",
+      "no attention",
+      "no raw high-dimensional embedding projection"
+    ],
+    "parameter_budget": {"hard_max": 50000, "target": 10000},
+
+    "grounding_scorer_frozen": {
+      "scorer": "V1 B3 (IndependentMLPScorer, frozen seeds 1/2/3)",
+      "top1_rule": "t = argmax_i s_i",
+      "lcr_must_not_change": ["candidate scores", "candidate ranking", "top-1 grounding prediction"],
+      "failure_condition": "if LCR changes grounding accuracy -> IMPLEMENTATION FAILURE -> STOP"
+    },
+
+    "local_competition_set": {
+      "definition": "the M competitors outside the winner with the highest B3 scores",
+      "M": 4,
+      "M_search": false,
+      "reason": "K >= 5 in all primary regimes, so no padding is needed; M is frozen",
+      "ordering": "stable descending B3 order (ties broken by lower candidate index, numpy stable argsort)"
+    },
+
+    "relation_vector": {
+      "definition": "r_j = [ds_norm, dp, a_t, a_j, a_t - a_j, v_tj, rank_j_over_k]",
+      "dim": 7,
+      "terms": {
+        "ds_norm": "(s_t - s_j) / (std(s) + eps), std over all K B3 scores (ddof=0), eps = 1e-8",
+        "dp": "p_t - p_j with p = softmax(s / T_corrected) using the scorer's own frozen corrected global temperature",
+        "a_t": "cos(z_q, z_t) (query vs winner)",
+        "a_j": "cos(z_q, z_j) (query vs competitor)",
+        "a_t - a_j": "explicit gap of the two query cosines",
+        "v_tj": "cos(z_t, z_j) (winner vs competitor)",
+        "rank_j_over_k": "1-based descending B3 rank of competitor j over K (winner = 1; competitors carry ranks 2..M+1)"
+      },
+      "forbidden_additions": [
+        "raw 512-d embedding",
+        "GT category",
+        "any new meta information beyond candidate count",
+        "objectness",
+        "target IoU",
+        "hard/random regime label"
+      ]
+    },
+
+    "shared_competitor_encoder": {
+      "phi": "7 -> 32 -> 16, ReLU (frozen; no activation search)",
+      "h_j": "phi(r_j)",
+      "pooling": {"h_max": "max_j h_j", "h_mean": "mean_j h_j"},
+      "h_c": "[h_max, h_mean], dim 32"
+    },
+
+    "ambiguity_gate": {
+      "gate_input": "a = [max_j v_tj, mean_j v_tj, ds_norm(j=B3 rank 2)]",
+      "gate": "g = sigmoid(w_g^T a + b_g)",
+      "meaning": {"easy_case": "g approx 0", "hard_local_competition": "g -> 1"}
+    },
+
+    "base_reliability_branch_frozen": {
+      "R1": "Stats Logistic (17 score statistics), fitted under the M1 protocol on random-only training rows",
+      "b": "logit(R1) = coef . x_std + intercept (exact linear logit, no clipping needed)",
+      "rule": "R1 is frozen while training LCR; retraining R1 to accommodate LCR is forbidden",
+      "purpose": "isolate what local competition information adds beyond score statistics"
+    },
+
+    "competition_correction": {
+      "delta": "MLP(h_c): 32 -> 16 -> 1",
+      "z_lcr": "b + g * delta",
+      "P_correct": "sigmoid(z_lcr)"
+    },
+
+    "capacity_control": {
+      "name": "Aggregate-MLP",
+      "input": "V2-G frozen 31d = 17 score stats + 14 V2 primary semantic stats",
+      "structure": "31 -> 32 -> 16 -> 1",
+      "training_protocol": "identical to LCR (same data, same optimizer philosophy, same LR grid, same seeds)"
+    },
+
+    "ablations": {
+      "LCR-noGate": {"z": "b + delta", "rest": "identical", "question": "does the ambiguity-gating structure itself carry the improvement?"},
+      "forbidden": ["no further architecture zoo"]
+    },
+
+    "primary_baselines": ["R1 Stats Logistic", "R2 (E1b) Stats+Semantic Logistic", "Aggregate-MLP", "LCR"],
+
+    "naming_note_E1b": {
+      "declaration": "In this V2-M stage, 'E1b' denotes the semantic-augmented logistic baseline = 17 score stats + 14 V2 primary semantic stats (31d) logistic regression, trained with the M1 protocol on the same random-only rows as LCR.",
+      "rationale": "V2-G used this same 'R2' object as the frozen reference for the hard-competition semantic increment; the V1-frozen 33d e1b bundle is a different (V1) object and is NOT part of M1 primary comparisons.",
+      "reporting": "M1 reports LCR vs E1b (primary) and LCR vs R1 (secondary)"
+    }
+  },
+
+  "data_regimes": {
+    "candidate_construction": "frozen V1/V2 manifests only",
+    "category_labels_policy": "category labels are used only for controlled candidate construction, never as reliability-model input",
+    "training_data_M1": {
+      "name": "M1 - Zero-Hard-Exposure",
+      "rows": "val_calib reliability_train images (image-level split, seed 20260928, train_frac 0.70)",
+      "candidate_sets": "Random K5 + K10 only",
+      "tuning_rows": "val_calib reliability_tune images, Random K5 + K10 only",
+      "forbidden_during_training": ["SameCategory", "m=2/4/8", "K20", "K50", "any hard competition"]
+    },
+    "test_cohorts_frozen": {
+      "Random-K5": "frozen B3 raw_scores K=5 rows with eval_split in (testA, testB)",
+      "SameCategory-K5": "frozen V1 hard cohort cell hard5 (same4 mask, results/phase1f_hard_semantic), n=9487 rows / 1424 images",
+      "K20 random": "frozen B3 raw_scores K=20 rows with eval_split in (testA, testB)",
+      "K50 random": "frozen B3 raw_scores K=50 rows with eval_split in (testA, testB)"
+    }
+  },
+
+  "training_protocol": {
+    "seeds": [1, 2, 3],
+    "seeds_note": "the 3 seeds are training replicates of the same protocol; they are NOT concatenated into independent samples",
+    "optimizer": "Adam, BCEWithLogitsLoss, weight_decay = 1e-4 (fixed, not searched)",
+    "epochs": 300,
+    "batch_size": 256,
+    "patience": 30,
+    "early_stopping": "monitor tune-block NLL (reliability_tune Random K5/K10 only), restore best state; hard performance must never select a checkpoint",
+    "lr_grid": [0.0001, 0.0003, 0.001],
+    "lr_selection": "mean AUROC_correct over reliability_tune Random K5/K10; tie rule: prefer smaller LR when within 0.002 (house A7 rule)",
+    "logistic_selection": "C grid (0.1, 1.0, 10.0) selected by the same tune mean AUROC with the same tie rule",
+    "standardization": "logistic branches (R1/E1b) use train-only standardisation fitted on the combined K5+K10 train rows (house protocol); LCR/noGate/Aggregate-MLP consume their frozen raw feature definitions without additional standardisation",
+    "frozen_hyperparameters": {
+      "M": 4,
+      "encoder": "7 -> 32 -> 16 (ReLU)",
+      "residual": "32 -> 16 -> 1",
+      "no_hyperparameter_search_beyond_lr_grid": true
+    }
+  },
+
+  "statistics": {
+    "primary": "image-cluster paired bootstrap",
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "cluster_unit": "image_id",
+    "shared_draws": "all comparisons on the same cohort share the same bootstrap draws (one cluster resample per replicate reused by every model and pair)",
+    "reporting": [
+      "per-seed point estimates and paired CIs",
+      "3-seed mean +/- std",
+      "per-seed direction (n seeds with positive delta)",
+      "aggregation convention for gates: seed-mean of per-seed point deltas; seed-mean of per-seed CI bounds (V2-G house convention)"
+    ]
+  },
+
+  "meters": {
+    "primary_metrics": ["auroc_correct", "e_aurc", "rer_at_50"],
+    "definitions": {
+      "auroc_correct": "ccg.metrics.discrimination.auroc_correct",
+      "e_aurc": "ccg.experiment.phase0b._e_aurc_metric (AURC - oracle AURC at the block accuracy)",
+      "rer_at_50": "ccg.metrics.selective.rer_at_coverage(conf, corr, 0.50)"
+    },
+    "derived_reported": {
+      "E-AURC reduction": "(e_aurc(E1b) - e_aurc(LCR)) / e_aurc(E1b)",
+      "RER50 gain_pp": "100 * (rer50(LCR) - rer50(E1b))"
+    }
+  },
+
+  "M1_gates": {
+    "primary_cell": "SameCategory-K5",
+    "GO_gate": {
+      "delta_auroc_LCR_minus_E1b_ge": 0.01,
+      "delta_auroc_ci_low_gt": 0.0,
+      "at_least_one_of": {"e_aurc_reduction_ge": 0.05, "rer50_gain_pp_ge": 3.0},
+      "random_k5_guard": {"delta_auroc_LCR_minus_E1b_ge": -0.005}
+    },
+    "STRONG_gate": {
+      "delta_auroc_LCR_minus_E1b_ge": 0.015,
+      "at_least_one_of": {"e_aurc_reduction_ge": 0.10, "rer50_gain_pp_ge": 5.0}
+    },
+    "structure_contribution_gate": {
+      "requirement": "SameCategory-K5: AUROC(LCR) - AUROC(Aggregate-MLP) > 0 AND paired bootstrap CI_low > 0",
+      "if_pass": "may claim 'local competition architecture helps'",
+      "if_fail": "may only claim 'nonlinear capacity helps'"
+    },
+    "gate_contribution": {
+      "comparison": "LCR vs LCR-noGate",
+      "rule": "if LCR significantly better -> ambiguity gating supported; if effectively equal -> keep results but the gate must not be written as the main contribution",
+      "forbidden": "re-designing the gate because the gate comparison failed"
+    },
+    "k_generalization": {
+      "cohorts": ["K20 random", "K50 random"],
+      "requirement": "no systematic degradation of LCR vs E1b (observe AUROC, E-AURC, RER50)",
+      "operational_definition": "systematic degradation flagged when a metric shows seed-mean delta strictly worse AND seed-mean CI bound excluding 0 on the worse side; additionally report material-degradation flags at (AUROC < -0.005) / (E-AURC reduction < -5%) / (RER50 gain < -3pp)"
+    },
+    "primary_question": "LCR > E1b? (especially on SameCategory-K5)"
+  },
+
+  "grounding_invariance_check": {
+    "requirement": "every evaluation verifies accuracy_before == accuracy_after and row-wise grounding decision bit-identical / index-identical; LCR only changes the reliability score",
+    "implementation": "sha256 fingerprints of the frozen score matrix and of the argmax index vector are taken before and after every evaluation stage; any change raises (IMPLEMENTATION FAILURE)"
+  },
+
+  "m0_tests_required_before_M1": [
+    "relation feature correctness",
+    "top-M stable ordering",
+    "candidate permutation handling",
+    "no GT category input",
+    "R1 frozen",
+    "grounding scores untouched",
+    "LCR param count",
+    "gate range [0,1]",
+    "MLP capacity control parameter matching",
+    "deterministic feature extraction",
+    "K5/K10/K20/K50 support",
+    "no hard data in M1 train/tune"
+  ],
+
+  "method_freeze_point": {
+    "rule": "after M1 + M2 complete on B0, the following are FROZEN and must not be modified based on B1/B2: relation vector, M, hidden dimensions, gate, loss, optimizer, LR selection rule, training regimes, model-selection metric",
+    "V2-MG": {
+      "precondition": "B0's LCR must reach at least M1 GO or M2 GO",
+      "procedure": "B1/B2 use the exact same architecture/hyperparameters; per-backbone weight retraining allowed; structural changes forbidden",
+      "primary": "LCR - E1b on SameCategory-K5",
+      "supported_rule": "at least one of B1/B2 significantly positive and the other not significantly negative -> METHOD CROSS-BACKBONE SUPPORTED",
+      "strong_rule": "2/2 significantly positive -> STRONG METHOD CROSS-BACKBONE GENERALITY"
+    }
+  },
+
+  "M2_preregistration": {
+    "status": "PREREGISTERED_NOT_RUN",
+    "rule": "run only after M1 completes; the M2 definition below must not be modified regardless of M1 success or failure; M2 baselines must be refit under the identical curriculum",
+    "training": {
+      "levels": [0, 2, 4],
+      "meaning": "number of same-category competitors injected by the frozen same_category manifest level construction",
+      "weights": "each m regime weighted equally"
+    },
+    "test": {"level": 8, "status": "completely unseen"},
+    "purpose": "under an explicit competition curriculum, can LCR extrapolate to competition severity stronger than training?",
+    "baselines_fairness": {
+      "models": ["E1b Logistic", "Aggregate-MLP", "LCR-noGate", "LCR"],
+      "rule": "ALL models are retrained on the same m=0/2/4 data; LCR must never see hard curriculum while a baseline only sees random"
+    },
+    "gate": {
+      "vs_curriculum_E1b": {"delta_auroc_ge": 0.01, "ci_low_gt": 0.0},
+      "vs_Aggregate_MLP": {"ci_low_gt": 0.0},
+      "support_statement": "structured competition modeling generalizes beyond training severity"
+    }
+  },
+
+  "artifact_layout": {
+    "root": "results/v2_local_competition",
+    "files": [
+      "protocol.json",
+      "m0_architecture.json",
+      "m1_random_only/",
+      "m2_curriculum/",
+      "ablations/",
+      "bootstrap/",
+      "gate.json",
+      "figures/"
+    ]
+  },
+
+  "core_figure_plan": {
+    "x_axis": "m = number of same-category competitors (0/2/4/8)",
+    "y_axis": "AUROC(LCR) - AUROC(E1b)",
+    "control": "Aggregate-MLP drawn alongside as capacity control",
+    "status": "M1 produces the Random-K5 / SameCategory-K5 / K20 / K50 analogue; the full m-axis figure belongs to M2"
+  },
+
+  "interpretation_boundary": {
+    "allowed_if_success": "A lightweight local-competition reliability module improves correctness estimation under candidate competition.",
+    "forbidden_claims": [
+      "improves visual grounding accuracy",
+      "solves candidate-set shift"
+    ]
+  },
+
+  "current_round_scope": {
+    "allowed": ["M0 implementation + tests", "M1 B0 random-only training", "M1 frozen Random/SameCategory/K20/K50 evaluation"],
+    "forbidden": ["M2", "B1", "B2", "any protocol change after seeing M1 results"],
+    "stop_after": "M1 report"
+  }
+}

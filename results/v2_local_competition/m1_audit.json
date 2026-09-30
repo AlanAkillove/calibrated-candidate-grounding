@@ -1,0 +1,186 @@
+{
+  "artifact": "v2m_m1_audit",
+  "passed": true,
+  "protocol_sha256": "90085940f75ed8cbf6ac3c2f72219b9ff34bde80c97aad89362580bf5fedd88b",
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "metrics": [
+      "auroc_correct",
+      "e_aurc",
+      "rer_at_50"
+    ]
+  },
+  "max_point_delta": 0.0,
+  "max_bootstrap_delta": 0.0,
+  "correctness_mismatches": 0,
+  "checks": [
+    {
+      "name": "hard5 row universe (9487 rows / 1424 images)",
+      "ok": true,
+      "detail": "rows=9487 images=1424"
+    },
+    {
+      "name": "K5 test universe (10286 rows)",
+      "ok": true,
+      "detail": "rows=10286"
+    },
+    {
+      "name": "K20 test universe (10286 rows)",
+      "ok": true,
+      "detail": "rows=10286"
+    },
+    {
+      "name": "K50 test universe (10286 rows)",
+      "ok": true,
+      "detail": "rows=10286"
+    },
+    {
+      "name": "seed1 K5 store rows are a scorer subset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed1 same4 rows are a K5-store subset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed1 K20 store rows are a scorer subset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed1 K50 store rows are a scorer subset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed1 hard5 frozen predictions align with the same4 rows",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed2 K5 store rows are a scorer subset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed2 same4 rows are a K5-store subset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed2 K20 store rows are a scorer subset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed2 K50 store rows are a scorer subset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed2 hard5 frozen predictions align with the same4 rows",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed3 K5 store rows are a scorer subset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed3 same4 rows are a K5-store subset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed3 K20 store rows are a scorer subset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed3 K50 store rows are a scorer subset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed3 hard5 frozen predictions align with the same4 rows",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "confidences.npz correctness == frozen B3 events (all cohorts/seeds)",
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "point metrics reproduce (auroc / e_aurc / rer50, 75 rows)",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "paired bootstrap reproduces (8 pair-cohorts x 3 seeds x 3 metrics)",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "M1_GO.verdict: stored=False recomputed=False",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "M1_STRONG.verdict: stored=False recomputed=False",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "structure_contribution.verdict: stored=False recomputed=False",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "gate_contribution.significantly_better: stored=False recomputed=False",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "k_generalization.no_systematic_degradation: stored=False recomputed=False",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "M1_GO.delta_auroc",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "M1_GO.delta_auroc_ci_low",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "M1_GO.e_aurc_reduction",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "M1_GO.rer50_gain_pp",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "structure_contribution.delta_auroc_LCR_vs_AggregateMLP",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "gate_contribution.delta_auroc_LCR_vs_noGate",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    }
+  ],
+  "runtime_sec": 441.4
+}

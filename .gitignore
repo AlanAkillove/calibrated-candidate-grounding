@@ -39,6 +39,8 @@ results/*
 !results/final_registry/**
 !results/v2_backbone_generalization/
 !results/v2_backbone_generalization/**
+!results/v2_local_competition/
+!results/v2_local_competition/**
 experiments/**/outputs/
 
 # Local logs / scratch
