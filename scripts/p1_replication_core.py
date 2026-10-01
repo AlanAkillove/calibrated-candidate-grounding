@@ -58,7 +58,7 @@ REFS_PATH = Path("data/raw/refcoco+/refcoco+/refs(unc).p")
 IMAGE_SIZES_PATH = Path("cache/image_sizes.npz")
 MANIFEST_SEED = 20260927
 
-V1_PHASE0B_BOOTSTRAP = B3_ROOT / "seed_{seed}" / "bootstrap.csv"
+V1_PHASE0B_BOOTSTRAP = str(B3_ROOT) + "/seed_{seed}/bootstrap.csv"
 V1_PHASE0B_AGGREGATE = B3_ROOT / "aggregate.csv"
 V1_PHASE1F_GATE_JSON = Path("results/phase1f_hard_semantic/gate.json")
 

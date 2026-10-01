@@ -1,0 +1,331 @@
+{
+  "artifact": "v2_p1_frozen_inference",
+  "protocol": "V2-P1 P1-F4/P1-F5 frozen inference (both proposal families)",
+  "families": [
+    {
+      "family": "RPN",
+      "attrition": {
+        "random": {
+          "regime": "random",
+          "total_target_present_rows": 10425,
+          "eligible": {
+            "5": 10425,
+            "10": 10425,
+            "20": 10425,
+            "50": 10286
+          },
+          "primary_common_K50_rows": 10286,
+          "images": 1490,
+          "refs": 3647,
+          "k50_availability": 0.9867
+        },
+        "same_category": {
+          "regime": "same_category",
+          "eligible_rows": 9623,
+          "images": 1428,
+          "refs": 3416,
+          "excluded_no_entry": 0,
+          "excluded_not_eligible": 802,
+          "excluded_target_mismatch": 0,
+          "same_cat_ge_4_availability": 0.9231
+        }
+      },
+      "jobs": [
+        {
+          "family": "RPN",
+          "regime": "random",
+          "job": "random_k5",
+          "K": 5,
+          "n_rows": 10425,
+          "images": 1494,
+          "refs": 3695,
+          "n_predictions_written": 3,
+          "rpn_reproduction_verify": {
+            "performed": true,
+            "K": 5,
+            "max_abs_delta": {
+              "b3_seed1": 1.1444091796875e-05,
+              "b3_seed2": 1.2874603271484375e-05,
+              "b3_seed3": 1.239776611328125e-05
+            },
+            "atol": 0.0001,
+            "n_cohort": 10425,
+            "n_intersection": 10286,
+            "coverage": 0.9867
+          }
+        },
+        {
+          "family": "RPN",
+          "regime": "random",
+          "job": "random_k10",
+          "K": 10,
+          "n_rows": 10425,
+          "images": 1494,
+          "refs": 3695,
+          "n_predictions_written": 3,
+          "rpn_reproduction_verify": {
+            "performed": true,
+            "K": 10,
+            "max_abs_delta": {
+              "b3_seed1": 9.5367431640625e-06,
+              "b3_seed2": 9.5367431640625e-06,
+              "b3_seed3": 8.58306884765625e-06
+            },
+            "atol": 0.0001,
+            "n_cohort": 10425,
+            "n_intersection": 10286,
+            "coverage": 0.9867
+          }
+        },
+        {
+          "family": "RPN",
+          "regime": "random",
+          "job": "random_k20",
+          "K": 20,
+          "n_rows": 10425,
+          "images": 1494,
+          "refs": 3695,
+          "n_predictions_written": 3,
+          "rpn_reproduction_verify": {
+            "performed": true,
+            "K": 20,
+            "max_abs_delta": {
+              "b3_seed1": 1.33514404296875e-05,
+              "b3_seed2": 1.239776611328125e-05,
+              "b3_seed3": 1.1444091796875e-05
+            },
+            "atol": 0.0001,
+            "n_cohort": 10425,
+            "n_intersection": 10286,
+            "coverage": 0.9867
+          }
+        },
+        {
+          "family": "RPN",
+          "regime": "random",
+          "job": "random_k50",
+          "K": 50,
+          "n_rows": 10286,
+          "images": 1490,
+          "refs": 3647,
+          "n_predictions_written": 3,
+          "rpn_reproduction_verify": {
+            "performed": true,
+            "K": 50,
+            "max_abs_delta": {
+              "b3_seed1": 1.71661376953125e-05,
+              "b3_seed2": 1.4781951904296875e-05,
+              "b3_seed3": 1.4781951904296875e-05
+            },
+            "atol": 0.0001,
+            "n_cohort": 10286,
+            "n_intersection": 10286,
+            "coverage": 1.0
+          }
+        },
+        {
+          "family": "RPN",
+          "regime": "same_category",
+          "job": "hard_k5",
+          "K": 5,
+          "n_rows": 9623,
+          "images": 1428,
+          "refs": 3416,
+          "n_predictions_written": 3
+        }
+      ]
+    },
+    {
+      "family": "DETR",
+      "attrition": {
+        "random": {
+          "regime": "random",
+          "total_target_present_rows": 10601,
+          "eligible": {
+            "5": 10601,
+            "10": 10601,
+            "20": 10570,
+            "50": 9665
+          },
+          "primary_common_K50_rows": 9665,
+          "images": 1421,
+          "refs": 3440,
+          "k50_availability": 0.9117
+        },
+        "same_category": {
+          "regime": "same_category",
+          "eligible_rows": 8376,
+          "images": 1265,
+          "refs": 2998,
+          "excluded_no_entry": 0,
+          "excluded_not_eligible": 2225,
+          "excluded_target_mismatch": 0,
+          "same_cat_ge_4_availability": 0.7901
+        }
+      },
+      "jobs": [
+        {
+          "family": "DETR",
+          "regime": "random",
+          "job": "random_k5",
+          "K": 5,
+          "n_rows": 10601,
+          "images": 1500,
+          "refs": 3767,
+          "n_predictions_written": 3
+        },
+        {
+          "family": "DETR",
+          "regime": "random",
+          "job": "random_k10",
+          "K": 10,
+          "n_rows": 10601,
+          "images": 1500,
+          "refs": 3767,
+          "n_predictions_written": 3
+        },
+        {
+          "family": "DETR",
+          "regime": "random",
+          "job": "random_k20",
+          "K": 20,
+          "n_rows": 10570,
+          "images": 1499,
+          "refs": 3756,
+          "n_predictions_written": 3
+        },
+        {
+          "family": "DETR",
+          "regime": "random",
+          "job": "random_k50",
+          "K": 50,
+          "n_rows": 9665,
+          "images": 1421,
+          "refs": 3440,
+          "n_predictions_written": 3
+        },
+        {
+          "family": "DETR",
+          "regime": "same_category",
+          "job": "hard_k5",
+          "K": 5,
+          "n_rows": 8376,
+          "images": 1265,
+          "refs": 2998,
+          "n_predictions_written": 3
+        }
+      ]
+    }
+  ],
+  "detr_text_cache": {
+    "text_features_sha256": "82c0d10195121bcefbf11e2adfab03348377e5aae6a7288e76568b8da25617a1",
+    "reused_text_index": true,
+    "n_sentences": 141564
+  },
+  "frozen_identity": {
+    "b3_checkpoints": {
+      "b3_seed1": {
+        "recorded_sha256": "396d90da2f4f402e0dba86f4956c12efdf19b6b0c76a542e5b60a281810a8e74",
+        "current_sha256": "396d90da2f4f402e0dba86f4956c12efdf19b6b0c76a542e5b60a281810a8e74",
+        "unchanged": true
+      },
+      "b3_seed2": {
+        "recorded_sha256": "6092592e6eef3cc031f9f3c0a33fcd296ea31061be80ab5008ceb8c6d7c910c4",
+        "current_sha256": "6092592e6eef3cc031f9f3c0a33fcd296ea31061be80ab5008ceb8c6d7c910c4",
+        "unchanged": true
+      },
+      "b3_seed3": {
+        "recorded_sha256": "b7671881b4c441d0ab01da1ee91572d2c3d66067c2a131e29e700460217d14ab",
+        "current_sha256": "b7671881b4c441d0ab01da1ee91572d2c3d66067c2a131e29e700460217d14ab",
+        "unchanged": true
+      }
+    },
+    "temperatures": {
+      "b3_seed1": {
+        "eval_metadata_temperature": 1.1153439683270872,
+        "bundle_temperature": 1.1153439683270872,
+        "unchanged": true
+      },
+      "b3_seed2": {
+        "eval_metadata_temperature": 1.116630407128927,
+        "bundle_temperature": 1.116630407128927,
+        "unchanged": true
+      },
+      "b3_seed3": {
+        "eval_metadata_temperature": 1.100524960810151,
+        "bundle_temperature": 1.100524960810151,
+        "unchanged": true
+      }
+    },
+    "text_cache": {
+      "v1_sha256": "82c0d10195121bcefbf11e2adfab03348377e5aae6a7288e76568b8da25617a1",
+      "detr_sha256": "82c0d10195121bcefbf11e2adfab03348377e5aae6a7288e76568b8da25617a1",
+      "unchanged": true
+    },
+    "openclip": {
+      "checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+      "recorded_identity": {
+        "checkpoint_path": "F:/DL Projects/calibrated-candidate-grounding/cache/hf_hub/models--laion--CLIP-ViT-B-32-laion2B-s34B-b79K/snapshots/1a25a446712ba5ee05982a381eed697ef9b435cf/open_clip_pytorch_model.bin",
+        "frozen": {
+          "cache_version": "phase0a-v1",
+          "checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+          "context_length": 77,
+          "embedding_dim": 512,
+          "library": "open_clip_torch",
+          "model_name": "ViT-B-32",
+          "precision": "fp16",
+          "pretrained": "laion2b_s34b_b79k",
+          "resolution": 224,
+          "tokenizer": "SimpleTokenizer"
+        },
+        "measured_checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+        "metadata": {
+          "cache_version": "phase0a-v1",
+          "checkpoint_path": "cache\\hf_hub\\models--laion--CLIP-ViT-B-32-laion2B-s34B-b79K\\snapshots\\1a25a446712ba5ee05982a381eed697ef9b435cf\\open_clip_pytorch_model.bin",
+          "context_length": 77,
+          "embedding_dim": 512,
+          "library": "open_clip_torch",
+          "library_version": "3.3.0",
+          "metadata_path": "cache/features/metadata.json",
+          "model_name": "ViT-B-32",
+          "precision": "fp16",
+          "preprocessing": {
+            "antialias": true,
+            "center_crop": [
+              224,
+              224
+            ],
+            "crop_policy": "exact proposal crop (round->clamp), no context padding",
+            "interpolation": "bicubic",
+            "mean": [
+              0.48145466,
+              0.4578275,
+              0.40821073
+            ],
+            "min_crop_px": 1,
+            "resize_mode": "shortest",
+            "resize_size": 224,
+            "source": "introspected from the live open_clip val transform",
+            "std": [
+              0.26862954,
+              0.26130258,
+              0.27577711
+            ]
+          },
+          "pretrained": "laion2b_s34b_b79k",
+          "recorded_checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+          "resolution": 224,
+          "tokenizer": "SimpleTokenizer"
+        },
+        "ok": true
+      }
+    },
+    "r1_e1b_bundle": {
+      "note": "R1/E1b are read from the checksum-verified bundle (models.sha256); load_models(verify_checksum=True) pinned them; they are never re-fitted.",
+      "bundle_checksum_verified": true
+    },
+    "grounding_invariant": true
+  },
+  "new_training_parameters": 0,
+  "generated_utc": "2026-10-01T15:05:28Z"
+}
