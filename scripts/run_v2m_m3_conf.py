@@ -44,7 +44,6 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List, Mapping, Optional, Sequence, Tuple
 
 import numpy as np
-from scipy.special import expit
 
 import matplotlib
 
@@ -225,22 +224,26 @@ def _corrected_T(b3_root: Path, seed: int) -> float:
     return value
 
 
-def _p_logistic(
+def _p_expert(
+    model: Any,
     stats17: np.ndarray,
     sem14: np.ndarray,
     stats_fit: Any,
     sem_fit: Any,
-    coef: np.ndarray,
-    intercept: float,
 ) -> np.ndarray:
-    """Frozen 31-d Stats+Semantic logistic inference (exact linear logit)."""
+    """Frozen expert inference through the model object itself.
+
+    Uses the fitted model's own ``predict_proba`` (the exact V2-G / M2 code
+    path) rather than a hand-rolled sigmoid, so that the E_random anchors are
+    bit-reproducible against the V2-G artifacts.
+    """
     x31 = np.hstack(
         [
             rfeat.normalize_apply(np.asarray(stats17), stats_fit),
             rfeat.normalize_apply(np.asarray(sem14), sem_fit),
         ]
     )
-    return expit(x31 @ np.asarray(coef, dtype=np.float64) + float(intercept))
+    return np.asarray(model.predict_proba(x31), dtype=np.float64)
 
 
 def _aggregate(
@@ -462,12 +465,11 @@ def _run_seed(
 
     # -- 1. E_random anchor: reproduce V2-G Phase A / dose-response -------------
     bundle10 = _load_store_bundle(bb_dir, paths, seed, 10, temperature)
-    coef_r2, intercept_r2 = pk["R2_model"].coefficients()
     bundle5 = _load_store_bundle(bb_dir, paths, seed, 5, temperature)
     test5 = np.isin(np.asarray(bundle5["eval_split"]), ("testA", "testB"))
-    p_r_k5 = _p_logistic(
-        np.asarray(bundle5["stats17"])[test5], np.asarray(bundle5["sem14"])[test5],
-        pk["stats_fit"], pk["sem_fit"], np.asarray(coef_r2, dtype=np.float64), float(intercept_r2),
+    p_r_k5 = _p_expert(
+        pk["R2_model"], np.asarray(bundle5["stats17"])[test5], np.asarray(bundle5["sem14"])[test5],
+        pk["stats_fit"], pk["sem_fit"],
     )
     auroc_k5 = float(
         reval.point_metric_row(
@@ -535,8 +537,6 @@ def _run_seed(
         {m: x31_std["tune"][m] for m in MIXER_FIT_LEVELS}, correct_tune,
         name=f"{tag}:seed{seed}:E_curriculum", log=log,
     )
-    coef_curr = np.asarray(e1b["coef"], dtype=np.float64)
-    intercept_curr = float(e1b["intercept"])
     log(
         f"[M3-CONF {tag} seed{seed}] E_curriculum trained (C={e1b['chosen_C']:g}, "
         f"tune balanced AUROC={e1b['tune_mean_auroc']:.4f})"
@@ -564,13 +564,10 @@ def _run_seed(
         sem14 = np.asarray(block["sem14"])
         a_tune = index.transform(competition_features_from_sem14(sem14, runner.SEM14_NAMES))
         groups[int(m)] = {
-            "p_r": _p_logistic(
-                block["stats17"], sem14, pk["stats_fit"], pk["sem_fit"],
-                np.asarray(coef_r2, dtype=np.float64), float(intercept_r2),
+            "p_r": _p_expert(
+                pk["R2_model"], block["stats17"], sem14, pk["stats_fit"], pk["sem_fit"]
             ),
-            "p_c": _p_logistic(
-                block["stats17"], sem14, stats_fit_curr, sem_fit_curr, coef_curr, intercept_curr
-            ),
+            "p_c": np.asarray(e1b["model"].predict_proba(x31_std["tune"][m]), dtype=np.float64),
             "a": a_tune,
             "y": np.asarray(block["correct"], dtype=np.float64),
         }
@@ -625,12 +622,11 @@ def _run_seed(
         ):
             raise AssertionError(f"{tag} seed{seed}/{level}: severity cells disagree on the shared rows")
         sem14 = np.asarray(block["sem14"])
-        p_r = _p_logistic(
-            block["stats17"], sem14, pk["stats_fit"], pk["sem_fit"],
-            np.asarray(coef_r2, dtype=np.float64), float(intercept_r2),
+        p_r = _p_expert(
+            pk["R2_model"], block["stats17"], sem14, pk["stats_fit"], pk["sem_fit"]
         )
-        p_c = _p_logistic(
-            block["stats17"], sem14, stats_fit_curr, sem_fit_curr, coef_curr, intercept_curr
+        p_c = _p_expert(
+            e1b["model"], block["stats17"], sem14, stats_fit_curr, sem_fit_curr
         )
         stored_dose = _dose_r2_auroc(tag, int(seed), int(m))
         auroc_pr = float(reval.point_metric_row(p_r, correct, probability=p_r)["auroc_correct"])

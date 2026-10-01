@@ -145,12 +145,21 @@
     "m3_mixture/conf/cross_backbone_verdict.json",
     "m3_mixture/conf/metadata.json"
   ],
+  "pre_run_amendments": [
+    {
+      "scope": "scripts/run_v2m_m3_conf.py only (no formula / gate / expert / metric change)",
+      "change": "E_random and E_curriculum inference now call the fitted model objects' own predict_proba (the exact V2-G / M2 code path) instead of a hand-rolled expit logit",
+      "reason": "the smoke anchor check showed a ~1e-7 AUROC difference (sklearn sigmoid vs scipy expit at ULP level); the model-object path restores bit fidelity against the V2-G artifacts",
+      "b1_b2_mixture_results_seen_before_this_change": false,
+      "anchor_tolerance_unchanged": 1e-9
+    }
+  ],
   "freeze_hashes": {
     "src/ccg/mixture/mixer.py": "0e849dbe8e7821c77bf24ac6e9d7a99332bd01c269f47a2f36585879a4edd08c",
     "src/ccg/mixture/bootstrap.py": "4e19b9c58b817a7904dd98ebd41774ed3d733d1eda23f1f02f717981590eb735",
     "results/v2_local_competition/m3_mixture/protocol_m3.json": "d5e17d6bba56471bf9382c2c3ebf534a98550ed9dbd5fe1f826f2831e9a371da",
     "results/v2_backbone_generalization/g4_protocol_freeze.json": "6845a3f9143fbcdd275257ebf51cd882e25281aa63913250ed57cc247139bb8b",
-    "scripts/run_v2m_m3_conf.py": "f927af0621ca7e008878268d67762f42cf5e040493d10eea3451a4cd623ff499",
+    "scripts/run_v2m_m3_conf.py": "68407b512b30b719aad6ab8bfb0934a96eebe68d110f06c71ed61951a0484c92",
     "scripts/run_v2m_m3_b0.py": "580c19e53b119a106c44fbd4b9806223a13fefa2548902269de3ad968a11348e"
   },
   "stop_rule": "ADAPTIVE MIXTURE NOT SUPPORTED stops the entire M3 method line; the specialist trade-off (M2.5) and the LCR no-go results remain the frozen record."
