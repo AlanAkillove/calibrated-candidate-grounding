@@ -1,0 +1,15 @@
+metric,RPN,DETR,note
+target max IoU (median),0.8250076770782471,0.9439224302768707,
+GT max IoU (median),0.7840040326118469,0.863077700138092,
+pairwise redundancy frac>0.7,0.001429563492063492,0.03966468253968254,
+pairwise redundancy frac>0.9,3.5052910052910054e-05,0.010321097883597884,
+box area mean (px^2),39068.33125531592,31441.85038386488,
+box area median (px^2),23432.39453125,7382.119384765625,
+aspect ratio mean,1.254280682117135,1.310063161513773,
+same-category supply (frac >= 4),0.900319829424307,0.7817164179104478,
+raw margin12 mean (K5),3.5152346666666667,21.598003000000002,
+MSP mean (K5),0.786166,0.9530696666666666,
+grounding accuracy (natural K5),0.789416,0.873188,
+C1 effect size: delta AUROC K5-K50,0.05216064928826799,0.0851570336375372,structural: reliability degrades in both families
+C4 amplification (Hard-Rand),0.030621709362858573,0.014680773651283915,structural: semantic gain keeps its hard-competition boost
+C1 delta AUROC on matched intersection,0.059250503856731175,0.08194726915703861,"same expressions, both families"

@@ -1,0 +1,236 @@
+{
+  "artifact": "v2_p1_final_summary",
+  "protocol": "V2-P1 sections 19 / 20 / 22",
+  "classification": "CONFIRMATORY",
+  "rpn_column_source": "frozen artifacts only (phase0b CSVs, phase1f gate.json, v2_backbone_generalization g3 gate, proposal_audit)",
+  "final_table": [
+    {
+      "metric": "target recall@0.5 (N=64)",
+      "RPN": 0.9858742004264393,
+      "DETR": 0.9973347547974414
+    },
+    {
+      "metric": "target recall@0.7 (N=64)",
+      "RPN": 0.8997867803837953,
+      "DETR": 0.9845415778251599
+    },
+    {
+      "metric": "K50 availability (audit)",
+      "RPN": 0.9912046908315565,
+      "DETR": 0.9224413646055437
+    },
+    {
+      "metric": "K50 availability (pooled-test rows)",
+      "RPN": 0.9867,
+      "DETR": 0.9117
+    },
+    {
+      "metric": "same-cat >=4 availability (audit)",
+      "RPN": 0.900319829424307,
+      "DETR": 0.7817164179104478
+    },
+    {
+      "metric": "K5 grounding acc",
+      "RPN": 0.7907431447024696,
+      "DETR": 0.8806001034661147
+    },
+    {
+      "metric": "K50 grounding acc",
+      "RPN": 0.4319919226885908,
+      "DETR": 0.5849284359372305
+    },
+    {
+      "metric": "K5 MSP AUROC",
+      "RPN": 0.8426060088002331,
+      "DETR": 0.7993564000651058
+    },
+    {
+      "metric": "K50 MSP AUROC",
+      "RPN": 0.790445359511965,
+      "DETR": 0.7141993664275684
+    },
+    {
+      "metric": "delta AUROC K5-K50",
+      "RPN": 0.05216064928826799,
+      "DETR": 0.0851570336375372
+    },
+    {
+      "metric": "E-AURC worsening (relative)",
+      "RPN": 2.2412988814563963,
+      "DETR": 4.554741315827319
+    },
+    {
+      "metric": "RER50 drop",
+      "RPN": 0.4559951902305548,
+      "DETR": 0.29431379584558787
+    },
+    {
+      "metric": "delta Rand (E1b-R1 AUROC)",
+      "RPN": 0.0012267810120019443,
+      "DETR": 0.006617761583707933
+    },
+    {
+      "metric": "delta Hard (E1b-R1 AUROC)",
+      "RPN": 0.03184849037486052,
+      "DETR": 0.02129853523499185
+    },
+    {
+      "metric": "Amplification (Hard-Rand)",
+      "RPN": 0.030621709362858573,
+      "DETR": 0.014680773651283915
+    },
+    {
+      "metric": "C1 verdict",
+      "RPN": "YES",
+      "DETR": "YES"
+    },
+    {
+      "metric": "C4 verdict",
+      "RPN": "YES",
+      "DETR": "YES"
+    }
+  ],
+  "distribution_diagnostic_descriptive_only": [
+    {
+      "metric": "target max IoU (median)",
+      "RPN": 0.8250076770782471,
+      "DETR": 0.9439224302768707,
+      "note": ""
+    },
+    {
+      "metric": "GT max IoU (median)",
+      "RPN": 0.7840040326118469,
+      "DETR": 0.863077700138092,
+      "note": ""
+    },
+    {
+      "metric": "pairwise redundancy frac>0.7",
+      "RPN": 0.001429563492063492,
+      "DETR": 0.03966468253968254,
+      "note": ""
+    },
+    {
+      "metric": "pairwise redundancy frac>0.9",
+      "RPN": 3.5052910052910054e-05,
+      "DETR": 0.010321097883597884,
+      "note": ""
+    },
+    {
+      "metric": "box area mean (px^2)",
+      "RPN": 39068.33125531592,
+      "DETR": 31441.85038386488,
+      "note": ""
+    },
+    {
+      "metric": "box area median (px^2)",
+      "RPN": 23432.39453125,
+      "DETR": 7382.119384765625,
+      "note": ""
+    },
+    {
+      "metric": "aspect ratio mean",
+      "RPN": 1.254280682117135,
+      "DETR": 1.310063161513773,
+      "note": ""
+    },
+    {
+      "metric": "same-category supply (frac >= 4)",
+      "RPN": 0.900319829424307,
+      "DETR": 0.7817164179104478,
+      "note": ""
+    },
+    {
+      "metric": "raw margin12 mean (K5)",
+      "RPN": 3.5152346666666667,
+      "DETR": 21.598003000000002,
+      "note": ""
+    },
+    {
+      "metric": "MSP mean (K5)",
+      "RPN": 0.786166,
+      "DETR": 0.9530696666666666,
+      "note": ""
+    },
+    {
+      "metric": "grounding accuracy (natural K5)",
+      "RPN": 0.789416,
+      "DETR": 0.873188,
+      "note": ""
+    },
+    {
+      "metric": "C1 effect size: delta AUROC K5-K50",
+      "RPN": 0.05216064928826799,
+      "DETR": 0.0851570336375372,
+      "note": "structural: reliability degrades in both families"
+    },
+    {
+      "metric": "C4 amplification (Hard-Rand)",
+      "RPN": 0.030621709362858573,
+      "DETR": 0.014680773651283915,
+      "note": "structural: semantic gain keeps its hard-competition boost"
+    },
+    {
+      "metric": "C1 delta AUROC on matched intersection",
+      "RPN": 0.059250503856731175,
+      "DETR": 0.08194726915703861,
+      "note": "same expressions, both families"
+    }
+  ],
+  "verdicts": {
+    "detr_C1": "YES",
+    "detr_C4": "YES",
+    "rpn_recomputed_crosscheck": {
+      "C1": "YES",
+      "C4": "YES"
+    }
+  },
+  "overall_p1_verdict": {
+    "label": "CORE_FINDINGS_PROPOSAL_FAMILY_ROBUST",
+    "value": "YES",
+    "detail": "candidate-cardinality degradation and hard-semantic amplification both replicate under DETR proposals."
+  },
+  "interpretation_case": {
+    "detr_k5_accuracy": 0.8806001034661147,
+    "rpn_k5_accuracy": 0.789519735562901,
+    "detr_k5_higher": true,
+    "c1_replicated": true,
+    "note": "higher absolute grounding accuracy does not remove candidate-cardinality reliability degradation (no causal claim)"
+  },
+  "five_questions": {
+    "q1_cardinality_replication": "YES",
+    "q2_hard_amplification_replication": "YES",
+    "q3_matched_effect_sizes": {
+      "n_expressions": 9418,
+      "RPN": {
+        "delta_auroc_K5_K50_mean": 0.059250503856731175,
+        "rer50_drop_mean": 0.4727092380084685
+      },
+      "DETR": {
+        "delta_auroc_K5_K50_mean": 0.08194726915703861,
+        "rer50_drop_mean": 0.2814454727472846
+      },
+      "delta_auroc_gap_DETR_minus_RPN": 0.022696765300307432,
+      "rer50_drop_gap_DETR_minus_RPN": -0.19126376526118388
+    },
+    "q4_core_findings_survive": "CORE_FINDINGS_PROPOSAL_FAMILY_ROBUST",
+    "q5_accuracy_vs_reliability": {
+      "detr_k5_accuracy": 0.8806001034661147,
+      "rpn_k5_accuracy": 0.789519735562901,
+      "detr_k5_higher": true,
+      "c1_replicated": true,
+      "note": "higher absolute grounding accuracy does not remove candidate-cardinality reliability degradation (no causal claim)"
+    }
+  },
+  "new_training_parameters": 0,
+  "preconditions_from_frozen_config": {
+    "proposal_b_feasibility": "FULL",
+    "route_f": "ROUTE_F_FULLY_USABLE",
+    "p1_f3_detr_random_k5_accuracy": 0.8732,
+    "p1_f3_detr_r1_auroc": 0.8008,
+    "p1_f3_detr_e1b_auroc": 0.8092,
+    "p1_f3_confidence_collapse": false,
+    "p1_f3_new_training_parameters": 0,
+    "p1_f3_frozen_identity": "PASS"
+  },
+  "generated_utc": "2026-10-01T16:15:17Z"
+}
