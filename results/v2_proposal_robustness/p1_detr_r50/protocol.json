@@ -12,6 +12,15 @@
     "near_duplicate_handling": "recorded only (redundancy stats); no result-driven NMS in the first version",
     "same_category_assignment": "proposal -> highest-IoU COCO GT object only if IoU >= 0.5 (unchanged from V1)"
   },
+  "candidate_ordering": {
+    "amendment": "P1-A0",
+    "detr_confidence_ordering_role": "The DETR foreground-score ranking is bank *provenance* only: it fixes the order in which the N=64 DETR proposals are stored at bank-generation time. It is NOT a Random candidate-selection rule and MUST NOT be used to pick the K5/K10/K20/K50 distractors.",
+    "manifest_seed": 20260927,
+    "primary_random_rule": "target = canonical slot 0; the remaining eligible proposals are laid out by the exact V1 deterministic seeded-random per-ref shuffle (rng = default_rng([MANIFEST_SEED, ref_id])), and C_K = [target] + order[:K-1] gives nested prefixes for K5/K10/K20/K50 (C5 subset C10 subset C20 subset C50).",
+    "rationale": "The proposal-family robustness test must change ONLY the proposal family while holding the candidate-construction regime fixed. Reusing the V1 seeded-random ordering keeps the DETR cohort directly comparable with the frozen RPN reference.",
+    "resolution": "Supersedes the P1-F3 wording 'distractors ordered by DETR confidence': the primary Random regime follows the exact V1 seeded-random distractor construction (seed 20260927), never DETR confidence top-K. The P1-F3 run already used --regime random, so its Random-K5 numbers are consistent with this clarification.",
+    "scope": "P1-F4 (C1) and P1-F5 (C4) primary cohorts"
+  },
   "created_utc": "2026-10-01T09:42:55Z",
   "id2label_0_placeholder": "N/A",
   "n_proposals": 64,
