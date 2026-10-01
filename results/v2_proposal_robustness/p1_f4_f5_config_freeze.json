@@ -1,0 +1,226 @@
+{
+  "artifact": "v2_p1_f4_f5_config_freeze",
+  "protocol": "V2-P1 P1-F4 (C1 proposal-family cardinality) + P1-F5 (C4 proposal-family hard-semantic) replication",
+  "classification": "CONFIRMATORY",
+  "frozen_utc": "2026-10-01T00:00:00Z",
+  "frozen_before_results": true,
+  "note": "Both F4 and F5 configurations are frozen here simultaneously, before any F4 number is produced (protocol section 1). F5 must not be edited after F4 results exist (protocol section 26).",
+  "preconditions": {
+    "proposal_b_feasibility": "FULL",
+    "route_f": "ROUTE_F_FULLY_USABLE",
+    "p1_f3_detr_random_k5_accuracy": 0.8732,
+    "p1_f3_detr_r1_auroc": 0.8008,
+    "p1_f3_detr_e1b_auroc": 0.8092,
+    "p1_f3_confidence_collapse": false,
+    "p1_f3_new_training_parameters": 0,
+    "p1_f3_frozen_identity": "PASS"
+  },
+  "forbidden": [
+    "B3 retraining",
+    "temperature refit",
+    "R1 refit",
+    "E1b refit",
+    "proposal tuning",
+    "N change",
+    "NMS",
+    "checkpoint change",
+    "threshold change",
+    "new reliability model",
+    "DETR confidence top-K as primary random selection (P1-A0)"
+  ],
+  "candidate_ordering": {
+    "amendment": "P1-A0",
+    "manifest_seed": 20260927,
+    "primary_random_rule": "exact V1 seeded-random distractor construction: target at canonical slot 0, remaining eligible proposals in deterministic seeded random order, nested prefixes for K5/K10/K20/K50",
+    "detr_confidence_ordering_role": "proposal-bank provenance only, never a random candidate-selection rule",
+    "held_fixed": "candidate-construction regime",
+    "varied": "proposal family (RPN -> DETR)"
+  },
+  "families": {
+    "RPN": {
+      "role": "frozen reference",
+      "features_root": "cache/features",
+      "manifests_root": "cache/manifests",
+      "bank": "cache/proposals.h5"
+    },
+    "DETR": {
+      "role": "proposal-B under test",
+      "features_root": "cache/features_detr_r50",
+      "manifests_root": "cache/manifests_detr",
+      "bank": "cache/proposals_detr_r50.h5",
+      "top_n": 64,
+      "query_independent": true
+    }
+  },
+  "frozen_stack": {
+    "scorer": "frozen phase0b B3 seed1/2/3, per-seed global calibration temperature (global_T_corrected)",
+    "reliability_heads": {
+      "R1": "frozen stats_logistic",
+      "R2_E1b": "frozen e1b_stats_semantic"
+    },
+    "base_confidence": "conf_msp (temperature-scaled B3 MSP)",
+    "seeds": [1, 2, 3],
+    "new_parameters": 0,
+    "load": "read-only via ccg.semantic.frozen_load.load_models(verify_checksum=True); never re-fitted"
+  },
+  "p1_f4_c1": {
+    "regime": "random",
+    "bank_N": 64,
+    "nested_ks": [5, 10, 20, 50],
+    "primary_cohort": "common-K50 (target available AND >=49 valid distractors)",
+    "cohort_identity": "the same rows at K5/K10/K20/K50; C5 subset C10 subset C20 subset C50",
+    "natural_cohorts_forbidden_as_primary": true,
+    "metrics": ["accuracy", "auroc_correct", "e_aurc", "rer_at_50", "rer_at_80"],
+    "seed_reporting": "per-seed separate + mean +/- std",
+    "attrition_report": [
+      "total_target_present_rows",
+      "K5_eligible",
+      "K10_eligible",
+      "K20_eligible",
+      "K50_eligible",
+      "primary_common_K50_rows",
+      "images",
+      "refs"
+    ],
+    "attrition_reference": "RPN frozen reference (side by side); no resampling to compensate DETR K50 availability 0.9224",
+    "primary_comparison": "K5 vs K50",
+    "statistics": {
+      "resample_unit": "image",
+      "design": "image-cluster paired bootstrap",
+      "replicates": 5000,
+      "seed": 0,
+      "ci": 0.95
+    },
+    "effects": ["delta_auroc_K5_minus_K50", "relative_e_aurc_worsening", "rer50_drop", "rer80_drop"],
+    "gate": {
+      "reuse": "V2-G G3 (analyze_v2g_cardinality), applied verbatim",
+      "route_a": {
+        "auroc_drop_min": 0.03,
+        "ci_excludes_zero_all_seeds": true
+      },
+      "route_b": {
+        "e_aurc_relative_worsening_min": 0.20,
+        "rer50_drop_min_pp": 0.10,
+        "ci_excludes_zero_all_seeds": true
+      },
+      "replicated": "route_a OR route_b",
+      "verdict_keys": ["C1_PROPOSAL_FAMILY_REPLICATED=YES", "C1_PROPOSAL_FAMILY_REPLICATED=NO"]
+    },
+    "secondary_diagnostics": {
+      "calibration_independent": {
+        "reason": "F3 observed DETR raw margin much larger / MSP much higher",
+        "metrics": ["raw_margin_auroc_K5_10_20_50", "raw_top1_score_auroc_K5_10_20_50"],
+        "purpose": "distinguish candidate-cardinality reliability degradation from frozen-temperature calibration shift",
+        "participates_in_gate": false,
+        "temperature_refit_forbidden": true
+      },
+      "matched_proposal_family_intersection": {
+        "definition": "expressions that are BOTH RPN K50-eligible AND DETR K50-eligible",
+        "quantities": ["RPN_delta_auroc_K5_K50", "DETR_delta_auroc_K5_K50", "RPN_rer50_drop", "DETR_rer50_drop"],
+        "purpose": "exclude RPN-vs-DETR cohort composition as the cause of effect-size differences",
+        "participates_in_gate": false
+      }
+    }
+  },
+  "p1_f5_c4": {
+    "regime": "same_category",
+    "hard_definition": "identical to V1/V2-G: proposal assigned to highest-IoU COCO GT only if IoU>=0.5; hard distractors same GT category as target; K5 = target + 4 same-category distractors",
+    "unchanged": ["iou_threshold (0.5)", "category_definition", "target_matching"],
+    "matched_random_control": {
+      "requirement": "every SameCategory-K5 row has a matched Random-K5",
+      "shared": ["same expression", "same image", "same target proposal", "same scorer seed", "same K"],
+      "only_difference": "distractor composition"
+    },
+    "cohort_report": ["eligible_rows", "images", "refs", "excluded_rows"],
+    "cohort_reference": "RPN Phase1F 9487 rows / 1424 images / 3369 refs (sample size not forced equal; DETR same-cat>=4 availability 0.7817)",
+    "manipulation_check": {
+      "features": [
+        {"name": "winner_competitor_max_cos", "direction": "up"},
+        {"name": "winner_top2_cos", "direction": "up"},
+        {"name": "q_margin12", "direction": "down"}
+      ],
+      "feature_space": "V2 14-dim backbone-neutral v2_primary_semantic_stats",
+      "contrast": "Hard - Random",
+      "statistics": {"resample_unit": "image", "design": "image-cluster paired bootstrap", "replicates": 5000, "seed": 0, "ci": 0.95},
+      "valid_rule": {
+        "per_seed": "correct_direction >= 2/3 AND >= 1 indicator CI excludes 0",
+        "aggregate": "manipulation_valid = >= 2/3 seeds valid"
+      },
+      "invalid_verdict": "MANIPULATION_INVALID -> C4 = NOT_ASSESSABLE (never FAIL)"
+    },
+    "reliability_heads": {
+      "R1": "frozen stats_logistic (conf_stats)",
+      "R2_E1b": "frozen e1b_stats_semantic (conf_e1b)",
+      "retrain_forbidden": true
+    },
+    "effects": {
+      "delta_rand": "AUROC(R2) - AUROC(R1) on Random",
+      "delta_hard": "AUROC(R2) - AUROC(R1) on Hard",
+      "amplification": "delta_hard - delta_rand",
+      "bootstrap": "shared image-cluster draws for Random and Hard, 5000 reps, seed 0, ci 0.95",
+      "reporting": ["point", "ci_low", "ci_high", "per_seed", "mean_std"]
+    },
+    "gate": {
+      "requires_manipulation_valid": true,
+      "delta_hard_min": 0.015,
+      "delta_hard_ci_low_gt_0": true,
+      "amplification_min": 0.01,
+      "amplification_ci_low_gt_0": true,
+      "verdict_keys": ["C4_PROPOSAL_FAMILY_REPLICATED=YES", "C4_PROPOSAL_FAMILY_REPLICATED=NO", "C4=NOT_ASSESSABLE"]
+    },
+    "selective_metrics": {
+      "reported": ["e_aurc", "rer_at_50", "rer_at_80", "e1b_minus_r1_e_aurc_reduction", "e1b_minus_r1_rer50_gain"],
+      "participates_in_primary_gate": false
+    },
+    "matched_proposal_family_intersection": {
+      "definition": "expressions BOTH RPN Phase1F hard-eligible AND DETR hard-eligible",
+      "quantities": ["RPN_delta_rand", "RPN_delta_hard", "RPN_amplification", "DETR_delta_rand", "DETR_delta_hard", "DETR_amplification"],
+      "participates_in_gate": false
+    }
+  },
+  "shared_bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "resample_unit": "image",
+    "paired": true,
+    "shared_draws_hard_vs_random": true
+  },
+  "final_table": {
+    "columns": ["metric", "RPN", "DETR"],
+    "rpn_source": "frozen artifacts only (results/phase0b_independent, results/phase1f_hard_semantic), never hardcoded",
+    "rows": [
+      "target_recall_0.5",
+      "target_recall_0.7",
+      "K50_availability",
+      "same_cat_ge_4",
+      "K5_grounding_acc",
+      "K50_grounding_acc",
+      "K5_msp_auroc",
+      "K50_msp_auroc",
+      "delta_auroc",
+      "e_aurc_worsening",
+      "rer50_drop",
+      "delta_rand",
+      "delta_hard",
+      "amplification",
+      "c1_verdict",
+      "c4_verdict"
+    ]
+  },
+  "figures": {
+    "P1-Fig1": "K vs auroc_correct (RPN, DETR)",
+    "P1-Fig2": "K vs e_aurc (RPN, DETR)",
+    "P1-Fig3": "Random vs Hard semantic incremental AUROC (RPN, DETR)",
+    "max_figures": 3
+  },
+  "overall_verdict_labels": {
+    "c1_yes_c4_yes": "CORE_FINDINGS_PROPOSAL_FAMILY_ROBUST=YES",
+    "c1_yes_c4_not_assessable": ["CARDINALITY_PROPOSAL_ROBUST", "HARD_AMPLIFICATION_NOT_ASSESSABLE"],
+    "only_one": "PARTIAL_PROPOSAL_ROBUSTNESS",
+    "both_fail_valid_manipulation": "PROPOSAL_FAMILY_SENSITIVITY_WARNING"
+  },
+  "output_home": "results/v2_proposal_robustness",
+  "f4_out": "results/v2_proposal_robustness/p1_f4_c1",
+  "f5_out": "results/v2_proposal_robustness/p1_f5_c4"
+}
