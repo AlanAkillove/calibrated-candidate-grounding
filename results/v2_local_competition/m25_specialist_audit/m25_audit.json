@@ -1,0 +1,187 @@
+{
+  "artifact": "v2m_m25_audit",
+  "passed": true,
+  "recompute_dir": "results\\v2_local_competition\\m25_specialist_audit\\_audit_recompute",
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "metrics": [
+      "auroc_correct",
+      "e_aurc",
+      "rer_at_50",
+      "rer_at_80"
+    ]
+  },
+  "specialist_pattern": "SPECIALIST TRADEOFF PRESENT",
+  "severity_headline": {
+    "m0": {
+      "n_seeds": 3,
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "delta": -0.00890237374204302,
+      "ci_low": -0.012809283735864756,
+      "ci_high": -0.005096189956308943,
+      "per_seed": {
+        "1": -0.009238417982621039,
+        "2": -0.006231144829442314,
+        "3": -0.011237558414065707
+      },
+      "per_seed_ci": {
+        "1": [
+          -0.012776440290042384,
+          -0.005805661508514796
+        ],
+        "2": [
+          -0.009958491086004459,
+          -0.0025720073439168606
+        ],
+        "3": [
+          -0.015692919831547424,
+          -0.00691090101649517
+        ]
+      },
+      "n_positive": 0,
+      "n_negative": 3
+    },
+    "m2": {
+      "n_seeds": 3,
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "delta": 0.003209520450060399,
+      "ci_low": -0.0007952477881917069,
+      "ci_high": 0.007266290530879265,
+      "per_seed": {
+        "1": 0.0005682961815104415,
+        "2": 0.0035676612165599364,
+        "3": 0.005492603952110819
+      },
+      "per_seed_ci": {
+        "1": [
+          -0.0030645085163940604,
+          0.004238064892353338
+        ],
+        "2": [
+          -0.0002443055723199719,
+          0.0074699439503307236
+        ],
+        "3": [
+          0.0009230707241389117,
+          0.010090862749953734
+        ]
+      },
+      "n_positive": 3,
+      "n_negative": 0
+    },
+    "m4": {
+      "n_seeds": 3,
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "delta": 0.014568173314290537,
+      "ci_low": 0.010582098350278875,
+      "ci_high": 0.018600757893715295,
+      "per_seed": {
+        "1": 0.011753920118343197,
+        "2": 0.016703836231264146,
+        "3": 0.015246763593264268
+      },
+      "per_seed_ci": {
+        "1": [
+          0.00807647381256328,
+          0.015475278337798656
+        ],
+        "2": [
+          0.012893083689000611,
+          0.020638535546191848
+        ],
+        "3": [
+          0.010776737549272736,
+          0.019688459797155385
+        ]
+      },
+      "n_positive": 3,
+      "n_negative": 0
+    },
+    "m8": {
+      "n_seeds": 3,
+      "seeds": [
+        1,
+        2,
+        3
+      ],
+      "delta": 0.025829747649910344,
+      "ci_low": 0.02243494750698921,
+      "ci_high": 0.029320166401355752,
+      "per_seed": {
+        "1": 0.02287017749743292,
+        "2": 0.028033829121823062,
+        "3": 0.02658523633047505
+      },
+      "per_seed_ci": {
+        "1": [
+          0.01984093667538493,
+          0.026043665727629912
+        ],
+        "2": [
+          0.02461311373848781,
+          0.03150966882457797
+        ],
+        "3": [
+          0.022850792107094894,
+          0.03040716465185937
+        ]
+      },
+      "n_positive": 3,
+      "n_negative": 0
+    }
+  },
+  "max_deltas": {
+    "point_metrics": 0.0,
+    "paired_bootstrap": 0.0,
+    "expert_disagreement": 0.0,
+    "calibration": 0.0
+  },
+  "verdict_tree_mismatches": [],
+  "checks": [
+    {
+      "name": "point_metrics.csv reproduces (4 levels x 3 seeds x 2 experts)",
+      "ok": true,
+      "detail": "rows=24 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "paired_bootstrap.csv reproduces (4 levels x 3 seeds x 4 metrics)",
+      "ok": true,
+      "detail": "rows=48 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "expert_disagreement.csv reproduces (4 levels x 3 seeds)",
+      "ok": true,
+      "detail": "rows=12 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "calibration.csv reproduces (4 levels x 3 seeds x 2 experts)",
+      "ok": true,
+      "detail": "rows=24 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "verdict.json tree reproduces (severity + pattern + conditions + envelope)",
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "pattern: stored=SPECIALIST TRADEOFF PRESENT recomputed=SPECIALIST TRADEOFF PRESENT",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "runtime_sec": 399.3
+}

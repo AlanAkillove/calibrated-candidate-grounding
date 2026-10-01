@@ -1,0 +1,56 @@
+{
+  "artifact": "v2m_m25_metadata",
+  "branch": "v2-local-competition-reliability",
+  "head": "8fc4c7fef88df42d65407badb03d306efc12453b",
+  "dirty": true,
+  "started_utc": "2026-10-01T02:04:08Z",
+  "runtime_sec": 358.8,
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "levels": [
+    0,
+    2,
+    4,
+    8
+  ],
+  "k_level": 10,
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "metrics": [
+      "auroc_correct",
+      "e_aurc",
+      "rer_at_50",
+      "rer_at_80"
+    ],
+    "shared_draws": "same cohort -> same draws (paired design)"
+  },
+  "sources": {
+    "m1_manifest_sha": {
+      "1": "5d78ec3f51d9f98b15d6a58b5527d2711eced3c2541fbb5d1350761160df973e",
+      "2": "0c56dae4ea980290ae94a8d58a98949af119d68099862c6876bcd0db6af76858",
+      "3": "14305a3c55961f7d74cc8dddcd3264cbf4d7eaa0ea0a0bfe0499cd61ab3d3f10"
+    },
+    "m2_manifest_sha": {
+      "1": "9aa027f377ee943018f8bc2330bf22dff072f4d2143f46c2cf0c6570c5aeef97",
+      "2": "5741694485a4699d21bee0c2bc725d89751da7534001fc564e502ce5b22dde54",
+      "3": "7277a2c1590eb494eb593a0e9a9a416439f2324b6f808ca5585ddf7c26cb8123"
+    },
+    "m2_manifest_freeze_sha": "32d753bea652a98edd50f3f549d99482600fefb08c84ef6d5ab273a289123297"
+  },
+  "repro_checks": {
+    "random_vs_m1_confidences": 2.220446049250313e-16,
+    "curriculum_vs_m2_confidences": 0.0,
+    "curriculum_vs_m2_point_table": 0.0
+  },
+  "repro_tolerance": 1e-09,
+  "figures": [
+    "results\\v2_local_competition\\m25_specialist_audit\\figures\\m25_specialist_audit.png"
+  ],
+  "read_only": true,
+  "no_training": true
+}
