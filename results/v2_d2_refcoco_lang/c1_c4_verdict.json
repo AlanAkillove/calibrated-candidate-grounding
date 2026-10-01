@@ -1,0 +1,151 @@
+{
+  "artifact": "v2_d2_refcoco_lang_c1_c4",
+  "protocol": "V2-D2 RefCOCO strict cross-dataset robustness (language-distribution transfer)",
+  "cohort": {
+    "rows": 10544,
+    "images": 1494,
+    "refs": 3707,
+    "common_c1": 10400,
+    "matched_hard_c4": 9748
+  },
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "resample_unit": "image",
+    "shared_cluster_draws_for_hard_vs_rand": true
+  },
+  "models": {
+    "scorer": "frozen phase0b B3 seeds (global_T_corrected)",
+    "reliability": "frozen R1 stats_logistic / E1b e1b_stats_semantic",
+    "new_parameters": 0
+  },
+  "c1": {
+    "gate": {
+      "primary_comparison": "K5_vs_K50",
+      "variant": "global_T_corrected",
+      "auc_drop_mean": 0.04685566987853825,
+      "auc_drop_ci_low_mean": 0.03353683406095249,
+      "auc_all_seeds_ci_exclude_0": true,
+      "eaurc_worsening_mean": 1.8067467924488314,
+      "eaurc_all_seeds_ci_exclude_0": true,
+      "rer50_drop_mean": 0.46810585980342445,
+      "rer50_all_seeds_ci_exclude_0": true,
+      "route_a_passed": true,
+      "route_b_passed": true,
+      "replicated": true,
+      "thresholds": {
+        "route_a_auc_drop_min": 0.03,
+        "route_b_eaurc_worsen_min": 0.2,
+        "route_b_rer50_drop_min": 0.1
+      }
+    },
+    "v1_refcococo_plus_reference": {
+      "auroc_correct|absolute": {
+        "diff_mean": 0.05216064928826799,
+        "ci_low_mean": 0.04283331856565162
+      },
+      "e_aurc|relative": {
+        "diff_mean": -0.6914817063859674,
+        "ci_low_mean": -0.7147162785593513
+      },
+      "rer_at_50|absolute": {
+        "diff_mean": 0.4559951902305548,
+        "ci_low_mean": 0.4324007730579022
+      }
+    },
+    "auc_by_k_mean": {
+      "5": 0.8287564655103079,
+      "10": 0.7995414421160181,
+      "20": 0.7854282625460045,
+      "50": 0.7819007956317697
+    },
+    "accuracy_by_k_mean": {
+      "5": 0.7567307692307693,
+      "10": 0.6322435897435897,
+      "20": 0.5108974358974359,
+      "50": 0.37679487179487176
+    }
+  },
+  "c4": {
+    "manipulation": {
+      "metrics": [
+        [
+          "winner_competitor_max_cos",
+          "up"
+        ],
+        [
+          "winner_top2_cos",
+          "up"
+        ],
+        [
+          "q_margin12",
+          "down"
+        ]
+      ],
+      "per_seed_valid": {
+        "b3_seed1": true,
+        "b3_seed2": true,
+        "b3_seed3": true
+      },
+      "n_seed_valid": 3,
+      "n_seeds": 3,
+      "rule": "per-seed: >=2/3 metrics correct dir AND >=1 CI excludes 0; ok = >=2/3 seeds",
+      "manipulation_ok": true
+    },
+    "gate": {
+      "protocol": "V2-G G4 item 9 (frozen), replayed on D2",
+      "comparison": "stats_logistic -> e1b_stats_semantic on SameCat-K5 (matched random control)",
+      "delta_hard_mean": 0.03625991119068872,
+      "delta_hard_ci_low_mean": 0.03234459960723512,
+      "delta_rand_mean": 0.0006800541893984638,
+      "amplification_mean": 0.03557985700129026,
+      "amplification_ci_low_mean": 0.03127926347196746,
+      "pass_delta_hard": true,
+      "pass_amplification": true,
+      "n_seed_same_direction": 3,
+      "n_seeds": 3,
+      "instability": false,
+      "manipulation_ok": true,
+      "verdict": "HARD_SEMANTIC_REPLICATED",
+      "thresholds": {
+        "delta_hard_min": 0.015,
+        "amplification_min": 0.01,
+        "requires_manipulation_valid": true
+      }
+    },
+    "v1_refcococo_plus_reference": {
+      "verdict": "CONFIRMED",
+      "diff_of_diffs_auroc": {
+        "diff": 0.030621709362858573,
+        "ci_low": 0.02661669347776996
+      },
+      "delta_hard": 0.03184849037486052
+    }
+  },
+  "verdict": {
+    "c1_cross_dataset": "C1 CROSS-DATASET REPLICATED",
+    "c4_cross_dataset": "C4 CROSS-DATASET REPLICATED",
+    "overall": "CORE FINDINGS CROSS-DATASET ROBUST",
+    "boundary": "cross-dataset transfer under a shared COCO visual domain and a shared frozen proposal system; NOT cross-visual-domain generalisation"
+  },
+  "environment": {
+    "python": "3.10.19",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "numpy": "1.26.4",
+    "torch": "2.5.1+cu121",
+    "cuda": "12.1",
+    "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "device_count": 1,
+    "sklearn": "1.7.2",
+    "transformers": "4.57.6",
+    "open_clip": "3.3.0"
+  },
+  "provenance": {
+    "cohort_csv_sha256": "1918dc4834009b3f33df8170d8bbb4dbc6822038fcc0d7713f8b14249db4ae94",
+    "inference_report_sha256": "4c3348961159dbd77a08b3498f8e24297c8e44823510487aed052f59a0b6b025",
+    "phase1_audit_sha256": "175428d604fbc60413267f98ba9b386ea91d9b6f0da4211a6883d8505dadd233",
+    "phase2_feasibility_sha256": "a481084ada60bc56cf782528ea8752880a5abdf8bf7db7c82775aa527465844d"
+  },
+  "generated_utc": "2026-10-01T09:06:37Z"
+}

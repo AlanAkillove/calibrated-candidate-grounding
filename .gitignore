@@ -43,6 +43,10 @@ results/*
 !results/v2_local_competition/**
 !results/v2_data_robustness/
 !results/v2_data_robustness/**
+!results/v2_d2_refcoco_lang/
+!results/v2_d2_refcoco_lang/**
+# per-row frozen predictions are reproducible from scripts/d2_frozen_inference.py - not committed
+results/v2_d2_refcoco_lang/predictions/
 experiments/**/outputs/
 
 # Local logs / scratch

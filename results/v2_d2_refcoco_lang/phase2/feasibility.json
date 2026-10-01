@@ -1,0 +1,115 @@
+{
+  "Ks": [
+    5,
+    10,
+    20,
+    50
+  ],
+  "gate": {
+    "criteria": {
+      "full_recall_min": 0.95,
+      "gray_recall_min": 0.9
+    },
+    "measured_recall_at_05": 0.980655,
+    "note": "proposal generator frozen; a STOP is reported, never answered by tuning the RPN",
+    "verdict": "FULL"
+  },
+  "n_expressions": 10752,
+  "n_images": 1500,
+  "note": "same_name_* keys carry same-COCO-category supply (RefCOCO/RefCOCO+ share the COCO ontology, unlike FineCops' GQA names); 'share_ge_4' is the K=5 hard-cohort constructibility rate reused for C4",
+  "protocol": "V2-D2 Phase 2 (proposal feasibility, frozen N=64 RPN)",
+  "summary": {
+    "by_level": {
+      "1": {
+        "k5_availability": 0.9806547619047619,
+        "k5_same_name_availability": 0.9066220238095238,
+        "n_images": 1500,
+        "n_rows": 10752,
+        "recall_at_05": 0.9806547619047619,
+        "recall_at_07": 0.9042038690476191,
+        "same_name_distractors_mean": 13.4579
+      }
+    },
+    "by_tuple_type": {
+      "refcoco_test": {
+        "k5_availability": 0.980655,
+        "k5_same_name_availability": 0.906622,
+        "n_rows": 10752,
+        "recall_at_05": 0.980655,
+        "reportable": true
+      }
+    },
+    "gt_object_recall_at_05": 0.897358,
+    "gt_object_recall_at_07": 0.78202,
+    "invalid_crop_rate": 0.004171,
+    "k10_availability": {
+      "rate": 0.980655,
+      "same_name_rate": 0.650205,
+      "same_name_wilson_high": 0.659164,
+      "same_name_wilson_low": 0.641138,
+      "wilson_high": 0.983092,
+      "wilson_low": 0.977874
+    },
+    "k20_availability": {
+      "rate": 0.980655,
+      "same_name_rate": 0.265532,
+      "same_name_wilson_high": 0.273962,
+      "same_name_wilson_low": 0.257269,
+      "wilson_high": 0.983092,
+      "wilson_low": 0.977874
+    },
+    "k50_availability": {
+      "rate": 0.967262,
+      "same_name_rate": 0.0,
+      "same_name_wilson_high": 0.000357,
+      "same_name_wilson_low": 0.0,
+      "wilson_high": 0.970462,
+      "wilson_low": 0.963728
+    },
+    "k5_availability": {
+      "rate": 0.980655,
+      "same_name_rate": 0.906622,
+      "same_name_wilson_high": 0.911978,
+      "same_name_wilson_low": 0.900976,
+      "wilson_high": 0.983092,
+      "wilson_low": 0.977874
+    },
+    "mean_bank_size": 64.0,
+    "mean_n_equivalent": 6.0872,
+    "mean_n_valid_distractors": 57.913,
+    "min_bank_size": 64,
+    "n_images": 1500,
+    "n_names": 66,
+    "n_rows": 10752,
+    "n_target_present": 10544,
+    "natural_omission_at_05": 0.019345,
+    "recall_at_05": {
+      "rate": 0.980655,
+      "wilson_high": 0.983092,
+      "wilson_low": 0.977874
+    },
+    "recall_at_07": {
+      "rate": 0.904204,
+      "wilson_high": 0.909624,
+      "wilson_low": 0.898495
+    },
+    "redundancy_frac_pairs_gt_07": 0.001451,
+    "same_name_distractors": {
+      "max": 46,
+      "mean": 13.4579,
+      "median": 11.0,
+      "p90": 27.0,
+      "share_ge_1": 0.974237,
+      "share_ge_4": 0.906622,
+      "share_ge_9": 0.650205
+    },
+    "target_max_iou": {
+      "mean": 0.806201,
+      "median": 0.820633590221405,
+      "p10": 0.7027848958969116,
+      "p25": 0.7670343518257141,
+      "p75": 0.8736231923103333,
+      "p90": 0.9119716286659241
+    }
+  }
+}

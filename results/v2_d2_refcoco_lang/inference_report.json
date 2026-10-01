@@ -1,0 +1,220 @@
+{
+  "cohort_rows": 10544,
+  "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "inference_seconds": 310.58,
+  "jobs": [
+    "random_k5",
+    "random_k10",
+    "random_k20",
+    "random_k50",
+    "hard_k5"
+  ],
+  "peak_vram_mb": 100.1,
+  "protocol": "V2-D2 Phase 3b (frozen inference, 0 new parameters)",
+  "rows": [
+    {
+      "acc": 0.7567593207475571,
+      "file": "d2__random_k5__b3_seed1.npz",
+      "job": "random_k5",
+      "k": 5,
+      "mean_margin": 3.0955904703327537,
+      "n": 10541,
+      "regime": "random",
+      "scorer": "b3_seed1",
+      "temperature": 1.1153439683270872
+    },
+    {
+      "acc": 0.7539132909591121,
+      "file": "d2__random_k5__b3_seed2.npz",
+      "job": "random_k5",
+      "k": 5,
+      "mean_margin": 3.1359832848927782,
+      "n": 10541,
+      "regime": "random",
+      "scorer": "b3_seed2",
+      "temperature": 1.116630407128927
+    },
+    {
+      "acc": 0.7598899535148468,
+      "file": "d2__random_k5__b3_seed3.npz",
+      "job": "random_k5",
+      "k": 5,
+      "mean_margin": 3.035519022717909,
+      "n": 10541,
+      "regime": "random",
+      "scorer": "b3_seed3",
+      "temperature": 1.100524960810151
+    },
+    {
+      "acc": 0.6323878189925054,
+      "file": "d2__random_k10__b3_seed1.npz",
+      "job": "random_k10",
+      "k": 10,
+      "mean_margin": 1.8417895319106914,
+      "n": 10541,
+      "regime": "random",
+      "scorer": "b3_seed1",
+      "temperature": 1.1153439683270872
+    },
+    {
+      "acc": 0.6278341713309933,
+      "file": "d2__random_k10__b3_seed2.npz",
+      "job": "random_k10",
+      "k": 10,
+      "mean_margin": 1.8719507449637605,
+      "n": 10541,
+      "regime": "random",
+      "scorer": "b3_seed2",
+      "temperature": 1.116630407128927
+    },
+    {
+      "acc": 0.6347595104828764,
+      "file": "d2__random_k10__b3_seed3.npz",
+      "job": "random_k10",
+      "k": 10,
+      "mean_margin": 1.8128992129918076,
+      "n": 10541,
+      "regime": "random",
+      "scorer": "b3_seed3",
+      "temperature": 1.100524960810151
+    },
+    {
+      "acc": 0.5114315529835879,
+      "file": "d2__random_k20__b3_seed1.npz",
+      "job": "random_k20",
+      "k": 20,
+      "mean_margin": 1.204389545691555,
+      "n": 10541,
+      "regime": "random",
+      "scorer": "b3_seed1",
+      "temperature": 1.1153439683270872
+    },
+    {
+      "acc": 0.5093444644720615,
+      "file": "d2__random_k20__b3_seed2.npz",
+      "job": "random_k20",
+      "k": 20,
+      "mean_margin": 1.2201007359459983,
+      "n": 10541,
+      "regime": "random",
+      "scorer": "b3_seed2",
+      "temperature": 1.116630407128927
+    },
+    {
+      "acc": 0.5101034057489802,
+      "file": "d2__random_k20__b3_seed3.npz",
+      "job": "random_k20",
+      "k": 20,
+      "mean_margin": 1.1917226856646688,
+      "n": 10541,
+      "regime": "random",
+      "scorer": "b3_seed3",
+      "temperature": 1.100524960810151
+    },
+    {
+      "acc": 0.37567307692307694,
+      "file": "d2__random_k50__b3_seed1.npz",
+      "job": "random_k50",
+      "k": 50,
+      "mean_margin": 0.7790659499168396,
+      "n": 10400,
+      "regime": "random",
+      "scorer": "b3_seed1",
+      "temperature": 1.1153439683270872
+    },
+    {
+      "acc": 0.3758653846153846,
+      "file": "d2__random_k50__b3_seed2.npz",
+      "job": "random_k50",
+      "k": 50,
+      "mean_margin": 0.8028320828997172,
+      "n": 10400,
+      "regime": "random",
+      "scorer": "b3_seed2",
+      "temperature": 1.116630407128927
+    },
+    {
+      "acc": 0.37884615384615383,
+      "file": "d2__random_k50__b3_seed3.npz",
+      "job": "random_k50",
+      "k": 50,
+      "mean_margin": 0.7779252308435165,
+      "n": 10400,
+      "regime": "random",
+      "scorer": "b3_seed3",
+      "temperature": 1.100524960810151
+    },
+    {
+      "acc": 0.5530365203118588,
+      "file": "d2__hard_k5__b3_seed1.npz",
+      "job": "hard_k5",
+      "k": 5,
+      "mean_margin": 1.4443000070032253,
+      "n": 9748,
+      "regime": "same_category",
+      "scorer": "b3_seed1",
+      "temperature": 1.1153439683270872
+    },
+    {
+      "acc": 0.551702913418137,
+      "file": "d2__hard_k5__b3_seed2.npz",
+      "job": "hard_k5",
+      "k": 5,
+      "mean_margin": 1.4712764679343058,
+      "n": 9748,
+      "regime": "same_category",
+      "scorer": "b3_seed2",
+      "temperature": 1.116630407128927
+    },
+    {
+      "acc": 0.5556011489536316,
+      "file": "d2__hard_k5__b3_seed3.npz",
+      "job": "hard_k5",
+      "k": 5,
+      "mean_margin": 1.4464940543282299,
+      "n": 9748,
+      "regime": "same_category",
+      "scorer": "b3_seed3",
+      "temperature": 1.100524960810151
+    }
+  ],
+  "seeds": [
+    "b3_seed1",
+    "b3_seed2",
+    "b3_seed3"
+  ],
+  "semantic_stat_names": [
+    "clip_top1",
+    "clip_top2",
+    "clip_margin12",
+    "clip_entropy",
+    "clip_normH",
+    "clip_rank_top1",
+    "cand_vmax",
+    "cand_vmean",
+    "cand_vstd",
+    "cand_top12_sim",
+    "cand_top15_mean",
+    "density_070",
+    "density_080",
+    "q_top3",
+    "q_margin13",
+    "cand_top13_sim"
+  ],
+  "v2_sem_names": [
+    "q_top1_cos",
+    "q_top2_cos",
+    "q_top3_cos",
+    "q_margin12",
+    "q_margin13",
+    "q_margin23",
+    "winner_competitor_max_cos",
+    "winner_competitor_mean_cos",
+    "winner_competitor_std_cos",
+    "winner_top2_cos",
+    "winner_top3_cos",
+    "winner_top5_mean_cos",
+    "winner_rank_under_query_similarity",
+    "query_cos_spread"
+  ]
+}

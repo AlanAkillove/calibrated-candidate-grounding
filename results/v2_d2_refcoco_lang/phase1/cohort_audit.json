@@ -1,0 +1,107 @@
+{
+  "boundary": "cross-dataset transfer under a shared COCO visual domain; NOT cross-visual-domain generalisation",
+  "cohort": {
+    "common_cohort_K50_eligible": 10400,
+    "matched_hard_K5_eligible": 9748,
+    "mean_n_same_category": 13.723349772382397,
+    "mean_n_valid_distractors": 57.792678300455236,
+    "mean_target_best_iou": 0.8163875232765816,
+    "n_images": 1494,
+    "n_refs": 3707,
+    "n_rows": 10544,
+    "per_K_availability": {
+      "available_K10": 10544,
+      "available_K20": 10544,
+      "available_K5": 10544,
+      "available_K50": 10400
+    }
+  },
+  "cohort_redefinition": "D2 is expression-language-distribution transfer on shared COCO testA/testB images under the frozen N=64 RPN; a strict image-disjoint RefCOCO cohort does not exist because RefCOCO and RefCOCO+ re-annotate the same COCO regions.",
+  "dataset": {
+    "checksums": {
+      "instances.json": "7f86adb7f4c39db19c7f02a3cc604d17f8016e4c4e8312652d0acc4eae3a2cbd",
+      "refs(unc).p": "d4a8dd3152f130127924f9d0f0ea30f4dc43ec19e1b47bc55af972f90614f8ba"
+    },
+    "source": "UNC refcoco refs(unc).p + instances.json (data/raw/refcoco)",
+    "splits": [
+      "testA",
+      "testB"
+    ]
+  },
+  "environment": {
+    "cuda_available": true,
+    "cuda_version": "12.1",
+    "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "gpu_count": 1,
+    "numpy": "1.26.4",
+    "open_clip": "3.3.0",
+    "python": "3.10.19",
+    "sklearn": "1.7.2",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.57.6"
+  },
+  "material": {
+    "images_dropped_in_cohort_build": 6,
+    "natural_omission": {
+      "iou_thresh": 0.5,
+      "mean_target_best_iou": 0.806201079233991,
+      "n_expressions": 10752,
+      "n_target_present": 10544,
+      "natural_omission_at_iou_thresh": 208,
+      "natural_omission_rate": 0.019345238095238096
+    },
+    "original_expressions": 10752,
+    "original_images": 1500,
+    "strict_expressions": 10544,
+    "strict_images": 1494,
+    "target_present_expressions": 10544
+  },
+  "overlap": {
+    "image_disjoint_premise_holds": false,
+    "n_refcoco_test_images": 1500,
+    "per_set": {
+      "all_refcoco_plus": {
+        "overlap_with_refcoco_test": 1500,
+        "plus_images": 19992,
+        "refcoco_test_disjoint_from_this": 0
+      },
+      "all_refcoco_plus_ids": {
+        "overlap_with_refcoco_test": 1500,
+        "plus_images": 19992,
+        "refcoco_test_disjoint_from_this": 0
+      },
+      "development": {
+        "overlap_with_refcoco_test": 0,
+        "plus_images": 18492,
+        "refcoco_test_disjoint_from_this": 1500
+      },
+      "testA": {
+        "overlap_with_refcoco_test": 750,
+        "plus_images": 750,
+        "refcoco_test_disjoint_from_this": 750
+      },
+      "testB": {
+        "overlap_with_refcoco_test": 750,
+        "plus_images": 750,
+        "refcoco_test_disjoint_from_this": 750
+      },
+      "train": {
+        "overlap_with_refcoco_test": 0,
+        "plus_images": 16992,
+        "refcoco_test_disjoint_from_this": 1500
+      },
+      "val_calib": {
+        "overlap_with_refcoco_test": 0,
+        "plus_images": 750,
+        "refcoco_test_disjoint_from_this": 1500
+      },
+      "val_select": {
+        "overlap_with_refcoco_test": 0,
+        "plus_images": 750,
+        "refcoco_test_disjoint_from_this": 1500
+      }
+    },
+    "strict_image_disjoint_survivors": 0
+  },
+  "protocol": "V2-D2 Phase 1 (language-distribution transfer cohort)"
+}

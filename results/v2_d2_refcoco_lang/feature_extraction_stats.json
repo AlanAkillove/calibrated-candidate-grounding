@@ -1,0 +1,18 @@
+{
+  "cohort_csv": "results\\v2_d2_refcoco_lang\\phase1\\cohort.csv",
+  "encoder": {
+    "checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+    "device": "cuda",
+    "model_name": "ViT-B-32",
+    "pretrained": "laion2b_s34b_b79k"
+  },
+  "max_sentence_tokens": 33,
+  "n_score_rows": 10541,
+  "n_sentences": 10541,
+  "n_sentences_truncated": 0,
+  "peak_vram_mb": 899.0,
+  "skipped": false,
+  "text_encoded_utc": "2026-10-01T08:43:24+00:00",
+  "text_seconds": 7.34,
+  "texts_per_second": 1720.0
+}
