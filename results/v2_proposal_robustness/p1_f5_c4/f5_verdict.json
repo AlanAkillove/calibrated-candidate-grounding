@@ -1,0 +1,174 @@
+{
+  "artifact": "v2_p1_f5_c4_proposal_family_hard_semantic",
+  "protocol": "V2-P1 P1-F5 C4 replication (V2-G G4 applied on DETR proposals)",
+  "classification": "CONFIRMATORY",
+  "cohort": "matched Random-K5 / SameCategory-K5 (distractor composition only)",
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "resample_unit": "image",
+    "shared_cluster_draws_for_hard_vs_random": true
+  },
+  "new_training_parameters": 0,
+  "c4_by_family": {
+    "RPN": {
+      "matched_rows": 9623,
+      "attrition": {
+        "regime": "same_category",
+        "eligible_rows": 9623,
+        "images": 1428,
+        "refs": 3416,
+        "excluded_no_entry": 0,
+        "excluded_not_eligible": 802,
+        "excluded_target_mismatch": 0,
+        "same_cat_ge_4_availability": 0.9231
+      },
+      "manipulation": {
+        "metrics": [
+          [
+            "winner_competitor_max_cos",
+            "up"
+          ],
+          [
+            "winner_top2_cos",
+            "up"
+          ],
+          [
+            "q_margin12",
+            "down"
+          ]
+        ],
+        "per_seed_valid": {
+          "b3_seed1": true,
+          "b3_seed2": true,
+          "b3_seed3": true
+        },
+        "n_seed_valid": 3,
+        "n_seeds": 3,
+        "rule": "per-seed: >=2/3 metrics correct dir AND >=1 CI excludes 0; ok = >=2/3 seeds",
+        "manipulation_valid": true
+      },
+      "gate": {
+        "protocol": "V2-G G4 item 9 (frozen), replayed on the proposal family",
+        "comparison": "stats_logistic -> e1b_stats_semantic on SameCat-K5 (matched random control)",
+        "delta_hard_mean": 0.03173793035294429,
+        "delta_hard_ci_low_mean": 0.028434691725300294,
+        "delta_rand_mean": 0.0011644856996282742,
+        "amplification_mean": 0.030573444653316018,
+        "amplification_ci_low_mean": 0.026497333190284605,
+        "pass_delta_hard": true,
+        "pass_amplification": true,
+        "n_seed_same_direction": 3,
+        "n_seeds": 3,
+        "instability": false,
+        "manipulation_ok": true,
+        "verdict": "HARD_SEMANTIC_REPLICATED",
+        "thresholds": {
+          "delta_hard_min": 0.015,
+          "amplification_min": 0.01,
+          "requires_manipulation_valid": true
+        }
+      },
+      "c4_verdict": "YES"
+    },
+    "DETR": {
+      "matched_rows": 8376,
+      "attrition": {
+        "regime": "same_category",
+        "eligible_rows": 8376,
+        "images": 1265,
+        "refs": 2998,
+        "excluded_no_entry": 0,
+        "excluded_not_eligible": 2225,
+        "excluded_target_mismatch": 0,
+        "same_cat_ge_4_availability": 0.7901
+      },
+      "manipulation": {
+        "metrics": [
+          [
+            "winner_competitor_max_cos",
+            "up"
+          ],
+          [
+            "winner_top2_cos",
+            "up"
+          ],
+          [
+            "q_margin12",
+            "down"
+          ]
+        ],
+        "per_seed_valid": {
+          "b3_seed1": true,
+          "b3_seed2": true,
+          "b3_seed3": true
+        },
+        "n_seed_valid": 3,
+        "n_seeds": 3,
+        "rule": "per-seed: >=2/3 metrics correct dir AND >=1 CI excludes 0; ok = >=2/3 seeds",
+        "manipulation_valid": true
+      },
+      "gate": {
+        "protocol": "V2-G G4 item 9 (frozen), replayed on the proposal family",
+        "comparison": "stats_logistic -> e1b_stats_semantic on SameCat-K5 (matched random control)",
+        "delta_hard_mean": 0.02129853523499185,
+        "delta_hard_ci_low_mean": 0.017649247310561958,
+        "delta_rand_mean": 0.006617761583707933,
+        "amplification_mean": 0.014680773651283915,
+        "amplification_ci_low_mean": 0.01077852040259271,
+        "pass_delta_hard": true,
+        "pass_amplification": true,
+        "n_seed_same_direction": 3,
+        "n_seeds": 3,
+        "instability": false,
+        "manipulation_ok": true,
+        "verdict": "HARD_SEMANTIC_REPLICATED",
+        "thresholds": {
+          "delta_hard_min": 0.015,
+          "amplification_min": 0.01,
+          "requires_manipulation_valid": true
+        }
+      },
+      "c4_verdict": "YES"
+    }
+  },
+  "detr_C4_PROPOSAL_FAMILY_REPLICATED": "YES",
+  "rpn_C4_replication_reference": "YES",
+  "matched_proposal_family_intersection_secondary": {
+    "n_expressions": 7943,
+    "RPN": {
+      "delta_rand_mean": 0.0005506157182889974,
+      "delta_hard_mean": 0.028859871243457385,
+      "amplification_mean": 0.028309255525168386,
+      "manipulation_ok": true
+    },
+    "DETR": {
+      "delta_rand_mean": 0.007017916871109124,
+      "delta_hard_mean": 0.020845830792563524,
+      "amplification_mean": 0.013827913921454401,
+      "manipulation_ok": true
+    }
+  },
+  "rpn_frozen_reference_from_artifacts": {
+    "verdict": "CONFIRMED",
+    "amplification": {
+      "diff": 0.030621709362858573,
+      "ci_low": 0.02661669347776996,
+      "ci_high": 0.0348208116344742
+    },
+    "delta_hard": 0.03184849037486052,
+    "e_aurc_reduction": 0.15367059525131538,
+    "rer50_gain_pp": 4.637289158812382,
+    "delta_rand": 0.0012267810120019443
+  },
+  "overall_p1_verdict": {
+    "label": "CORE_FINDINGS_PROPOSAL_FAMILY_ROBUST",
+    "value": "YES",
+    "detail": "candidate-cardinality degradation and hard-semantic amplification both replicate under DETR proposals."
+  },
+  "figures": [
+    "results\\v2_proposal_robustness\\p1_f5_c4\\figures\\fig3_random_vs_hard_increment.png"
+  ],
+  "generated_utc": "2026-10-01T16:14:20Z"
+}
