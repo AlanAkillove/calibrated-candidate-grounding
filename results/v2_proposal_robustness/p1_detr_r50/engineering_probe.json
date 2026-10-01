@@ -1,0 +1,38 @@
+{
+  "autocast": false,
+  "bank_size_summary": {
+    "max": 64,
+    "mean": 64.0,
+    "min": 64,
+    "share_exactly_64": 1.0,
+    "share_full_N64_available": 1.0
+  },
+  "batch_size": 1,
+  "box_conversion_max_abs_pixel_error": 2.5451183319091797e-05,
+  "checkpoint_id": "facebook/detr-resnet-50",
+  "created_utc": "2026-10-01T09:56:13Z",
+  "device": "cuda",
+  "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "failures": [],
+  "gpu_forward_images_per_second": 9.839683157364542,
+  "images_per_second": 7.652099558594122,
+  "max_foreground_score_seen": 0.999878466129303,
+  "near_duplicate_frac_pairs_gt_0p9_mean": 0.009925595238095237,
+  "num_images_failed": 0,
+  "num_images_ok": 300,
+  "num_images_sampled": 300,
+  "peak_vram_gb": 0.4700751304626465,
+  "peak_vram_limit_gb": 7.0,
+  "projected_full_bank_seconds_at_19992": 2612.6162952946497,
+  "revision": "main",
+  "sanitize_counts_total": {
+    "exact_duplicates": 0,
+    "invalid_finite": 0,
+    "invalid_small": 2
+  },
+  "scores_descending_ok": true,
+  "task": "p1_f0_engineering_probe",
+  "verdict": "OK",
+  "vram_within_budget": true,
+  "wall_seconds": 39.20492639997974
+}

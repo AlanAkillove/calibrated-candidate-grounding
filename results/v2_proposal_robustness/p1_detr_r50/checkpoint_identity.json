@@ -1,0 +1,13 @@
+{
+  "checkpoint_id": "facebook/detr-resnet-50",
+  "detected_family": "DETR ResNet-50 (transformer set-prediction, query-independent)",
+  "frozen": true,
+  "license": "apache-2.0",
+  "query_independent": true,
+  "revision": "1d5f47bd3bdd2c4bbfa585418ffe6da5028b4c0b",
+  "source": "huggingface hub (facebook/detr-resnet-50), COCO-pretrained",
+  "trained_by_us": false,
+  "weights_bytes": 166587896,
+  "weights_file": "model.safetensors",
+  "weights_sha256": "830f5e2eeaada8c8c8281779dcc8ab12833972eb8514ed0a35be6c1d4420ad81"
+}

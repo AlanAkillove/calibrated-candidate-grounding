@@ -1,0 +1,65 @@
+{
+  "box_selection_rule": {
+    "conversion": "cxcywh(normalised) -> xyxy -> scale by (W, H) -> clip to [0,W]x[0,H]",
+    "coordinate_space": "absolute xyxy pixels in the original image",
+    "drop": [
+      "non-finite",
+      "clipped width <= 1",
+      "clipped height <= 1",
+      "exact duplicate xyxy (first/highest-score kept)"
+    ],
+    "iou_target_criterion": "proposal IoU with GT target >= 0.5 (unchanged from V1)",
+    "near_duplicate_handling": "recorded only (redundancy stats); no result-driven NMS in the first version",
+    "same_category_assignment": "proposal -> highest-IoU COCO GT object only if IoU >= 0.5 (unchanged from V1)"
+  },
+  "created_utc": "2026-10-01T09:42:55Z",
+  "id2label_0_placeholder": "N/A",
+  "n_proposals": 64,
+  "no_object_index": 91,
+  "no_result_driven_tuning": "N, threshold, checkpoint, NMS, target-matching and same-category rules are frozen here; a gate failure is reported, never answered by tuning (sections 10/25).",
+  "num_labels": 91,
+  "num_queries": 100,
+  "phase": "V2-P1 - Second Proposal Family Robustness",
+  "preprocessing": {
+    "aspect_preserving": true,
+    "batch_note": "one image per forward call: the processor is aspect-preserving and, at batch=1, adds no padding, so normalised pred_boxes scale exactly to original pixels (inverse of post_process_object_detection).",
+    "batch_size_for_extraction": 1,
+    "do_normalize": true,
+    "do_resize": true,
+    "image_mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "image_processor": "DetrImageProcessor",
+    "image_std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "longest_edge": 1333,
+    "shortest_edge": 800,
+    "size": {
+      "longest_edge": 1333,
+      "shortest_edge": 800
+    }
+  },
+  "proposal_a_reference": {
+    "bank": "cache/proposals.h5",
+    "model": "fasterrcnn_resnet50_fpn (COCO_V1) RPN stage, N=64, frozen, NOT regenerated"
+  },
+  "proposal_family": "Proposal-B = frozen DETR-R50 (Proposal-A stays the frozen COCO RPN)",
+  "score_definition": {
+    "excludes": "the trailing no-object column (index num_labels)",
+    "foreground_columns": "0 .. num_labels-1 (index 0 is a COCO-id alignment placeholder with negligible probability)",
+    "never_uses": [
+      "referring expression",
+      "target category",
+      "ground-truth boxes"
+    ],
+    "per_query": "max foreground class probability of the softmax over class logits",
+    "ranking": "descending foreground score, stable ties, truncated to N=64",
+    "shortfall_policy": "fewer than 64 surviving sanitized boxes keeps the real count; never padded",
+    "threshold": null
+  }
+}
