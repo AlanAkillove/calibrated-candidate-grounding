@@ -1,0 +1,157 @@
+{
+  "artifact": "v2m_m3_amendment_31",
+  "amendment": "V2-M3.1",
+  "title": "Cross-Backbone Confirmatory Evaluation",
+  "status": "FROZEN before the B1/B2 mixture run",
+  "frozen_utc": "2026-10-01",
+  "context": {
+    "m25_freeze_commit": "673f56a797d0e98871eb7e3d5d6b9d5fe438078a",
+    "b0_record_commit": "35993693fdb1e32531896bfe33a3a308d2d46b93",
+    "b0_consistency_audit": "V2M_M3_B0_AUDIT_PASS 9/9 checks, max|delta| = 0.0 (bitwise recompute of every B0 artifact)",
+    "b0_commit_message": "Record V2-M3 B0 developmental audit — adaptive mixture collapses toward static mixing"
+  },
+  "disclosure": {
+    "b0_test_result_already_known": true,
+    "b0_result": {
+      "headline": "AdaptiveMix ~ StaticMix (B0 DEVELOPMENTAL RESULT)",
+      "delta_macro_adaptive_minus_static": 0.00008928977292864866,
+      "delta_macro_ci": [0.0000151, 0.0001647],
+      "three_seed_sign_inconsistency": true,
+      "per_seed_delta_macro": {"1": 0.0002808, "2": -0.0001176, "3": 0.0001047},
+      "extreme_safety": {
+        "m0_adaptive_minus_random": -0.0035,
+        "m0_fails_threshold": true,
+        "m8_adaptive_minus_curriculum": -0.0080,
+        "m8_fails_threshold": true
+      },
+      "alpha_nearly_constant": true,
+      "alpha_mean_by_m": {"m0": 0.5684, "m2": 0.5720, "m4": 0.5737, "m8": 0.5749},
+      "fit_collapse": "2 of 3 seeds fitted beta ~ 0.09-0.10 (alpha ~ constant); AdaptiveMix NLL 0.4454 vs StaticMix 0.4455"
+    },
+    "b0_interpretation": "B0 does not provide evidence that competition-dependent mixing improves over a fitted static mixture.",
+    "b0_forbidden_claims": [
+      "adaptive mixture works",
+      "specialist trade-off is false (the specialist trade-off and mixer effectiveness are distinct questions; the M2.5 trade-off stands)"
+    ],
+    "b1_b2_mixture_results_unseen": true,
+    "reason_to_proceed": "The confirmatory judgement of V2-M3 was always pre-registered on B1/B2; the B0 developmental set must not cancel the confirmatory run, and a negative confirmatory result is a clean, valuable outcome."
+  },
+  "no_b0_driven_redesign": {
+    "statement": "No competition feature, CDF transform, mixing equation, loss, expert definition, static baseline, metric or gate threshold may be modified in response to the B0 developmental results; the confirmatory run executes the frozen protocol as-is.",
+    "b0_freeze_point_upheld": true,
+    "forbidden_adjustments": [
+      "steepening the sigmoid / manual beta",
+      "hard threshold / routing",
+      "adding expert disagreement as a mixer input",
+      "changing the three feature weights",
+      "adding any MLP or hidden layer",
+      "lowering the 0.003 gate because B0 looked flat"
+    ]
+  },
+  "frozen_formulas": {
+    "experts": {
+      "E_random": "frozen V2-G Phase A R2 (random-only Stats+V2-Semantic logistic, per-backbone/seed; pickle reused verbatim, never retrained)",
+      "E_curriculum": "fresh 31-d Stats+Semantic logistic trained with the identical M2 curriculum protocol (m={0,2,4} regime-balanced weights, C grid 0.1/1/10, tie 0.002, train-only standardisation, tune-only selection)"
+    },
+    "mixing": "p_mix = (1 - alpha) p_R + alpha p_C",
+    "competition_index": {
+      "features": [
+        {"name": "winner_competitor_max_cos", "direction": "up"},
+        {"name": "winner_top2_cos", "direction": "up"},
+        {"name": "q_margin12", "direction": "down"}
+      ],
+      "cdf": "per backbone; empirical CDF fitted on that backbone's reliability_train m={0,2,4} rows only",
+      "index": "A = (F(v1) + F(v2) + 1 - F(v3)) / 3 in [0, 1]",
+      "frozen": "no weight search"
+    },
+    "adaptive_alpha": {
+      "formula": "alpha(A) = sigmoid(beta (A - tau))",
+      "beta": "beta = softplus(theta) >= 0",
+      "free_parameters": ["theta", "tau"],
+      "n_trainable": 2
+    },
+    "static_control": {
+      "formula": "p_static = (1 - c) p_R + c p_C, c in [0, 1]",
+      "n_trainable": 1
+    },
+    "loss": "binary NLL on grounding_correct; L = (1/3)(L_m0 + L_m2 + L_m4), equal weight per regime, fitted on reliability_tune m={0,2,4} only",
+    "m8_exclusions": ["m8 fit", "m8 early stopping", "m8 threshold selection", "m8 hyperparameter selection"]
+  },
+  "confirmatory_design": {
+    "backbones": [
+      {"tag": "b1", "name": "OpenCLIP ViT-B/16", "features_root": "cache/v2_backbones/openclip_b16", "b3_root": "results/v2_backbone_generalization/b1_phase0b"},
+      {"tag": "b2", "name": "SigLIP B/16", "features_root": "cache/v2_backbones/siglip_b16", "b3_root": "results/v2_backbone_generalization/b2_phase0b"}
+    ],
+    "models": ["E_random", "E_curriculum", "EqualMix", "StaticMix", "AdaptiveMix"],
+    "seeds": [1, 2, 3],
+    "test_cells": "frozen K=10 same8 severity cells m in {0,2,4,8} (7410 rows / 1189 images per cell); all five models share exactly the same rows; the row construction is cross-checked against the frozen B0 expb arrays and the candidate indices are hashed into the artifacts",
+    "per_backbone_fitting": "own reliability_train CDF; own reliability_tune mixer; identical architecture and formula; no backbone-specific redesign",
+    "primary_comparison": "AdaptiveMix vs StaticMix"
+  },
+  "frozen_metrics_and_bootstrap": {
+    "point_metrics": ["AUROC_correct", "E-AURC", "RER@50", "RER@80", "ECE", "Brier", "NLL"],
+    "macro_auroc": "MacroAUROC = (1/4) sum_{m in {0,2,4,8}} AUROC_m",
+    "bootstrap": {
+      "unit": "image cluster",
+      "paired": true,
+      "replicates": 5000,
+      "seed": 0,
+      "ci": 0.95,
+      "shared_draws_across_severity": true
+    }
+  },
+  "frozen_gates": {
+    "primary": "delta_macro = MacroAUROC(Adaptive) - MacroAUROC(Static) >= 0.003 AND CI_low > 0",
+    "extreme_safety": [
+      "AUROC(Adaptive, m0) - AUROC(Random, m0) >= -0.003",
+      "AUROC(Adaptive, m8) - AUROC(Curriculum, m8) >= -0.003"
+    ],
+    "per_backbone_pass": "primary AND extreme safety (both sub-conditions)",
+    "selective_support": "at least one of {Macro E-AURC improves >= 3%, Macro RER@50 gain >= 1pp} versus StaticMix; otherwise the result is labelled AUROC-ONLY METHOD SIGNAL",
+    "thresholds_never_adjusted": true
+  },
+  "frozen_verdict_rule": {
+    "2/2 pass": "STRONG ADAPTIVE-MIXTURE GENERALITY",
+    "1 pass and the other non-significant and not significantly negative (delta_macro CI does not lie entirely below 0)": "PARTIAL METHOD SUPPORT",
+    "otherwise (0 pass, or 1 pass with the other significantly negative)": "ADAPTIVE MIXTURE NOT SUPPORTED -- stop the entire M3 line"
+  },
+  "required_behavior_reporting": [
+    "A mean by m (per backbone)",
+    "alpha mean by m (per backbone)",
+    "beta (softplus(theta)) per seed",
+    "tau per seed",
+    "static c per seed",
+    "alpha(m8) - alpha(m0)",
+    "if beta ~ 0 / alpha nearly constant also appears on B1/B2: record explicitly that the soft adaptive mixing mechanism collapses across backbones"
+  ],
+  "diagnostics": {
+    "oracle_regret": "Oracle_m = max(AUROC_R(m), AUROC_C(m)); Regret_m = Oracle_m - AUROC_method(m); diagnostic only",
+    "alpha_diagnostics": "A mean/median/p10/p90 and alpha mean/median per m",
+    "disagreement_exclusion": "|p_R - p_C| is never a mixer input",
+    "calibration": "ECE / Brier / NLL reported; AUROC improvements with clear calibration degradation must be recorded honestly",
+    "grounding_invariance": "raw grounding scores, argmax and accuracy stay unchanged; the mixture only changes the reliability estimate"
+  },
+  "parameter_budget": {"AdaptiveMix": 2, "StaticMix": 1, "EqualMix": 0, "hidden_layers": 0},
+  "anchors": {
+    "e_random_vs_phase_a": "recomputed K5 pooled-test AUROC must equal V2-G Phase A phaseA_summary.csv R2_stats_sem (tolerance 1e-9)",
+    "e_random_vs_dose_response": "recomputed m-level R2 AUROC must equal V2-G Phase B dose_response.csv auroc_R2 per (seed, level) (tolerance 1e-9)",
+    "val_stop_check": "random C10 re-score of every curriculum row vs the frozen K10 store (A8.4-style)"
+  },
+  "outputs": [
+    "m3_mixture/conf/b1/{point_metrics,macro_metrics,bootstrap_pairs,alpha_diagnostics,regret,calibration,dose_anchor}.csv",
+    "m3_mixture/conf/b1/gate.json",
+    "m3_mixture/conf/b1/figures/",
+    "m3_mixture/conf/b2/{...same...}",
+    "m3_mixture/conf/cross_backbone_verdict.json",
+    "m3_mixture/conf/metadata.json"
+  ],
+  "freeze_hashes": {
+    "src/ccg/mixture/mixer.py": "0e849dbe8e7821c77bf24ac6e9d7a99332bd01c269f47a2f36585879a4edd08c",
+    "src/ccg/mixture/bootstrap.py": "4e19b9c58b817a7904dd98ebd41774ed3d733d1eda23f1f02f717981590eb735",
+    "results/v2_local_competition/m3_mixture/protocol_m3.json": "d5e17d6bba56471bf9382c2c3ebf534a98550ed9dbd5fe1f826f2831e9a371da",
+    "results/v2_backbone_generalization/g4_protocol_freeze.json": "6845a3f9143fbcdd275257ebf51cd882e25281aa63913250ed57cc247139bb8b",
+    "scripts/run_v2m_m3_conf.py": "f927af0621ca7e008878268d67762f42cf5e040493d10eea3451a4cd623ff499",
+    "scripts/run_v2m_m3_b0.py": "580c19e53b119a106c44fbd4b9806223a13fefa2548902269de3ad968a11348e"
+  },
+  "stop_rule": "ADAPTIVE MIXTURE NOT SUPPORTED stops the entire M3 method line; the specialist trade-off (M2.5) and the LCR no-go results remain the frozen record."
+}
