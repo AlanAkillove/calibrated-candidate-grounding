@@ -1,0 +1,33 @@
+{
+  "artifact": "v2m_m3_conf_verdict",
+  "amendment": "V2-M3.1",
+  "backbones": {
+    "b1": {
+      "pass": false,
+      "primary_pass": false,
+      "safety_pass": false,
+      "selective_support": false,
+      "delta_macro": 0.0001480237641543388,
+      "delta_macro_ci": [
+        -5.551499740256422e-05,
+        0.0003563481906519518
+      ]
+    },
+    "b2": {
+      "pass": false,
+      "primary_pass": false,
+      "safety_pass": false,
+      "selective_support": false,
+      "delta_macro": 0.0004296088161074296,
+      "delta_macro_ci": [
+        -0.0003879347918457646,
+        0.001243200998489723
+      ]
+    }
+  },
+  "n_pass": 0,
+  "n_backbones": 2,
+  "verdict": "ADAPTIVE MIXTURE NOT SUPPORTED",
+  "rule": "2/2 pass -> STRONG ADAPTIVE-MIXTURE GENERALITY; 1 pass with the other non-significant and not significantly negative -> PARTIAL METHOD SUPPORT; otherwise -> ADAPTIVE MIXTURE NOT SUPPORTED (stop the M3 line)",
+  "stop": true
+}

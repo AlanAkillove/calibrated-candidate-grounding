@@ -1,0 +1,243 @@
+{
+  "artifact": "v2m_m3_conf_audit",
+  "passed": true,
+  "label": "CONFIRMATORY RESULT \u2014 adaptive mixture not supported",
+  "amendment": "V2-M3.1",
+  "recompute_dir": "results\\v2_local_competition\\m3_mixture\\conf\\_audit_recompute",
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "metrics": [
+      "auroc_correct",
+      "e_aurc",
+      "rer_at_50",
+      "rer_at_80"
+    ],
+    "shared_draws_across_severity": true
+  },
+  "headline": {
+    "b1": {
+      "pass": false,
+      "delta_macro_adaptive_minus_static": {
+        "delta": 0.0001480237641543388,
+        "ci_low": -5.551499740256422e-05,
+        "ci_high": 0.0003563481906519518,
+        "per_seed": {
+          "1": 0.00022272113115609504,
+          "2": 0.00015234462827881656,
+          "3": 6.900553302810475e-05
+        }
+      },
+      "extreme_safety": {
+        "m0_adaptive_minus_random": -0.0037975813843085606,
+        "m0_pass": false,
+        "m8_adaptive_minus_curriculum": -0.0027739023361365023,
+        "m8_pass": true,
+        "threshold": -0.003
+      },
+      "selective_support": {
+        "e_aurc_relative_improvement": 0.0009585544185897071,
+        "rer50_gain_pp": 0.02834927136446952,
+        "satisfied": false
+      },
+      "alpha_m8_minus_m0": 0.020568383224893516,
+      "static_c_mean": 0.8730092062541503,
+      "adaptive_beta_mean": 2.780859279968452,
+      "adaptive_tau_mean": -1.0713301644957656
+    },
+    "b2": {
+      "pass": false,
+      "delta_macro_adaptive_minus_static": {
+        "delta": 0.0004296088161074296,
+        "ci_low": -0.0003879347918457646,
+        "ci_high": 0.001243200998489723,
+        "per_seed": {
+          "1": 0.00014204571884843253,
+          "2": 0.0010705819322105181,
+          "3": 7.619879726333822e-05
+        }
+      },
+      "extreme_safety": {
+        "m0_adaptive_minus_random": -0.012141537433215888,
+        "m0_pass": false,
+        "m8_adaptive_minus_curriculum": -0.004567176047700887,
+        "m8_pass": false,
+        "threshold": -0.003
+      },
+      "selective_support": {
+        "e_aurc_relative_improvement": 0.0017098301845835686,
+        "rer50_gain_pp": 0.11628465261184218,
+        "satisfied": false
+      },
+      "alpha_m8_minus_m0": 0.05424138053820604,
+      "static_c_mean": 0.9155080267758481,
+      "adaptive_beta_mean": 5.366638157910731,
+      "adaptive_tau_mean": -0.9870345100557825
+    }
+  },
+  "cross_backbone_verdict": "ADAPTIVE MIXTURE NOT SUPPORTED",
+  "n_pass": 0,
+  "stop": true,
+  "max_deltas": {
+    "b1/point_metrics.csv": 0.0,
+    "b1/macro_metrics.csv": 0.0,
+    "b1/bootstrap_pairs.csv": 0.0,
+    "b1/alpha_diagnostics.csv": 0.0,
+    "b1/regret.csv": 0.0,
+    "b1/calibration.csv": 0.0,
+    "b1/dose_anchor.csv": 0.0,
+    "b2/point_metrics.csv": 0.0,
+    "b2/macro_metrics.csv": 0.0,
+    "b2/bootstrap_pairs.csv": 0.0,
+    "b2/alpha_diagnostics.csv": 0.0,
+    "b2/regret.csv": 0.0,
+    "b2/calibration.csv": 0.0,
+    "b2/dose_anchor.csv": 0.0
+  },
+  "frozen_hashes_verified": {
+    "src/ccg/mixture/mixer.py": "0e849dbe8e7821c77bf24ac6e9d7a99332bd01c269f47a2f36585879a4edd08c",
+    "src/ccg/mixture/bootstrap.py": "4e19b9c58b817a7904dd98ebd41774ed3d733d1eda23f1f02f717981590eb735",
+    "results/v2_local_competition/m3_mixture/protocol_m3.json": "d5e17d6bba56471bf9382c2c3ebf534a98550ed9dbd5fe1f826f2831e9a371da",
+    "results/v2_backbone_generalization/g4_protocol_freeze.json": "6845a3f9143fbcdd275257ebf51cd882e25281aa63913250ed57cc247139bb8b",
+    "scripts/run_v2m_m3_conf.py": "a2aae27c54ebb72d9df7d73816e5a3fa85f4cf3f730bcb8bba5f8315a138eee0"
+  },
+  "checks": [
+    {
+      "name": "freeze hash src/ccg/mixture/mixer.py",
+      "ok": true,
+      "detail": "0e849dbe8e7821c7... == 0e849dbe8e7821c7..."
+    },
+    {
+      "name": "freeze hash src/ccg/mixture/bootstrap.py",
+      "ok": true,
+      "detail": "4e19b9c58b817a79... == 4e19b9c58b817a79..."
+    },
+    {
+      "name": "freeze hash results/v2_local_competition/m3_mixture/protocol_m3.json",
+      "ok": true,
+      "detail": "d5e17d6bba56471b... == d5e17d6bba56471b..."
+    },
+    {
+      "name": "freeze hash results/v2_backbone_generalization/g4_protocol_freeze.json",
+      "ok": true,
+      "detail": "6845a3f9143fbcdd... == 6845a3f9143fbcdd..."
+    },
+    {
+      "name": "freeze hash scripts/run_v2m_m3_conf.py",
+      "ok": true,
+      "detail": "a2aae27c54ebb72d... == a2aae27c54ebb72d..."
+    },
+    {
+      "name": "b1/point_metrics.csv reproduces",
+      "ok": true,
+      "detail": "rows=60 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b1/macro_metrics.csv reproduces",
+      "ok": true,
+      "detail": "rows=15 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b1/bootstrap_pairs.csv reproduces",
+      "ok": true,
+      "detail": "rows=153 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b1/alpha_diagnostics.csv reproduces",
+      "ok": true,
+      "detail": "rows=12 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b1/regret.csv reproduces",
+      "ok": true,
+      "detail": "rows=60 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b1/calibration.csv reproduces",
+      "ok": true,
+      "detail": "rows=60 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b1/dose_anchor.csv reproduces",
+      "ok": true,
+      "detail": "rows=12 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b1/gate.json tree reproduces (primary + safety + selective + alpha + fits)",
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "b2/point_metrics.csv reproduces",
+      "ok": true,
+      "detail": "rows=60 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b2/macro_metrics.csv reproduces",
+      "ok": true,
+      "detail": "rows=15 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b2/bootstrap_pairs.csv reproduces",
+      "ok": true,
+      "detail": "rows=153 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b2/alpha_diagnostics.csv reproduces",
+      "ok": true,
+      "detail": "rows=12 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b2/regret.csv reproduces",
+      "ok": true,
+      "detail": "rows=60 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b2/calibration.csv reproduces",
+      "ok": true,
+      "detail": "rows=60 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b2/dose_anchor.csv reproduces",
+      "ok": true,
+      "detail": "rows=12 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "b2/gate.json tree reproduces (primary + safety + selective + alpha + fits)",
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "cross_backbone_verdict.json reproduces (incl. stop rule)",
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "metadata.json core reproduces (frozen config + source hashes)",
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "verdict: ADAPTIVE MIXTURE NOT SUPPORTED (0/2), stop=True",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "label: CONFIRMATORY / amendment V2-M3.1",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "b1: repro anchors within frozen tolerances",
+      "ok": true,
+      "detail": "k5=0.00e+00 dose=5.29e-07 val_stop=1.34e-05"
+    },
+    {
+      "name": "b2: repro anchors within frozen tolerances",
+      "ok": true,
+      "detail": "k5=0.00e+00 dose=6.27e-07 val_stop=2.29e-05"
+    }
+  ],
+  "runtime_sec": 2742.2
+}

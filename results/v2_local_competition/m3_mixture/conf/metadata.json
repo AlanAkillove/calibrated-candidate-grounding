@@ -1,0 +1,66 @@
+{
+  "artifact": "v2m_m3_conf_metadata",
+  "amendment": "V2-M3.1",
+  "label": "CONFIRMATORY",
+  "branch": "v2-competition-adaptive-mixture",
+  "head": "acd83b03a4daa7d7434b9be52d3c82438e17f1de",
+  "dirty": true,
+  "started_utc": "2026-10-01T04:34:56Z",
+  "runtime_sec": 2654.3,
+  "backbones": [
+    "b1",
+    "b2"
+  ],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "levels": [
+    0,
+    2,
+    4,
+    8
+  ],
+  "mixer_fit_levels": [
+    0,
+    2,
+    4
+  ],
+  "k_level": 10,
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "metrics": [
+      "auroc_correct",
+      "e_aurc",
+      "rer_at_50",
+      "rer_at_80"
+    ],
+    "shared_draws_across_severity": true
+  },
+  "gates": {
+    "delta_macro_min": 0.003,
+    "extreme_safety_min": -0.003,
+    "e_aurc_rel_min": 0.03,
+    "rer50_gain_pp_min": 1.0
+  },
+  "sources": {
+    "amendment_sha": "d4e75eebbb9db3cd4e104d182d386533f0df62e0e6d5ec0933270744d81b7c85",
+    "mixer_module_sha": "0e849dbe8e7821c77bf24ac6e9d7a99332bd01c269f47a2f36585879a4edd08c",
+    "bootstrap_module_sha": "4e19b9c58b817a7904dd98ebd41774ed3d733d1eda23f1f02f717981590eb735",
+    "g4_freeze_sha": "6845a3f9143fbcdd275257ebf51cd882e25281aa63913250ed57cc247139bb8b",
+    "phase_a_models_sha": {
+      "b1/seed1": "f6237181382af8d5be82eefc7d1f6df065e20593b66d9588f792acc4a783fcdd",
+      "b1/seed2": "9f94a5ed5e63ff169ce3f30b37ed9d81b2bdf9d1422d17d38bcc33bcc3bd0115",
+      "b1/seed3": "1dfe2a1d17f6ce1cd8520e5459966c74848f9775283635ef50af920910dd7939",
+      "b2/seed1": "55a40c25915af073804e5debfbdb33017b469f9499ef87fdc2ac07d1da3b94a2",
+      "b2/seed2": "8d30c24bd9da8089097157088068716ecb8d3a3adac1511ae2c209c160ac01e2",
+      "b2/seed3": "47531e821194e9795d5d689b190a7772a39395db75b77390c002d7e9f25038d6"
+    }
+  },
+  "verdict": "ADAPTIVE MIXTURE NOT SUPPORTED",
+  "read_only_experts": true,
+  "no_training_except_frozen_curriculum_protocol": true
+}
