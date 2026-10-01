@@ -1,0 +1,2 @@
+N,target_max_iou_p25,target_max_iou_median,target_max_iou_p75,gt_max_iou_p25,gt_max_iou_median,gt_max_iou_p75,redundancy_frac_gt_0.7,redundancy_frac_gt_0.9,remaining_count_median
+64,0.9065956175327301,0.9439224302768707,0.9652849286794662,0.7233353853225708,0.863077700138092,0.9342765808105469,0.03966468253968254,0.010321097883597884,62.0

@@ -1,0 +1,263 @@
+{
+  "task": "p1_f2_proposal_audit",
+  "created_utc": "2026-10-01T10:40:24Z",
+  "config": {
+    "subset": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\audit_subset.csv",
+    "detr_bank": "F:\\DL Projects\\calibrated-candidate-grounding\\cache\\proposals_detr_r50.h5",
+    "rpn_bank": "F:\\DL Projects\\calibrated-candidate-grounding\\cache\\proposals.h5",
+    "out_dir": "F:\\DL Projects\\calibrated-candidate-grounding\\results\\v2_proposal_robustness\\p1_detr_r50",
+    "n": 64,
+    "iou_thresh": 0.5,
+    "K_levels": [
+      5,
+      10,
+      20,
+      50
+    ],
+    "same_category_levels": [
+      1,
+      2,
+      4,
+      9
+    ],
+    "coco_annotations": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\raw\\annotations\\instances_train2014.json",
+    "refcoco_pickle": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\raw\\refcoco+\\refcoco+\\refs(unc).p",
+    "refcoco_instances": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\raw\\refcoco+\\refcoco+\\instances.json",
+    "target_criterion": "proposal IoU with highest-IoU GT target >= 0.5 (unchanged from V1)",
+    "same_category_assignment": "proposal -> highest-IoU COCO GT object only if IoU >= 0.5 (unchanged)",
+    "reuses": "scripts.run_proposal_audit primitives (V1 authoritative proposal audit)"
+  },
+  "detr_bank_attrs": {
+    "model_name": "detr_resnet50",
+    "weights": "facebook/detr-resnet-50",
+    "checkpoint_revision": "1d5f47bd3bdd2c4bbfa585418ffe6da5028b4c0b",
+    "checkpoint_sha256": "830f5e2eeaada8c8",
+    "top_n": 64,
+    "query_independent": true,
+    "n_images_in_bank": 19992
+  },
+  "images": {
+    "subset_rows": 1500,
+    "analyzed": 1500,
+    "missing_in_detr_bank": 0,
+    "empty_bank": 0
+  },
+  "gate": {
+    "n": 64,
+    "primary_metric": "ref_target_recall@0.5",
+    "ref_target_recall@0.5": 0.9973347547974414,
+    "ref_target_recall@0.5_ci": [
+      0.9951004912788188,
+      0.9985516371815508
+    ],
+    "ref_target_recall@0.7": 0.9845415778251599,
+    "candidate_availability_K50_frac": 0.9224413646055437,
+    "candidate_availability_K50_gate": ">= 0.90",
+    "candidate_availability_K50_ok": true,
+    "verdict": "FULL",
+    "thresholds": {
+      "FULL": ">=0.95",
+      "GRAY": "[0.90,0.95)",
+      "LIMITED": "[0.80,0.90)",
+      "STOP": "<0.80"
+    }
+  },
+  "rpn_frozen_reference": {
+    "available": true,
+    "path": "F:\\DL Projects\\calibrated-candidate-grounding\\results\\proposal_audit\\summary.json",
+    "ref_target_recall@0.5": 0.9858742004264393,
+    "ref_target_recall@0.7": 0.8997867803837953,
+    "gt_object_recall@0.5": 0.8085217277998566,
+    "candidate_availability_K50_frac": 0.9912046908315565,
+    "same_category_ge4_frac": 0.900319829424307,
+    "num_expressions": 3752
+  },
+  "per_N": {
+    "64": {
+      "num_images": 1500,
+      "num_images_short_bank": 0,
+      "num_proposals_total": 96000,
+      "num_expressions": 3752,
+      "num_gt_objects": 15349,
+      "recall": {
+        "gt_object": {
+          "num_units": 15349,
+          "by_threshold": {
+            "0.5": {
+              "threshold": 0.5,
+              "num_units": 15349,
+              "num_recalled": 13871,
+              "recall": 0.9037070818945859,
+              "ci_low": 0.8989386722216091,
+              "ci_high": 0.9082734597657358
+            },
+            "0.7": {
+              "threshold": 0.7,
+              "num_units": 15349,
+              "num_recalled": 11879,
+              "recall": 0.7739266401719982,
+              "ci_low": 0.7672411217184316,
+              "ci_high": 0.7804750743504447
+            }
+          }
+        },
+        "ref_target": {
+          "num_units": 3752,
+          "by_threshold": {
+            "0.5": {
+              "threshold": 0.5,
+              "num_units": 3752,
+              "num_recalled": 3742,
+              "recall": 0.9973347547974414,
+              "ci_low": 0.9951004912788188,
+              "ci_high": 0.9985516371815508
+            },
+            "0.7": {
+              "threshold": 0.7,
+              "num_units": 3752,
+              "num_recalled": 3694,
+              "recall": 0.9845415778251599,
+              "ci_low": 0.9800694671694251,
+              "ci_high": 0.988022477922189
+            }
+          }
+        }
+      },
+      "candidate_availability": {
+        "5": {
+          "K": 5,
+          "num_expressions": 3752,
+          "num_available": 3752,
+          "frac_available": 1.0,
+          "ci_low": 0.9989771666621936,
+          "ci_high": 1.0
+        },
+        "10": {
+          "K": 10,
+          "num_expressions": 3752,
+          "num_available": 3751,
+          "frac_available": 0.9997334754797441,
+          "ci_low": 0.9984917113034679,
+          "ci_high": 0.9999529515385435
+        },
+        "20": {
+          "K": 20,
+          "num_expressions": 3752,
+          "num_available": 3748,
+          "frac_available": 0.9989339019189766,
+          "ci_low": 0.9972618050588159,
+          "ci_high": 0.9995853463226482
+        },
+        "50": {
+          "K": 50,
+          "num_expressions": 3752,
+          "num_available": 3461,
+          "frac_available": 0.9224413646055437,
+          "ci_low": 0.9134440241457484,
+          "ci_high": 0.930574530843365
+        }
+      },
+      "same_category": {
+        "num_target_category_unknown": 0,
+        "1": {
+          "threshold": 1,
+          "num_expressions": 3752,
+          "num_available": 3715,
+          "frac": 0.9901385927505331,
+          "ci_low": 0.9864375063982868,
+          "ci_high": 0.9928370189171579
+        },
+        "2": {
+          "threshold": 2,
+          "num_expressions": 3752,
+          "num_available": 3392,
+          "frac": 0.9040511727078892,
+          "ci_low": 0.8942095304133414,
+          "ci_high": 0.9130662609831862
+        },
+        "4": {
+          "threshold": 4,
+          "num_expressions": 3752,
+          "num_available": 2933,
+          "frac": 0.7817164179104478,
+          "ci_low": 0.7682140691826775,
+          "ci_high": 0.7946424687501257
+        },
+        "9": {
+          "threshold": 9,
+          "num_expressions": 3752,
+          "num_available": 2071,
+          "frac": 0.5519722814498934,
+          "ci_low": 0.5360147719073493,
+          "ci_high": 0.56782347302822
+        }
+      },
+      "natural_omission": {
+        "expression": {
+          "level": "expression",
+          "iou_thresh": 0.5,
+          "num_units": 3752,
+          "num_omitted": 10,
+          "rate": 0.0026652452025586353,
+          "ci_low": 0.0014483628184492128,
+          "ci_high": 0.004899508721181213,
+          "mean_max_iou": 0.9241921867885347,
+          "quantiles_max_iou": {
+            "q10": 0.8524484097957611,
+            "q25": 0.9065956175327301,
+            "q50": 0.9439224302768707,
+            "q75": 0.9652849286794662,
+            "q90": 0.9771787405014039
+          }
+        },
+        "gt_object": {
+          "level": "coco_gt_object",
+          "iou_thresh": 0.5,
+          "num_units": 15349,
+          "num_omitted": 1478,
+          "rate": 0.09629291810541403,
+          "ci_low": 0.0917265402342641,
+          "ci_high": 0.10106132777839097,
+          "mean_max_iou": 0.7927137010659691,
+          "quantiles_max_iou": {
+            "q10": 0.5098304748535157,
+            "q25": 0.7233353853225708,
+            "q50": 0.863077700138092,
+            "q75": 0.9342765808105469,
+            "q90": 0.9644296169281006
+          }
+        }
+      },
+      "iou_stats": {
+        "target_max_iou": {
+          "num_values": 3752,
+          "mean": 0.9241921867885347,
+          "p25": 0.9065956175327301,
+          "median": 0.9439224302768707,
+          "p75": 0.9652849286794662
+        },
+        "gt_max_iou": {
+          "num_values": 15349,
+          "mean": 0.7927137010659691,
+          "p25": 0.7233353853225708,
+          "median": 0.863077700138092,
+          "p75": 0.9342765808105469
+        },
+        "remaining_count": {
+          "num_values": 3752,
+          "mean": 58.74680170575693,
+          "p25": 58.0,
+          "median": 62.0,
+          "p75": 63.0
+        },
+        "redundancy": {
+          "n_pairs": 3024000,
+          "frac_gt_0.7": 0.03966468253968254,
+          "frac_gt_0.9": 0.010321097883597884
+        }
+      }
+    }
+  },
+  "runtime_seconds": 30.40322710003238,
+  "verdict": "FULL"
+}
