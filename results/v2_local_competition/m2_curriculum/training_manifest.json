@@ -1,0 +1,50 @@
+{
+  "artifact": "v2m_m2_training_manifest",
+  "rule": "all four curriculum models share the identical frozen rows; m=8 is never materialised before the models freeze",
+  "k_level": 10,
+  "levels_train": [
+    0,
+    2,
+    4
+  ],
+  "levels_test": [
+    0,
+    2,
+    4,
+    8
+  ],
+  "weights": "train s_i = N/(3 n_r) (mean-1; loss = mean(s.*l)); val v_i = 1/(3 n_r) (val_nll = sum(v.*l)); both equal the regime-balanced (1/3)(L_m0+L_m2+L_m4)",
+  "curriculum_sha256": "cffc00ce21faf86612e1e4c96f81007407c13a300a66a0ae9f3c30257b4a5010",
+  "val_tables": {
+    "m0": {
+      "file": "val_level_m0.npz",
+      "sha256": "8ec3c2f7fc05d127e1d77f8baa988da78a4536eb398090a39d4c633460df755e",
+      "train_rows": 3686,
+      "train_images": 523,
+      "tune_rows": 1545,
+      "tune_images": 224
+    },
+    "m2": {
+      "file": "val_level_m2.npz",
+      "sha256": "37fc88c56287d54f50ba333e5d38b7c56142b5ea59cc0d0a14c14d6504cf83c3",
+      "train_rows": 3574,
+      "train_images": 512,
+      "tune_rows": 1502,
+      "tune_images": 221
+    },
+    "m4": {
+      "file": "val_level_m4.npz",
+      "sha256": "52e48eb52f5209bf43d7871b7833df11c6a96ca7b66c428961a87804d3020006",
+      "train_rows": 3370,
+      "train_images": 497,
+      "tune_rows": 1446,
+      "tune_images": 219
+    }
+  },
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "model_selection": "tune balanced mean AUROC on m in {0,2,4} only (m=8 never seen)"
+}

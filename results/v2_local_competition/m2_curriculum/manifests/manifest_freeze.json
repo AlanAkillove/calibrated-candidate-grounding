@@ -1,0 +1,97 @@
+{
+  "artifact": "v2m_m2_manifest_freeze",
+  "rule": "M2 levels reuse the frozen manifests-v1 exactly; the val m=2/m=4 tables are a deterministic derivation of same_category_val.jsonl under the Phase1F level construction, the test cells are the frozen Phase1F expb manifests. No resampling.",
+  "k_level": 10,
+  "levels_train": [
+    0,
+    2,
+    4
+  ],
+  "levels_test": [
+    0,
+    2,
+    4,
+    8
+  ],
+  "construction": "[target] + same_order[:m] + first (k-1-m) of the manifest rest shuffle (HardCohort.level_indices / level_sample; K=10)",
+  "eligibility": "target present AND eligible[10] AND n_same_category_available >= m AND distractor_order.size >= n_avail + (10-1-m)",
+  "k_mapping": {
+    "train": {
+      "m0": 10,
+      "m2": 10,
+      "m4": 10
+    },
+    "test": {
+      "m0": 10,
+      "m2": 10,
+      "m4": 10,
+      "m8": 10
+    },
+    "note": "the M2 preregistration fixes m=8 to the frozen K=10 same8 cell (K=5 can host at most 4 distractors and is never redefined)"
+  },
+  "sources": {
+    "same_category_val.jsonl": "11536cd04cb51efdd7c1b54fbae83726dce36731e121eee27e1020ca57ac90c2",
+    "same_category_val.meta.json": "e694794f45b25313f1482e3f2c3685bef800010f1e236754a5132bc1efd236a0",
+    "random_val.jsonl": "b9e770535ec4e25018e7f4782fcc34861d1dd4f1b956a0f9454e153366b8d0f7",
+    "random_val.meta.json": "c3da13134cf5950050720c371dfd964f87a775f235cbfd959184d7ed95a7972d",
+    "split_manifest.json": "badd94bc88c1f0ba87c7136e2b33cb5b427a73fe0e112dc39d4260cb62b5b7c0"
+  },
+  "test_side_verification": {
+    "expb_m0": {
+      "rows": 7410,
+      "sha256": "f987c200ef4e556a66a4f172d0864dc295b35c35d36a91351606d71c00ff06ab",
+      "construction_match": true
+    },
+    "expb_m2": {
+      "rows": 7410,
+      "sha256": "de944296f60046ae0abe8ad7685fdff05f93ef16b9966039f16d29d7eee367fc",
+      "construction_match": true
+    },
+    "expb_m4": {
+      "rows": 7410,
+      "sha256": "731e9cf99e0b98e290eda95427b6b3316670d4afcd69cd96b51a3d7fc2550698",
+      "construction_match": true
+    },
+    "expb_m8": {
+      "rows": 7410,
+      "sha256": "9d91d08437379021b3564346210aaf9b1879524d56f8741b7e019b19926a1664",
+      "construction_match": true
+    }
+  },
+  "val_tables": {
+    "m0": {
+      "file": "val_level_m0.npz",
+      "sha256": "8ec3c2f7fc05d127e1d77f8baa988da78a4536eb398090a39d4c633460df755e",
+      "train_rows": 3686,
+      "train_images": 523,
+      "tune_rows": 1545,
+      "tune_images": 224
+    },
+    "m2": {
+      "file": "val_level_m2.npz",
+      "sha256": "37fc88c56287d54f50ba333e5d38b7c56142b5ea59cc0d0a14c14d6504cf83c3",
+      "train_rows": 3574,
+      "train_images": 512,
+      "tune_rows": 1502,
+      "tune_images": 221
+    },
+    "m4": {
+      "file": "val_level_m4.npz",
+      "sha256": "52e48eb52f5209bf43d7871b7833df11c6a96ca7b66c428961a87804d3020006",
+      "train_rows": 3370,
+      "train_images": 497,
+      "tune_rows": 1446,
+      "tune_images": 219
+    }
+  },
+  "disjointness": {
+    "train_tune_images": 0,
+    "train_test_images": 0,
+    "tune_test_images": 0,
+    "train_test_rows": 0,
+    "tune_test_rows": 0
+  },
+  "git_head": "c92c86d5f4ee74a74348e18129c9fc980ef0e548",
+  "created_utc": "2026-09-30T19:34:47Z",
+  "runtime_sec": 1.6
+}

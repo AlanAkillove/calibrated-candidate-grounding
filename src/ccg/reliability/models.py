@@ -72,10 +72,31 @@ class LogisticModel:
         self._clf: Optional[LogisticRegression] = None
 
     # -- fitting -------------------------------------------------------------
-    def fit(self, X: np.ndarray, y: np.ndarray) -> "LogisticModel":
-        """Fit on ``X`` ``[n, d]`` float64 (already standardised) and ``y`` {0,1}."""
+    def fit(
+        self,
+        X: np.ndarray,
+        y: np.ndarray,
+        *,
+        sample_weight: Optional[np.ndarray] = None,
+    ) -> "LogisticModel":
+        """Fit on ``X`` ``[n, d]`` float64 (already standardised) and ``y`` {0,1}.
+
+        ``sample_weight`` (``[n]``, finite / non-negative) is passed through to
+        ``sklearn`` verbatim; the M2 curriculum uses it for the regime-balanced
+        objective (``s_i = N / (3 * n_regime)``, mean 1 by construction, so the
+        frozen ``C`` grid keeps its M1 meaning).
+        """
         X = _as_2d_float64(X, "X")
         y = _as_binary_labels(y, X.shape[0])
+        weights: Optional[np.ndarray] = None
+        if sample_weight is not None:
+            weights = np.asarray(sample_weight, dtype=np.float64).reshape(-1)
+            if weights.shape[0] != X.shape[0]:
+                raise ValueError(
+                    f"sample_weight has {weights.shape[0]} rows but X has {X.shape[0]}"
+                )
+            if not np.all(np.isfinite(weights)) or np.any(weights < 0.0):
+                raise ValueError("sample_weight must be finite and non-negative")
         clf = LogisticRegression(
             C=self.C,
             penalty="l2",
@@ -83,7 +104,7 @@ class LogisticModel:
             max_iter=20000,
             tol=1e-10,
         )
-        clf.fit(X, y)
+        clf.fit(X, y, sample_weight=weights)
         self._clf = clf
         return self
 

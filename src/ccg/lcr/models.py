@@ -104,6 +104,18 @@ def _as_binary_float(y: Any, n: int) -> np.ndarray:
     return np.ascontiguousarray(arr, dtype=np.float32)
 
 
+def _as_weight_tensor(weight: Any, n: int, name: str) -> Optional[torch.Tensor]:
+    """Validate an optional non-negative weight vector and return it as float32."""
+    if weight is None:
+        return None
+    arr = np.asarray(weight, dtype=np.float64).reshape(-1)
+    if arr.shape[0] != n:
+        raise ValueError(f"{name} has {arr.shape[0]} rows, expected {n}")
+    if not np.all(np.isfinite(arr)) or np.any(arr < 0.0):
+        raise ValueError(f"{name} must be finite and non-negative")
+    return torch.from_numpy(np.ascontiguousarray(arr, dtype=np.float32))
+
+
 class LCRNet(nn.Module):
     """The frozen first-version LCR core (see module docstring)."""
 
@@ -220,26 +232,43 @@ class _TorchModelBase:
         weight_decay: float = 1e-4,
         patience: int = 30,
         log: Optional[Any] = None,
+        sample_weight: Optional[Any] = None,
+        val_sample_weight: Optional[Any] = None,
     ) -> Dict[str, Any]:
-        """Train with Adam + BCEWithLogits; monitor ``val_nll`` for early stop."""
+        """Train with Adam + BCEWithLogits; monitor ``val_nll`` for early stop.
+
+        M2 regime-balanced curriculum (optional, loss-aggregation layer only):
+        ``sample_weight`` holds ``s_i = N / (3 * n_regime)`` and each batch loss
+        is ``mean(s_i * l_i)`` -- an unbiased estimator of ``(1/3) sum_r
+        mean_r(l)`` at the same loss magnitude as the unweighted path, so the
+        frozen optimiser / wd semantics are unchanged. ``val_sample_weight``
+        holds ``v_i = 1 / (3 * n_regime)``; ``val_nll`` is then the weighted
+        *sum* ``sum_i v_i * l_i = (1/3) sum_r mean_r(l)``. Without weights both
+        paths reduce to the frozen M1 behaviour bit-for-bit.
+        """
         train_arrays = self._pack(inputs)
         n = int(train_arrays[0].shape[0])
         y_t = torch.from_numpy(_as_binary_float(y, n))
+        w_t = _as_weight_tensor(sample_weight, n, "sample_weight")
         has_val = inputs_val is not None and y_val is not None
         if (inputs_val is None) != (y_val is None):
             raise ValueError("inputs_val and y_val must be provided together")
+        if val_sample_weight is not None and not has_val:
+            raise ValueError("val_sample_weight requires inputs_val and y_val")
         val_tensors: Tuple[torch.Tensor, ...] = ()
         yv_t: Optional[torch.Tensor] = None
+        vw_t: Optional[torch.Tensor] = None
         if has_val:
             val_arrays = self._pack(inputs_val)  # type: ignore[arg-type]
             yv_t = torch.from_numpy(_as_binary_float(y_val, val_arrays[0].shape[0]))
+            vw_t = _as_weight_tensor(val_sample_weight, val_arrays[0].shape[0], "val_sample_weight")
             val_tensors = tuple(torch.from_numpy(a) for a in val_arrays)
 
         self._net = self._build_net()
         net = self._net
         net.train()
         opt = torch.optim.Adam(net.parameters(), lr=float(lr), weight_decay=float(weight_decay))
-        loss_fn = nn.BCEWithLogitsLoss()
+        loss_fn = nn.BCEWithLogitsLoss(reduction="none")
         tensors = tuple(torch.from_numpy(a) for a in train_arrays)
         gen = torch.Generator()
         gen.manual_seed(self.seed)
@@ -260,7 +289,8 @@ class _TorchModelBase:
                 idx = perm[start : start + int(batch_size)]
                 opt.zero_grad()
                 logits = net(*[t[idx] for t in tensors])
-                loss = loss_fn(logits, y_t[idx])
+                element = loss_fn(logits, y_t[idx])
+                loss = element.mean() if w_t is None else (element * w_t[idx]).mean()
                 loss.backward()
                 opt.step()
                 total += float(loss.item()) * int(idx.shape[0])
@@ -270,7 +300,12 @@ class _TorchModelBase:
             if has_val:
                 with torch.no_grad():
                     v_logits = net(*val_tensors)
-                    val_nll = float(loss_fn(v_logits, yv_t).item())
+                    element_v = loss_fn(v_logits, yv_t)
+                    if vw_t is None:
+                        val_nll = float(element_v.mean().item())
+                    else:
+                        # regime-balanced validation NLL: sum_i v_i * l_i
+                        val_nll = float((element_v * vw_t).sum().item())
                 if val_nll < best_val_nll - 1e-12:
                     best_val_nll = val_nll
                     best_epoch = epoch
@@ -358,6 +393,36 @@ class LCR(_TorchModelBase):
         with torch.no_grad():
             g = torch.sigmoid(self._net.gate(tensors[2])).squeeze(-1).numpy()
         return g.astype(np.float64)
+
+    def correction_and_gate(self, inputs: Mapping[str, Any]) -> Dict[str, np.ndarray]:
+        """Diagnostic decomposition of ``z = b + g * delta`` (frozen M2 §13).
+
+        Returns ``{"gate": g, "delta": d}`` as float64 arrays: ``g`` the sigmoid
+        gate, ``d`` the raw correction logit of ``z - b``.  Read-only diagnostic;
+        no parameter is updated and no score is touched.
+        """
+        arrays = self._pack(inputs)
+        tensors = tuple(torch.from_numpy(a) for a in arrays)
+        net = self._net
+        net.eval()
+        g_chunks: List[np.ndarray] = []
+        d_chunks: List[np.ndarray] = []
+        n = int(tensors[0].shape[0])
+        with torch.no_grad():
+            for start in range(0, n, _PREDICT_BATCH):
+                stop = min(start + _PREDICT_BATCH, n)
+                r = tensors[1][start:stop]
+                h = net.phi(r)
+                h_c = torch.cat([h.max(dim=1).values, h.mean(dim=1)], dim=-1)
+                g_chunks.append(torch.sigmoid(net.gate(tensors[2][start:stop])).squeeze(-1).numpy())
+                d_chunks.append(net.delta(h_c).squeeze(-1).numpy())
+        if not g_chunks:
+            empty = np.empty((0,), dtype=np.float64)
+            return {"gate": empty, "delta": empty}
+        return {
+            "gate": np.concatenate(g_chunks).astype(np.float64),
+            "delta": np.concatenate(d_chunks).astype(np.float64),
+        }
 
 
 class LCRNoGate(_TorchModelBase):

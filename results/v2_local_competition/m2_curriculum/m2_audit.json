@@ -1,0 +1,750 @@
+{
+  "artifact": "v2m_m2_audit",
+  "passed": true,
+  "protocol_sha256": "90085940f75ed8cbf6ac3c2f72219b9ff34bde80c97aad89362580bf5fedd88b",
+  "manifest_freeze_sha256": "32d753bea652a98edd50f3f549d99482600fefb08c84ef6d5ab273a289123297",
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "metrics": [
+      "auroc_correct",
+      "e_aurc",
+      "rer_at_50",
+      "rer_at_80"
+    ]
+  },
+  "m8_headline": {
+    "LCR-E1b": {
+      "seed1": {
+        "auroc_correct": {
+          "recomputed_diff": -0.0006981076719965174,
+          "stored_diff": -0.0006981076719965174,
+          "recomputed_ci": [
+            -0.004779103402618434,
+            0.0034422851399759195
+          ],
+          "stored_ci": [
+            -0.004779103402618434,
+            0.0034422851399759195
+          ]
+        },
+        "e_aurc": {
+          "recomputed_diff": 0.0013378989136926256,
+          "stored_diff": 0.0013378989136926256,
+          "recomputed_ci": [
+            -0.0006683265306605332,
+            0.0033314288197099605
+          ],
+          "stored_ci": [
+            -0.0006683265306605332,
+            0.0033314288197099605
+          ]
+        },
+        "rer_at_50": {
+          "recomputed_diff": -0.009999999999999898,
+          "stored_diff": -0.009999999999999898,
+          "recomputed_ci": [
+            -0.02293294339742119,
+            0.007601398495907615
+          ],
+          "stored_ci": [
+            -0.02293294339742119,
+            0.007601398495907615
+          ]
+        },
+        "rer_at_80": {
+          "recomputed_diff": 0.010294117647058787,
+          "stored_diff": 0.010294117647058787,
+          "recomputed_ci": [
+            0.0011138780981353612,
+            0.017876913785801887
+          ],
+          "stored_ci": [
+            0.0011138780981353612,
+            0.017876913785801887
+          ]
+        }
+      },
+      "seed2": {
+        "auroc_correct": {
+          "recomputed_diff": -0.0040196308749468335,
+          "stored_diff": -0.0040196308749468335,
+          "recomputed_ci": [
+            -0.0071345710420105775,
+            -0.0007325213081024351
+          ],
+          "stored_ci": [
+            -0.0071345710420105775,
+            -0.0007325213081024351
+          ]
+        },
+        "e_aurc": {
+          "recomputed_diff": 0.003331026656544278,
+          "stored_diff": 0.003331026656544278,
+          "recomputed_ci": [
+            0.001708993451277466,
+            0.004949770623481369
+          ],
+          "stored_ci": [
+            0.001708993451277466,
+            0.004949770623481369
+          ]
+        },
+        "rer_at_50": {
+          "recomputed_diff": -0.002366863905325367,
+          "stored_diff": -0.002366863905325367,
+          "recomputed_ci": [
+            -0.01792031653097669,
+            0.009936612676522032
+          ],
+          "stored_ci": [
+            -0.01792031653097669,
+            0.009936612676522032
+          ]
+        },
+        "rer_at_80": {
+          "recomputed_diff": 0.0022189349112426704,
+          "stored_diff": 0.0022189349112426704,
+          "recomputed_ci": [
+            -0.006463759290509007,
+            0.010526456084084455
+          ],
+          "stored_ci": [
+            -0.006463759290509007,
+            0.010526456084084455
+          ]
+        }
+      },
+      "seed3": {
+        "auroc_correct": {
+          "recomputed_diff": -0.0008555195297713647,
+          "stored_diff": -0.0008555195297713647,
+          "recomputed_ci": [
+            -0.003999298162463002,
+            0.0022206936616737216
+          ],
+          "stored_ci": [
+            -0.003999298162463002,
+            0.0022206936616737216
+          ]
+        },
+        "e_aurc": {
+          "recomputed_diff": 0.0020238675490882596,
+          "stored_diff": 0.0020238675490882596,
+          "recomputed_ci": [
+            0.0003606781341758132,
+            0.0036617138445438732
+          ],
+          "stored_ci": [
+            0.0003606781341758132,
+            0.0036617138445438732
+          ]
+        },
+        "rer_at_50": {
+          "recomputed_diff": -0.004158004158004269,
+          "stored_diff": -0.004158004158004269,
+          "recomputed_ci": [
+            -0.02325979791536173,
+            0.011878785251754953
+          ],
+          "stored_ci": [
+            -0.02325979791536173,
+            0.011878785251754953
+          ]
+        },
+        "rer_at_80": {
+          "recomputed_diff": 0.009652509652509661,
+          "stored_diff": 0.009652509652509661,
+          "recomputed_ci": [
+            0.0014726082914483132,
+            0.017189909813587416
+          ],
+          "stored_ci": [
+            0.0014726082914483132,
+            0.017189909813587416
+          ]
+        }
+      }
+    },
+    "LCR-Aggregate-MLP": {
+      "seed1": {
+        "auroc_correct": {
+          "recomputed_diff": 0.03377849493912277,
+          "stored_diff": 0.03377849493912277,
+          "recomputed_ci": [
+            0.027462036979085107,
+            0.040126330926592374
+          ],
+          "stored_ci": [
+            0.027462036979085107,
+            0.040126330926592374
+          ]
+        },
+        "e_aurc": {
+          "recomputed_diff": -0.01471268850486862,
+          "stored_diff": -0.01471268850486862,
+          "recomputed_ci": [
+            -0.017642256061293205,
+            -0.011875873783256516
+          ],
+          "stored_ci": [
+            -0.017642256061293205,
+            -0.011875873783256516
+          ]
+        },
+        "rer_at_50": {
+          "recomputed_diff": 0.060000000000000164,
+          "stored_diff": 0.060000000000000164,
+          "recomputed_ci": [
+            0.0418212269084756,
+            0.08213380269916022
+          ],
+          "stored_ci": [
+            0.0418212269084756,
+            0.08213380269916022
+          ]
+        },
+        "rer_at_80": {
+          "recomputed_diff": 0.03492647058823539,
+          "stored_diff": 0.03492647058823539,
+          "recomputed_ci": [
+            0.024334477177652292,
+            0.046153360408194136
+          ],
+          "stored_ci": [
+            0.024334477177652292,
+            0.046153360408194136
+          ]
+        }
+      },
+      "seed2": {
+        "auroc_correct": {
+          "recomputed_diff": 0.035004258005784994,
+          "stored_diff": 0.035004258005784994,
+          "recomputed_ci": [
+            0.030043841417733193,
+            0.04027643978840086
+          ],
+          "stored_ci": [
+            0.030043841417733193,
+            0.04027643978840086
+          ]
+        },
+        "e_aurc": {
+          "recomputed_diff": -0.014992465951378015,
+          "stored_diff": -0.014992465951378015,
+          "recomputed_ci": [
+            -0.017396006863605176,
+            -0.012728262634104348
+          ],
+          "stored_ci": [
+            -0.017396006863605176,
+            -0.012728262634104348
+          ]
+        },
+        "rer_at_50": {
+          "recomputed_diff": 0.07337278106508882,
+          "stored_diff": 0.07337278106508882,
+          "recomputed_ci": [
+            0.05476201586862498,
+            0.0892965528316947
+          ],
+          "stored_ci": [
+            0.05476201586862498,
+            0.0892965528316947
+          ]
+        },
+        "rer_at_80": {
+          "recomputed_diff": 0.037352071005917115,
+          "stored_diff": 0.037352071005917115,
+          "recomputed_ci": [
+            0.02746349381406448,
+            0.04913044569986953
+          ],
+          "stored_ci": [
+            0.02746349381406448,
+            0.04913044569986953
+          ]
+        }
+      },
+      "seed3": {
+        "auroc_correct": {
+          "recomputed_diff": 0.03844769118081015,
+          "stored_diff": 0.03844769118081015,
+          "recomputed_ci": [
+            0.033338720100131246,
+            0.04368123244577255
+          ],
+          "stored_ci": [
+            0.033338720100131246,
+            0.04368123244577255
+          ]
+        },
+        "e_aurc": {
+          "recomputed_diff": -0.016625699843357072,
+          "stored_diff": -0.016625699843357072,
+          "recomputed_ci": [
+            -0.019035124620864756,
+            -0.014263587324537901
+          ],
+          "stored_ci": [
+            -0.019035124620864756,
+            -0.014263587324537901
+          ]
+        },
+        "rer_at_50": {
+          "recomputed_diff": 0.06712206712206725,
+          "stored_diff": 0.06712206712206725,
+          "recomputed_ci": [
+            0.05190171124452635,
+            0.0890462793543032
+          ],
+          "stored_ci": [
+            0.05190171124452635,
+            0.0890462793543032
+          ]
+        },
+        "rer_at_80": {
+          "recomputed_diff": 0.04677754677754678,
+          "stored_diff": 0.04677754677754678,
+          "recomputed_ci": [
+            0.03626767200819863,
+            0.05729280354652295
+          ],
+          "stored_ci": [
+            0.03626767200819863,
+            0.05729280354652295
+          ]
+        }
+      }
+    },
+    "LCR-LCR-noGate": {
+      "seed1": {
+        "auroc_correct": {
+          "recomputed_diff": -0.0015641044447703978,
+          "stored_diff": -0.0015641044447703978,
+          "recomputed_ci": [
+            -0.0038842649462454137,
+            0.0008382010915638384
+          ],
+          "stored_ci": [
+            -0.0038842649462454137,
+            0.0008382010915638384
+          ]
+        },
+        "e_aurc": {
+          "recomputed_diff": 0.0008320535875851465,
+          "stored_diff": 0.0008320535875851465,
+          "recomputed_ci": [
+            -0.00032567222757444924,
+            0.0019613782999296555
+          ],
+          "stored_ci": [
+            -0.00032567222757444924,
+            0.0019613782999296555
+          ]
+        },
+        "rer_at_50": {
+          "recomputed_diff": -0.0052941176470587825,
+          "stored_diff": -0.0052941176470587825,
+          "recomputed_ci": [
+            -0.018246027074749763,
+            0.009507186607839611
+          ],
+          "stored_ci": [
+            -0.018246027074749763,
+            0.009507186607839611
+          ]
+        },
+        "rer_at_80": {
+          "recomputed_diff": 0.002205882352941252,
+          "stored_diff": 0.002205882352941252,
+          "recomputed_ci": [
+            -0.0032824489266871184,
+            0.006650684292075606
+          ],
+          "stored_ci": [
+            -0.0032824489266871184,
+            0.006650684292075606
+          ]
+        }
+      },
+      "seed2": {
+        "auroc_correct": {
+          "recomputed_diff": -0.0026379079977094655,
+          "stored_diff": -0.0026379079977094655,
+          "recomputed_ci": [
+            -0.0049025686745205865,
+            -0.000346404823893734
+          ],
+          "stored_ci": [
+            -0.0049025686745205865,
+            -0.000346404823893734
+          ]
+        },
+        "e_aurc": {
+          "recomputed_diff": 0.0013499375144074288,
+          "stored_diff": 0.0013499375144074288,
+          "recomputed_ci": [
+            0.00021685587995126453,
+            0.002487586485154808
+          ],
+          "stored_ci": [
+            0.00021685587995126453,
+            0.002487586485154808
+          ]
+        },
+        "rer_at_50": {
+          "recomputed_diff": -0.007100591715976212,
+          "stored_diff": -0.007100591715976212,
+          "recomputed_ci": [
+            -0.019200248031935187,
+            0.006526303043877412
+          ],
+          "stored_ci": [
+            -0.019200248031935187,
+            0.006526303043877412
+          ]
+        },
+        "rer_at_80": {
+          "recomputed_diff": 0.00036982248520706085,
+          "stored_diff": 0.00036982248520706085,
+          "recomputed_ci": [
+            -0.005135799602718609,
+            0.0056252309818609495
+          ],
+          "stored_ci": [
+            -0.005135799602718609,
+            0.0056252309818609495
+          ]
+        }
+      },
+      "seed3": {
+        "auroc_correct": {
+          "recomputed_diff": -0.0025214539189309937,
+          "stored_diff": -0.0025214539189309937,
+          "recomputed_ci": [
+            -0.004072489135485779,
+            -0.0010351356372147711
+          ],
+          "stored_ci": [
+            -0.004072489135485779,
+            -0.0010351356372147711
+          ]
+        },
+        "e_aurc": {
+          "recomputed_diff": 0.0012799084255637194,
+          "stored_diff": 0.0012799084255637194,
+          "recomputed_ci": [
+            0.0005397436444398261,
+            0.0020529921215350112
+          ],
+          "stored_ci": [
+            0.0005397436444398261,
+            0.0020529921215350112
+          ]
+        },
+        "rer_at_50": {
+          "recomputed_diff": -0.007722007722007707,
+          "stored_diff": -0.007722007722007707,
+          "recomputed_ci": [
+            -0.01763550210434989,
+            0.002328878148426674
+          ],
+          "stored_ci": [
+            -0.01763550210434989,
+            0.002328878148426674
+          ]
+        },
+        "rer_at_80": {
+          "recomputed_diff": 0.0018562518562519614,
+          "stored_diff": 0.0018562518562519614,
+          "recomputed_ci": [
+            -0.004982373061681435,
+            0.007173143478427785
+          ],
+          "stored_ci": [
+            -0.004982373061681435,
+            0.007173143478427785
+          ]
+        }
+      }
+    },
+    "LCR-R1": {
+      "seed1": {
+        "auroc_correct": {
+          "recomputed_diff": 0.053276661287956606,
+          "stored_diff": 0.053276661287956606,
+          "recomputed_ci": [
+            0.04624408667610719,
+            0.06041629681811252
+          ],
+          "stored_ci": [
+            0.04624408667610719,
+            0.06041629681811252
+          ]
+        },
+        "e_aurc": {
+          "recomputed_diff": -0.02354553110586763,
+          "stored_diff": -0.02354553110586763,
+          "recomputed_ci": [
+            -0.026862832027860103,
+            -0.020336727488067554
+          ],
+          "stored_ci": [
+            -0.026862832027860103,
+            -0.020336727488067554
+          ]
+        },
+        "rer_at_50": {
+          "recomputed_diff": 0.09058823529411764,
+          "stored_diff": 0.09058823529411764,
+          "recomputed_ci": [
+            0.07221704975251264,
+            0.11239178118991673
+          ],
+          "stored_ci": [
+            0.07221704975251264,
+            0.11239178118991673
+          ]
+        },
+        "rer_at_80": {
+          "recomputed_diff": 0.06139705882352953,
+          "stored_diff": 0.06139705882352953,
+          "recomputed_ci": [
+            0.04862625650689287,
+            0.07363037918515855
+          ],
+          "stored_ci": [
+            0.04862625650689287,
+            0.07363037918515855
+          ]
+        }
+      },
+      "seed2": {
+        "auroc_correct": {
+          "recomputed_diff": 0.05015739938625985,
+          "stored_diff": 0.05015739938625985,
+          "recomputed_ci": [
+            0.044316379526902344,
+            0.05615454103918675
+          ],
+          "stored_ci": [
+            0.044316379526902344,
+            0.05615454103918675
+          ]
+        },
+        "e_aurc": {
+          "recomputed_diff": -0.021898436176279706,
+          "stored_diff": -0.021898436176279706,
+          "recomputed_ci": [
+            -0.024604086480561616,
+            -0.019215199556626254
+          ],
+          "stored_ci": [
+            -0.024604086480561616,
+            -0.019215199556626254
+          ]
+        },
+        "rer_at_50": {
+          "recomputed_diff": 0.10295857988165691,
+          "stored_diff": 0.10295857988165691,
+          "recomputed_ci": [
+            0.08387240003280667,
+            0.12018242275490894
+          ],
+          "stored_ci": [
+            0.08387240003280667,
+            0.12018242275490894
+          ]
+        },
+        "rer_at_80": {
+          "recomputed_diff": 0.05251479289940833,
+          "stored_diff": 0.05251479289940833,
+          "recomputed_ci": [
+            0.04128949059457817,
+            0.06427968396114227
+          ],
+          "stored_ci": [
+            0.04128949059457817,
+            0.06427968396114227
+          ]
+        }
+      },
+      "seed3": {
+        "auroc_correct": {
+          "recomputed_diff": 0.051698106360485774,
+          "stored_diff": 0.051698106360485774,
+          "recomputed_ci": [
+            0.04563200791925888,
+            0.05772988800420813
+          ],
+          "stored_ci": [
+            0.04563200791925888,
+            0.05772988800420813
+          ]
+        },
+        "e_aurc": {
+          "recomputed_diff": -0.022882359349341408,
+          "stored_diff": -0.022882359349341408,
+          "recomputed_ci": [
+            -0.025784728649280084,
+            -0.020027043681876956
+          ],
+          "stored_ci": [
+            -0.025784728649280084,
+            -0.020027043681876956
+          ]
+        },
+        "rer_at_50": {
+          "recomputed_diff": 0.0926640926640927,
+          "stored_diff": 0.0926640926640927,
+          "recomputed_ci": [
+            0.07469769055502902,
+            0.11405732476759055
+          ],
+          "stored_ci": [
+            0.07469769055502902,
+            0.11405732476759055
+          ]
+        },
+        "rer_at_80": {
+          "recomputed_diff": 0.053460053460053475,
+          "stored_diff": 0.053460053460053475,
+          "recomputed_ci": [
+            0.03978991090851723,
+            0.0653004180169214
+          ],
+          "stored_ci": [
+            0.03978991090851723,
+            0.0653004180169214
+          ]
+        }
+      }
+    }
+  },
+  "max_point_delta": 0.0,
+  "max_bootstrap_delta": 0.0,
+  "max_diag_delta": 0.0,
+  "max_severity_delta": 0.0,
+  "gate_tree_mismatches": [],
+  "checks": [
+    {
+      "name": "seed1 confidences.npz key universe complete",
+      "ok": true,
+      "detail": "missing=[] extra=[]"
+    },
+    {
+      "name": "seed2 confidences.npz key universe complete",
+      "ok": true,
+      "detail": "missing=[] extra=[]"
+    },
+    {
+      "name": "seed3 confidences.npz key universe complete",
+      "ok": true,
+      "detail": "missing=[] extra=[]"
+    },
+    {
+      "name": "point metrics reproduce (4 levels x 3 seeds x 5 models)",
+      "ok": true,
+      "detail": "faulty values=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "paired bootstrap reproduces (10 pair-levels x 3 seeds x 4 metrics)",
+      "ok": true,
+      "detail": "faulty values=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "gate diagnostics (g/delta) reproduce from raw confidences",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "m8 LCR-E1b (auroc diff + CI reproduce)",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "m8 LCR-Aggregate-MLP (auroc diff + CI reproduce)",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "m8 LCR-LCR-noGate (auroc diff + CI reproduce)",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "m8 LCR-R1 (auroc diff + CI reproduce)",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "severity_curve.csv reproduces (4 levels x 5 models)",
+      "ok": true,
+      "detail": "faulty values=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "M2 gate tree reproduces (verdicts + comparisons + diagnostics)",
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "M2_GO.delta1_LCR_vs_E1b.delta",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "M2_GO.delta2_LCR_vs_AggregateMLP.delta",
+      "ok": true,
+      "detail": "max|delta|=0.000e+00"
+    },
+    {
+      "name": "M2_GO.verdict: stored=False recomputed=False",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "M2_GO.condition_delta1: stored=False recomputed=False",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "M2_GO.condition_delta2: stored=True recomputed=True",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "capacity_case.case: stored=C recomputed=C",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "gate_contribution.unsupported: stored=True recomputed=True",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "selective_metrics.method_signal_mixed: stored=False recomputed=False",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "authorization.V2-MG: stored=False recomputed=False",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "authorization.B1/B2: stored=False recomputed=False",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "authorization.v2mg_not_authorized: stored=True recomputed=True",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "runtime_sec": 713.5
+}
