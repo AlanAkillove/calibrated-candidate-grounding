@@ -1,0 +1,58 @@
+{
+  "protocol": "V2-P2-B0",
+  "schema": "phase-b-external-validation-feasibility-v1",
+  "date": "2026-10-02",
+  "scope": "audit only; no experiment run",
+  "inherits_freeze": ["P1-A0 seeded-random regime", "V2-G G3/G4 gates", "frozen B3 + per-seed temperature", "frozen R1/E1b heads", "image-cluster paired bootstrap 5000/seed0/0.95", "zero new training parameters"],
+  "environment": {
+    "huggingface_reachable": true,
+    "transformers_version": "4.57.6",
+    "grounding_dino_class_available": true,
+    "gdino_weights_mb": {"tiny": 1381, "base": 1869},
+    "detr_resnet_101_weights_mb": 486,
+    "coco_train2014_images_local": 19992,
+    "bank_writer_family_agnostic": true
+  },
+  "targets": {
+    "E1_gdino_class_prompt_query_independent_bank": {
+      "role": "PRIMARY external validation",
+      "verdict": "RECOMMENDED pending engineering probe",
+      "single_variable_preserved": true,
+      "conditioning_argument": "DETR-R50 is itself class-conditioned and expression-independent; GDINO class-prompt mode shares that conditioning form",
+      "cost": "weights ~1.4-1.9 GB; bank ~1.5-3 h; features ~2-4 h; one unattended night",
+      "new_code": ["ccg/data/gdino.py", "extractor script (clone of p1_extract_detr_proposals)", "FAMILIES entry", "manifest builder reuse"]
+    },
+    "E2_gdino_query_conditioned_topk": {
+      "role": "secondary descriptive diagnostic only",
+      "verdict": "NOT usable for C1/C4 replication",
+      "reason": "query-dependent bank changes proposal family and candidate regime simultaneously; violates P1-A0 single-variable design"
+    },
+    "E3_dino_detr_or_detr_r101": {
+      "role": "fallback / third-family robustness check",
+      "verdict": "OPTIONAL, lowest cost, modest scientific increment"
+    },
+    "E4_refcocog_a11_reinterpretation": {
+      "role": "Phase C mechanism evidence",
+      "verdict": "REUSE EXISTING ARTIFACTS, no re-run",
+      "facts": {"q1_semantic_transfer": "YES (d_hard 0.0178, 3/3 seeds)", "q2_hard_amplification": "INVALID_MANIPULATION (construction invalid, not a null effect)", "full_verdict": "EXTERNAL INCONCLUSIVE"}
+    },
+    "E5_finecops": {
+      "role": "none",
+      "verdict": "REJECT (prior engineering gate EXTERNAL STOP: recall@0.5 0.7579, same-name K5 supply 0.1861)"
+    },
+    "E6_random_grid_proposals": {
+      "role": "Phase C sanity control (structural vs detector-specific)",
+      "verdict": "NOT external validation; cheap mechanistic control"
+    }
+  },
+  "probe_gates_before_full_run": {
+    "boxes_ge_64_share_min": 0.98,
+    "ref_target_recall_at_05_min": 0.95,
+    "same_category_supply_ge4_min": 0.85,
+    "k50_availability_min": 0.90,
+    "peak_vram_gb_max": 6.0,
+    "checkpoint_identity": "sha256 recorded and revision pinned before any use",
+    "on_failure": "fall back to E3; never substitute E2 as primary"
+  },
+  "recommendation": "GO on E1 gated by the probe; Phase C absorbs E4/E6; E5 stays closed; Phase A remains queued after B and C"
+}
