@@ -1,0 +1,43 @@
+{
+  "per_k": {
+    "5": {
+      "n_removed_evaluated": 5037,
+      "n_kept_evaluated": 15762,
+      "error_rate_removed": 0.2492885977102773,
+      "error_rate_kept": 0.19646406970350627,
+      "share_of_total_errors_from_removed": 0.2885042505935514,
+      "share_of_evaluated_rows_removed": 0.2421751045723352
+    },
+    "10": {
+      "n_removed_evaluated": 5037,
+      "n_kept_evaluated": 15762,
+      "error_rate_removed": 0.37601747071669644,
+      "error_rate_kept": 0.3070041872858774,
+      "share_of_total_errors_from_removed": 0.2813010545076489,
+      "share_of_evaluated_rows_removed": 0.2421751045723352
+    },
+    "20": {
+      "n_removed_evaluated": 5037,
+      "n_kept_evaluated": 15762,
+      "error_rate_removed": 0.49884190324928857,
+      "error_rate_kept": 0.41549295774647893,
+      "share_of_total_errors_from_removed": 0.27728526761081473,
+      "share_of_evaluated_rows_removed": 0.2421751045723352
+    },
+    "50": {
+      "n_removed_evaluated": 5037,
+      "n_kept_evaluated": 15762,
+      "error_rate_removed": 0.6270928462709284,
+      "error_rate_kept": 0.5491265913801125,
+      "share_of_total_errors_from_removed": 0.2673664014446137,
+      "share_of_evaluated_rows_removed": 0.2421751045723352
+    }
+  },
+  "not_evaluated": {
+    "removed_rows_without_v1": {
+      "val": 61,
+      "testA": 41,
+      "testB": 59
+    }
+  }
+}

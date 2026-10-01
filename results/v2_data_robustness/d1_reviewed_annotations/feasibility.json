@@ -1,0 +1,98 @@
+{
+  "artifact": "d1_feasibility",
+  "splits": {
+    "val": {
+      "total_expressions": 10758,
+      "mapped_expressions": 10758,
+      "unmatched_expressions": 0,
+      "unchanged": 8059,
+      "removed": 2699,
+      "unchanged_verified": 8059,
+      "images_total": 1500,
+      "images_unchanged": 1480,
+      "box_mismatch_rows": 0,
+      "text_mismatch_rows": 0
+    },
+    "testA": {
+      "total_expressions": 5726,
+      "mapped_expressions": 5726,
+      "unmatched_expressions": 0,
+      "unchanged": 4215,
+      "removed": 1511,
+      "unchanged_verified": 4215,
+      "images_total": 750,
+      "images_unchanged": 742,
+      "box_mismatch_rows": 0,
+      "text_mismatch_rows": 0
+    },
+    "testB": {
+      "total_expressions": 4889,
+      "mapped_expressions": 4889,
+      "unmatched_expressions": 0,
+      "unchanged": 3901,
+      "removed": 988,
+      "unchanged_verified": 3901,
+      "images_total": 750,
+      "images_unchanged": 738,
+      "box_mismatch_rows": 0,
+      "text_mismatch_rows": 0
+    },
+    "all": {
+      "total_expressions": 21373,
+      "mapped_expressions": 21373,
+      "unmatched_expressions": 0,
+      "unchanged": 16175,
+      "removed": 5198,
+      "unchanged_verified": 16175,
+      "images_total": 3000,
+      "images_unchanged": 2960,
+      "box_mismatch_rows": 0,
+      "text_mismatch_rows": 0
+    }
+  },
+  "reviewed_subset_note": "The reviewed source covers the full val+testA+testB archives 1:1 (21373 sentences); train is not covered by the source and is not used by D1. Nothing is extrapolated beyond the reviewed splits.",
+  "status_taxonomy_supported": {
+    "UNCHANGED": "caption_quality == 1",
+    "REMOVED": "caption_quality == 0",
+    "UNMATCHED": "no reviewed row (expected 0)",
+    "CORRECTED_BOX": "not supported by this source (zero box modifications: verified)",
+    "CORRECTED_TEXT": "not supported by this source (captions match the V1 'sent' text)",
+    "AMBIGUOUS": "not supported by this source",
+    "INVALID": "not supported by this source"
+  },
+  "d1_clean_definition": [
+    "status == UNCHANGED (kept by the human review)",
+    "mapping verified (group text sequence equal + target box equal to instances.json)",
+    "target identity determined (ann_id present in the instances join table)",
+    "target-present and proposal-matchable (recomputed IoU target assignment >= 0.5)"
+  ],
+  "d1_clean": {
+    "val": {
+      "n_expressions": 7956,
+      "n_images": 1470,
+      "n_in_phase0b_cohort": 7875
+    },
+    "testA": {
+      "n_expressions": 4194,
+      "n_images": 742,
+      "n_in_phase0b_cohort": 4176
+    },
+    "testB": {
+      "n_expressions": 3816,
+      "n_images": 732,
+      "n_in_phase0b_cohort": 3711
+    },
+    "test_pooled": {
+      "n_expressions": 8010,
+      "n_images": 1474
+    }
+  },
+  "sample_size_gate": {
+    "criterion": "clean test expressions >= 3000 and images >= 500 -> FULL; 1000-2999 -> LIMITED; < 1000 -> UNDERPOWERED",
+    "clean_test_expressions": 8010,
+    "clean_test_images": 1474,
+    "verdict": "FULL_ROBUSTNESS_AUDIT",
+    "proceed": true
+  },
+  "generated_utc": "2026-10-01T06:39:39Z"
+}

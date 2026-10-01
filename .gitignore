@@ -41,6 +41,8 @@ results/*
 !results/v2_backbone_generalization/**
 !results/v2_local_competition/
 !results/v2_local_competition/**
+!results/v2_data_robustness/
+!results/v2_data_robustness/**
 experiments/**/outputs/
 
 # Local logs / scratch

@@ -1,0 +1,112 @@
+{
+  "artifact": "d1_proposal_audit",
+  "audited_population": "kept (UNCHANGED) refs of the reviewed source",
+  "bank": {
+    "path": "cache\\proposals.h5",
+    "proposals_per_image": 64,
+    "iou_thresh": 0.5,
+    "frozen": true
+  },
+  "recomputed_target_mapping": true,
+  "box_changed_by_review": false,
+  "note": "the reviewed source leaves every target box untouched (verified against instances.json), so the recomputed IoU mapping must equal the frozen manifest row; mismatches are reported below and are a hard error",
+  "per_split": {
+    "val": {
+      "n_refs": 3471,
+      "target_recall_at_0.5": 0.9855949294151541,
+      "natural_miss_refs": 50,
+      "k_availability_refs": {
+        "5": 3471,
+        "10": 3471,
+        "20": 3471,
+        "50": 3440
+      },
+      "k_availability_rate": {
+        "5": 1.0,
+        "10": 1.0,
+        "20": 1.0,
+        "50": 0.9910688562373956
+      },
+      "same_category": {
+        "min": 0,
+        "mean": 13.851051570152693,
+        "median": 12.0,
+        "max": 43,
+        "ge_4_refs": 3152,
+        "ge_8_refs": 2500
+      }
+    },
+    "testA": {
+      "n_refs": 1824,
+      "target_recall_at_0.5": 0.993421052631579,
+      "natural_miss_refs": 12,
+      "k_availability_refs": {
+        "5": 1824,
+        "10": 1824,
+        "20": 1824,
+        "50": 1817
+      },
+      "k_availability_rate": {
+        "5": 1.0,
+        "10": 1.0,
+        "20": 1.0,
+        "50": 0.9961622807017544
+      },
+      "same_category": {
+        "min": 0,
+        "mean": 14.379934210526315,
+        "median": 12.0,
+        "max": 41,
+        "ge_4_refs": 1733,
+        "ge_8_refs": 1388
+      }
+    },
+    "testB": {
+      "n_refs": 1663,
+      "target_recall_at_0.5": 0.9747444377630787,
+      "natural_miss_refs": 42,
+      "k_availability_refs": {
+        "5": 1663,
+        "10": 1663,
+        "20": 1663,
+        "50": 1622
+      },
+      "k_availability_rate": {
+        "5": 1.0,
+        "10": 1.0,
+        "20": 1.0,
+        "50": 0.9753457606734817
+      },
+      "same_category": {
+        "min": 0,
+        "mean": 12.319903788334335,
+        "median": 10.0,
+        "max": 46,
+        "ge_4_refs": 1444,
+        "ge_8_refs": 1092
+      }
+    }
+  },
+  "pooled": {
+    "n_refs": 6958,
+    "target_recall_at_0.5": 0.9850531762000575,
+    "k_availability_rate": {
+      "5": 1.0,
+      "10": 1.0,
+      "20": 1.0,
+      "50": 0.9886461626904283
+    }
+  },
+  "manifest_consistency": {
+    "target_index_mismatches": 0,
+    "target_max_iou_mismatches": 0,
+    "target_max_iou_max_abs_delta": 0.0,
+    "n_same_category_mismatches": 0
+  },
+  "proposal_gate": {
+    "criterion": "target recall@0.5 >= 0.95 -> CONTINUE; 0.9-0.95 -> REVIEWED-PROPOSAL GRAY; < 0.9 -> STOP",
+    "recall_at_0.5": 0.9850531762000575,
+    "verdict": "CONTINUE"
+  },
+  "generated_utc": "2026-10-01T06:39:39Z"
+}

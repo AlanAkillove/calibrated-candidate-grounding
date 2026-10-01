@@ -1,0 +1,71 @@
+{
+  "artifact": "d1_source_manifest",
+  "source": {
+    "dataset": "HuggingFace datasets/JierunChen/Ref-L4",
+    "directory": "refcocos_annotation_reviewed",
+    "paper": "arXiv:2406.16866 (Chen et al., 2024, 'Revisiting Referring Expression Comprehension Evaluation in the Era of Large Multimodal Models')",
+    "revision_at_audit": "d62c4f4e5f3a639b34adab34e5c8ffeb39f168c1",
+    "license": "Dataset card: CC BY-NC 4.0; the RefCOCO+ portion carries its original Apache-2.0 terms (per the per-file 'licenses' field).",
+    "endpoint": "https://hf-mirror.com"
+  },
+  "annotation_schema": {
+    "format": "COCO-like, one record per (image, expression) pair",
+    "images[]": {
+      "id": "review-local row id",
+      "original_id": "COCO image id (matches the V1 archive)",
+      "caption": "expression text (matches the V1 'sent' field)",
+      "tokens_negative": "negative spans of the expression"
+    },
+    "annotations[]": {
+      "id": "review-local annotation id",
+      "image_id": "review-local image row id",
+      "original_id": "original COCO instance id (= V1 ref ann_id)",
+      "caption_quality": "1 = expression kept by the human review, 0 = excluded",
+      "tokens_positive": "positive spans of the expression",
+      "bbox": "xywh, verified equal to instances.json (zero box modifications)"
+    },
+    "extra_fields_ignored": [
+      "model prediction columns",
+      "categories"
+    ]
+  },
+  "files": {
+    "refcoco+_val_reviewed.json": {
+      "urls_tried": [
+        "https://hf-mirror.com/datasets/JierunChen/Ref-L4/resolve/main/refcocos_annotation_reviewed/refcoco%2B_val_reviewed.json",
+        "https://hf-mirror.com/datasets/JierunChen/Ref-L4/resolve/main/refcocos_annotation_reviewed/refcoco+_val_reviewed.json"
+      ],
+      "bytes": 22198412,
+      "sha256": "c61080db850708f343f9bef5f408bc7c358a364d09f9fd843765a6ab0ceb262f",
+      "status": "prefetched_verified"
+    },
+    "refcoco+_testA_reviewed.json": {
+      "urls_tried": [
+        "https://hf-mirror.com/datasets/JierunChen/Ref-L4/resolve/main/refcocos_annotation_reviewed/refcoco%2B_testA_reviewed.json",
+        "https://hf-mirror.com/datasets/JierunChen/Ref-L4/resolve/main/refcocos_annotation_reviewed/refcoco+_testA_reviewed.json"
+      ],
+      "bytes": 11718341,
+      "sha256": "9e03439fc8ed189d169d65d6cb6ad455c7798b6de4109a4ebabcf7067b4987f8",
+      "status": "prefetched_verified"
+    },
+    "refcoco+_testB_reviewed.json": {
+      "urls_tried": [
+        "https://hf-mirror.com/datasets/JierunChen/Ref-L4/resolve/main/refcocos_annotation_reviewed/refcoco%2B_testB_reviewed.json",
+        "https://hf-mirror.com/datasets/JierunChen/Ref-L4/resolve/main/refcocos_annotation_reviewed/refcoco+_testB_reviewed.json"
+      ],
+      "bytes": 10119780,
+      "sha256": "1057944a4a1cc0ce2b8b8ac693be2144f736ee6bba640a656459bbbdc2fdb76f",
+      "status": "prefetched_verified"
+    }
+  },
+  "frozen_namespace": {
+    "raw_dir": "data\\reviewed_refcocoplus\\raw",
+    "note": "dedicated namespace; data/raw/refcoco+ is never modified"
+  },
+  "expected_sha256": {
+    "refcoco+_val_reviewed.json": "c61080db850708f343f9bef5f408bc7c358a364d09f9fd843765a6ab0ceb262f",
+    "refcoco+_testA_reviewed.json": "9e03439fc8ed189d169d65d6cb6ad455c7798b6de4109a4ebabcf7067b4987f8",
+    "refcoco+_testB_reviewed.json": "1057944a4a1cc0ce2b8b8ac693be2144f736ee6bba640a656459bbbdc2fdb76f"
+  },
+  "generated_utc": "2026-10-01T06:39:20Z"
+}

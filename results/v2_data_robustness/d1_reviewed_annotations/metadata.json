@@ -1,0 +1,45 @@
+{
+  "artifact": "d1_metadata",
+  "stage": "feasibility + mapping + proposal compatibility (no model run)",
+  "new_training_parameters": 0,
+  "runtime_sec": 19.249704837799072,
+  "generated_utc": "2026-10-01T06:39:39Z",
+  "environment": {
+    "python": "3.10.19",
+    "platform": "Windows-10-10.0.26200-SP0"
+  },
+  "frozen_inputs_sha256": {
+    "data/raw/refcoco+/refcoco+/refs(unc).p": "7de24c182449758b9d9ae87d968b1f25831236a54d38d45408e2e0fdd318e802",
+    "data/raw/refcoco+/refcoco+/instances.json": "35cfcbe8cd12a7927e7940453ed7d7ea05c5000b0ab1106d1e08eed1b934e441",
+    "data/raw/annotations/instances_train2014.json": "777ef504abfeba349930485bb32ecd5b6529129a3e010f7852e1437cb049b732",
+    "cache/proposals.h5": "de0c769fa4266d1b9769abe6c8c7587dd8d221ad45a465503b17974fe1057ad6",
+    "cache/manifests/random_val.jsonl": "b9e770535ec4e25018e7f4782fcc34861d1dd4f1b956a0f9454e153366b8d0f7",
+    "cache/manifests/random_testA.jsonl": "35bfd08298df560c7042ec8ebac3c6e6daf115b410d4cffc100d24dee937a1dd",
+    "cache/manifests/random_testB.jsonl": "32de6c535df1b9679a931e131baef74483cdd06cdf959c23cc0d13a394782259",
+    "cache/manifests/same_category_val.jsonl": "11536cd04cb51efdd7c1b54fbae83726dce36731e121eee27e1020ca57ac90c2",
+    "cache/manifests/same_category_testA.jsonl": "c5425b202ddb9a82db0715255a10e2c6b59e6dd66662dfd1c3c8caebcf67a8ee",
+    "cache/manifests/same_category_testB.jsonl": "876d671dab5174532ff5799506bfffe32fdee95ac63d1bfdafcfd6616e2ead5e",
+    "results/phase0b_independent/seed_1/per_sentence_predictions.npz": "ab6916c5b4690a2731a054b1fc3179f290ff49e57dce368af08eb70a5c6213a0",
+    "results/phase0b_independent/seed_2/per_sentence_predictions.npz": "52ffc82a74e6d18448e43c8581ec3773768b7cd618a7b40ee845b8f59703e54d",
+    "results/phase0b_independent/seed_3/per_sentence_predictions.npz": "bdda91ebadb6058da2a116d798c58116b24f369fb0e97c8a27efb84d47644f2c"
+  },
+  "reviewed_source_sha256": {
+    "refcoco+_val_reviewed.json": "c61080db850708f343f9bef5f408bc7c358a364d09f9fd843765a6ab0ceb262f",
+    "refcoco+_testA_reviewed.json": "9e03439fc8ed189d169d65d6cb6ad455c7798b6de4109a4ebabcf7067b4987f8",
+    "refcoco+_testB_reviewed.json": "1057944a4a1cc0ce2b8b8ac693be2144f736ee6bba640a656459bbbdc2fdb76f"
+  },
+  "gates": {
+    "sample_size": {
+      "criterion": "clean test expressions >= 3000 and images >= 500 -> FULL; 1000-2999 -> LIMITED; < 1000 -> UNDERPOWERED",
+      "clean_test_expressions": 8010,
+      "clean_test_images": 1474,
+      "verdict": "FULL_ROBUSTNESS_AUDIT",
+      "proceed": true
+    },
+    "proposal": {
+      "criterion": "target recall@0.5 >= 0.95 -> CONTINUE; 0.9-0.95 -> REVIEWED-PROPOSAL GRAY; < 0.9 -> STOP",
+      "recall_at_0.5": 0.9850531762000575,
+      "verdict": "CONTINUE"
+    }
+  }
+}

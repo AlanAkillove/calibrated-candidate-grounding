@@ -1,0 +1,50 @@
+{
+  "artifact": "d1_metadata_stage2",
+  "stage": "C1 + C4 replay on D1_clean (frozen weights, no training)",
+  "new_training_parameters": 0,
+  "runtime_sec": 1152.2509525999776,
+  "generated_utc": "2026-10-01T07:20:32Z",
+  "environment": {
+    "python": "3.12.7",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "resample_unit": "image",
+    "source_of_config": "phase0b metadata.json / phase1f metadata.json (identical)"
+  },
+  "cohort": {
+    "n_sentences": 15762,
+    "per_split": {
+      "val": 7875,
+      "testA": 4176,
+      "testB": 3711
+    }
+  },
+  "frozen_inputs_sha256": {
+    "results/v2_data_robustness/d1_reviewed_annotations/clean_manifest.csv": "2b429627ed8bb106b4f2cb2b7e36d105d0d890061dba345e2620751d0b0b0a7e",
+    "results/phase0a_corrected/per_sentence_predictions.npz": "2b3cc00914d481b8a7197cb21af209a0f9b78603fbfd3eda79a1936ac3e4bdd7",
+    "results/phase1f_hard_semantic/gate.json": "05e854602746280d82347c8fea28aa6fcb587f2cfbdaaa2d858ed0d3ee461586",
+    "results/phase1f_hard_semantic/paired_random_vs_hard.csv": "22918290aa97c61852b405d230140bfa97de9b5d38383eda25c34cc32a25b912",
+    "results/phase0b_independent/metadata.json": "99071f03ec45880feb2afd0c8a741f70b25fe7779956041f2a8aa17bac91e537",
+    "results/phase0b_independent/seed_1/per_sentence_predictions.npz": "ab6916c5b4690a2731a054b1fc3179f290ff49e57dce368af08eb70a5c6213a0",
+    "results/phase0b_independent/seed_1/bootstrap.csv": "195804417e1bcb12c4c3d5d0b5628225fde74d77c47cf432f1cca4db9bde7de3",
+    "results/phase1f_hard_semantic/predictions/rand5__b3_seed1.npz": "535ce06d00727ddf75d85ac9d8168023495733c9df67f9d01c24ae03c28cd189",
+    "results/phase1f_hard_semantic/predictions/hard5__b3_seed1.npz": "eeb01bccd298c5bc1399b5ad47c2d20860c0832a1bd3c86c197bd6411b02bb67",
+    "results/phase0b_independent/seed_2/per_sentence_predictions.npz": "52ffc82a74e6d18448e43c8581ec3773768b7cd618a7b40ee845b8f59703e54d",
+    "results/phase0b_independent/seed_2/bootstrap.csv": "5636c51628b7ffb66403a06add7edf166a6b74606c439c21e209a5eba0c0f0d4",
+    "results/phase1f_hard_semantic/predictions/rand5__b3_seed2.npz": "553ae678e3f25a39ab3b5dfebe5ccca8af1f977e6338128fa567d63af86f93bc",
+    "results/phase1f_hard_semantic/predictions/hard5__b3_seed2.npz": "c04ed006bd622baff749929abe971eb6e48801c118f20df72065c89779fa81c8",
+    "results/phase0b_independent/seed_3/per_sentence_predictions.npz": "bdda91ebadb6058da2a116d798c58116b24f369fb0e97c8a27efb84d47644f2c",
+    "results/phase0b_independent/seed_3/bootstrap.csv": "ba5d35d2b89302961a89e4b9b0fcb23197cd6914f1f6b541a298ff330172be17",
+    "results/phase1f_hard_semantic/predictions/rand5__b3_seed3.npz": "24965e381f0d58b34ec329f33deff2b626a1dbff7c40324a7505ff62ce0117e1",
+    "results/phase1f_hard_semantic/predictions/hard5__b3_seed3.npz": "df1b2366f6540ff2b7dd8cb0cf49a44c47ee07b6309a9d65b299a2cd4e1c1df0"
+  },
+  "figures": [
+    "results\\v2_data_robustness\\d1_reviewed_annotations\\figures\\fig_d1_c1_cardinality_delta.png",
+    "results\\v2_data_robustness\\d1_reviewed_annotations\\figures\\fig_d1_c4_semantic_increment.png"
+  ],
+  "verdict": "CORE FINDINGS ROBUST TO REVIEWED ANNOTATIONS"
+}

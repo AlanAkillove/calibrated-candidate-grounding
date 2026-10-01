@@ -1,0 +1,268 @@
+{
+  "artifact": "d1_verdict",
+  "cohort": {
+    "n_sentences": 15762,
+    "per_split": {
+      "val": 7875,
+      "testA": 4176,
+      "testB": 3711
+    },
+    "source": "clean_manifest.csv in_phase0b_cohort=True"
+  },
+  "c1_cardinality": {
+    "verdict": {
+      "label": "C1 ANNOTATION-ROBUST",
+      "robust": true,
+      "checks": {
+        "auroc_gain_k50_ci_low_gt0": true,
+        "e_aurc_worse_k50_ci_high_lt0": true,
+        "e_aurc_relative_worse_k50_ci_low_lt0": true,
+        "rer50_gain_k50_ci_low_gt0": true,
+        "monotone_in_k": true
+      },
+      "k50_values": {
+        "auroc_correct|absolute": {
+          "diff": 0.055635139246847674,
+          "ci_low": 0.04461813359103493,
+          "ci_high": 0.06658516715207129
+        },
+        "e_aurc|absolute": {
+          "diff": -0.08445318393477702,
+          "ci_low": -0.09057625082971477,
+          "ci_high": -0.07831082518564679
+        },
+        "e_aurc|relative": {
+          "diff": -0.7118257363754039,
+          "ci_low": -0.7368164519222442,
+          "ci_high": -0.685044142031065
+        },
+        "rer_at_50|absolute": {
+          "diff": 0.4516852100163511,
+          "ci_low": 0.42348128805647206,
+          "ci_high": 0.47865563913725606
+        }
+      }
+    },
+    "vs_v1": {
+      "auroc_correct|absolute|K10": {
+        "d1_clean": {
+          "diff": 0.03300203370010505,
+          "ci_low": 0.025392863956557547,
+          "ci_high": 0.04053483182405015
+        },
+        "v1_full_cohort": {
+          "diff": 0.03234871427045072,
+          "ci_low": 0.025546722153701084,
+          "ci_high": 0.03922854935264294
+        },
+        "same_direction": true
+      },
+      "auroc_correct|absolute|K20": {
+        "d1_clean": {
+          "diff": 0.045340196308450466,
+          "ci_low": 0.0354875678091601,
+          "ci_high": 0.05496845442735008
+        },
+        "v1_full_cohort": {
+          "diff": 0.04309558626645408,
+          "ci_low": 0.03472252089371273,
+          "ci_high": 0.051705610909787876
+        },
+        "same_direction": true
+      },
+      "auroc_correct|absolute|K50": {
+        "d1_clean": {
+          "diff": 0.055635139246847674,
+          "ci_low": 0.04461813359103493,
+          "ci_high": 0.06658516715207129
+        },
+        "v1_full_cohort": {
+          "diff": 0.05216064928826799,
+          "ci_low": 0.04283331856565162,
+          "ci_high": 0.06192920558425746
+        },
+        "same_direction": true
+      },
+      "e_aurc|absolute|K10": {
+        "d1_clean": {
+          "diff": -0.031062883112462015,
+          "ci_low": -0.03437159640004201,
+          "ci_high": -0.02774859863916257
+        },
+        "v1_full_cohort": {
+          "diff": -0.03264734236538192,
+          "ci_low": -0.03582754461076004,
+          "ci_high": -0.02964832070076639
+        },
+        "same_direction": true
+      },
+      "e_aurc|absolute|K20": {
+        "d1_clean": {
+          "diff": -0.056115144857232534,
+          "ci_low": -0.06088952556026483,
+          "ci_high": -0.05135466237264016
+        },
+        "v1_full_cohort": {
+          "diff": -0.058224216053708665,
+          "ci_low": -0.06272721450389424,
+          "ci_high": -0.05383754247243586
+        },
+        "same_direction": true
+      },
+      "e_aurc|absolute|K50": {
+        "d1_clean": {
+          "diff": -0.08445318393477702,
+          "ci_low": -0.09057625082971477,
+          "ci_high": -0.07831082518564679
+        },
+        "v1_full_cohort": {
+          "diff": -0.08479846552755511,
+          "ci_low": -0.09044684520402728,
+          "ci_high": -0.07948554210616877
+        },
+        "same_direction": true
+      },
+      "e_aurc|relative|K10": {
+        "d1_clean": {
+          "diff": -0.4760336875252349,
+          "ci_low": -0.508883380683874,
+          "ci_high": -0.4408252465930043
+        },
+        "v1_full_cohort": {
+          "diff": -0.46320928234772457,
+          "ci_low": -0.49245036677291765,
+          "ci_high": -0.4333918106096298
+        },
+        "same_direction": true
+      },
+      "e_aurc|relative|K20": {
+        "d1_clean": {
+          "diff": -0.6213789380217184,
+          "ci_low": -0.650809289499029,
+          "ci_high": -0.5896532147227725
+        },
+        "v1_full_cohort": {
+          "diff": -0.6061333043655025,
+          "ci_low": -0.6329535602571994,
+          "ci_high": -0.5788138917336664
+        },
+        "same_direction": true
+      },
+      "e_aurc|relative|K50": {
+        "d1_clean": {
+          "diff": -0.7118257363754039,
+          "ci_low": -0.7368164519222442,
+          "ci_high": -0.685044142031065
+        },
+        "v1_full_cohort": {
+          "diff": -0.6914817063859674,
+          "ci_low": -0.7147162785593513,
+          "ci_high": -0.6675125494527688
+        },
+        "same_direction": true
+      },
+      "rer_at_50|absolute|K10": {
+        "d1_clean": {
+          "diff": 0.159852852147115,
+          "ci_low": 0.1339595348835704,
+          "ci_high": 0.18630568127441383
+        },
+        "v1_full_cohort": {
+          "diff": 0.1728325177603844,
+          "ci_low": 0.14891911681738662,
+          "ci_high": 0.1960634872714905
+        },
+        "same_direction": true
+      },
+      "rer_at_50|absolute|K20": {
+        "d1_clean": {
+          "diff": 0.30144933035183014,
+          "ci_low": 0.2712408590484771,
+          "ci_high": 0.3292468788286717
+        },
+        "v1_full_cohort": {
+          "diff": 0.3119941231265285,
+          "ci_low": 0.28703455359257657,
+          "ci_high": 0.33703577234261933
+        },
+        "same_direction": true
+      },
+      "rer_at_50|absolute|K50": {
+        "d1_clean": {
+          "diff": 0.4516852100163511,
+          "ci_low": 0.42348128805647206,
+          "ci_high": 0.47865563913725606
+        },
+        "v1_full_cohort": {
+          "diff": 0.4559951902305548,
+          "ci_low": 0.4324007730579022,
+          "ci_high": 0.48027031893991695
+        },
+        "same_direction": true
+      }
+    }
+  },
+  "c4_hard_semantic": {
+    "verdict": {
+      "label": "C4 ANNOTATION-ROBUST",
+      "robust": true,
+      "checks": {
+        "delta_auroc_ci_low_gt0": true,
+        "dod_ci_low_gt0": true,
+        "dod_same_direction_as_v1": true,
+        "a8_6_gate_confirmed_or_strong": true
+      },
+      "gate_verdict": "CONFIRMED",
+      "dod": {
+        "diff": 0.030070553759398527,
+        "ci_low": 0.025625386887323565,
+        "ci_high": 0.03461525241182222
+      }
+    },
+    "vs_v1": {
+      "delta_auroc": {
+        "d1_clean": 0.03191221332352201,
+        "v1_full_cohort": 0.03184849037486052,
+        "ratio_d1_over_v1": 1.0020008153576971,
+        "same_direction": true
+      },
+      "e_aurc_reduction": {
+        "d1_clean": 0.16086252466921738,
+        "v1_full_cohort": 0.15367059525131538,
+        "ratio_d1_over_v1": 1.046800947221817,
+        "same_direction": true
+      },
+      "rer50_gain_pp": {
+        "d1_clean": 4.4377741789631315,
+        "v1_full_cohort": 4.637289158812382,
+        "ratio_d1_over_v1": 0.9569759458561893,
+        "same_direction": true
+      },
+      "diff_of_diffs_auroc": {
+        "d1_clean": 0.030070553759398527,
+        "v1_full_cohort": 0.030621709362858573,
+        "ratio_d1_over_v1": 0.9820011483706214,
+        "same_direction": true
+      },
+      "d1_clean_dod_ci": {
+        "ci_low": 0.025625386887323565,
+        "ci_high": 0.03461525241182222
+      },
+      "v1_dod_ci": {
+        "ci_low": 0.02661669347776996,
+        "ci_high": 0.0348208116344742
+      }
+    }
+  },
+  "combined_verdict": "CORE FINDINGS ROBUST TO REVIEWED ANNOTATIONS",
+  "questions_answered": {
+    "q1_cardinality_survives_reviewed_annotations": true,
+    "q2_semantic_amplification_survives_annotation_cleanup": true,
+    "q3_error_share_of_removed_rows": "see removed_ambiguous_audit_summary.json (stage 1)"
+  },
+  "constraints": {
+    "new_training_parameters": 0,
+    "cohort_unmodified_after_inspection": true,
+    "reviewed_annotation_namespace": "data/reviewed_refcocoplus/ (originals untouched)"
+  }
+}
