@@ -44,6 +44,7 @@ results/*
 experiments/**/outputs/
 
 # Local logs / scratch
+tmp/
 logs_*.txt
 pytest_*.txt
 *_console.txt
