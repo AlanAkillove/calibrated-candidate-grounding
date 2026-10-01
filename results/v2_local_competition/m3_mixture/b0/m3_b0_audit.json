@@ -1,0 +1,104 @@
+{
+  "artifact": "v2m_m3_b0_audit",
+  "passed": true,
+  "label": "B0 DEVELOPMENTAL RESULT \u2014 AdaptiveMix ~ StaticMix (no gate)",
+  "recompute_dir": "results\\v2_local_competition\\m3_mixture\\b0\\_audit_recompute",
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "metrics": [
+      "auroc_correct",
+      "e_aurc",
+      "rer_at_50",
+      "rer_at_80"
+    ],
+    "shared_draws_across_severity": true
+  },
+  "headline": {
+    "delta_macro_adaptive_minus_static": {
+      "delta": 8.928977292864866e-05,
+      "ci_low": 1.5132922578426744e-05,
+      "ci_high": 0.00016469998304939355,
+      "per_seed": {
+        "1": 0.0002808060126312517,
+        "2": -0.00011763257484032064,
+        "3": 0.00010469588099501492
+      }
+    },
+    "extreme_safety": {
+      "m0_adaptive_minus_random": -0.003453466374283861,
+      "m8_adaptive_minus_curriculum": -0.008005138916964563,
+      "threshold": -0.003
+    },
+    "alpha_mean_by_m": {
+      "m0": 0.5683652179920266,
+      "m2": 0.5720222347878658,
+      "m4": 0.5737252186275592,
+      "m8": 0.5748539253105721
+    },
+    "fits": {
+      "static_c": 0.5749547364042296,
+      "adaptive_theta": -1.3134659707876146,
+      "adaptive_tau": -1.1347826962458434,
+      "adaptive_beta": 0.4265135740876573
+    }
+  },
+  "max_deltas": {
+    "point_metrics": 0.0,
+    "macro_metrics": 0.0,
+    "bootstrap_pairs": 0.0,
+    "alpha_diagnostics": 0.0,
+    "regret": 0.0,
+    "calibration": 0.0
+  },
+  "summary_tree_mismatches": [],
+  "checks": [
+    {
+      "name": "point_metrics.csv reproduces (4 levels x 3 seeds x 5 models)",
+      "ok": true,
+      "detail": "rows=60 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "macro_metrics.csv reproduces (3 seeds x 5 models)",
+      "ok": true,
+      "detail": "rows=15 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "bootstrap_pairs.csv reproduces (per-level pairs + macro)",
+      "ok": true,
+      "detail": "rows=153 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "alpha_diagnostics.csv reproduces (4 levels x 3 seeds)",
+      "ok": true,
+      "detail": "rows=12 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "regret.csv reproduces (4 levels x 3 seeds x 5 models)",
+      "ok": true,
+      "detail": "rows=60 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "calibration.csv reproduces (4 levels x 3 seeds x 5 models)",
+      "ok": true,
+      "detail": "rows=60 faults=0 max|delta|=0.000e+00"
+    },
+    {
+      "name": "summary.json tree reproduces (fits + delta_macro + safety + alpha + regret)",
+      "ok": true,
+      "detail": "mismatches=0"
+    },
+    {
+      "name": "B0 label: POST-HOC DEVELOPMENTAL, no_gate=True",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "repro checks: E_random vs M1 <= 1e-9 and E_curriculum vs M2 <= 1e-9",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "runtime_sec": 1235.2
+}

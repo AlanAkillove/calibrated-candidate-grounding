@@ -1,0 +1,73 @@
+{
+  "artifact": "v2m_m3_b0_metadata",
+  "amendment": "V2-M3",
+  "label": "POST-HOC DEVELOPMENTAL",
+  "branch": "v2-competition-adaptive-mixture",
+  "head": "673f56a797d0e98871eb7e3d5d6b9d5fe438078a",
+  "dirty": true,
+  "started_utc": "2026-10-01T03:15:23Z",
+  "runtime_sec": 1177.1,
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "levels": [
+    0,
+    2,
+    4,
+    8
+  ],
+  "mixer_fit_levels": [
+    0,
+    2,
+    4
+  ],
+  "k_level": 10,
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "metrics": [
+      "auroc_correct",
+      "e_aurc",
+      "rer_at_50",
+      "rer_at_80"
+    ],
+    "shared_draws_across_severity": true
+  },
+  "sources": {
+    "protocol_m3_sha": "d5e17d6bba56471bf9382c2c3ebf534a98550ed9dbd5fe1f826f2831e9a371da",
+    "mixer_module_sha": "0e849dbe8e7821c77bf24ac6e9d7a99332bd01c269f47a2f36585879a4edd08c",
+    "bootstrap_module_sha": "4e19b9c58b817a7904dd98ebd41774ed3d733d1eda23f1f02f717981590eb735",
+    "m1_manifest_sha": {
+      "1": "5d78ec3f51d9f98b15d6a58b5527d2711eced3c2541fbb5d1350761160df973e",
+      "2": "0c56dae4ea980290ae94a8d58a98949af119d68099862c6876bcd0db6af76858",
+      "3": "14305a3c55961f7d74cc8dddcd3264cbf4d7eaa0ea0a0bfe0499cd61ab3d3f10"
+    },
+    "m2_manifest_sha": {
+      "1": "9aa027f377ee943018f8bc2330bf22dff072f4d2143f46c2cf0c6570c5aeef97",
+      "2": "5741694485a4699d21bee0c2bc725d89751da7534001fc564e502ce5b22dde54",
+      "3": "7277a2c1590eb494eb593a0e9a9a416439f2324b6f808ca5585ddf7c26cb8123"
+    },
+    "m2_manifest_freeze_sha": "32d753bea652a98edd50f3f549d99482600fefb08c84ef6d5ab273a289123297"
+  },
+  "parameter_budget": {
+    "AdaptiveMix": 2,
+    "StaticMix": 1,
+    "EqualMix": 0,
+    "hidden_layers": 0
+  },
+  "repro_checks": {
+    "random_vs_m1_confidences_max": 2.220446049250313e-16,
+    "curriculum_vs_m2_confidences_max": 0.0,
+    "tolerance": 1e-09
+  },
+  "figures": [
+    "results\\v2_local_competition\\m3_mixture\\b0\\figures\\m3_b0_adaptive_curves.png",
+    "results\\v2_local_competition\\m3_mixture\\b0\\figures\\m3_b0_macro_delta.png"
+  ],
+  "read_only": true,
+  "no_training": true,
+  "experts_frozen": true
+}

@@ -1,0 +1,158 @@
+{
+  "artifact": "v2m_m3_protocol",
+  "amendment": "V2-M3",
+  "title": "Competition-Adaptive Reliability Mixture",
+  "predecessor_evidence": {
+    "M2.5_specialist_audit": "SPECIALIST TRADEOFF PRESENT (m0: -0.0089 CI entirely < 0; m8: +0.0258 CI entirely > 0; 3 seeds, paired image-cluster bootstrap 5000 reps)",
+    "LCR_v1": "M1 NO-GO and M2 NO-GO stay frozen as a negative result; this amendment is NOT an LCR v1 modification"
+  },
+  "methodological_boundary": {
+    "b0_cohort": "B0 OpenCLIP B/32 test cohort",
+    "b0_label": "POST-HOC DEVELOPMENTAL",
+    "b0_allowed_uses": [
+      "method definition",
+      "implementation validation",
+      "mixer fitting protocol development",
+      "descriptive result"
+    ],
+    "b0_forbidden_use": "B0 mixture performance must never be presented as confirmatory method evidence",
+    "confirmatory_cohorts": ["B1 OpenCLIP B/16", "B2 SigLIP B/16"],
+    "freeze_rule": "all method structures, metrics and thresholds are frozen before the B1/B2 mixture run (see freeze_point)"
+  },
+  "experts": {
+    "R": {
+      "name": "E_random",
+      "definition": "random-only E1b",
+      "form": "31-d Stats + V2 Semantic logistic",
+      "b0_source": "frozen M1 manifest (random K5/K10 training)"
+    },
+    "C": {
+      "name": "E_curriculum",
+      "definition": "m in {0,2,4} balanced curriculum E1b",
+      "form": "31-d Stats + V2 Semantic logistic",
+      "b0_source": "frozen M2 manifest (regime-balanced curriculum)"
+    },
+    "rule": "expert structures are never modified; expert weights stay frozen while fitting the mixers"
+  },
+  "mixing_equation": {
+    "equation": "p_mix = (1 - alpha) * p_R + alpha * p_C",
+    "forbidden": [
+      "new MLP",
+      "Transformer",
+      "raw embeddings",
+      "new semantic features",
+      "new grounding model"
+    ]
+  },
+  "competition_index": {
+    "features": [
+      {"name": "winner_competitor_max_cos", "direction": "up (larger = stronger competition)"},
+      {"name": "winner_top2_cos", "direction": "up (larger = stronger competition)"},
+      {"name": "q_margin12", "direction": "down (smaller = stronger competition)"}
+    ],
+    "cdf": "per backbone; empirical CDF fitted on that backbone's reliability_train m={0,2,4} rows only",
+    "transform": [
+      "u1 = F_train(winner_competitor_max_cos)",
+      "u2 = F_train(winner_top2_cos)",
+      "u3 = 1 - F_train(q_margin12)"
+    ],
+    "index": "A = (u1 + u2 + u3) / 3, A in [0, 1]; larger A = stronger local competition",
+    "frozen": "this formula is frozen; no search over the three feature weights"
+  },
+  "adaptive_mix": {
+    "alpha": "alpha(A) = sigmoid(beta (A - tau))",
+    "beta": "beta = softplus(theta) >= 0",
+    "free_parameters": ["theta", "tau"],
+    "n_trainable": 2,
+    "note": "implementation may parameterise beta = softplus(theta); beta >= 0 is mandatory"
+  },
+  "controls": {
+    "equal_mix": {
+      "equation": "p = 0.5 p_R + 0.5 p_C",
+      "n_trainable": 0
+    },
+    "static_mix": {
+      "equation": "p_static = (1 - c) p_R + c p_C with c in [0, 1]",
+      "n_trainable": 1,
+      "note": "most important mechanistic control: if AdaptiveMix ~ StaticMix, competition adaptation itself has no value"
+    }
+  },
+  "fitting": {
+    "rows": "reliability_tune m={0,2,4} rows only",
+    "objective": "binary NLL (cross entropy) on grounding_correct",
+    "regime_weight": "L = (1/3) (L_m0 + L_m2 + L_m4); equal weight per regime, never per-sample-count",
+    "m8_exclusions": ["m8 fit", "m8 early stopping", "m8 threshold selection", "m8 hyperparameter selection"],
+    "experts_frozen": true
+  },
+  "comparison_family": ["E_random", "E_curriculum", "EqualMix", "StaticMix", "AdaptiveMix"],
+  "primary_comparison": "AdaptiveMix vs StaticMix (does competition-dependent adaptation add value beyond a plain ensemble?)",
+  "metrics": {
+    "per_severity": ["AUROC_correct", "E-AURC", "RER@50", "RER@80", "ECE", "Brier", "NLL"],
+    "macro_auroc": "MacroAUROC = (1/4) sum_{m in {0,2,4,8}} AUROC_m",
+    "bootstrap": {
+      "unit": "image cluster",
+      "paired": true,
+      "replicates": 5000,
+      "seed": 0,
+      "ci": 0.95,
+      "shared_draws_across_severity": true
+    }
+  },
+  "confirmatory_gates": {
+    "status": "DRAFT — frozen as Amendment V2-M3.1 after B0; never modified from B0 test results",
+    "per_backbone_primary": "delta_macro = MacroAUROC(Adaptive) - MacroAUROC(Static) >= 0.003 AND CI_low > 0",
+    "extreme_regime_safety": [
+      "AUROC(Adaptive, m0) - AUROC(Random, m0) >= -0.003",
+      "AUROC(Adaptive, m8) - AUROC(Curriculum, m8) >= -0.003"
+    ],
+    "selective_support": "at least one of {Macro E-AURC improves >= 3%, Macro RER@50 gain >= 1pp} versus StaticMix; otherwise the result is labelled AUROC-ONLY METHOD SIGNAL",
+    "cross_backbone_verdict": {
+      "2/2 pass": "STRONG ADAPTIVE-MIXTURE GENERALITY",
+      "1 pass and the other non-significant but not negative": "PARTIAL METHOD SUPPORT",
+      "0 pass": "ADAPTIVE MIXTURE NOT SUPPORTED (stop)"
+    }
+  },
+  "diagnostics": {
+    "oracle_regret": "Oracle_m = max(AUROC_R(m), AUROC_C(m)); Regret_m = Oracle_m - AUROC_method(m); report mean and max regret; diagnostic only, never a training objective",
+    "competition_index_report": "per m: A mean, A median, A p10/p90, alpha mean, alpha median; expected (not gated): A/alpha generally increase with m",
+    "disagreement_exclusion": "|p_R - p_C| does not increase monotonically with m (M2.5) and is never a gate input for AdaptiveMix v1",
+    "calibration_report": "ECE / Brier / NLL are reported; if AUROC improves while calibration clearly degrades this must be recorded honestly",
+    "grounding_invariance": "raw grounding scores, argmax and accuracy stay unchanged; the mixture only changes the reliability estimate"
+  },
+  "parameter_budget": {
+    "AdaptiveMix": 2,
+    "StaticMix": 1,
+    "hidden_layers": 0,
+    "note": "record total parameters; no hidden layer may be added"
+  },
+  "b0_plan": {
+    "experts": "frozen M1/M2 artifacts of the B0 backbone",
+    "outputs": [
+      "m3_mixture/b0/point_metrics.csv",
+      "m3_mixture/b0/macro_metrics.csv",
+      "m3_mixture/b0/bootstrap_pairs.csv",
+      "m3_mixture/b0/alpha_diagnostics.csv",
+      "m3_mixture/b0/regret.csv",
+      "m3_mixture/b0/calibration.csv",
+      "m3_mixture/b0/summary.json",
+      "m3_mixture/b0/metadata.json",
+      "m3_mixture/b0/figures/"
+    ],
+    "questions": [
+      "alpha mean by m",
+      "alpha distribution by m",
+      "does alpha increase with severity?",
+      "Adaptive vs Static descriptive difference",
+      "extreme-regime regret"
+    ],
+    "no_gate": "B0 has no GO/NO-GO"
+  },
+  "freeze_point": "after B0: no modification of the competition index, the CDF transform, the three input features, the mixing equation, the loss, the expert definitions, the static baseline, the metrics or the cross-backbone gates may be driven by B0 test mixture results",
+  "b1_b2_expert_preparation": {
+    "E_random": "reuse the V2-G random E1b artifacts (restore, never retrain if an artifact exists)",
+    "E_curriculum": "train with the identical B0 M2 protocol: m={0,2,4} balanced curriculum, same C grid, normalisation and split",
+    "per_backbone": "CDF from the backbone's own reliability_train; mixer fitted on the backbone's own reliability_tune; identical architecture and formula; no backbone-specific redesign",
+    "frozen_test": "same frozen K=10 severity cohort (m in {0,2,4,8}); all models share exactly the same rows"
+  },
+  "amendment_note": "approved by the preregistered M2.5 specialisation finding (SPECIALIST TRADEOFF PRESENT); new method amendment, not an LCR v1 patch"
+}
