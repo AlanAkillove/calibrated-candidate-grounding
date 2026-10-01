@@ -107,8 +107,17 @@ MACRO_PAIRS: Tuple[Tuple[str, str], ...] = (
 BOOT_REPLICATES: int = 5000
 BOOT_SEED: int = 0
 BOOT_CI: float = 0.95
-REPRO_TOL: float = 1e-9
-ANCHOR_TOL: float = 1e-9
+#: Anchor tolerance for checks whose inputs load verbatim from frozen
+#: artifacts (V2-G Phase A K5 store: the stored scores + stored embeddings
+#: are the only inputs), i.e. bitwise-reproducible by construction.
+ANCHOR_STORE_TOL: float = 1e-9
+#: Anchor tolerance for re-scoring checks: V2-G Phase B never persisted its
+#: per-example dose-response scores, so the m-level R2 AUROC anchor compares
+#: against a re-score.  Float32 re-scoring is not bitwise reproducible
+#: (observed drift ~2.8e-07 AUROC; same class as the frozen 1e-4 score-level
+#: STOP tolerance), while any wrong row set / model / T / feature pipeline
+#: shifts AUROC by >= 1e-3 and is still caught.
+ANCHOR_RESCORE_TOL: float = 1e-4
 
 #: Frozen confirmatory gate constants (amendment V2-M3.1; never adjusted).
 GATE_DELTA_MACRO_MIN: float = 0.003
@@ -478,7 +487,7 @@ def _run_seed(
     )
     stored_k5 = _phase_a_k5_auroc(tag, int(seed))
     anchor_phase_a = abs(auroc_k5 - stored_k5)
-    if not (anchor_phase_a <= ANCHOR_TOL):
+    if not (anchor_phase_a <= ANCHOR_STORE_TOL):
         raise AssertionError(
             f"{tag} seed{seed}: E_random does not reproduce V2-G Phase A K5 pooled-test "
             f"AUROC ({auroc_k5:.6f} vs {stored_k5:.6f})"
@@ -632,7 +641,7 @@ def _run_seed(
         auroc_pr = float(reval.point_metric_row(p_r, correct, probability=p_r)["auroc_correct"])
         anchor_dose = abs(auroc_pr - stored_dose)
         anchor_dose_max = max(anchor_dose_max, anchor_dose)
-        if not (anchor_dose <= ANCHOR_TOL):
+        if not (anchor_dose <= ANCHOR_RESCORE_TOL):
             raise AssertionError(
                 f"{tag} seed{seed}/{level}: E_random does not reproduce the V2-G dose-response "
                 f"R2 AUROC ({auroc_pr:.6f} vs {stored_dose:.6f})"
@@ -910,7 +919,10 @@ def _backbone_gate(
         "phase_a_k5_max_delta": max(float(e["anchor_phase_a_max_delta"]) for e in per_seed),
         "dose_r2_max_delta": max(float(e["anchor_dose_max_delta"]) for e in per_seed),
         "val_stop_max_delta": max(float(e["val_stop_max_delta"]) for e in per_seed),
-        "tolerance": ANCHOR_TOL,
+        "tolerances": {
+            "phase_a_k5_store": ANCHOR_STORE_TOL,
+            "dose_rescore": ANCHOR_RESCORE_TOL,
+        },
     }
 
     return {
@@ -1244,7 +1256,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 "val_stop_random_k10_max_delta": max(
                     float(e["val_stop_max_delta"]) for e in per_seed
                 ),
-                "tolerance": ANCHOR_TOL,
+                "tolerances": {
+                    "phase_a_k5_store": ANCHOR_STORE_TOL,
+                    "dose_rescore": ANCHOR_RESCORE_TOL,
+                },
             },
             "runtime_sec": round(time.perf_counter() - started, 1),
         }

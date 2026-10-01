@@ -33,7 +33,9 @@
       "adaptive mixture works",
       "specialist trade-off is false (the specialist trade-off and mixer effectiveness are distinct questions; the M2.5 trade-off stands)"
     ],
-    "b1_b2_mixture_results_unseen": true,
+    "b1_b2_confirmatory_results_unseen": true,
+    "script_validation_smoke_outputs_seen": true,
+    "smoke_disclosure": "The instrument-validation smoke was completed end-to-end before the confirmatory run (see pre_run_amendments): 1 seed / 100 bootstrap reps / output dir conf/_smoke (deleted afterwards); no confirmatory-scale result exists and no formula, expert, metric, gate or tolerance was edited after the smoke.",
     "reason_to_proceed": "The confirmatory judgement of V2-M3 was always pre-registered on B1/B2; the B0 developmental set must not cancel the confirmatory run, and a negative confirmatory result is a clean, valuable outcome."
   },
   "no_b0_driven_redesign": {
@@ -133,8 +135,8 @@
   },
   "parameter_budget": {"AdaptiveMix": 2, "StaticMix": 1, "EqualMix": 0, "hidden_layers": 0},
   "anchors": {
-    "e_random_vs_phase_a": "recomputed K5 pooled-test AUROC must equal V2-G Phase A phaseA_summary.csv R2_stats_sem (tolerance 1e-9)",
-    "e_random_vs_dose_response": "recomputed m-level R2 AUROC must equal V2-G Phase B dose_response.csv auroc_R2 per (seed, level) (tolerance 1e-9)",
+    "e_random_vs_phase_a": "recomputed K5 pooled-test AUROC must equal V2-G Phase A phaseA_summary.csv R2_stats_sem (store tolerance 1e-9: every input loads verbatim from the frozen store + scorer, bitwise-reproducible by construction)",
+    "e_random_vs_dose_response": "recomputed m-level R2 AUROC vs V2-G Phase B dose_response.csv auroc_R2 per (seed, level) (re-scoring tolerance 1e-4: V2-G never persisted per-example dose scores; observed float32 re-scoring drift ~3e-07 AUROC, batch-size independent; a wrong row set / model / T / feature pipeline shifts AUROC by >= 1e-3 and is still caught)",
     "val_stop_check": "random C10 re-score of every curriculum row vs the frozen K10 store (A8.4-style)"
   },
   "outputs": [
@@ -152,6 +154,20 @@
       "reason": "the smoke anchor check showed a ~1e-7 AUROC difference (sklearn sigmoid vs scipy expit at ULP level); the model-object path restores bit fidelity against the V2-G artifacts",
       "b1_b2_mixture_results_seen_before_this_change": false,
       "anchor_tolerance_unchanged": 1e-9
+    },
+    {
+      "scope": "scripts/run_v2m_m3_conf.py only (no formula / expert / metric / gate change)",
+      "change": "the single anchor tolerance splits into ANCHOR_STORE_TOL = 1e-9 (Phase A K5 anchor) and ANCHOR_RESCORE_TOL = 1e-4 (Phase B dose-response m-level AUROC anchor, a re-scoring check because V2-G never persisted its per-example dose scores)",
+      "reason": "even after the entry-1 inference-path fix the dose anchor still failed with a float32 re-scoring residual of ~3e-07 AUROC; a batch-size probe (64/128/256) reproduced the recomputed AUROC exactly while the stored V2-G value differs by that same ~3e-07, i.e. the residual is float32 non-reproducibility of re-scoring, not a pipeline error; this is the same class as the frozen 1e-4 score-level STOP tolerance, whereas 1e-9 would require bitwise reproducibility (which by construction holds only for the store-loaded K5 anchor)",
+      "b1_b2_mixture_results_seen_before_this_change": false,
+      "gate_thresholds_unchanged": true
+    },
+    {
+      "record": "instrument-validation smoke (no script / formula / expert / metric / gate change)",
+      "change": "after the entry-2 tolerance split, the end-to-end smoke (1 seed, 100 bootstrap reps, output dir conf/_smoke, deleted afterwards) completed and produced provisional smoke-scale outputs: b1 seed1 dAUROC(A-S) for m0/2/4/8 = +0.0002 / +0.0006 / +0.0006 / -0.0005 (macro +0.0002, CI [+0.0000, +0.0004]); b2 seed1 = -0.0005 / +0.0001 / +0.0004 / +0.0006 (macro +0.0001, CI [+0.0001, +0.0002]); smoke verdict ADAPTIVE MIXTURE NOT SUPPORTED (0/2)",
+      "reason": "the final frozen script must be validated end-to-end before the confirmatory run; the smoke used the 1-seed / 100-rep configuration only, produced no confirmatory-scale verdict, and nothing was changed afterwards",
+      "b1_b2_confirmatory_results_unseen": true,
+      "design_changed_after_smoke": false
     }
   ],
   "freeze_hashes": {
@@ -159,7 +175,7 @@
     "src/ccg/mixture/bootstrap.py": "4e19b9c58b817a7904dd98ebd41774ed3d733d1eda23f1f02f717981590eb735",
     "results/v2_local_competition/m3_mixture/protocol_m3.json": "d5e17d6bba56471bf9382c2c3ebf534a98550ed9dbd5fe1f826f2831e9a371da",
     "results/v2_backbone_generalization/g4_protocol_freeze.json": "6845a3f9143fbcdd275257ebf51cd882e25281aa63913250ed57cc247139bb8b",
-    "scripts/run_v2m_m3_conf.py": "68407b512b30b719aad6ab8bfb0934a96eebe68d110f06c71ed61951a0484c92",
+    "scripts/run_v2m_m3_conf.py": "a2aae27c54ebb72d9df7d73816e5a3fa85f4cf3f730bcb8bba5f8315a138eee0",
     "scripts/run_v2m_m3_b0.py": "580c19e53b119a106c44fbd4b9806223a13fefa2548902269de3ad968a11348e"
   },
   "stop_rule": "ADAPTIVE MIXTURE NOT SUPPORTED stops the entire M3 method line; the specialist trade-off (M2.5) and the LCR no-go results remain the frozen record."
