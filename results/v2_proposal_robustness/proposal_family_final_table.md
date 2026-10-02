@@ -1,5 +1,8 @@
 # Proposal-family final table (section 19), extended by V2-P2
 
+> The axis close-out index - claim ledger, withdrawn ledger, boundary register and
+> lineage - is `v2_p_program_summary.md` in this directory.
+
 P1 (RPN, DETR) columns are unchanged from commit `5bbbb73`-era text; the GDINO
 column is added by **V2-P2-C1** and covers **C1 only** (C4 was never authorized
 for GDINO - see `p2_c1_gdino_config_freeze.json`).

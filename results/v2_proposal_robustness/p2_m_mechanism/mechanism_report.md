@@ -135,7 +135,8 @@ cancel H1a; this records why there was nothing to cancel.
 ```
 python -u scripts/p2_m_mechanism.py                 # 330 s, writes the four artifacts
 python -u scripts/p2_m_mechanism.py --limit 400     # smoke: no CI, writes nothing
-python -m pytest tests/test_p2_m_plumbing.py -q     # 9 plumbing + 3 result-layer tests
+python -m pytest tests/test_p2_m_plumbing.py -q     # 14 tests: 4 protocol-identity, 4 estimator,
+                                                   # 1 stratification, 5 result-layer
 ```
 
 Declared deviations from the frozen helpers, both recorded in the freeze's own
