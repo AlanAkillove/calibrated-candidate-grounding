@@ -1361,3 +1361,665 @@ notes: >
   B0 数字全部从 V1 frozen artifacts 载入；rer50_drop 在 g3 内为 fraction（0.4593=45.93 pp），主表统一为 pp。本轮完成后停止；
   下一轮（单独设计）：V2-M Local Competition Reliability Module——protocol 必须建立在当前 frozen V2-G 结果之上。
 ```
+
+---
+
+# V2 post-A11 result records
+
+> **本节性质**：append-only **回顾性结果登记**（retrospective result record）。它把 V2-A11 之后各轴**已经执行完毕、
+> 已经冻结、已经落在各自 artifact 里**的结果正式登记进本日志；它**不**追溯性地把任何已完成实验声明为预注册，
+> 也不改动上方任何历史条目（含 V2-G 条目 `protocol_history` 中「**LCR 尚未实现**」这类当时状态的句子——那是
+> 2026-09-30 的真实历史文本，保留，不覆写）。
+>
+> **字段纪律**：本节日采用与 V2-G 条目相同的 **axis-specific / legacy 简化字段**风格，而**不是** §2 schema 的
+> 逐字段填满。原因：这些轴的真实产物里根本没有 §2 的若干字段（例如 D1/D2/M 的 metadata 不携带
+> `experiment_id` / `git_commit` / `dirty`）。为统一格式而编造这些字段值即为本节禁止事项，因此凡 artifact
+> 未记录者，本节写 `未在 artifact 中携带`，并注明 provenance 只能由 git 历史回读。
+>
+> **分类学**（每条必须且只能属于其一）：`pre-result freeze`（结果产生前冻结的协议/config）／`result record`
+> （结果登记）／`post-result correction`（结果产生后的解释修正）／`descriptive diagnostic`（描述性诊断，
+> 不得创造、加强或削弱任何存在性主张）。
+>
+> **数字来源**：本节所有数值均从下列真实 artifact 回读，无一项由今日总结倒推：
+> `results/v2_data_robustness/d1_reviewed_annotations/*`、`results/v2_d2_refcoco_lang/*`、
+> `results/v2_local_competition/*`、`results/v2_proposal_robustness/*`。
+
+## V2-D1｜人工复核标注鲁棒性（annotation-cleanup robustness）
+
+```yaml
+# ===== V2 post-A11 RESULT RECORD — axis-specific / legacy（非 §2 schema 全字段）=====
+record_class: result record（登记动作发生在结果之后；测量本身有 pre-result 冻结的门禁，见 gates_frozen_before_measurement）
+experiment_id: v2d1-reviewed-annotation-robustness-20261001-01   # 登记用标识；D1 artifacts 内无 experiment_id 字段
+branch: v2-data-robustness
+commit: "7feaa68（2026-10-01，D1 全部结果工件的入库提交）"
+frozen_config_commit: >
+  **不存在**：`results/v2_data_robustness/d1_config_freeze.json` 与
+  `results/v2_data_robustness/d1_reviewed_annotations/protocol.json` 在磁盘上均不存在（已核实）。
+  D1 的结果前约束不是 config 文件，而是 metadata.json 里的 12 项 `frozen_inputs_sha256`
+  （`cache/proposals.h5`、6 份 candidate manifests、3 份 phase0b per_sentence 产物、2 份 refcoco+ 原始标注）
+  加 3 份 `reviewed_source_sha256`。因此本条**只**能声称「输入身份被哈希冻结」，不能声称存在过一份 D1 协议文件。
+classification: legacy / axis-specific result record（artifact 不携带 CONFIRMATORY 等 classification label；
+  判定以 `c*_verdict.label` 与 `gate_verdict` 为准）
+dataset: "RefCOCO+ 人工复核子集（`d1_clean`）；cohort 15,762 sentences = val 7,875 / testA 4,176 / testB 3,711"
+candidate_protocol: "冻结 N=64 RPN proposal bank + V1 冻结 random / same_category manifests（未重建、未重新采样）"
+backbone: "B0 = V1 冻结 OpenCLIP ViT-B/32（未更换）"
+proposal_family: RPN
+training_status: >
+  `new_training_parameters: 0`。stage 1 `feasibility + mapping + proposal compatibility (no model run)`
+  runtime 19.25 s；stage 2 `C1 + C4 replay on D1_clean (frozen weights, no training)` runtime 1152.25 s。
+split_usage: "V1 冻结 splits 原样复用（val / testA / testB）；`cohort_unmodified_after_inspection: true`"
+gates_frozen_before_measurement: >
+  sample-size gate（clean test expressions ≥ 3000 且 images ≥ 500 → FULL）实测 8,010 expressions / 1,474
+  images → `FULL_ROBUSTNESS_AUDIT`；proposal gate（target recall@0.5 ≥ 0.95 → CONTINUE）实测
+  **0.9850531762** → `CONTINUE`。两条判据文本均在 `d1_reviewed_annotations/metadata.json` 的
+  `gates.*.criterion` 中，本条只引用不回写。
+metrics_k50: >
+  ΔAUROC(correct) **+0.055635** CI [0.044618, 0.066585]；E-AURC absolute **−0.084453**
+  CI [−0.090576, −0.078311] / relative **−0.711826** CI [−0.736816, −0.685044]；
+  RER@50 **+0.451685** CI [0.423481, 0.478656]；C4 侧 delta-AUROC CI lower > 0 且
+  degree-of-difficulty **0.030071** CI [0.025625, 0.034615]，与 V1 同方向。
+verdict: >
+  `C1 ANNOTATION-ROBUST` + `C4 ANNOTATION-ROBUST`，综合
+  `CORE FINDINGS ROBUST TO REVIEWED ANNOTATIONS`；C4 `gate_verdict = CONFIRMED`。
+artifact_paths: >
+  results/v2_data_robustness/d1_reviewed_annotations/{verdict.json, metadata.json, metadata_stage2.json,
+  feasibility.json, proposal_audit.json, source_manifest.json, clean_manifest.csv, mapping_audit.csv,
+  removed_ambiguous_audit.csv, removed_ambiguous_summary.json, bootstrap.csv, c1_cardinality.csv,
+  c4_hard_semantic.csv, figures/}
+boundary_and_forbidden_claims: >
+  允许：annotation cleanup robustness（同一 cohort 上把人工复核判定为 ambiguous 的表达式移除后，两个核心效应
+  仍在）。**禁止**：(a) 把它写成「新数据集」——它是标注清洗，`reviewed_annotation_namespace:
+  data/reviewed_refcocoplus/ (originals untouched)`，原始 `data/raw/refcoco+` 从未被修改；
+  (b) 把它写成 cross-visual-domain / 跨视觉域泛化——仍在同一 COCO 图像域内；
+  (c) 把「移除歧义行」写成对主线数字的改写（V1 数字不动）。
+```
+
+## V2-D2｜RefCOCO 语言分布迁移（含一次必须登记的 protocol redefinition）
+
+```yaml
+# ===== V2 post-A11 RESULT RECORD — axis-specific / legacy（非 §2 schema 全字段）=====
+record_class: result record + post-result protocol redefinition（见 phase1_feasibility_finding，该重定义不得被隐藏）
+experiment_id: v2d2-refcoco-language-transfer-20261001-01   # 登记用标识；D2 artifacts 内无 experiment_id 字段
+branch: v2-data-robustness
+commit: "0f9c7ab（2026-10-01，D2 全部结果工件的入库提交）"
+frozen_config_commit: >
+  **不存在**：`results/v2_d2_refcoco_lang/metadata.json` 与 `d2_config_freeze.json` 均不存在（已核实）。
+  D2 的 pre-result 证据是 `c1_c4_verdict.json.provenance` 里的 4 项 sha256（cohort.csv /
+  inference_report / phase1_audit / phase2_feasibility）与 `phase1/cohort.csv.sha256`；
+  以及 Phase-2 冻结声明：`V2-D2 Phase 2 (proposal feasibility, frozen N=64 RPN)`，其
+  `gate.note = "proposal generator frozen; a STOP is reported, never answered by tuning the RPN"`。
+classification: legacy / axis-specific result record
+dataset: "RefCOCO（UNC refs(unc).p + instances.json）testA ∪ testB"
+candidate_protocol: "冻结 N=64 RPN bank；nested K ∈ {5,10,20,50}；primary pair (K5, K50)；random + matched hard (same-COCO-category)"
+cohort: "10,544 rows / 1,494 images / 3,707 refs；C1 common cohort 10,400；C4 matched hard 9,748"
+backbone: "B0 冻结 OpenCLIP ViT-B/32"
+proposal_family: RPN
+training_status: >
+  无训练：`models.scorer = frozen phase0b B3 seeds (global_T_corrected)`、
+  `models.reliability = frozen R1 stats_logistic / E1b e1b_stats_semantic`、`models.new_parameters = 0`；
+  Phase 3b 冻结推理 runtime 310.58 s（peak VRAM 100.1 MB，5 jobs × 3 seeds）。
+statistics: "image-clustered paired bootstrap，5000 reps / seed 0 / CI 0.95，hard vs random 共享 cluster draws"
+selection_split: "无选择环节（零新参数）；calibration 沿用冻结 per-seed global_T_corrected，不按数据集重拟合"
+eval_split: "RefCOCO testA ∪ testB（development images 未进入）"
+phase1_feasibility_finding: >
+  **strict image-disjoint RefCOCO premise impossible**。Phase-1 审计实测
+  `overlap.image_disjoint_premise_holds = false`：RefCOCO test 的 1,500 张图像与 RefCOCO+ 完全重叠
+  （per_set：testA overlap 750/750、testB overlap 750/750、all_refcoco_plus overlap 1500；仅 train / development
+  为 0 重叠），因为 RefCOCO 与 RefCOCO+ 是对同一批 COCO 区域的重新标注。因此 D2 被**重新定义**为
+  表达式语言分布迁移（artifact 原文）：
+  `D2 is expression-language-distribution transfer on shared COCO testA/testB images under the frozen
+  N=64 RPN; a strict image-disjoint RefCOCO cohort does not exist because RefCOCO and RefCOCO+ re-annotate
+  the same COCO regions.`
+  ——这是一次 **post-result 之前的 protocol redefinition**（在跑主 gate 前由 Phase-1 实测得出并写进 artifact），
+  本节显式登记它，不隐藏。
+phase2_feasibility: "gate verdict = FULL（measured recall@0.5 0.980655）；K5 same-name 供给率 0.906622，K50 same-name 供给率 0.0"
+metrics_c1: >
+  K5→K50 ΔAUROC drop mean **0.046856**（CI lower mean 0.033537，3/3 seed CI 排除 0）；E-AURC worsening
+  mean **1.806747**（3/3 seed CI 排除 0）；RER@50 drop mean **0.468106**（3/3 seed CI 排除 0）；
+  route_a_passed / route_b_passed / replicated 均 true。阈值以 artifact `c1.gate.thresholds` 为准（本条不回写）。
+metrics_c4: >
+  沿用 V2-G G4 item 9（frozen）在 D2 上重放：Δhard mean **0.036260**（CI lower 0.032345）、Δrand mean
+  0.000680、amplification mean **0.035580**（CI lower 0.031279）；manipulation 三指标规则（≥2/3 方向正确且 ≥1 CI 排除 0）下 3/3 seed 有效。
+verdict: >
+  `C1 CROSS-DATASET REPLICATED` + `C4 CROSS-DATASET REPLICATED`，综合
+  `CORE FINDINGS CROSS-DATASET ROBUST`。
+boundary: >
+  artifact 自带的边界声明必须逐字携带：**cross-dataset transfer under a shared COCO visual domain and a
+  shared frozen proposal system; NOT cross-visual-domain generalisation**。
+  允许：cross-dataset（语言分布）迁移下的复制、CORE FINDINGS CROSS-DATASET ROBUST。
+  **禁止**：cross-visual-domain generalisation / 跨视觉域泛化 / 图像不相交外部验证（三者均不被本轴支持）。
+  也不得把 D2 与 A11 的 RefCOCOg 外部验证（Q2 = NOT ASSESSABLE）合并表述。
+artifact_paths: >
+  results/v2_d2_refcoco_lang/{c1_c4_verdict.json, c1_point.csv, c1_bootstrap.csv, c4_amplification.csv,
+  c4_manipulation.csv, inference_report.json, feature_extraction_stats.json, phase1/cohort_audit.json,
+  phase1/cohort.csv, phase1/cohort.csv.sha256, phase1/image_sizes.json, phase2/feasibility.json,
+  phase2/feasibility_per_expression.csv, predictions/*.npz}
+```
+
+## V2-M｜Local Competition Reliability（LCR）——M1 / M2 / M2.5
+
+> 命名提醒：本轴的 `V2-M` 是 **Local Competition Reliability Module**（`results/v2_local_competition/`），
+> 与 V2-P 轴内部的机制诊断 `V2-P2-M` **不是同一事物**；引用时不得混用。
+
+```yaml
+# ===== V2 post-A11 RESULT RECORD — M1（random-only 训练）=====
+record_class: result record（针对 pre-result 冻结的协议）
+experiment_id: v2m-m1-random-only-20260930-01   # 登记用标识；gate.json 内无 experiment_id 字段
+branch: v2-local-competition-reliability
+commit: "运行 HEAD = 0aaa29d5d2b48f28a408ab556c123a9aa8fbaa3e（dirty=true，见 m1_metadata.json）；结果入库 = c92c86d"
+frozen_config_commit: >
+  协议文件 `results/v2_local_competition/protocol.json`（`artifact: v2m_protocol_freeze`，
+  `base_commit = 0aaa29d`）的 sha256 = `90085940f75ed8cbf6ac3c2f72219b9ff34bde80c97aad89362580bf5fedd88b`，
+  被 `m1_metadata.json` / `m0_architecture.json` / `m1_audit.json` / `m2_curriculum/m2_audit.json` **一致引用**。
+  **provenance 注意（不得美化）**：该文件在 git 中首次出现于 `c92c86d`——即与 M1 结果同一提交。因此它的
+  「结果前存在」证据链是运行时记录的 sha256 与 `created_utc = 2026-10-01T00:00:00Z` 自声明，
+  **不是**提交顺序。本条只能写成如此，不能写成「协议先于 M1 入库」。
+  M0 实现门禁另存：`m0_architecture.json`（stage `V2-M M0 (implementation gate before M1)`，all_checks_passed）。
+classification: >
+  **legacy / axis-specific negative-result record**：M1 的 artifact **不携带** classification label
+  （`gate.json` 顶层只有 artifact / primary_cell / primary_question / aggregation / bootstrap / comparisons /
+  gates / interpretation_boundary），判定以布尔量 `gates.M1_GO.verdict` 为准。
+dataset: "RefCOCO+（V1 冻结 cohort 与 manifests）"
+candidate_protocol: "primary cell = SameCategory-K5；次要 K20-random / K50-random / Random-K5 / Random-K5-matched"
+backbone: "B0 冻结 OpenCLIP ViT-B/32"
+proposal_family: RPN
+training_status: >
+  **训练了可靠性层，未训练任何定位层**。M1 = random-only（`no_hard_exposure: true`）：
+  reliability_train 7,372 rows 全部来自 `val_calib`，`hard_overlap = 0`，K ∈ {5,10}（pass=true）；
+  Adam + BCEWithLogits（wd 1e-4）、300 epochs、batch 256、patience 30、lr grid {1e-4,3e-4,1e-3}、
+  C grid {0.1,1,10}；scorer 冻结 B3 seeds 1/2/3。LCR n_params = **1,333**（预算 ≤ 50,000），
+  seed-1 tune-mean-AUROC：R1 0.812037 / E1b 0.814914 / Aggregate-MLP 0.813898 / LCR-noGate 0.817238 / LCR 0.812057。
+selection_calibration_eval: "selection = tune block（Random K5/K10）；calibration = 冻结 global_T_corrected（seed1 T=1.115344，不重拟合）；eval = 冻结 testA ∪ testB"
+metrics: >
+  primary question `LCR > E1b?` on SameCategory-K5：**ΔAUROC = −0.029442**；
+  `gates.M1_GO` 仅记录 `delta_auroc_ci_low = −0.032442`（**artifact 无 ci_high 字段**，本条不写 CI 上界）；
+  per-seed delta：seed1 −0.032731 / seed2 −0.026878 / seed3 −0.028717（**三个 seed 方向全为负**）；
+  `e_aurc_reduction = −0.168746`；`rer50_gain_pp = −4.4353`；secondary guard（Random-K5）
+  delta −0.001267 / ci_low −0.003842 / threshold −0.005 / pass=true。bootstrap 5000 / seed 0 / 0.95，共享 draw。
+verdict: "M1_GO = false"
+zero_effect_guarantee: >
+  grounding 不变性实测：`hard5_stop_max_delta = 7.62939453125e-06`（LCR 不得改变候选得分/排序/top-1）；
+  R1 冻结禁重训；relation vector 7 维 `r_j=[ds_norm, dp, a_t, a_j, a_t−a_j, v_tj, rank_j_over_k]`，
+  6 项 forbidden_additions（raw 512-d embedding / GT category / 新 meta 信息 / objectness / target IoU / hard-random 标签）。
+artifact_paths: >
+  results/v2_local_competition/{protocol.json, m0_architecture.json, m1_metadata.json, m1_audit.json,
+  gate.json, ablations/lcr_vs_nogate.csv, bootstrap/pairs.csv, figures/m1_cohort_delta_auroc.png,
+  m1_random_only/point_metrics.csv, m1_random_only/seed_{1,2,3}/{confidences.npz, model_manifest.json}}
+boundary_and_forbidden_claims: >
+  artifact `interpretation_boundary`（逐字）：成功时才允许说
+  "A lightweight local-competition reliability module improves correctness estimation under candidate
+  competition"；**forbidden**："improves visual grounding accuracy"、"solves candidate-set shift"。
+  M1 为 NO-GO，因此以上主张在本轴一律不成立；也不得把 M1 写成「LCR 已被完整证伪」——它只否定了
+  random-only 训练下的迁移。
+```
+
+```yaml
+# ===== V2 post-A11 RESULT RECORD — M2（竞争课程训练）=====
+record_class: result record
+experiment_id: v2m-m2-curriculum-20260930-01   # 登记用标识
+branch: v2-local-competition-reliability
+commit: "运行 HEAD = c92c86d5f4ee74a74348e18129c9fc980ef0e548（dirty=true，m2_curriculum/metadata.json）；结果入库 = 8fc4c7f"
+frozen_config_commit: >
+  `protocol_sha256 = 90085940f75ed8cbf6ac3c2f72219b9ff34bde80c97aad89362580bf5fedd88b`（与 M1 同一文件，未改）；
+  `manifest_freeze_sha256 = 32d753bea652a98edd50f3f549d99482600fefb08c84ef6d5ab273a289123297`；
+  `m0_sha256 = 5a16aeceffbc3ad0db7322e07ffabf612eca507ee940fb375ff0400e5afe5112`；
+  `curriculum_sha256 = cffc00ce21faf86612e1e4c96f81007407c13a300a66a0ae9f3c30257b4a5010`。
+  M2 在协议文件中属 **PREREGISTERED**（`M2_preregistration` 字段；note 原文："This file freezes the M0/M1
+  protocol and PREREGISTERS M2 before any M1 result exists. It must not be modified after M1 results are seen."）。
+classification: legacy / axis-specific negative-result record（无 classification label；以 `gates.M2_GO.verdict` 为准）
+dataset: "RefCOCO+（V1 冻结 cohort）"
+candidate_protocol: "K=10 固定；竞争严重度 m ∈ {0,2,4,8}（m = winner 之外的同类竞争者数）；primary cell = m8"
+backbone: "B0 冻结 OpenCLIP ViT-B/32"
+proposal_family: RPN
+training_status: >
+  课程训练 4 个模型（m0/m2/m4 参与训练与选择，m8 仅测试）；runtime 1135.0 s；audit 713.5 s（passed）。
+  训练协议与 M1 一致（Adam+BCEWithLogits / wd 1e-4 / 300 epochs / batch 256 / patience 30 / lr・C grid）。
+  `r1_anchor`：存盘系数为权威（m1_confidence_repro_max_delta = 2.22e-16，rows 10286）。
+selection_calibration_eval: >
+  selection：`tune balanced mean AUROC on m in {0,2,4} only (m=8 never seen)`；训练行共享同一冻结集合
+  （m0 3,686 / m2 3,574 / m4 3,370 train rows）；eval：testA ∪ testB（K=10）；calibration：冻结 global_T_corrected。
+metrics: >
+  `gates.M2_GO`：`delta1_LCR_vs_E1b` = **−0.0018578** CI [−0.0053043, +0.0016435]（3/3 seed 为负，n_positive 0）
+  → `condition_delta1_ge_0.010_and_ci_low_gt_0 = false`；`delta2_LCR_vs_AggregateMLP` = **+0.0357435**
+  CI [0.0302815, 0.0413613]（3/3 为正）→ `condition_delta2_gt_0_and_ci_low_gt_0 = true`；`verdict = false`。
+  其他 m8 对比：LCR − Aggregate-MLP +0.0357435、LCR − LCR-noGate −0.002241（CI 全负）、LCR − R1 +0.051711（CI 全正）；
+  低严重度侧 m0 LCR−E1b = +0.006518（CI 全正）、m2 +0.00007（跨 0）、m4 +0.003233（跨 0）。
+verdict: >
+  **M2_GO = false** → LCR v1 = **negative result**（冻结）；`authorization` 逐字：
+  `{"V2-MG": false, "B1/B2": false, "v2mg_not_authorized": true}`
+  → **V2-MG_NOT_AUTHORIZED**。
+correct_reading: >
+  必须按两个已回读的事实同时登记：`LCR > Aggregate-MLP`（+0.0357435，CI 全正）**但** `LCR ≤ E1b`
+  （−0.0018578，CI 跨 0 且 3/3 seed 为负）。正确解读：
+  **curriculum activated the competition branch, but the structured model did not outperform the simple
+  semantic-statistics baseline.** **禁止**将其简化为 "LCR learned nothing"。
+  `m8 LCR−LCR-noGate = −0.002241`（CI 全负）说明 gate 本身未带来增益，但不得写成「gate 反向有害」的因果主张。
+forbidden_followups: >
+  `interpretation_boundary.negative_result_note` 逐字："if M2 is NO-GO: LCR v1 is frozen as a negative result
+  (M1 random-only failure + M2 curriculum result); no m=8 gate tuning, no Transformer, no hidden-size / M /
+  raw-embedding changes within this protocol -- any new structure requires a new method amendment."
+  forbidden claims 同 M1（improves visual grounding accuracy / solves candidate-set shift）。
+artifact_paths: >
+  results/v2_local_competition/m2_curriculum/{gate.json, metadata.json, training_manifest.json, m2_audit.json,
+  point_metrics.csv, bootstrap_pairs.csv, severity_curve.csv, gate_diagnostics.csv,
+  manifests/{manifest_freeze.json, val_level_m{0,2,4}.npz}, seed_{1,2,3}/{confidences.npz,
+  model_manifest_seed*.json}, figures/m2_severity_curve.png}
+```
+
+```yaml
+# ===== V2 post-A11 RESULT RECORD — M2.5（专家分工审计）=====
+record_class: descriptive diagnostic
+experiment_id: v2m-m25-specialist-audit-20261001-01   # 登记用标识
+branch: v2-local-competition-reliability
+commit: "运行 HEAD = 8fc4c7fef88df42d65407badb03d306efc12453b（dirty=true，m25_specialist_audit/metadata.json）；结果入库 = 673f56a"
+classification: >
+  **diagnostic**——该分类不是事后追加，而是 artifact 自带边界声明的逐字内容：
+  `verdict.json.interpretation.boundary = "diagnostic only; no success gate, no mixture training here, no B1/B2."`
+  因此本条**不是**新的 confirmatory method success，也不是任何 gate。
+frozen_config_commit: >
+  无独立 config freeze 文件；约束写进 artifact 本身：`constraints = ["read-only: no training, no fitting,
+  no hyper-parameter search, no architecture change, no new candidate sampling",
+  "both experts are frozen M1/M2 manifests; only inference on the frozen K=10 severity cells"]`；
+  metadata 同时记录 `read_only: true` / `no_training: true` / `repro_tolerance: 1e-09`。
+dataset: "RefCOCO+（与 M1/M2 同一冻结 cohort）"
+candidate_protocol: "K=10 固定；severity m ∈ {0,2,4,8}；对比对象 = random-only E1b vs curriculum E1b"
+backbone: "B0 冻结 OpenCLIP ViT-B/32"
+proposal_family: RPN
+training_status: "零训练（两个专家均为已冻结的 M1/M2 manifest，仅推断）；runtime 358.8 s；audit 399.3 s"
+reproducibility: "repro_checks：random vs M1 confidences 2.22e-16；curriculum vs M2 confidences 0.0；point table 0.0"
+metrics: >
+  curriculum − random（seed mean ΔAUROC）：m0 **−0.008902** CI [−0.012809, −0.005096]；m2 +0.003210；
+  m4 +0.014568；m8 **+0.025830** CI [0.022435, 0.029320]。专家分歧 mean_abs_diff 均在 0.041–0.050，
+  `non_decreasing_in_m = false`（不假设单调）。
+verdict: "SPECIALIST TRADEOFF PRESENT"
+boundary_and_forbidden_claims: >
+  只登记为：两个冻结专家在不同竞争严重度上发生了**分工**（课程模型在高竞争 m8 更好、在无竞争 m0 更差）。
+  **禁止**：把它当作方法成功、当作 LCR 复活、或当作可发表的正结果；不得从中推出集成/混合已得到验证
+  （它只是后续 V2-M3 立项的预注册发现）。
+artifact_paths: >
+  results/v2_local_competition/m25_specialist_audit/{verdict.json, metadata.json, m25_audit.json,
+  point_metrics.csv, paired_bootstrap.csv, calibration.csv, expert_disagreement.csv,
+  figures/m25_specialist_audit.png}
+```
+
+## V2-M3｜Competition-Adaptive Reliability Mixture（B0 developmental / B1・B2 confirmatory）
+
+```yaml
+# ===== V2 post-A11 RESULT RECORD — V2-M3（自适应混合）=====
+record_class: result record（两段：developmental B0 + confirmatory B1/B2）
+experiment_id: v2m3-competition-adaptive-mixture-20261001-01   # 登记用标识
+branch: v2-competition-adaptive-mixture
+commit: >
+  B0：运行 HEAD = 673f56a797d0e98871eb7e3d5d6b9d5fe438078a（dirty=true），入库 = 3599369；
+  B1/B2：运行 HEAD = acd83b03a4daa7d7434b9be52d3c82438e17f1de（dirty=true），入库 = 11efec7。
+developmental_vs_confirmatory: >
+  **两段必须区分，不得合并为一项实验**：
+  (a) `m3_mixture/b0/metadata.json.label = "POST-HOC DEVELOPMENTAL"`（amendment V2-M3；runtime 1177.1 s；
+  `read_only: true` / `no_training: true` / `experts_frozen: true`）——混合器拟合仅在 m0/m2/m4，m8 仅诊断；
+  (b) `m3_mixture/conf/metadata.json.label = "CONFIRMATORY"`（amendment V2-M3.1；runtime 2654.3 s；
+  `read_only_experts: true` / `no_training_except_frozen_curriculum_protocol: true`）——这才是判定段。
+frozen_config_commit: >
+  `protocol_m3.json`（amendment **V2-M3**，title "Competition-Adaptive Reliability Mixture"，
+  `freeze_point = "after B0: no modification of the competition index, the CDF transform, the three input
+  features, the mixing equation, the loss, the expert definitions, the static baseline, the metrics or the
+  cross-backbone gates may be driven by B0 test mixture results"`，入库 3599369）；
+  `amendment_v2m31.json`（amendment **V2-M3.1** "Cross-Backbone Confirmatory Evaluation"，
+  `status = "FROZEN before the B1/B2 mixture run"`，frozen_utc 2026-10-01，入库 cedfa30）。
+  `amendment_note` 逐字："approved by the preregistered M2.5 specialisation finding (SPECIALIST TRADEOFF
+  PRESENT); new method amendment, not an LCR v1 patch."
+classification: CONFIRMATORY（B1/B2）+ POST-HOC DEVELOPMENTAL（B0）——两个 label 均直接回读自 metadata.json
+dataset: "RefCOCO+（V1/V2-M 冻结 cohort）"
+candidate_protocol: "K=10 固定；severity m ∈ {0,2,4,8}；专家 = 冻结 random-only 与 curriculum E1b"
+backbone: "B0（V1 冻结）+ B1 OpenCLIP B/16 + B2 SigLIP B/16（跨 backbone 确认）"
+proposal_family: RPN
+training_status: >
+  零新定位训练；仅混合器参数（B0 runtime 1177.1 s，B1/B2 runtime 2654.3 s）。
+  primary_comparison："AdaptiveMix vs StaticMix (does competition-dependent adaptation add value beyond a
+  plain ensemble?)"
+metrics_confirmatory: >
+  `conf/m3_conf_audit.json`：`passed = true`、`n_pass = 0`、`stop = true`、label =
+  "CONFIRMATORY RESULT — adaptive mixture not supported"。B1：`delta_macro_adaptive_minus_static` =
+  **+0.00014802** CI [−5.55e-05, +3.56e-04]（跨 0）；extreme_safety `m0_pass = false` / `m8_pass = true`
+  （threshold −0.003）；`selective_support.satisfied = false`（E-AURC relative improvement 0.000959、
+  rer50_gain_pp 0.0283）。Frozen-hash 审计：`frozen_hashes_verified` 列出 5 项（mixer.py / bootstrap.py /
+  protocol_m3.json / g4_protocol_freeze.json / run_v2m_m3_conf.py）；`max_deltas` 对 b1/b2 全部 14 份产物
+  均为 **0.0**（含 `alpha_diagnostics.csv`）。
+alpha_evidence: >
+  自适应权重在确认段**确实随竞争变化**（因此不得写“机制塌缩”）：`alpha_m8_minus_m0` = B1 **+0.020568** /
+  B2 **+0.054241**；`alpha_by_level` 均值：B1 从 m0 0.820827 升至 m4 0.838917，B2 从 0.816395 升至 0.853210；
+  而在开发段 B0，alpha 几乎平坦（alpha_mean_by_m 0.568365 → 0.574854，`alpha_non_decreasing_in_m = true`）。
+  静态混合器均值 `static_c_mean = 0.873009`，自适应 `adaptive_beta_mean = 2.780859`。
+verdict: >
+  **ADAPTIVE MIXTURE NOT SUPPORTED**；`n_pass = 0/2`（两个新 backbone 均未通过）。按 `amendment_v2m31.json.stop_rule`
+  逐字："ADAPTIVE MIXTURE NOT SUPPORTED stops the entire M3 method line; the specialist trade-off (M2.5) and
+  the LCR no-go results remain the frozen record."
+correct_reading: >
+  正确表述：自适应权重在 B1/B2 **did respond to competition**，但 **did not produce practically meaningful
+  gains over StaticMix**（ΔMacroAUROC 量级 1e-4，CI 均跨 0）。**禁止**表述为
+  "adaptive mechanism collapsed everywhere" / 「机制全面塌缩」——因为 B1/B2 的 alpha 确实变化。
+  也禁止把 B0（developmental）的任何数字当作确认证据。
+artifact_paths: >
+  results/v2_local_competition/m3_mixture/{protocol_m3.json, amendment_v2m31.json,
+  b0/metadata.json, b0/*, conf/metadata.json, conf/cross_backbone_verdict.json, conf/m3_conf_audit.json,
+  conf/b1/, conf/b2/}
+```
+
+## V2-P｜proposal family 轴（按 lineage 分开登记，不得合并为一个模糊的 proposal robustness experiment）
+
+> **全轴不变量**（适用于 P1-F4 / P1-F5 / P2-C1 / P2-M 每一段，逐字回读自
+> `v2_p_program_summary.md` §1 与各 freeze artifact）：**0 new training parameters**（`new_training_parameters: 0`）、
+> **同一冻结打分栈**（B3 `IndependentMLPScorer` seeds 1/2/3 + per-seed `global_T_corrected`，从不按 family 重拟合）、
+> **同一 presented K**（nested K ∈ {5,10,20,50}，baseline K5，primary pair (5,50)）、
+> **同一 candidate construction regime**（V1 seeded-random，seed 20260927，target slot 0；amendment **P1-A0**）、
+> **同一候选供给量**（三族 bank 均 **N = 64** proposals/image）、同一 COCO 图像域。
+> 只变 proposal family：RPN → DETR-R50 → Grounding DINO base。
+
+```yaml
+# ===== V2 post-A11 RESULT RECORD — V2-P1 F0–F3（bank 构建与工程可行性）=====
+record_class: pre-result engineering / feasibility stage（不产生任何 confirmatory 结果）
+experiment_id: v2p1-f0-f3-detr-bank-engineering-20261001-01
+branch: v2-proposal-robustness
+commit: >
+  阶段提交链：`2249206` → `bcdc2cd` → `8a831f1`（amendment **P1-A0**：候选排序歧义澄清，
+  `p1_amendment_history.csv` 逐字："pre-result clarification (candidate ordering)... no (disambiguates protocol
+  wording only; candidate-construction regime unchanged, P1-F3 already ran --regime random)"）→ `1285e95`。
+classification: engineering / feasibility（F0–F3 不是 confirmatory；`p1_f4_f5_config_freeze.json.preconditions`
+  将 P1-F3 的输出作为**前置条件**引用，而非作为证据）
+dataset: "RefCOCO+（与主线同一冻结 cohort）"
+candidate_protocol: "DETR-R50 proposal bank，N=64，num_queries=100，box 转换与 sanitize 规则冻结于 p1_detr_r50/protocol.json"
+backbone: "B0 冻结 OpenCLIP ViT-B/32（表示层不变；DETR 只作为 proposal generator）"
+proposal_family: DETR-R50（新建 bank）
+training_status: "零新定位训练参数；`p1_f3_new_training_parameters: 0`"
+metrics: >
+  `p1_detr_r50/engineering_probe.json.verdict = "OK"`（wall 39.2 s，peak VRAM 在预算内，scores_descending_ok）；
+  `p1_detr_r50/proposal_summary.json.verdict = "FULL"`：ref-target recall@0.5 = **0.997335**
+  CI [0.995100, 0.998552]、recall@0.7 = 0.984542、K50 candidate availability = **0.922441**（gate ≥ 0.90）；
+  阈值分级 FULL ≥0.95 / GRAY [0.90,0.95) / LIMITED [0.80,0.90) / STOP <0.80。
+  前置条件实测（`p1_final_summary.json.preconditions_from_frozen_config`）：`proposal_b_feasibility = FULL`、
+  `route_f = ROUTE_F_FULLY_USABLE`、`p1_f3_detr_random_k5_accuracy = 0.8732`、`p1_f3_detr_r1_auroc = 0.8008`、
+  `p1_f3_detr_e1b_auroc = 0.8092`、`p1_f3_confidence_collapse = false`、`p1_f3_frozen_identity = "PASS"`。
+verdict: "F0–F3 = 工程/可行性判定（OK / FULL / ROUTE_F_FULLY_USABLE），无科学主张"
+boundary_and_forbidden_claims: >
+  禁止把 F0–F3 写成「DETR 上已复制」；它们只说明 DETR bank 足以进入后续 confirmatory gate。
+  禁止用 proposal 质量差异倒推任何可靠性结论（`route_f` 只回答“能不能用”）。
+artifact_paths: >
+  results/v2_proposal_robustness/{p1_detr_r50/protocol.json, p1_detr_r50/engineering_probe.json,
+  p1_detr_r50/proposal_summary.json, p1_detr_r50/recall_by_N.csv, p1_detr_r50/candidate_availability_by_N.csv,
+  p1_detr_r50/same_category_availability.csv, p1_detr_r50/natural_omission.csv,
+  p1_detr_r50/checkpoint_identity.json, p1_amendment_history.csv, inference_report.json}
+```
+
+```yaml
+# ===== V2 post-A11 RESULT RECORD — V2-P1 P1-F4（C1 candidate-cardinality 复制）=====
+record_class: pre-result freeze + result record
+experiment_id: v2p1-f4-c1-proposal-family-cardinality-20261001-01
+branch: v2-proposal-robustness
+commit: "结果入库 = feb40d8 / 6496119；轴汇总入库 = 7441ab1"
+frozen_config_commit: >
+  `p1_f4_f5_config_freeze.json`，提交 **`1285e95`**（提交信息逐字："P1-F4/F5 config freeze + replication core +
+  frozen inference (pre-result)"）；文件内 `classification = "CONFIRMATORY"`、`frozen_before_results = true`、
+  `frozen_utc = 2026-10-01T00:00:00Z`，note 原文："Both F4 and F5 configurations are frozen here simultaneously,
+  before any F4 number is produced (protocol section 1). F5 must not be edited after F4 results exist."
+classification: CONFIRMATORY（直接回读自 freeze 与 f4_verdict.json）
+dataset: "RefCOCO+ testA ∪ testB（与主线同一冻结 cohort）"
+candidate_protocol: "nested seeded-random（P1-A0 适用）；primary cohort = common-K50（行间同一）；K ∈ {5,10,20,50}"
+backbone: B0 冻结 OpenCLIP ViT-B/32
+proposal_family: "RPN（frozen reference）+ DETR-R50"
+training_status: "0 new training parameters（`f4_verdict.json.new_training_parameters = 0`）"
+selection_calibration_eval: >
+  无选择环节；calibration = per-seed 冻结 `global_T_corrected`（变体名 `variant = global_T_corrected`）；
+  eval = common-K50 cohort：RPN 10,286 rows / DETR 9,665 rows（DETR 漏斗 10,601 → K20 10,570 → K50 9,665，
+  k50_availability 0.9117；RPN 10,425 → 10,286，0.9867）
+statistics: "image-cluster paired bootstrap，5000 reps / seed 0 / 0.95 CI"
+metrics: >
+  DETR：auc_drop_mean **0.08515703**（ci_low_mean 0.06059571，3/3 seed CI 排除 0）、eaurc worsening mean
+  **4.554741**、rer50_drop_mean **0.294314**、rer80_drop_mean 0.318931；per-seed ΔAUROC 0.079892 / 0.089352 / 0.086227。
+  RPN（同一栈重算，与 frozen artifacts 交叉校验）：auc_drop_mean 0.05169761（ci_low 0.03804034）、
+  eaurc 2.256772、rer50_drop 0.465960；frozen 参考值 ΔAUROC 0.052161 / rer50 drop 0.455995。
+  matched intersection（secondary，无 CI）：n=9,418，RPN 0.059251 vs DETR 0.081947。
+verdict: >
+  `c1_verdicts = {"RPN": "YES", "DETR": "YES"}`；`detr_C1_PROPOSAL_FAMILY_REPLICATED = "YES"`。
+boundary_and_forbidden_claims: >
+  不得读成「DETR 比 RPN 更差」（两族都退化，绝对精度反而 DETR 更高）；不得写任何因果主张；
+  不得拿 matched-intersection 的 gap 当假设检验（freeze 定义为 secondary/descriptive，无 CI）。
+artifact_paths: >
+  results/v2_proposal_robustness/p1_f4_c1/{f4_verdict.json, c1_point.csv, c1_bootstrap.csv,
+  c1_secondary_raw_auroc.csv, figures/}, p1_f4_f5_config_freeze.json, predictions/p1__{RPN,DETR}__*.npz
+```
+
+```yaml
+# ===== V2 post-A11 RESULT RECORD — V2-P1 P1-F5（C4 hard-semantic 放大复制）=====
+record_class: pre-result freeze + result record
+experiment_id: v2p1-f5-c4-proposal-family-hard-semantic-20261001-01
+branch: v2-proposal-robustness
+commit: "结果入库 = 6496119；轴汇总入库 = 7441ab1"
+frozen_config_commit: >
+  与 P1-F4 **同一份** freeze（`p1_f4_f5_config_freeze.json` @ `1285e95`）：F4 与 F5 在任何 F4 数字产生前
+  同时冻结，且 F5 不得在 F4 出数后修改（freeze note 原文）。因此 F5 属于真正的 pre-result freeze。
+classification: CONFIRMATORY
+dataset: "RefCOCO+ testA ∪ testB"
+candidate_protocol: "matched Random-K5 / SameCategory-K5（仅 distractor composition 不同）"
+backbone: B0 冻结 OpenCLIP ViT-B/32
+proposal_family: "RPN + DETR-R50"
+training_status: "0 new training parameters"
+selection_calibration_eval: "同 P1-F4；C4 侧 cohort：RPN matched_rows 9,623（same_cat ≥4 availability 0.9231）/ DETR 8,376（0.7901）"
+statistics: "image-clustered paired bootstrap 5000 / seed 0 / 0.95，hard vs random 共享 cluster draws"
+metrics: >
+  DETR（protocol："V2-G G4 item 9 (frozen), replayed on the proposal family"；comparison
+  "stats_logistic -> e1b_stats_semantic on SameCat-K5 (matched random control)"）：
+  Δhard mean **0.02129854**（ci_low 0.01764925）、Δrand mean 0.00661776、amplification mean
+  **0.01468077**（ci_low 0.01077852）；pass_delta_hard / pass_amplification = true；n_seed_same_direction 3/3；
+  manipulation（三指标规则）valid 3/3 seed。RPN 重算：Δhard 0.03173793 / amplification 0.03057344（ci_low 0.02649733）。
+verdict: >
+  两族 gate verdict 均为 `HARD_SEMANTIC_REPLICATED`；`detr_C4_PROPOSAL_FAMILY_REPLICATED = "YES"`；
+  `rpn_C4_replication_reference = "YES"`；轴综合 `overall_p1_verdict.label = CORE_FINDINGS_PROPOSAL_FAMILY_ROBUST`
+  （value YES；detail："candidate-cardinality degradation and hard-semantic amplification both replicate
+  under DETR proposals."）
+boundary_and_forbidden_claims: >
+  same-category 为 **GT 辅助诊断构造**，不得写成自然场景；不得作因果解释（“semantic information causes…”）；
+  不得把 P1 的 YES 外推到 GDINO（P1 只包含 RPN/DETR，GDINO 属 P2）。
+artifact_paths: >
+  results/v2_proposal_robustness/p1_f5_c4/{f5_verdict.json, c4_amplification.csv, c4_manipulation.csv,
+  c4_selective.csv, figures/fig3_random_vs_hard_increment.png}, p1_final_summary.json,
+  proposal_family_final_table.md
+```
+
+## V2-P2｜Grounding DINO（第三 proposal family，**C1-only** confirmatory）
+
+```yaml
+# ===== V2 post-A11 RESULT RECORD — V2-P2-C1（GDINO class-prompt 上的 C1 复制；C4 从未授权）=====
+record_class: pre-result freeze + result record
+experiment_id: v2p2-c1-gdino-third-family-cardinality-20261002-01
+branch: v2-proposal-robustness
+commit: >
+  前置可行性审计入库 `9dd14e0`（`phase_b_feasibility_audit.json`，protocol "V2-P2-B0"，提交信息注明
+  "no experiments run"）；工程 probe 入库 `75ce48d`（提交信息逐字："V2-P2-B1: GDINO E1 engineering probe -
+  4/5 gates PASS, same-category supply gate FAILS"）；C1 verdict 入库 `7905aad`；轴汇总与台账入库 `9b010e6`。
+frozen_config_commit: >
+  `p2_c1_gdino_config_freeze.json`，提交 **`91f2758`**（提交信息逐字："V2-P2-C1: config freeze BEFORE any P2
+  result - GDINO participates in C1 only (user-authorised protocol decision); C4/hard-regime for GDINO
+  explicitly out of scope citing the frozen probe same-category supply failure"）；`frozen_utc =
+  2026-10-02T00:00:00Z`；`protocol = "V2-P2-C1"`、`schema = "p2-config-freeze-v1"`；authorization 逐字：
+  "User authorised 'GDINO participates in C1 only' (new protocol decision beyond the frozen audit on_failure
+  rule) on 2026-10-02, BEFORE any P2 result exists. This file must be committed before any P2 numeric
+  artifact is produced."
+classification: >
+  CONFIRMATORY（回读自 `p2_c1_verdict.json.classification`；同文件 protocol 字段逐字为
+  "V2-P2-C1 (C1 replication on the GDINO class-prompt family; C4 out of scope)"）
+dataset: "RefCOCO+ testA ∪ testB（与 V2-P1 同一冻结 cohort）"
+candidate_protocol: "random（nested seeded-random，P1-A0 原文适用）；primary cohort = common-K50；K ∈ {5,10,20,50}"
+backbone: B0 冻结 OpenCLIP ViT-B/32
+proposal_family: "Grounding DINO base（class-prompt，第三族）；RPN / DETR 数值逐字复用 V2-P1 冻结产物"
+training_status: >
+  `new_training_parameters: 0`；freeze 的 `zero_fit` 逐字："0 new training parameters. B3 no retrain,
+  temperature no refit, R1/E1b no refit, no new scorer, no NMS, no threshold change."；
+  `immutable_reuse_from_v2_p1.note` 逐字："All analysis code below is IMPORTED VERBATIM from the frozen P1
+  stack; P2 adds only plumbing (a FAMILIES entry + CLI choices), never a new metric or gate."
+selection_calibration_eval: >
+  无选择环节；calibration = per-seed 冻结 `global_T_corrected`（`variant = global_T_corrected`）；
+  eval = GDINO common-K50 cohort **10,402 rows**（target-present 10,547 → K5/K10/K20 均 10,547、K50 10,402；
+  `k50_availability` 0.9863；1,489 images / 3,695 refs）。**GDINO 不存在 same_category cohort**（冻结范围规定
+  其不构建、不打分行、不出 verdict）。
+statistics: "image-cluster paired bootstrap，5000 reps / seed 0 / 0.95 CI（paired = true）"
+metrics: >
+  GDINO `auc_drop_mean` **0.23659945**（`auc_drop_ci_low_mean` 0.21619267，`auc_all_seeds_ci_exclude_0` true）、
+  `eaurc_worsening_mean` **8.65414442**、`rer50_drop_mean` **0.66781081**、`rer80_drop_mean` 0.38295881；
+  per-seed ΔAUROC 0.23885029 / 0.24025433 / 0.23069372；冻结阈值 `route_a_auc_drop_min` 0.03 /
+  `route_b_eaurc_worsen_min` 0.2 / `route_b_rer50_drop_min` 0.1，`route_a_passed` 与 `route_b_passed` 均 true，
+  `replicated` true。复用完整性校验：`rpn_detr_reuse_verbatim_check = "PASSED (all frozen F4 point rows
+  matched to 1e-12)"`。secondary intersections（**无 CI，descriptive，不得当假设检验**）：GDINO∪RPN
+  n=10,125，RPN 0.05340577 vs GDINO 0.23122964（gap +0.1778）；GDINO∪DETR n=9,589，DETR 0.08625652 vs
+  GDINO 0.22120686（gap +0.1350）。
+verdict: >
+  `c1_verdicts = {"RPN": "YES", "DETR": "YES", "GDINO": "YES"}`；
+  `gdino_C1_PROPOSAL_FAMILY_REPLICATED = "YES"`；总表 label **`C1_REPLICATED_ON_THIRD_PROPOSAL_FAMILY`**
+  （`proposal_family_final_table.md` 原文括号限定：**C1 only; C4 not tested**）。
+boundary_and_forbidden_claims: >
+  **本条只授权 C1。**禁止出现的措辞（experiment_log / protocol / 论文一律禁止）：`GDINO C4`、
+  GDINO hard-semantic replication、GDINO same-category result、任何 GDINO 强竞争（hard-regime）主张。
+  依据是可回读事实：`p2_gdino_probe/probe_report.json` 的 `same_category_ge4_frac` 实测
+  **0.6892430278884463 < 阈值 0.85 → pass false**，整体 `verdict = "FAIL"`（其余四门通过：
+  boxes_ge_64_share 1.0/0.98、ref_target_recall_05 0.9880478/0.95、candidate_availability_K50
+  0.9920319/0.90、peak_vram_gb 2.631041/6.0），因此 C4 从未被授权、属 out of scope。
+  freeze 原文："No GDINO same_category manifest is built, no hard_k5 job is scored, no C4 verdict may be
+  computed or reported for GDINO. The probe number is final and never re-measured."
+  verdict 原文 `out_of_scope_confirmed`："no GDINO same_category manifest, hard_k5 job, or C4 verdict
+  exists or is reported"。同时禁止：任何「某个 detector 优于另一个」的主张；E2（query-conditioned GDINO
+  top-K）或 E3（DINO-DETR / DETR-R101）作为 gate-bearing 实验；结果产生后修改 N、K levels、truncation、
+  NMS、thresholds、checkpoints、scorer heads 或 metrics。约 2.8× 的放大**幅度**是确认性数字，
+  但它的机制解读已被撤回（见下方 P2-A0）。
+  stop_conditions 逐字："After the C1_GDINO verdict + secondary artifacts are committed, V2-P2 Phase B STOPS.
+  Grounding DINO hard-regime, E3 families, and any fourth proposal family require a NEW authorized protocol."
+artifact_paths: >
+  results/v2_proposal_robustness/{phase_b_feasibility_audit.json, p2_gdino_probe/probe_report.json,
+  p2_gdino_probe/checkpoint_identity.json, p2_gdino_bank/bank_extraction_stats.json,
+  p2_gdino_bank/bank_extraction_report.md, p2_c1_gdino_config_freeze.json,
+  p2_c1_gdino/p2_c1_verdict.json, p2_c1_gdino/c1_point.csv, p2_c1_gdino/c1_bootstrap.csv,
+  p2_c1_gdino/c1_secondary_raw_auroc.csv, p2_c1_gdino/analysis_report.md,
+  p2_c1_gdino/figures/fig1_k_vs_auroc_three_families.png,
+  p2_c1_gdino/figures/fig2_k_vs_eaurc_three_families.png, proposal_family_final_table.md}
+```
+
+## V2-P2-M｜descriptive mechanism diagnostic（**不是** confirmatory mechanism proof）
+
+```yaml
+# ===== V2 post-A11 RESULT RECORD — V2-P2-M（composition vs count 机制诊断）=====
+record_class: pre-result freeze + result record（descriptive diagnostic）
+experiment_id: v2p2-m-composition-vs-count-mechanism-diagnostic-20261002-01
+branch: v2-proposal-robustness
+commit: >
+  freeze 入库 **`87009ac`**（提交信息逐字："V2-P2-M: mechanism-diagnostic freeze BEFORE any P2-M number -
+  composition vs count"）；verdict 与撤回文字入库 `0c60104`；台账与轴汇总入库 `9b010e6`。
+frozen_config_commit: >
+  `p2_m_mechanism_config_freeze.json` @ **`87009ac`**；`created_utc = 2026-10-02T08:20:00Z`、
+  `authored_before_any_result = true`；四个 decision labels、R1 bin edges、0.50 shrinkage bar、
+  2-of-3 families 要求与三条 stop conditions 全部写在任何 P2-M 数字存在之前。
+classification: >
+  **`DESCRIPTIVE_MECHANISM`**（回读自 freeze 与 `p2_m_verdict.json.classification`）。
+  `classification_meaning` 逐字："This protocol may not create, strengthen or weaken any existence claim.
+  C1's existence is already settled by V2-P1/V2-P2-C1 (confirmatory). P2-M only asks which measured property
+  of the candidate pool co-varies with the measured harm." 因此本条**不是** confirmatory mechanism proof。
+dataset: "RefCOCO+ testA ∪ testB；三族同一冻结 cohort（RPN 10,286 / DETR 9,665 / GDINO 10,402 expressions）"
+candidate_protocol: "只读取已冻结的预测列与已有 primitive；不新建 manifest / proposal bank / seed"
+backbone: B0 冻结 OpenCLIP ViT-B/32
+proposal_family: "RPN + DETR-R50 + Grounding DINO（三族同比较；GDINO 侧仍只涉及 C1 regime）"
+training_status: >
+  `new_training_parameters: 0`、**`model_forward_passes: 0`**、`wall_seconds` 330.28。freeze `forbidden`
+  逐字包含 "any model forward pass, any detector/CLIP/B3 inference, any GPU use" 与
+  "any fit / train / calibration / threshold tuning / refit (temperature, R1, E1b stay frozen)" 与
+  "any new scorer, any new feature function: every measured quantity must be an existing frozen primitive
+  or an existing stored prediction column"。
+selection_calibration_eval: >
+  无选择/校准环节；`unknown_target_share` 三族均为 0.0，故 R1 规则未被阻塞（`blocked_by_unknown_share = []`）；
+  R1 quintile 无任何 bin 低于冻结的 200 行下限（`bins_dropped = 0`）。
+statistics: >
+  沿用冻结 bootstrap convention（image-cluster sampler，5000 reps / seed 0 / 0.95）；estimator 逐字为
+  "the replicate resamples images and re-runs the point functional (mean over B3 seeds of the within-family
+  per-seed Spearman rho)"；shrinkage ratio **无 CI**（freeze 禁止把它提升为检验）。
+metrics: >
+  rule (a) 族内剂量反应 rho(H1c, R1)：RPN **-0.014419** [-0.038327, +0.009518]、DETR **+0.089424**
+  [0.061096, 0.119124]、GDINO **+0.052527** [0.024218, 0.080763]；`families_passing = [DETR, GDINO]`、
+  `required = 2` → `passed = true`。
+  rule (b) R1 五分位匹配（`bin_edges_R1 = [3,5,9,14]`）：unmatched gap GDINO−RPN 0.041035 /
+  GDINO−DETR 0.105886；matched gap 0.048427 / 0.112817；shrinkage **−0.180145** 与 **−0.065458**
+  （`shrinkage_min = 0.50`）→ `passed = false`。
+  族均值（`mechanism_report.md` §2）：R1 = 11.51 (RPN) / 8.71 (DETR) / **6.23 (GDINO，最低)**；
+  R2 unmatched fraction = 0.564 / 0.611 / **0.718（最高）**；R4 pair-IoU>.7 = 0.0014 / 0.0297 / 0.0094；
+  H1c net harm = 0.3605 / 0.2957 / **0.4016（最高）**；GDINO 内 rho(H1c, R2) = +0.0036 [-0.024, +0.032]
+  （与 0 不可区分）。
+verdict: >
+  **`MECHANISM_PARTIAL`**（decision_labels 定义："only (a) holds"）。两条实际结论：
+  (1) 被测量的同类冗余通道**不解释**跨 proposal family 的放大差异
+  （same-class redundancy does not explain the between-family amplification **under the tested diagnostic**）；
+  (2) candidate **count** 被**算术**排除而非被实验排除：三族 bank 均恰好 64 proposals/image，
+  且全部在同一 presented K 下评估（N=64 与 presented K 固定）。
+boundary_and_forbidden_claims: >
+  禁止升级为 "composition in general is ruled out"；禁止写 "the mechanism is explained"；禁止任何因果措辞
+  （freeze `out_of_scope` 逐字："any causal language: this diagnostic is associational within family and
+  stratified across families"）；禁止「某检测器优于另一检测器」；禁止对 GDINO 的任何 C4 / hard-regime 措辞
+  （逐字："any C4 / hard-regime statement about GDINO (the B0 probe failed the same-category supply gate at
+  0.6892 vs 0.85; GDINO stays C1-only by user authorisation)"）。`honesty_clause` 逐字："if
+  MECHANISM_NOT_SUPPORTED or MECHANISM_GAP_PERSISTS, the report must state that the composition account is NOT
+  established by this diagnostic and must not be used to explain the P2-C1 amplification; the P2-C1 numbers
+  stand either way, since they are confirmatory and independent of this file"。
+  `note_on_binary_harm` 要求：H1a/H1c 按构造是离散指标，对它的秩相关应按 rank-biserial 关联解读，
+  **不得**当作连续函数形式的证据。GDINO 的高 R2（unmatched 份额）只是**尚未被测量的候选观察**，
+  report §6 明确本诊断不能称其为机制。
+artifact_paths: >
+  results/v2_proposal_robustness/{p2_m_mechanism_config_freeze.json, p2_m_mechanism/p2_m_verdict.json,
+  p2_m_mechanism/mechanism_point.csv, p2_m_mechanism/mechanism_association.csv,
+  p2_m_mechanism/mechanism_strata.csv, p2_m_mechanism/mechanism_report.md, v2_p_program_summary.md}
+```
+
+## P2-A0｜post-result interpretation correction（**WITHDRAWN**）
+
+```yaml
+# ===== V2 post-A11 AMENDMENT RECORD — P2-A0（解释层撤回；不是 result tampering，也不是预注册）=====
+record_class: post-result correction（prose / mechanistic interpretation only）
+amendment_id: P2-A0
+branch: v2-proposal-robustness
+commit: >
+  撤回文字随诊断结果入库 **`0c60104`**；正式台账行（`results/v2_proposal_robustness/p2_amendment_history.csv`）
+  与轴汇总索引入库 **`9b010e6`**；material bank 同步入库 **`92f09d0`**。执行更正所依据的测量（V2-P2-M）
+  本身在任何 P2-M 数字之前冻结（`87009ac`）。
+classification: >
+  台账 `classification` 逐字："post-result interpretation correction (prose only; no metric, threshold,
+  gate, cohort or verdict label touched)"。因此本条是 **prose/mechanistic interpretation correction**，
+  **不是** result tampering。
+target_scope: >
+  台账逐字："V2-P2-C1 p2_c1_gdino/analysis_report.md section 5 mechanistic reading;
+  proposal_family_final_table.md closing paragraph"。
+withdrawn_claim: >
+  旧解释（状态：**WITHDRAWN**）：「GDINO 最强的放大由同类语义竞争解释」。其原文为
+  `p2_c1_gdino/analysis_report.md` §5："the class-prompt bank fills its 64 slots with semantically
+  redundant, same-class boxes ..."，并称约 2.8× 放大是
+  "the strongest evidence in the program so far for the semantic-competition mechanism"。
+  `mechanism_report.md` §6 以 "**Withdrawn**" 记录该撤回，并在原 §5 追加 addendum、修正总表结尾段。
+replacement_safe_wording: >
+  新的安全表述：**the measured same-class redundancy channel does not explain the between-family
+  amplification**（限定于 the tested diagnostic）。不得改写为「composition 被整体排除」，也不得宣布任何
+  替代机制。
+unchanged_facts: >
+  **all confirmatory C1/C4 numbers unchanged；all gates unchanged；all thresholds unchanged。**
+  台账 `modified_original_gates = no`；`gate_frozen_before_results` 逐字："n/a - this item corrects an
+  interpretation, not a gate; the correcting measurement (V2-P2-M) was itself frozen before any P2-M number
+  existed (commit 87009ac)"。任何 ΔAUROC / E-AURC / RER / cohort / verdict label 均未被重算或改动。
+still_supported: >
+  candidate **count** 的排除仍然成立，且性质是算术而非测量；台账逐字：
+  "The candidate-COUNT exclusion is NOT withdrawn (all three banks hold exactly 64 proposals and are
+  evaluated at the same presented K - arithmetic, not measurement)."
+open_question_consequence: >
+  GDINO 放大的机制因此仍是**开放问题**（RQ4）。旧候选解释被否证**不构成**新解释；任何后续机制实验必须
+  自带新的结果前冻结协议与判据。
+artifact_paths: >
+  results/v2_proposal_robustness/{p2_amendment_history.csv, p2_m_mechanism/mechanism_report.md,
+  p2_c1_gdino/analysis_report.md, proposal_family_final_table.md, v2_p_program_summary.md}
+```
+
+## 本节登记完毕（本轮不新增任何实验）
+
+> 本节全部条目均为 **append-only 回顾性结果登记**：不重跑任何推理、不新增任何 bootstrap / 统计检验 /
+> 机制诊断 / 结果数字，不追溯预注册任何已完成实验。`docs/final_result_summary.md` 与
+> `results/v2_proposal_robustness/v2_p_program_summary.md` 的既有数字在本节中只被**引用**，未被改写。
+> **RQ4（GDINO 放大的机制）此刻只登记为 open question：NOT STARTED、NOT AUTHORIZED**，
+> 详见 `docs/research_protocol.md` 的「V2 Post-A11 Program Result Record」与「Program status」。

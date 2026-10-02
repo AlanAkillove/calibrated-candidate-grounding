@@ -1797,5 +1797,229 @@ absolute grounding performance  !=  reliability robustness under candidate-set s
 - 一致性审计：`scripts/audit_v2g_final.py` → 82 checks / 0 failures。
 - 全量测试：**774 passed, 0 failed, 0 error**（`deepminer`，python 3.10.19 / torch 2.5.1+cu121 / cuda 12.1 / RTX 4060 Laptop，约 113s）。
 
+---
+
+# V2 Post-A11 Program Result Record（append-only）
+
+> **This section is a retrospective result record. It does not retroactively preregister any completed
+> experiment.** 本节写于 V2 各轴的结果均已被看过之后，因此它本身**不是**任何实验的预注册文档，也不得被
+> 引为「本协议在 V2 开始之前已冻结」。每个轴的 **pre-result freeze provenance** 只能从**该轴自己的**
+> 冻结 artifact 与 commit 回读（下方逐条给出），而不是从本节的总结倒推。
+>
+> 上方 `# Amendment V2-A1` 及其 Result Record 中的历史句子——特别是
+> 「**LCR 尚未实现**：本轮只验证 generality，V2-M 未开始」以及关于 backbone 的解释限制——**保留原文、
+> 不覆写、不删除**：那是写入当时的真实项目状态，在本节中只作为历史记录存在，不再作为当前状态描述。
+> 同样，V1 的 A11 后方法学更正也不因本节而变成预注册。
+
+## 0. 四个必须区分的类别
+
+```text
+pre-result freeze        阈值 / 判据 / cohort 在该轴任何数字产生之前已写入的 artifact
+result record            该轴出数后的登记（本节 + docs/experiment_log.md 的 “V2 post-A11 result records”）
+post-result correction   看过结果后的更正（含解释层撤回）；必须自标它不是预注册
+descriptive diagnostic   不得创造 / 强化 / 削弱任何存在性主张的机制侧测量
+```
+
+字段纪律：任何 artifact 未携带的字段（例如某个 `ci_high`）一律不写；各轴不符合早期 §2 YAML schema 的
+历史条目均标为 `legacy / axis-specific result record`，不伪造字段。
+
+## 1. V2-G — result record（backbone 轴）**CLOSED**
+
+- pre-result freeze：`# Amendment V2-A1` 本身 + `results/v2_backbone_generalization/g4_protocol_freeze.json`
+  （`frozen_before_phase_a = true`）；G1→G5 未修改任何 primary gate。
+- result：`CARDINALITY_REPLICATED` 3/3（B1 ΔAUROC(K5→K50) +0.0540、B2 +0.0751）；
+  `HARD_SEMANTIC_REPLICATED` 3/3（放大 A：B1 +0.0223、B2 +0.0311；manipulation 3/3；dose ρ = 1.0）；
+  `STRONG_CROSS_BACKBONE_GENERALITY = YES`。
+- boundary（不变）：只能写 “replicated across three tested backbones spanning two vision-language model
+  families and two patch resolutions”，**禁止** “universal across all vision-language models”；
+  仍在同一 COCO 图像域内。
+- 完整条目已在 `docs/experiment_log.md` 的 V2-G `FORMAL ENTRY`（历史条目，本轮未改写）。
+
+## 2. V2-D — result record（数据轴）**CLOSED**
+
+**V2-D1（人工复核标注）**——legacy / axis-specific result record（无独立 config-freeze 文件；
+pre-result 约束 = `frozen_inputs_sha256` 12 项 + `reviewed_source_sha256` 3 项，入库 `7feaa68`）：
+
+```text
+C1 ANNOTATION-ROBUST
+C4 ANNOTATION-ROBUST
+CORE FINDINGS ROBUST TO REVIEWED ANNOTATIONS
+```
+
+边界：这是 **annotation cleanup robustness**；**不是新数据集**（`data/reviewed_refcocoplus/` 为专用命名空间，
+原始 `data/raw/refcoco+` 未被修改）；**不是 cross-visual-domain**。
+
+**V2-D2（RefCOCO 语言分布迁移）**——legacy / axis-specific result record（入库 `0f9c7ab`）：
+
+```text
+C1 CROSS-DATASET REPLICATED
+C4 CROSS-DATASET REPLICATED
+CORE FINDINGS CROSS-DATASET ROBUST
+```
+
+最重要的边界（artifact 原文，必须照抄）：
+
+> cross-dataset transfer under a shared COCO visual domain and a shared frozen proposal system;
+> **NOT cross-visual-domain generalisation**
+
+必须同时登记的 **Phase-1 feasibility 发现（不得隐藏这次 protocol redefinition）**：
+
+```text
+strict image-disjoint RefCOCO premise impossible
+（overlap.image_disjoint_premise_holds = false；RefCOCO 与 RefCOCO+ 共用同一 COCO 图像池）
+```
+
+因此 V2-D2 的实际契约是**语言分布迁移 + development 图像未见**，而不是图像不相交迁移；
+该重定义发生在任何 D2 结果数字产生之前（`phase1/` 的 overlap 审计），但它是 **post-freeze 的协议重定义**，
+不得被追溯写成「一开始就预注册了 image-disjoint 设计」。完整 cohort / gate / 重定义原文见
+`docs/experiment_log.md` 的 V2-D2 条目。
+
+## 3. V2-M — result record（Local Competition Reliability，LCR）**CLOSED（负结果）**
+
+- pre-result freeze：`results/v2_local_competition/protocol.json`（sha256
+  `90085940f75ed8cbf6ac3c2f72219b9ff34bde80c97aad89362580bf5fedd88b`，被 M0/M1/M2 产物一致引用）。
+  **provenance 注意（不得美化）**：该文件在 git 中首次出现的提交与 M1 结果同提交（`c92c86d`），
+  「结果前存在」的证据链是运行时 sha256 与 `created_utc` 自声明，而不是提交顺序。
+- **M1**：`M1_GO = false`。LCR − E1b 的 ΔAUROC = **−0.029442**，三个 seed 方向全为负；
+  gate artifact 实际只携带 `delta_auroc_ci_low = −0.032442`，**没有 `ci_high` 字段**，因此任何记录均不得写
+  “CI upper < 0”（已在上一轮修正过一次，本节不重复那个错误）。
+- **M2**：`M2_GO = false` → **LCR v1 = negative result**，`V2-MG_NOT_AUTHORIZED`（逐字取自 `authorization`）。
+  两个差值：delta1（LCR − E1b）**−0.0018578** CI [−0.0053043, +0.0016435]→ gate condition false；
+  delta2（LCR − Aggregate-MLP）**+0.0357435** CI [0.0302815, 0.0413613]→ condition true。
+- 正确的读法（**禁止**写 “LCR learned nothing”）：
+
+  > curriculum activated the competition branch, but the structured model did not outperform the
+  > simple semantic-statistics baseline.
+
+  即 `LCR > Aggregate-MLP` 而 `LCR <= E1b`，两者同时成立。
+- **M2.5**：classification = **`diagnostic`**（artifact 原文："diagnostic only; no success gate, no mixture
+  training here, no B1/B2."）；登记 `SPECIALIST TRADEOFF PRESENT`（m=8 **+0.025830** [0.022435, 0.029320]、
+  m=0 −0.008902）——它**不是**新的 confirmatory method success，而是 M3 的立项依据。
+
+## 4. V2-M3 — result record（competition-adaptive mixture）**CLOSED（负结果）**
+
+- pre-result freeze：`m3_mixture/protocol_m3.json.freeze_point` 与
+  `m3_mixture/amendment_v2m31.json.status`（原文："FROZEN before the B1/B2 mixture run"，入库 `cedfa30`）。
+- 必须区分：**B0 = POST-HOC DEVELOPMENTAL**（入库 `3599369`）与 **B1/B2 = CONFIRMATORY**（入库 `11efec7`）；
+  B0 的任何数字不得当确认证据。
+- 最终：`ADAPTIVE MIXTURE NOT SUPPORTED`，**n_pass = 0/2**（B1 ΔMacroAUROC +0.00014802，
+  CI [−5.55e-05, +3.56e-04] 跨 0；B2 +0.00042961，CI [−3.88e-04, +1.24e-03] 同样跨 0；`stop = true`）。
+- 不得过度否定也不得过度肯定：自适应权重在 B1/B2 **did respond to competition**
+  （`alpha_m8_minus_m0`：B1 +0.020568、B2 +0.054241），但 **did not produce practically meaningful gains
+  over StaticMix**。因此**禁止**写 “adaptive mechanism collapsed everywhere”（只有平坦的 B0 接近常数）。
+
+## 5. V2-P — result record（proposal family 轴）**CLOSED**
+
+按 lineage 分开登记，不得合并成一个模糊的 “proposal robustness experiment”：
+
+| lineage | 类型 | 冻结 / 入库 | verdict label |
+|---|---|---|---|
+| P1 F0–F3 | engineering / feasibility（pre-result） | `2249206`→`1285e95`；P1-A0 @ `8a831f1` | `OK` / `FULL` / `ROUTE_F_FULLY_USABLE`（无科学主张） |
+| P1-F4（C1） | **CONFIRMATORY** | `p1_f4_f5_config_freeze.json` @ **`1285e95`**（pre-result） | `c1_verdicts {RPN: YES, DETR: YES}` |
+| P1-F5（C4） | **CONFIRMATORY** | 同一 freeze（F4/F5 同时冻结） | `HARD_SEMANTIC_REPLICATED`；DETR C4 = YES |
+| P1 综合 | result record | 轴汇总 @ `7441ab1` | **`CORE_FINDINGS_PROPOSAL_FAMILY_ROBUST`** |
+| P2-C1（GDINO） | **CONFIRMATORY** | `p2_c1_gdino_config_freeze.json` @ **`91f2758`**（pre-result） | **`C1_REPLICATED_ON_THIRD_PROPOSAL_FAMILY`** |
+| P2-M | descriptive mechanism | `p2_m_mechanism_config_freeze.json` @ `87009ac` | `MECHANISM_PARTIAL` |
+| P2-A0 | post-result correction | 文字 `0c60104`；台账 `9b010e6` | 旧机制解释 **WITHDRAWN** |
+
+**全轴不变量**（只变 proposal family）：**0 new training parameters** / 同一冻结打分栈（B3
+`IndependentMLPScorer` seeds 1/2/3 + per-seed `global_T_corrected`，从不按 family 重拟合）/
+同一 presented K（nested K ∈ {5,10,20,50}）/ 同一 candidate construction regime（V1 seeded-random，
+P1-A0）/ 三族 bank 均 **N = 64**。
+
+**§ 强制禁令（必须同时存在于 experiment_log 与本 result record，防论文误引）**：
+
+Grounding DINO **只进入 C1**。唯一允许的外宣 label 是
+`C1_REPLICATED_ON_THIRD_PROPOSAL_FAMILY`（总表原文括号限定：**C1 only; C4 not tested**）。
+以下措辞一切实录中一律禁止：
+
+```text
+GDINO C4
+GDINO hard-semantic replication
+GDINO same-category result
+任何 GDINO 强竞争（hard-regime）主张
+```
+
+依据是可回读事实：`p2_gdino_probe/probe_report.json` 的 `same_category_ge4_frac` 实测
+**0.6892430278884463 < 0.85 → FAIL**（整体 `verdict = "FAIL"`）。冻结原文："No GDINO same_category
+manifest is built, no hard_k5 job is scored, no C4 verdict may be computed or reported for GDINO.
+The probe number is final and never re-measured."
+
+## 6. V2-P2-M — descriptive mechanism record
+
+- classification = **`DESCRIPTIVE_MECHANISM`**，**不是** confirmatory mechanism proof；
+  `classification_meaning` 原文：“This protocol may not create, strengthen or weaken any existence claim.”
+- 测量本身零计算成本升级：`new_training_parameters: 0`、**`model_forward_passes: 0`**（无 GPU、无 forward、
+  无新 bootstrap 设计以外的模型推理），wall 330.28 s。
+- verdict = **`MECHANISM_PARTIAL`**（只有规则 (a) 成立：族内 rho 在 DETR +0.0894 / GDINO +0.0525 排除 0，
+  RPN −0.0144 不排除；规则 (b) 失败：按 R1 五分位匹配后 shrinkage **−0.180145 / −0.065458** 对比 0.50 门槛）。
+- 两条实际结论：
+  1. **same-class redundancy does not explain the between-family amplification under the tested diagnostic**
+     （GDINO 同类干扰物最少 R1 6.23，却伤害最大 H1c 0.4016）；
+  2. **candidate count is excluded arithmetically** because N = 64 与 presented K 均固定（不是实验排除）。
+- 不得升级：禁止 “composition in general is ruled out”、禁止 “the mechanism is explained”、
+  禁止任何因果措辞、禁止对 GDINO 的任何 C4/hard 措辞。GDINO 的高 unmatched fraction（R2 0.718）
+  只是候选观察，本诊断不能称其为机制。
+
+## 7. P2-A0 — interpretation correction（正式 lineage）
+
+| 项 | 内容 |
+|---|---|
+| 旧解释（被撤回） | “GDINO 最强放大由同类语义竞争解释”（原文含 "the strongest evidence in the program so far for the semantic-competition mechanism"） |
+| 状态 | **`WITHDRAWN`** |
+| 新的安全表述 | **the measured same-class redundancy channel does not explain the between-family amplification** |
+| 未被改动的东西 | **all confirmatory C1/C4 numbers unchanged；all gates unchanged；all thresholds unchanged**（台账 `modified_original_gates = no`） |
+| 仍成立 | candidate **count** 的算术排除未被撤回（台账："The candidate-COUNT exclusion is NOT withdrawn … arithmetic, not measurement"） |
+| 性质 | **prose / mechanistic interpretation correction**，**不是** result tampering；也不是预注册。台账 `classification` 逐字："post-result interpretation correction (prose only; no metric, threshold, gate, cohort or verdict label touched)" |
+| 台账 | `results/v2_proposal_robustness/p2_amendment_history.csv` 行 `P2-A0` @ `9b010e6`；修正文字随 `0c60104` 入库；执行更正的测量（P2-M）自身先于其数字冻结（`87009ac`） |
+
+## 8. Program status（本轮冻结）
+
+```text
+V2-G CLOSED
+V2-D CLOSED
+V2-M CLOSED
+V2-M3 CLOSED
+V2-P CLOSED
+
+No active experiment.
+```
+
+开放问题：`RQ4 mechanism` —— 状态为 **`NOT STARTED`** 且 **`NOT AUTHORIZED`**，直到出现一个新的
+**pre-result frozen mechanism amendment**（自带判据、阈值、stop rule 与入库顺序证据）。
+
+## 9. RQ4（仅作为 open question 登记）
+
+> After controlling candidate count and rejecting the tested same-class redundancy account, which
+> measurable property explains the cross-proposal-family difference in cardinality-induced reliability
+> degradation?
+
+当前**不得**宣布下列任何一项为机制：
+
+```text
+unmatched COCO fraction is the mechanism
+margin collapse is the mechanism
+H2a is the mechanism
+```
+
+它们只是 **candidate observations**（因为均已在 V2-P2-M 的结果里被看到，所以任何后续使用都必须遵守
+§0 的 `post-result` 纪律）。任何后续 RQ4 必须走**单独新协议**，不得在本节内扩张。
+
+## 10. 治理不变量（四层一致性）
+
+```text
+docs/research_protocol.md          （本节：program-level result record + status）
+docs/experiment_log.md             （逐轴 / 逐段 lineage 的字段级 result records）
+docs/final_result_summary.md       （material bank：对外可引的 label 与 boundary）
+results/v2_*/                      （per-axis artifacts：label 的唯一来源）
+```
+
+四层必须：labels identical / boundaries identical / withdrawal identical。
+
+**This close-out round is documentation and provenance only.** `results/final_registry/`
+**不由 V2 数字重建**：material bank 已声明 V2 数字来自各轴 artifact，本治理轮不重新生成 registry、
+不重跑任何实验（无 GPU run / 无 model forward / 无新 bootstrap / 无新统计检验 / 无新机制诊断 /
+无新结果数字）。
+
 
 
