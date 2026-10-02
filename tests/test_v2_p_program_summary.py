@@ -49,6 +49,11 @@ def _grouped(v: int) -> str:
     return f"{v:,}".replace(",", " ")
 
 
+def _artifact(rel: str) -> dict:
+    """Read a committed JSON artifact by repository-relative path."""
+    return json.loads((_ROOT / rel).read_text(encoding="utf-8"))
+
+
 def _require(doc: str, token: str) -> None:
     assert token in doc, f"summary does not quote {token!r}"
 
@@ -283,12 +288,45 @@ def test_boundary_register_blocks_the_wordings_this_axis_never_licensed(doc):
         assert guard in doc
 
 
-def test_summary_carries_the_stale_downstream_limitation_pointer(doc):
-    """docs/final_result_summary.md still claims a single proposal family; the index says so."""
+def test_material_bank_now_states_the_axis_boundary_in_artifact_words(doc):
+    """The pre-V2-P limitation in docs/final_result_summary.md has been replaced, and every V2
+    label the material bank carries equals the artifact that produced it (both language
+    sections are checked, because the bank is written twice on purpose)."""
     paper = (_ROOT / "docs" / "final_result_summary.md").read_text(encoding="utf-8")
-    assert "single proposal family" in paper and "单一 proposal 家族" in paper
-    assert "single proposal\nfamily" in doc or "single proposal family" in doc
-    assert "This file does not edit that document." in doc
+
+    # the stale limitation is gone from the bank, and the index no longer claims innocence
+    for stale in ("single proposal family", "单一 proposal 家族"):
+        assert stale not in paper, f"material bank still carries {stale!r}"
+    assert "This file does not edit that document." not in doc
+    _require(doc, "does not duplicate its numbers")
+
+    labels = {
+        "P1 overall": _load("p1_f5_c4", "f5_verdict.json")["overall_p1_verdict"]["label"],
+        "D1": _artifact("results/v2_data_robustness/d1_reviewed_annotations/verdict.json")[
+            "combined_verdict"],
+        "D2": _artifact("results/v2_d2_refcoco_lang/c1_c4_verdict.json")["verdict"]["overall"],
+        "M2.5": _artifact("results/v2_local_competition/m25_specialist_audit/verdict.json")["pattern"],
+        "M3": _artifact(
+            "results/v2_local_competition/m3_mixture/conf/cross_backbone_verdict.json")["verdict"],
+    }
+    for name, label in labels.items():
+        assert label in paper, f"material bank does not carry the {name} label {label!r}"
+
+    # the P2 extension label is published only in the final table, so read it from there
+    final = (_DIR / "proposal_family_final_table.md").read_text(encoding="utf-8")
+    third = re.search(r"P2 extension verdict: \*\*([A-Z0-9_]+)\*\*", final)
+    assert third, "the final table must still publish its P2 extension verdict"
+    assert third.group(1) in paper
+
+    # backbone axis verdict and the GDINO scope gate, stated as their artifacts state them
+    v2g = _artifact("results/v2_backbone_generalization/v2a1_result_record.json")
+    assert v2g["verdicts"]["STRONG_CROSS_BACKBONE_GENERALITY"] == "YES"
+    assert "STRONG_CROSS_BACKBONE_GENERALITY = YES" in paper
+    assert "0.6892 < 0.85" in paper, "the GDINO same-category supply gate must stay non-claimable"
+
+    # the withdrawal is registered on both sides of the bilingual document
+    assert "已被撤回" in paper, "the Chinese section must state the withdrawal"
+    assert "withdrawn" in paper, "the English section must state the withdrawal"
 
 
 def _mechanism_point():

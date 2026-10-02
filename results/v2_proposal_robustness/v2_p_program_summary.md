@@ -148,7 +148,7 @@ each measurement is unchanged.
 
 Commit chain: `2249206` -> `bcdc2cd` -> `8a831f1` (P1-A0) -> `1285e95` -> `feb40d8` ->
 `6496119` -> `7441ab1` -> `9dd14e0` -> `6cfc437` -> `75ce48d` -> `91f2758` (P2-C1 freeze)
--> `6c1850c` -> `e9cd139` -> `7905aad` -> `87009ac` (P2-M freeze) -> `0c60104`.
+-> `6c1850c` -> `e9cd139` -> `7905aad` -> `87009ac` (P2-M freeze) -> `0c60104` -> `9b010e6`.
 
 ## 8. Paper-facing sentences that are safe to copy
 
@@ -169,10 +169,16 @@ Commit chain: `2249206` -> `bcdc2cd` -> `8a831f1` (P1-A0) -> `1285e95` -> `feb40
    CI low +0.0108, manipulation valid in 3/3 seeds), so the two core effects of the mainline
    are not artifacts of one proposal family."
 
-Downstream text that is now stale: `docs/final_result_summary.md` lists "single proposal
-family" / "单一 proposal 家族" among the limitations in both its Chinese and English
-summaries. That sentence predates V2-P and must be replaced by the axis's actual boundary
-(section 5) before the material bank is reused. This file does not edit that document.
+Downstream text that this axis made stale, and has now corrected: `docs/final_result_summary.md`
+used to list "single proposal family" / "单一 proposal 家族" among its limitations. That sentence
+predated V2-P. It was replaced when this axis closed: the material bank now carries a V2 robustness
+section (V2-G, V2-D1, V2-D2, V2-M/V2-M3, V2-P) in both its Chinese and its English summary, its
+limitations state this axis's actual boundary (section 5 above - three families sharing one image
+domain and one frozen scorer stack, GDINO in C1 only at probe 0.6892 < 0.85, the amplification
+mechanism left open), and it records the P2-A0 withdrawal. The correction was made in that document
+itself; this index still does not duplicate its numbers, and the paper-facing text must keep citing
+the per-axis artifacts under `results/` rather than this file, because only the artifacts carry the
+frozen protocol each value was produced under.
 
 ## 9. Integrity record and reproduction
 
@@ -187,6 +193,11 @@ summaries. That sentence predates V2-P and must be replaced by the axis's actual
   after the P2 runs; RPN/DETR point rows reproduced to 1e-12.
 * Zero-cost close-out: this axis consumed no additional model training. P2-M ran in
   330.28 s on CPU with 0 model forward passes.
+* Downstream correction: `docs/final_result_summary.md` (paper material bank) had its
+  "single proposal family" limitation replaced by this axis's real boundary and gained a V2
+  robustness section, together with the P2-A0 withdrawal. No number in it was touched, and
+  `results/final_registry/` was not regenerated - the bank now states that its V2 values come
+  from the per-axis artifacts. This file remains an index and does not restate the bank.
 
 ```
 E:\conda\envs\deepminer\python.exe    scripts/p1_frozen_inference.py --family DETR|GDINO
