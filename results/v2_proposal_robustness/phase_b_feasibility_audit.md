@@ -122,3 +122,32 @@ freeze, committed before results, exactly as P1-A0/F4/F5 did).
 No scorer changes, no new reliability model, no temperature refit, no re-running of
 FineCops/RefCOCOg, no E2-primary framing, no paper writing (Phase A stays queued after
 B/C). This document is the only artifact produced by this round.
+
+## 5. Probe outcome (recorded 2026-10-02, after this audit was frozen)
+
+The probe ran on the first 100 images of the frozen `data/audit_subset.csv` using the
+unchanged V1 audit primitives (`scripts/p2_gdino_probe.py`; thresholds read from
+`phase_b_feasibility_audit.json`, never re-specified). Full record:
+`results/v2_proposal_robustness/p2_gdino_probe/probe_report.json`.
+
+| Gate | Threshold | Measured | Verdict |
+|---|---|---|---|
+| boxes >= 64 share | 0.98 | **1.0000** | PASS |
+| ref-target recall @ 0.5 | 0.95 | **0.9880** | PASS |
+| same-category supply (>= 4) | 0.85 | **0.6892** | **FAIL** |
+| K50 availability | 0.90 | **0.9920** | PASS |
+| peak VRAM (GB) | <= 6.0 | **2.63** | PASS |
+
+Mechanism of the failure (descriptive): under the frozen top-64 truncation with no
+NMS, GDINO's score-ordered bank is dominated by same-class duplicate detections
+(`person` alone claims 20.3% of kept labels) and hallucinated small-object classes
+(book / apple / cup / bowl), crowding out distinct same-category objects relative to
+DETR's set-prediction bank (supply 0.7817 -> 0.6892). Cardinality-side gates (K50
+availability 0.992, recall 0.988) are excellent; the deficit is specific to the
+category-diversity requirement of the C4 same-category cohort.
+
+Per the frozen `on_failure` rule this closes E1 as a **full-participation** external
+validation target; the fallback named in the audit is E3 (DINO-DETR / DETR-R101).
+Any alternative that admits GDINO for C1 only (its gates all pass) while sourcing the
+cross-family C4 evidence elsewhere is a NEW protocol decision outside this audit and
+requires explicit authorization before any experiment runs.
