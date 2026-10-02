@@ -1,0 +1,99 @@
+{
+  "protocol": "V2-P2-M",
+  "title": "V2-P2-M mechanism diagnostic: does candidate COMPOSITION (semantic redundancy), not candidate COUNT, explain the GDINO C1 amplification?",
+  "created_utc": "2026-10-02T08:20:00Z",
+  "authored_before_any_result": true,
+  "classification": "DESCRIPTIVE_MECHANISM",
+  "classification_meaning": "This protocol may not create, strengthen or weaken any existence claim. C1's existence is already settled by V2-P1/V2-P2-C1 (confirmatory). P2-M only asks which measured property of the candidate pool co-varies with the measured harm.",
+  "parent_protocols": {
+    "V2-P1": "results/v2_proposal_robustness/p1_f4_c1/f4_verdict.json",
+    "V2-P2-C1": "results/v2_proposal_robustness/p2_c1_gdino/p2_c1_verdict.json",
+    "V2-P2-C1_config_freeze": "results/v2_proposal_robustness/p2_c1_gdino_config_freeze.json",
+    "V2-P2-B0_probe": "results/v2_proposal_robustness/p2_gdino_probe/probe_report.json"
+  },
+  "trigger": "V2-P2-C1 measured dAUROC(K5->K50) = +0.0517 (RPN) / +0.0852 (DETR) / +0.2366 (GDINO) under one identical frozen scorer stack, and the raw top1-top2 margin signal collapsed to 0.587 (near chance) for GDINO while its raw top-1 ranking degraded LEAST of the deep families. All three banks hold exactly 64 proposals per image and all three are evaluated at the same presented K, so count is already ruled out arithmetically; what remains untested is whether the proposed composition channel is measurable and ordered with the harm.",
+  "scientific_question": "Within each proposal family separately, do expressions whose K=50 pool is more semantically redundant show more pool-growth harm, and does the GDINO-minus-RPN (and GDINO-minus-DETR) harm gap survive when the comparison is restricted to pools of matched redundancy?",
+  "hypotheses": {
+    "H1_redundancy_harm_within_family": "per-expression pool-growth harm increases with pool redundancy (same-class distractor count, geometric redundancy, CLIP similarity concentration)",
+    "H2_gap_explained_by_composition": "the cross-family harm gap shrinks strongly (>= 0.50) once expressions are compared inside matched redundancy strata"
+  },
+  "inputs_read_only": [
+    "results/v2_proposal_robustness/predictions/p1__{RPN,DETR,GDINO}__random_k{5,10,20,50}__b3_seed{1,2,3}.npz  (already committed by P1 / P2-C1; columns per core.PRED_COLUMNS incl. sem14)",
+    "cache/proposals.h5, cache/proposals_detr_r50.h5, cache/proposals_gdino.h5  via ccg.data.bank.read_bank_image",
+    "data/raw/annotations/instances_train2014.json  via run_proposal_audit.load_gt_index (non_crowd only)",
+    "corpora via scripts.p1_replication_core.build_corpus(family, 'random')"
+  ],
+  "forbidden": [
+    "any model forward pass, any detector/CLIP/B3 inference, any GPU use",
+    "any fit / train / calibration / threshold tuning / refit (temperature, R1, E1b stay frozen)",
+    "any new scorer, any new feature function: every measured quantity must be an existing frozen primitive or an existing stored prediction column",
+    "any new data, any new manifest, any new proposal bank, any new seed",
+    "C4 / same_category / hard regime in any form",
+    "re-using a threshold, bin edge or label chosen after seeing results"
+  ],
+  "frozen_reuse": {
+    "cohort": "scripts.p2_c1_cardinality / p1_f4_cardinality.common_k50_ids(family) - identical rows across K, pooled test (testA+testB)",
+    "prediction_loader": "core.load_pred(pred_dir, family, job, scorer, keep_ids) - rows sorted by sentence_id, so K5 and K50 align row-for-row",
+    "seeds": "core.B3_SEEDS = (1,2,3)",
+    "ks": "K5 baseline, K50 primary (core.K_BASELINE / core.PRIMARY_KB)",
+    "gt_matching_rule": "ccg.data.audit.assign_gt_category(proposal_boxes, gt_boxes, gt_categories, iou_thresh=0.5): proposal -> highest-IoU non-crowd COCO GT object with IoU >= 0.5, else category -1 (unknown). The V1 rule the P2-B0 probe used; detector-predicted labels are NOT used, so the definition is identical for the class-agnostic RPN.",
+    "pool_source": "ccg.models.b3_data.SentenceRecord fields verified before freezing: (sentence_id, ref_id, image_id, eval_split, target_index, distractor_order, target_max_iou, eligible). Neither SentenceRecord nor ManifestEntry carries a gt_box, so the audit's assign_target is NOT used; the pool is taken from the frozen corpus record itself, which is the same source the frozen scorer used",
+    "geometric_redundancy": "ccg.data.audit.redundancy_stats(boxes, thresh_mid=0.7, thresh_high=0.9) -> {frac_pairs_gt_mid, frac_pairs_gt_high, n_pairs}, called on the pool subset (frozen primitive, fraction of proposal PAIRS above an IoU level)",
+    "clip_similarity_features": "stored sem14 columns of ccg.v2.semantic_features.V2_PRIMARY_SEMANTIC_NAMES, indices taken from core.V2_SEM_INDEX",
+    "bootstrap": "core.BOOTSTRAP_REPLICATES=5000, BOOTSTRAP_SEED=0, BOOTSTRAP_CI=0.95, resampling units = image_id (image-cluster paired), same clustering convention as the frozen C1 bootstrap"
+  },
+  "measures": {
+    "pool_definition": "for one expression at K, the pool is [target_index] + distractor_order[:K-1] from the frozen corpus record, i.e. exactly the candidates the frozen scorer saw; bank row indices, so bank boxes and assigned categories are looked up by index",
+    "R1_same_class_distractors": "count of pool members j != target_index with assigned GT category == the target's assigned category and that category != -1. PREREQUISITE: per image, categories = ccg.data.audit.assign_gt_category(bank_boxes, gt_boxes, gt_categories, iou_thresh=0.5)[0]. Target-equivalent duplicates are excluded by the frozen IoU rule applied proposal-vs-target (ccg.data.proposals.iou_matrix(bank_boxes[target], bank_boxes[pool]) >= 0.5). This is the POOL-LEVEL analogue of the frozen bank-level ccg.data.audit.same_category_counts: it differs from the audit quantity in exactly two declared ways, (i) restricted to the presented K pool instead of the whole 64-proposal bank, and (ii) duplicates identified by proposal-vs-target IoU instead of the audit's gt-based to_remove set, because no gt_box is available on the corpus record. The audit quantity itself is reported unchanged for reference in the probe/audit artifacts (RPN 0.9003 / DETR 0.7817 / GDINO 0.6892 at same-cat >= 4).",
+    "R2_unmatched_fraction": "share of pool members other than the target whose assigned GT category == -1, i.e. no non-crowd COCO object at IoU >= 0.5: hallucination pressure",
+    "R4_geometric_redundancy": "redundancy_stats(pool_boxes)['frac_pairs_gt_mid'] and ['frac_pairs_gt_high'] - frozen geometric pair-overlap of the pool",
+    "R3_clip_similarity": "stored sem14 columns, classified by reading the frozen sources of ccg.v2.semantic_features.v2_primary_semantic_stats and ccg.semantic.features.semantic_stats BEFORE freezing. The B3 descending order is 'order', the winner is t=order[:,0], a[i,j]=cos(z_q_i,z_i_j) and v[t,j]=cos(z_i_t,z_i_j). CLASS I, score-independent pool descriptors, used as redundancy measures: query_cos_spread (= std of a across K; the only Class-I column stored in sem14). CLASS II, winner-anchored (t comes from the B3 scores), reported as secondary with an endogeneity caveat and never used in a decision rule: winner_competitor_max_cos, winner_competitor_mean_cos, winner_competitor_std_cos, winner_top5_mean_cos. The 16-d E1 set (cand_vmax, cand_vmean, density_070, density_080, ...) is Class II as well and is NOT recomputed here: it is not stored in the prediction npz, and materialising z_q/z_i again would add no Class-I information beyond query_cos_spread. CLASS III, score-rank-indexed (q_top1_cos, q_top2_cos, q_top3_cos, q_margin12, q_margin13, q_margin23, clip_top1, clip_top2, clip_margin12, cand_top12_sim, winner_top2_cos, winner_top3_cos): these are CONFIDENCE-SEPARATION outcomes, not redundancy measures, and are used only on the H side (H2b/H2c below).",
+    "R5_note": "R1, R2 and R4 are computed from bank boxes and COCO GT only, so they are independent of the scorer, the temperature and the seeds; that is what makes the within-family association in A1 a composition test rather than a restatement of the score",
+    "H2c_delta_clip_separation": "q_margin12 at K5 minus q_margin12 at K50 (Class III, per expression): how much the query-to-candidate similarity separation collapsed as the pool grew",
+    "H1a_lost_flip": "binary per expression: correct at K5 == 1 AND correct at K50 == 0 (the target was pushed out of the top-1 by pool growth)",
+    "H1b_gained_flip": "binary per expression: correct at K5 == 0 AND correct at K50 == 1 (reported, never used to cancel H1a)",
+    "H1c_net_harm": "H1a - H1b per expression (continuous-in-{-1,0,+1}); family-level mean is the headline harm rate",
+    "H2a_delta_margin": "raw_margin12 at K5 minus raw_margin12 at K50 (per expression; how much the confidence signal collapsed)",
+    "H2b_delta_conf_msp": "conf_msp at K5 minus conf_msp at K50",
+    "note_on_binary_harm": "H1a/H1c are discrete by construction; a rank correlation against a discrete indicator is a rank-biserial association and is reported as such, not as evidence of a continuous functional form"
+  },
+  "statistics": {
+    "A1_within_family_association": "Spearman rho between each harm measure (H1a, H1c, H2a) and each redundancy measure (R1, R2, R4-mid, R4-high, query_cos_spread) computed WITHIN each family on its own common-K50 cohort, per seed, then mean and std over the 3 seeds; CI from the frozen image-cluster bootstrap. Within-family is mandatory: it removes family-level confounding by construction.",
+    "S1_matched_strata": "quintile bins of R1 (same_class_distractors at K50) with edges computed ONCE on the pooled 3-family expression sample (seeds do not affect R1); within each bin compute GDINO minus RPN and GDINO minus DETR mean H1c; matched gap = bin-size-weighted mean of within-bin gaps; unmatched gap = raw difference of family means; shrinkage = 1 - matched_gap / unmatched_gap",
+    "reporting_rule": "every number reported with its cohort size; no p-values; no CI is placed on the shrinkage ratio (it is a descriptive contrast, and the freeze forbids promoting it to a test)"
+  },
+  "decision_labels": {
+    "MECHANISM_COMPOSITION_LINKED": "BOTH (a) mean within-family Spearman rho(H1c, R1) > 0 with bootstrap CI excluding 0 in at least 2 of the 3 families, AND (b) shrinkage >= 0.50 for GDINO-minus-RPN and GDINO-minus-DETR",
+    "MECHANISM_PARTIAL": "only (a) holds",
+    "MECHANISM_GAP_PERSISTS": "only (b) holds",
+    "MECHANISM_NOT_SUPPORTED": "neither (a) nor (b) holds",
+    "honesty_clause": "if MECHANISM_NOT_SUPPORTED or MECHANISM_GAP_PERSISTS, the report must state that the composition account is NOT established by this diagnostic and must not be used to explain the P2-C1 amplification; the P2-C1 numbers stand either way, since they are confirmatory and independent of this file"
+  },
+  "stop_conditions": {
+    "cohort": "any family's common-K50 cohort < 8000 expressions -> STOP, report INSUFFICIENT_SUPPORT, no rescue",
+    "strata": "any redundancy quintile with < 200 expressions in any family -> that bin is dropped from the weighted matched gap and the drop is reported; if more than one bin is dropped, the shrinkage statistic is not reported at all",
+    "unknown_category": "if > 20% of expressions have target GT category -1 (unmatchable target), R1-based rules (a) and the S1 stratification are not reported; R3/R4-based association is reported instead"
+  },
+  "outputs": {
+    "dir": "results/v2_proposal_robustness/p2_m_mechanism",
+    "files": [
+      "mechanism_point.csv (family x measure means/stds over seeds, with cohort sizes)",
+      "mechanism_association.csv (family x harm x redundancy: rho mean/std, CI low/high, n)",
+      "mechanism_strata.csv (bin edges, per-bin n and H1c by family, matched/unmatched gaps, shrinkage)",
+      "p2_m_verdict.json",
+      "mechanism_report.md"
+    ],
+    "script": "scripts/p2_m_mechanism.py",
+    "tests": "tests/test_p2_m_plumbing.py"
+  },
+  "commit_plan": {
+    "A": "this freeze JSON, committed before any P2-M number exists",
+    "B": "scripts/p2_m_mechanism.py + tests + outputs + report, pushed only after an L3 deep review with 0 blocking findings"
+  },
+  "out_of_scope": [
+    "any C4 / hard-regime statement about GDINO (the B0 probe failed the same-category supply gate at 0.6892 vs 0.85; GDINO stays C1-only by user authorisation)",
+    "any claim that one detector is better than another",
+    "any causal language: this diagnostic is associational within family and stratified across families",
+    "any new model, feature, threshold, seed or dataset"
+  ]
+}
