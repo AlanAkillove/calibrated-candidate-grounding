@@ -1,0 +1,127 @@
+{
+  "protocol": "RQ4-M1",
+  "classification": "DESCRIPTIVE_MECHANISM_DECOMPOSITION",
+  "primary_verdict": "DECOMPOSITION_REPORTED",
+  "primary_verdict_meaning": "an exact accounting cannot succeed or fail; the identities were checked and both components are reported as they are",
+  "per_family_ordering": {
+    "RPN": "CONFIDENCE_CHANGE_HEAVIER",
+    "DETR": "CONFIDENCE_CHANGE_HEAVIER",
+    "GDINO": "CONFIDENCE_CHANGE_HEAVIER"
+  },
+  "per_family_components": {
+    "RPN": {
+      "D_total": 0.05169761132320797,
+      "D_label": 0.0026047031379755245,
+      "D_conf": 0.04909290818523245,
+      "share_label": 0.050383433031193595,
+      "share_conf": 0.9496165669688065,
+      "component_difference_label_minus_conf": -0.046488205047256925
+    },
+    "DETR": {
+      "D_total": 0.0851570336375372,
+      "D_label": 0.006165805521963293,
+      "D_conf": 0.07899122811557391,
+      "share_label": 0.07240512331849717,
+      "share_conf": 0.9275948766815029,
+      "component_difference_label_minus_conf": -0.07282542259361062
+    },
+    "GDINO": {
+      "D_total": 0.23659944702408384,
+      "D_label": -0.009144934344203715,
+      "D_conf": 0.24574438136828755,
+      "share_label": -0.0386515457209536,
+      "share_conf": 1.0386515457209535,
+      "component_difference_label_minus_conf": -0.2548893157124913
+    }
+  },
+  "cross_family_gaps": {
+    "GDINO_minus_RPN": {
+      "gap_total_degradation": 0.18490183570087587,
+      "gap_label_component": -0.01174963748217924,
+      "gap_conf_component": 0.1966514731830551,
+      "gap_residual": 2.7755575615628914e-17,
+      "heavier_component": "CONFIDENCE_CHANGE_HEAVIER",
+      "share_of_gap_from_label": -0.06354527221237091,
+      "share_of_gap_from_confidence": 1.0635452722123708,
+      "gap_total_degradation_ci_low": 0.16144133805662508,
+      "gap_total_degradation_ci_high": 0.20772082860680194
+    },
+    "GDINO_minus_DETR": {
+      "gap_total_degradation": 0.15144241338654663,
+      "gap_label_component": -0.015310739866167006,
+      "gap_conf_component": 0.16675315325271364,
+      "gap_residual": 0.0,
+      "heavier_component": "CONFIDENCE_CHANGE_HEAVIER",
+      "share_of_gap_from_label": -0.10109941808103234,
+      "share_of_gap_from_confidence": 1.1010994180810325,
+      "gap_total_degradation_ci_low": 0.12138960312852132,
+      "gap_total_degradation_ci_high": 0.18371132999736617
+    },
+    "DETR_minus_RPN": {
+      "gap_total_degradation": 0.033459422314329225,
+      "gap_label_component": 0.0035611023839877682,
+      "gap_conf_component": 0.029898319930341456,
+      "gap_residual": 0.0,
+      "heavier_component": "CONFIDENCE_CHANGE_HEAVIER",
+      "share_of_gap_from_label": 0.10643048019578934,
+      "share_of_gap_from_confidence": 0.8935695198042106,
+      "gap_total_degradation_ci_low": 0.006456743241087559,
+      "gap_total_degradation_ci_high": 0.059571413056845095
+    }
+  },
+  "matched_secondary": {
+    "GDINO_intersection_RPN": {
+      "n_expressions": 10125,
+      "classification": "SECONDARY_MATCHED_DIAGNOSTIC",
+      "ordering": {
+        "RPN": "CONFIDENCE_CHANGE_HEAVIER",
+        "GDINO": "CONFIDENCE_CHANGE_HEAVIER"
+      }
+    },
+    "GDINO_intersection_DETR": {
+      "n_expressions": 9589,
+      "classification": "SECONDARY_MATCHED_DIAGNOSTIC",
+      "ordering": {
+        "DETR": "CONFIDENCE_CHANGE_HEAVIER",
+        "GDINO": "CONFIDENCE_CHANGE_HEAVIER"
+      }
+    },
+    "DETR_intersection_RPN": {
+      "n_expressions": 9418,
+      "classification": "SECONDARY_MATCHED_DIAGNOSTIC",
+      "ordering": {
+        "RPN": "CONFIDENCE_CHANGE_HEAVIER",
+        "DETR": "CONFIDENCE_CHANGE_HEAVIER"
+      }
+    }
+  },
+  "identity_checks": {
+    "max_abs_shapley_residual": 0.0,
+    "max_abs_group_reconstruction_residual": 1.1102230246251565e-16,
+    "tolerance": 1e-12,
+    "all_within_tolerance": true
+  },
+  "forbidden_labels_used": [],
+  "stop_conditions_triggered": [],
+  "stop_conditions_note": "every frozen stop condition raises and aborts the run, so an empty list means none fired rather than one being ignored",
+  "interpretation_boundary": {
+    "allowed": [
+      "The observed AUROC degradation can be exactly decomposed into a correctness-transition component and a confidence-change component.",
+      "The larger GDINO degradation is statistically accounted for more by X than by Y in this decomposition."
+    ],
+    "forbidden": [
+      "X causes the degradation.",
+      "We discovered the true mechanism.",
+      "unmatched boxes / H2a / semantic ambiguity is the cause",
+      "any causal or intervention wording without a separate pre-result frozen intervention protocol"
+    ],
+    "phrase_rule": "use 'accounts for in the exact statistical decomposition', never 'causes' or 'is the causal mechanism'"
+  },
+  "out_of_scope_confirmed": [
+    "no R1/R2/R4/R5/H2a quantity enters the primary decomposition",
+    "no added-candidate tail-pressure metric is reported (freeze NOT USED: per-candidate raw scores are absent from the frozen prediction artifacts and recovering them would need a forbidden new model forward)",
+    "no new threshold, gate, model, dataset, seed or parameter",
+    "no V2 or V2-P confirmatory number, gate or threshold was touched"
+  ],
+  "generated_utc": "2026-10-02T13:55:37Z"
+}

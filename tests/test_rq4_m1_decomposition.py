@@ -18,6 +18,7 @@ section ``tests``:
 from __future__ import annotations
 
 import ast
+import csv
 import json
 import math
 import re
@@ -658,9 +659,109 @@ def test_freeze_documents_hold_no_real_decomposition_numbers():
     for name, text in scanned.items():
         hits = pattern.findall(text)
         assert not hits, f"{name} already contains a computed degradation number: {hits[:3]}"
-    # and no result artifact may exist yet in the freeze round
-    assert not (RESULT_DIR / "point_decomposition.csv").exists()
-    assert not (RESULT_DIR / "verdict.json").exists()
+    # once the result round has run, the same records must still not carry any of its numbers:
+    # that is the durable form of the freeze-round guarantee (the docs were written blind and
+    # were never back-filled after the results existed)
+    point = RESULT_DIR / "point_decomposition.csv"
+    if not point.exists():
+        return
+    rendered = set()
+    with point.open(encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            for key in ("D_total", "D_label", "D_conf"):
+                value = row.get(key, "")
+                if value in ("", None):
+                    continue
+                rendered.add(str(value))
+                rendered.add(f"{float(value):+.6f}")
+                rendered.add(f"{float(value):.6f}")
+    assert rendered, "the result file carried no decomposition number"
+    for name, text in scanned.items():
+        leaked = {value for value in rendered if value in text}
+        assert not leaked, f"{name} was back-filled with result numbers: {sorted(leaked)[:3]}"
+
+
+# ===========================================================================
+# rendering tier - the figure / report / CSV writers, on synthetic arrays only
+# ===========================================================================
+#: the real run crashed in a matplotlib call once; these tests keep the whole rendering
+#: layer executable without touching a frozen row, so a plotting regression surfaces in
+#: pytest instead of 25 minutes into a result round.
+@pytest.fixture(scope="module")
+def synthetic_pipeline():
+    names = ("SYN_A", "SYN_B")
+    arrays = {"SYN_A": drv.synthetic_arrays(n=1200, seed=11),
+              "SYN_B": drv.synthetic_arrays(n=1200, seed=23, flip_rate=0.15)}
+    families, boots, ids = {}, {}, {}
+    for name in names:
+        per_seed = arrays[name]
+        family = drv.analyze_family(name, per_seed, drv.synthetic_reference(per_seed, name))
+        family["cohort_rows"] = int(family["n"])
+        families[name] = family
+        boots[name] = dec.image_cluster_bootstrap(
+            drv.family_statistic(per_seed), per_seed[0]["image_id"],
+            n_replicates=25, seed=drv.core.BOOTSTRAP_SEED, ci=drv.core.BOOTSTRAP_CI,
+            keep_replicates=True)
+        ids[name] = {int(v) for v in per_seed[0]["sentence_id"]}
+    gaps = drv.gap_rows(families, boots, pairs=(("SYN_B", "SYN_A"),))
+    matched = [drv.matched_pair("SYN_B", "SYN_A", ids, arrays, replicates=25)]
+    freeze = drv.load_freeze()
+    verdict = {
+        "primary_verdict": "DECOMPOSITION_REPORTED",
+        "interpretation_boundary": freeze["interpretation_boundary"],
+        "identity_checks": {"max_abs_shapley_residual": 0.0,
+                            "max_abs_group_reconstruction_residual": 0.0,
+                            "tolerance": dec.IDENTITY_TOLERANCE, "all_within_tolerance": True},
+        "out_of_scope_confirmed": ["no new threshold"],
+    }
+    return {"names": names, "families": families, "arrays": arrays, "boots": boots,
+            "gaps": gaps, "matched": matched, "freeze": freeze, "verdict": verdict}
+
+
+def test_figures_render_on_synthetic_arrays(tmp_path, synthetic_pipeline):
+    written = drv.make_figures(synthetic_pipeline["families"], synthetic_pipeline["arrays"],
+                              synthetic_pipeline["gaps"], tmp_path)
+    assert len(written) == 3
+    for name in written:
+        path = drv.ROOT / name
+        assert path.exists() and path.stat().st_size > 1000, name
+
+
+def test_report_and_csv_writers_render_on_synthetic_arrays(tmp_path, monkeypatch,
+                                                           synthetic_pipeline):
+    monkeypatch.setattr(drv, "OUT_DIR", tmp_path)
+    names = synthetic_pipeline["names"]
+    monkeypatch.setattr(drv, "FAMILIES", names)
+    drv._write_point_rows(synthetic_pipeline["families"], synthetic_pipeline["gaps"])
+    drv._write_support_rows(synthetic_pipeline["families"], synthetic_pipeline["arrays"],
+                            synthetic_pipeline["boots"], synthetic_pipeline["gaps"],
+                            synthetic_pipeline["matched"])
+    report = drv.write_report(synthetic_pipeline["freeze"], synthetic_pipeline["families"],
+                              synthetic_pipeline["boots"], synthetic_pipeline["gaps"],
+                              synthetic_pipeline["matched"], synthetic_pipeline["verdict"],
+                              ["figures/fig1.png", "figures/fig2.png", "figures/fig3.png"],
+                              names)
+    text = (tmp_path / "report.md").read_text(encoding="utf-8")
+    assert report.endswith("report.md")
+    assert "DESCRIPTIVE_MECHANISM_DECOMPOSITION" in text
+    assert "not paired" in text.replace("**not** paired", "not paired")   # naming discipline kept
+    for sentence in synthetic_pipeline["freeze"]["interpretation_boundary"]["allowed"]:
+        assert sentence.split(".")[0][:40] in text
+    # the report renders numbers it was given and invents no causal wording of its own:
+    # causal phrases may only appear quoted inside the frozen boundary section (section 8)
+    causal = re.compile(r"\bcaus(?:e|es|ed|ing|al|ality)\b", re.IGNORECASE)
+    body, _, boundary_section = text.partition("## 8. Interpretation boundary")
+    assert boundary_section, "the frozen interpretation boundary section is missing"
+    assert not causal.search(body), causal.search(body)
+    for sentence in synthetic_pipeline["freeze"]["interpretation_boundary"]["forbidden"]:
+        assert sentence in boundary_section
+    for family in names:
+        assert f"{synthetic_pipeline['families'][family]['mean']['D_total']:+0.6f}" in text
+    assert (tmp_path / "point_decomposition.csv").exists()
+    for name in ("transition_groups.csv", "pairwise_auc_components.csv",
+                 "selective_error_sources.csv", "bootstrap_decomposition.csv",
+                 "cross_family_gap_decomposition.csv", "matched_intersection_decomposition.csv"):
+        assert (tmp_path / name).exists(), name
 
 
 # ===========================================================================
@@ -787,7 +888,9 @@ def test_metadata_attests_zero_fit_and_only_frozen_prediction_inputs():
     assert meta["confidence_column"].startswith("conf_msp")
     inputs = set(meta["inputs_read"])
     assert len(inputs) == len(drv.FAMILIES) * len(drv.SEEDS) * 2
-    assert all(p.startswith("results/v2_proposal_robustness/predictions/") for p in inputs)
+    # the metadata records OS-native paths, so compare on forward slashes
+    assert all(p.replace("\\", "/").startswith("results/v2_proposal_robustness/predictions/")
+               for p in inputs)
     assert len(meta["input_sha256"]) == len(inputs)
     assert meta["bootstrap"]["replicates"] == 5000 and meta["bootstrap"]["seed"] == 0
 

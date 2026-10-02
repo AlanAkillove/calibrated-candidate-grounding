@@ -2093,3 +2093,80 @@ next_allowed_step: >
   公式 / bootstrap / family pair / share 定义 / group 定义 / verdict wording，禁止新增机制变量。
 ```
 
+# RQ4-M1（Transition–Confidence Decomposition）—— result record
+
+> 本节是**结果后登记**：RQ4-M1 真实分解已在 freeze commit **`c68817b`** 推送之后才计算，
+> 数字全部来自 `results/v2_rq4_mechanism/m1_transition_confidence/`，未改写任何已冻结公式。
+
+```yaml
+# ===== RQ4-M1 result record（描述性机制分解；不是因果检验）=====
+record_class: result record（descriptive mechanism decomposition, computed after the freeze push）
+protocol_id: RQ4-M1
+freeze_commit: c68817b（"Freeze RQ4-M1 transition-confidence decomposition"，已 push v2-rq4-mechanism）
+classification: DESCRIPTIVE_MECHANISM_DECOMPOSITION
+real_results_seen_before_freeze: false
+new_training_parameters: 0
+new_model_forward: 0
+new_features: 0
+gpu_used: false
+temperature_refit: 0
+runtime: >
+  真实分解 wall = 791.89s，CPU only；bootstrap = image-cluster 5000 reps / seed 0 / 95% percentile；
+  输入 18 个冻结 prediction artifact + published C1 表，结果轮开头由 verify_input_manifest()
+  逐条重哈希（19/19 通过，含 sha256 与 file_size），任一 drift 即中止。
+identity_status: >
+  max |Shapley residual| = 0.0；max |group-weight reconstruction residual| = 1.11e-16（容差 1e-12）；
+  A00 / A11 逐位复现 published C1 的 K5 / K50 AUROC；G == 0 对三族三种子全部成立；
+  stop_conditions_triggered = []，forbidden_labels_used = []；verdict = DECOMPOSITION_REPORTED。
+headline_numbers: >
+  三族 ordering 全部为 CONFIDENCE_CHANGE_HEAVIER（3-seed mean，D_total / D_label / D_conf）：
+  RPN +0.051698 / +0.002605 / +0.049093；DETR +0.085157 / +0.006166 / +0.078991；
+  GDINO +0.236599 / **-0.009145** / +0.245744。GDINO 的 correctness-transition 分量为**负**
+  （该因子在此角上 improving reliability），全部退化由 confidence **ranking** 变化承载。
+cross_family_gap: >
+  GDINO-RPN gap D_total = +0.184902，拆为 label 分量 -0.011750 + confidence 分量 +0.196651
+  （residual 2.8e-17）；GDINO-DETR = +0.151442 = -0.015311 + +0.166753；
+  DETR-RPN = +0.033459 = +0.003561 + +0.029898。三个比较的 heavier component 均为 confidence change。
+  这些是各族自己 cohort 上独立重采样、按 replicate index 对齐的 **descriptive** CI（不是
+  paired-expression CI）：GDINO-RPN gap CI [0.161441, 0.207721]，confidence 分量 CI
+  [0.176015, 0.218443]，label 分量 CI [-0.029831, 0.005643] 含 0。
+matched_secondary: >
+  secondary = matched-expression intersection + **shared** image-cluster draws（真 paired）：
+  GDINO∩RPN（10125 表达式）paired gap +0.177824 CI [0.155407, 0.200415]，label -0.011598
+  CI [-0.028824, 0.005678]，conf +0.189421 CI [0.169174, 0.210470]；GDINO∩DETR（9589）
+  +0.134950 CI [0.107595, 0.162878]；DETR∩RPN（9418）+0.022697 CI [-0.004215, 0.048774]。
+  结论：cohort 匹配后同一 ordering 存活（不覆盖 primary）。
+diagnostics: >
+  S/F/E 组成（seed1）：RPN 4373/3727/2186、DETR 5647/2873/1145、GDINO 4635/4166/1601，G=0。
+  AUC(S,F;p50) vs AUC(S,E;p50)：RPN 0.763 / 0.837；DETR 0.737 / 0.658；GDINO 0.593 / 0.581
+  —— GDINO 上新引入错误在 K50 仍保留接近随机的置信排序。selective@50% 接受错误中来自 F 的比例：
+  RPN≈0.73、DETR≈0.63、GDINO≈0.71。
+implementation_fix_in_result_round: >
+  第一次真实运行在完成全部计算、渲染 fig2 时因 matplotlib Line2D 无 get_xpos() 而崩溃（未写任何
+  artifact）。修复**仅**涉及渲染层：fig2 中位线标记改用 get_xdata()；数值 artifact 改为先于 figures
+  写出；补齐 freeze 中已列出但驱动未实现的 report.md 输出；新增 rendering-tier 测试（纯 synthetic）
+  使该类缺陷在 pytest 中暴露。公式 / bootstrap / family pair / share 定义 / group 定义 /
+  verdict wording **零改动**，未新增机制变量；修复后重跑的三族点估计与首次运行逐位一致。
+answer_to_questions: >
+  RQ4-M1-Q1：三族的 K5→K50 退化在此精确分解中均由 confidence-ranking-change 分量承载为主，
+  correctness-transition 分量近零（GDINO 为负）。RQ4-M1-Q2：GDINO 相对 RPN / DETR 的额外退化
+  在该分解中几乎全部由 confidence 分量 accounted for（gap 的 conf 分量 +0.1967 / +0.1668，
+  label 分量为负且 CI 含 0）。措辞上限："accounts for in the exact statistical decomposition"。
+forbidden_wording_still: >
+  不得写 X causes the degradation / we discovered the true mechanism / unmatched boxes、H2a、
+  semantic ambiguity is the cause；不得把上述描述性分解当作干预证据。
+tests_and_suite: >
+  结果轮后 full pytest = 1107 tests / 0 failed / 0 errors / 2 skipped（RQ4-M1 的 7 个
+  artifact-tier 测试由 skip 转为实际执行并通过）。
+artifact_paths: >
+  results/v2_rq4_mechanism/m1_transition_confidence/{protocol_freeze.json,
+  input_artifact_manifest.csv, point_decomposition.csv, bootstrap_decomposition.csv,
+  transition_groups.csv, pairwise_auc_components.csv, selective_error_sources.csv,
+  cross_family_gap_decomposition.csv, matched_intersection_decomposition.csv, verdict.json,
+  metadata.json, report.md, figures/fig1..fig3.png}
+program_status_after_this: >
+  RQ4-M1 COMPLETE。RQ4 到此停止：RQ4-M2、新 candidate-property search、新 detector / dataset /
+  model、任何 intervention / ablation / causal test 均**未获授权**。V2-G/D/M/M3/P 仍 CLOSED，
+  其 confirmatory 数字、gate、threshold 未被触碰。
+```
+

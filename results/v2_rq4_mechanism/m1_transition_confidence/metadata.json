@@ -1,0 +1,99 @@
+{
+  "artifact": "rq4_m1_transition_confidence_decomposition",
+  "protocol": "RQ4-M1",
+  "classification": "DESCRIPTIVE_MECHANISM_DECOMPOSITION",
+  "config_freeze": "results\\v2_rq4_mechanism\\m1_transition_confidence\\protocol_freeze.json",
+  "config_freeze_sha256": "82f275b4536659105868ef273b323c43031a91a2a26019bcef847db12058387a",
+  "input_artifact_manifest": "results\\v2_rq4_mechanism\\m1_transition_confidence\\input_artifact_manifest.csv",
+  "input_manifest_sha256": "096357ae300bbb16874691725db48d7d9f50fffd3a2670a2fa31543e90fb608a",
+  "input_manifest_verified": {
+    "manifest_sha256": "096357ae300bbb16874691725db48d7d9f50fffd3a2670a2fa31543e90fb608a",
+    "n_verified": 19,
+    "n_prediction_verified": 18
+  },
+  "branch": "v2-rq4-mechanism",
+  "commit": "c68817b76f0b1ad58c65b303088724654cea4c04",
+  "parent_artifacts": {
+    "governance_closeout_commit": "42fe6ad",
+    "C1_confirmatory_source": "results/v2_proposal_robustness/p2_c1_gdino/p2_c1_verdict.json",
+    "C1_point_reference": "results/v2_proposal_robustness/p2_c1_gdino/c1_point.csv",
+    "P1_reference": "results/v2_proposal_robustness/p1_f4_c1/f4_verdict.json",
+    "axis_index": "results/v2_proposal_robustness/v2_p_program_summary.md",
+    "algebra_module": "src/ccg/rq4/decomposition.py",
+    "driver": "scripts/rq4_m1_decomposition.py",
+    "tests": "tests/test_rq4_m1_decomposition.py"
+  },
+  "families": [
+    "RPN",
+    "DETR",
+    "GDINO"
+  ],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "cohorts": {
+    "RPN": 10286,
+    "DETR": 9665,
+    "GDINO": 10402
+  },
+  "inputs_read": [
+    "results\\v2_proposal_robustness\\predictions\\p1__DETR__random_k50__b3_seed1.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__DETR__random_k50__b3_seed2.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__DETR__random_k50__b3_seed3.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__DETR__random_k5__b3_seed1.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__DETR__random_k5__b3_seed2.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__DETR__random_k5__b3_seed3.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__GDINO__random_k50__b3_seed1.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__GDINO__random_k50__b3_seed2.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__GDINO__random_k50__b3_seed3.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__GDINO__random_k5__b3_seed1.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__GDINO__random_k5__b3_seed2.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__GDINO__random_k5__b3_seed3.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__RPN__random_k50__b3_seed1.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__RPN__random_k50__b3_seed2.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__RPN__random_k50__b3_seed3.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__RPN__random_k5__b3_seed1.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__RPN__random_k5__b3_seed2.npz",
+    "results\\v2_proposal_robustness\\predictions\\p1__RPN__random_k5__b3_seed3.npz"
+  ],
+  "input_sha256": {
+    "results\\v2_proposal_robustness\\predictions\\p1__DETR__random_k50__b3_seed1.npz": "62c880ba1fa1aa33c9174dfa30962b4ae736965355f9c65d35a05b4d656d6509",
+    "results\\v2_proposal_robustness\\predictions\\p1__DETR__random_k50__b3_seed2.npz": "0ec96483754567e6d5cbf684b03812a65b929365ff31177c5109a9098ac59cc5",
+    "results\\v2_proposal_robustness\\predictions\\p1__DETR__random_k50__b3_seed3.npz": "308605ec24e75e35380678d1547948cfbfb06ec8c4c6c96723a12620da849e86",
+    "results\\v2_proposal_robustness\\predictions\\p1__DETR__random_k5__b3_seed1.npz": "335c34a29a9450f2f75d9c427fce1f5105ffc1c937445f55a7892f0926b5a523",
+    "results\\v2_proposal_robustness\\predictions\\p1__DETR__random_k5__b3_seed2.npz": "f0e1391b57f1943ce606ff0ae128e3c897d34deba883037bc995f9257a907f12",
+    "results\\v2_proposal_robustness\\predictions\\p1__DETR__random_k5__b3_seed3.npz": "8464221ea8360e1c37b3a0a4bc144ff9142a8d14662266f7a039eaad3e0a5fd8",
+    "results\\v2_proposal_robustness\\predictions\\p1__GDINO__random_k50__b3_seed1.npz": "00baecd0c31e4f12adac818bde64960f7d9ba621f47302a40ab7d0cc7f8673ec",
+    "results\\v2_proposal_robustness\\predictions\\p1__GDINO__random_k50__b3_seed2.npz": "91770ff7449e4f99e445d67dfe993069ecfc4002c79b05c6bae26eb4098586ed",
+    "results\\v2_proposal_robustness\\predictions\\p1__GDINO__random_k50__b3_seed3.npz": "2fbc8895b9283d59e99bf5a0c8e56a02dccfb27ba68737e2ea90b8d0805fa5c3",
+    "results\\v2_proposal_robustness\\predictions\\p1__GDINO__random_k5__b3_seed1.npz": "ba8f986e48e4452b10a74a3a9fbfad636fc3e1bae32d0f3564f9285241f15c3a",
+    "results\\v2_proposal_robustness\\predictions\\p1__GDINO__random_k5__b3_seed2.npz": "fd2b3980a824b3e71e469f64b42d3f504e51200c965468eb8cc76fc699f5112b",
+    "results\\v2_proposal_robustness\\predictions\\p1__GDINO__random_k5__b3_seed3.npz": "3248450fba426348c4d7e01498fc357cda9fcbf32546fd6eebceec9d32254e86",
+    "results\\v2_proposal_robustness\\predictions\\p1__RPN__random_k50__b3_seed1.npz": "e484809bd9a3ecd73e872d4856482d5b979409353339f8cb7a5ad11cb8fade72",
+    "results\\v2_proposal_robustness\\predictions\\p1__RPN__random_k50__b3_seed2.npz": "3c1ca11502ad6df11e9204a4ab498c52d48f4df182b18844d6cf7086ab365b3d",
+    "results\\v2_proposal_robustness\\predictions\\p1__RPN__random_k50__b3_seed3.npz": "46017eb90d0a81a7b6da49fe543d6cdd261510fced150b279db7fd4373ef7e38",
+    "results\\v2_proposal_robustness\\predictions\\p1__RPN__random_k5__b3_seed1.npz": "0f721d6656bdb24fa464194dc144cf24394b32aab7515cd7356a9508070bcbbe",
+    "results\\v2_proposal_robustness\\predictions\\p1__RPN__random_k5__b3_seed2.npz": "bc3b78e7e6df70a878fd1b7da2a5ba0ec6f6f974c84e4c6c1e77884d7e59e847",
+    "results\\v2_proposal_robustness\\predictions\\p1__RPN__random_k5__b3_seed3.npz": "b70f7b6ce9e9de227925422dcaeb42b7c1f157eada1c53246940d118f38cd751"
+  },
+  "confidence_column": "conf_msp (frozen global_T_corrected), read as stored",
+  "new_training_parameters": 0,
+  "model_forward_passes": 0,
+  "gpu_used": false,
+  "temperature_refit": 0,
+  "bootstrap": {
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "resample_unit": "image"
+  },
+  "figures": [
+    "results\\v2_rq4_mechanism\\m1_transition_confidence\\figures\\fig1_signed_decomposition.png",
+    "results\\v2_rq4_mechanism\\m1_transition_confidence\\figures\\fig2_transition_group_confidence.png",
+    "results\\v2_rq4_mechanism\\m1_transition_confidence\\figures\\fig3_cross_family_gap_components.png"
+  ],
+  "wall_seconds": 791.89,
+  "generated_utc": "2026-10-02T13:55:38Z"
+}

@@ -516,7 +516,12 @@ def make_figures(families: Mapping[str, Dict[str, Any]],
             ticks.append(f"{family}\n{group} n={counts[group]}")
     box = ax.boxplot(values, positions=positions, widths=0.7, showfliers=False, whis=(5, 95))
     for median in box["medians"]:
-        ax.plot([median.get_xpos()], median.get_ydata(), marker="D", color="black", markersize=4)
+        # a median line spans its box, so its two endpoints average back to the position
+        xs = np.asarray(median.get_xdata(), dtype=np.float64)
+        ys = np.asarray(median.get_ydata(), dtype=np.float64)
+        if xs.size == 0 or ys.size == 0:
+            continue
+        ax.plot([float(xs.mean())], [float(ys[0])], marker="D", color="black", markersize=4)
     ax.set_xticks(positions)
     ax.set_xticklabels(ticks, fontsize=7)
     ax.set_ylabel("conf_msp (global_T_corrected) at K50")
@@ -554,7 +559,10 @@ def _save(fig: Any, path: Path) -> str:
     import matplotlib.pyplot as plt
 
     plt.close(fig)
-    return str(path.relative_to(ROOT))
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:                                  # rendered outside the repo (tests)
+        return str(path)
 
 
 # ---------------------------------------------------------------------------
@@ -606,8 +614,11 @@ def run_real(args: argparse.Namespace) -> Dict[str, Any]:
 
     gaps = gap_rows(families, boots)
     matched = [matched_pair(first, second, ids, arrays) for first, second in PAIRS]
-    figures = make_figures(families, arrays, gaps, OUT_DIR / "figures") if args.figures else []
 
+    # Numeric artifacts are written before any rendering: every frozen stop condition has
+    # already been evaluated inside analyze_family / bootstrap / matched_pair, so a plotting
+    # or report failure can never destroy a computed decomposition, and no number is written
+    # that has not passed the identity, reproduction and invariant checks.
     _write_point_rows(families, gaps)
     _write_support_rows(families, arrays, boots, gaps, matched)
 
@@ -662,6 +673,9 @@ def run_real(args: argparse.Namespace) -> Dict[str, Any]:
         "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
     _write_json(OUT_DIR / "verdict.json", verdict)
+
+    figures = make_figures(families, arrays, gaps, OUT_DIR / "figures") if args.figures else []
+    write_report(freeze, families, boots, gaps, matched, verdict, figures, FAMILIES)
 
     metadata = {
         "artifact": "rq4_m1_transition_confidence_decomposition",
@@ -807,6 +821,196 @@ def _write_support_rows(families: Mapping[str, Dict[str, Any]],
         "comparison", "gap_total_degradation", "gap_label_component", "gap_conf_component",
         "gap_residual", "share_of_gap_from_label", "share_of_gap_from_confidence",
         "heavier_component"])
+
+
+# ---------------------------------------------------------------------------
+# report.md (the frozen prose of §21 is the only admissible wording)
+# ---------------------------------------------------------------------------
+def _sig(value: Any, digits: int = 6) -> str:
+    """Signed fixed-point rendering; a missing or non-finite value says so instead of hiding."""
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return "n/a"
+    if not np.isfinite(number):
+        return "nan"
+    return f"{number:+.{digits}f}"
+
+
+def _plain(value: Any, digits: int = 6) -> str:
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return "n/a"
+    return "nan" if not np.isfinite(number) else f"{number:.{digits}f}"
+
+
+def _ci(boot: Mapping[str, Any], key: str) -> str:
+    block = boot.get(key)
+    if not isinstance(block, Mapping):
+        return "n/a"
+    return f"[{_plain(block['ci_low'])}, {_plain(block['ci_high'])}]"
+
+
+def write_report(freeze: Mapping[str, Any], families: Mapping[str, Dict[str, Any]],
+                 boots: Mapping[str, Dict[str, Any]], gaps: Sequence[Mapping[str, Any]],
+                 matched: Sequence[Mapping[str, Any]], verdict: Mapping[str, Any],
+                 figures: Sequence[str],
+                 names: Sequence[str] = FAMILIES) -> str:
+    """Render ``report.md`` from the frozen artifacts; it computes nothing of its own."""
+    boundary = verdict["interpretation_boundary"]
+    lines: List[str] = ["# RQ4-M1 — Transition–Confidence Decomposition",
+                        "",
+                        f"Classification: `{freeze['classification']}` — descriptive mechanism "
+                        "decomposition of an already-settled confirmatory effect (V2-P C1). "
+                        "No new existence claim, no intervention test, no new method.",
+                        "",
+                        f"Protocol: `{freeze['protocol']}` (frozen before any RQ4-M1 result: "
+                        "`protocol_freeze.json`).",
+                        "",
+                        "## 1. Identity checks (all frozen tolerances)",
+                        "",
+                        f"- max |Shapley residual| over families: "
+                        f"`{verdict['identity_checks']['max_abs_shapley_residual']:.3e}`",
+                        f"- max |group-weight reconstruction residual|: "
+                        f"`{verdict['identity_checks']['max_abs_group_reconstruction_residual']:.3e}`",
+                        f"- tolerance: `{verdict['identity_checks']['tolerance']:.1e}`, "
+                        f"within tolerance: `{verdict['identity_checks']['all_within_tolerance']}`",
+                        f"- A00 / A11 reproduce the published C1 K5 / K50 AUROC per (family, seed) "
+                        "(checked at computation time; a drift would have stopped the run)",
+                        f"- structural invariant G == 0 held for every family and seed "
+                        "(checked in `transition_groups.csv`)",
+                        f"- primary verdict: `{verdict['primary_verdict']}` — a constant, because an "
+                        "exact accounting decomposition cannot succeed or fail",
+                        "",
+                        "## 2. Per-family decomposition of the K5→K50 AUROC degradation",
+                        "",
+                        "`D_total = D_label + D_conf`, both components **signed** (a negative "
+                        "component means that factor improved reliability while the other worsened "
+                        "it more). Shares are signed descriptive shares, never clipped.",
+                        "",
+                        "| family | cohort n | D_total | D_label | D_conf | share_label | "
+                        "share_conf | D_label CI | D_conf CI | D_total CI | ordering |",
+                        "|---|---|---|---|---|---|---|---|---|---|"]
+    for family in names:
+        mean = families[family]["mean"]
+        boot = boots[family]
+        lines.append(
+            f"| {family} | {families[family]['cohort_rows']} | {_sig(mean['D_total'])} | "
+            f"{_sig(mean['D_label'])} | {_sig(mean['D_conf'])} | {_plain(mean['share_label'], 4)} | "
+            f"{_plain(mean['share_conf'], 4)} | {_ci(boot, 'D_label')} | {_ci(boot, 'D_conf')} | "
+            f"{_ci(boot, 'D_total')} | `{mean['ordering']}` |")
+    lines += ["", "Cohorts: " + ", ".join(f"{f} = {families[f]['cohort_rows']} rows "
+                                          f"(per-seed n = {families[f]['n']})" for f in names) + ".",
+              "", "Per-seed values are in `point_decomposition.csv` (rows `seed1/seed2/seed3`), "
+                  "bootstrap details in `bootstrap_decomposition.csv`.",
+              "",
+              "## 3. Cross-family exact gap decomposition",
+              "",
+              "`D_total(a) - D_total(b) = (D_label(a) - D_label(b)) + (D_conf(a) - D_conf(b))`, "
+              "exact by subtraction of two exact identities. The gap CIs are **descriptive under "
+              "independent-family resampling** on each family's own cohort and are **not** "
+              "paired-expression CIs.",
+              "",
+              "| comparison | gap D_total | gap CI | gap D_label | label-gap CI | "
+              "gap D_conf | conf-gap CI | heavier component | share from label | "
+              "share from confidence |",
+              "|---|---|---|---|---|---|---|---|---|"]
+    for gap in gaps:
+        lines.append(
+            f"| {gap['comparison']} | {_sig(gap['gap_total_degradation'])} | "
+            f"[{_plain(gap['gap_total_degradation_ci_low'])}, "
+            f"{_plain(gap['gap_total_degradation_ci_high'])}] | "
+            f"{_sig(gap['gap_label_component'])} | "
+            f"[{_plain(gap['gap_label_component_ci_low'])}, "
+            f"{_plain(gap['gap_label_component_ci_high'])}] | "
+            f"{_sig(gap['gap_conf_component'])} | "
+            f"[{_plain(gap['gap_conf_component_ci_low'])}, "
+            f"{_plain(gap['gap_conf_component_ci_high'])}] | `{gap['heavier_component']}` | "
+            f"{_plain(gap['share_of_gap_from_label'], 4)} | "
+            f"{_plain(gap['share_of_gap_from_confidence'], 4)} |")
+    lines += ["", "## 4. Transition-group composition (S / F / E, G == 0 everywhere)", "",
+              "Counts and confidence summaries per family × seed are in `transition_groups.csv`; "
+              "the key ranking quantity `AUC(S,F;p50)` (newly introduced errors keep high "
+              "confidence at K50?) is reported next to `AUC(S,E;p50)` (persistent errors) in "
+              "`pairwise_auc_components.csv`.", "",
+              "| family | seed | S | F | E | G | AUC(S,F;p50) | AUC(S,E;p50) |",
+              "|---|---|---|---|---|---|---|---|"]
+    for family in names:
+        for row in families[family]["per_seed"]:
+            counts = row["group_counts"]
+            pairwise = row["pairwise"]
+            lines.append(f"| {family} | {row['seed']} | {counts['S']} | {counts['F']} | "
+                         f"{counts['E']} | {counts['G']} | {_plain(pairwise['AUC_SF_p50'])} | "
+                         f"{_plain(pairwise['AUC_SE_p50'])} |")
+    lines += ["", "## 5. Accepted-error sources behind the published RER@50 / RER@80 degradation",
+              "",
+              "No new gate: this only describes the composition of the accepted set under the "
+              "frozen selective convention (`n_keep = max(1, ceil(coverage * n))`, descending "
+              "`conf_msp`@K50, stable sort). Full table in `selective_error_sources.csv`.", "",
+              "| family | seed | coverage | accepted F (new) | accepted E (persistent) | "
+              "fraction of accepted errors from F | risk |",
+              "|---|---|---|---|---|---|---|"]
+    for family in names:
+        for row in families[family]["per_seed"]:
+            for entry in row["selective"]:
+                lines.append(
+                    f"| {family} | {row['seed']} | {entry['coverage']} | "
+                    f"{entry['accepted_F_new_errors']} | "
+                    f"{entry['accepted_E_persistent_errors']} | "
+                    f"{_plain(entry['fraction_of_accepted_errors_from_F'], 4)} | "
+                    f"{_plain(entry['risk'], 4)} |")
+    lines += ["", "## 6. Matched-expression secondary (paired, SECONDARY_MATCHED_DIAGNOSTIC)",
+              "",
+              "On each intersection both families are restricted to identical expression rows and "
+              "resampled with **shared** image-cluster draws, so the gap there is genuinely "
+              "paired-expression. It never overrides the primary own-cohort result; it reports "
+              "whether the same component ordering survives cohort matching.", "",
+              "| pair | n expressions | family | D_total | D_label | D_conf | ordering |",
+              "|---|---|---|---|---|---|---|"]
+    for block in matched:
+        for family, mean in block["family_mean"].items():
+            lines.append(
+                f"| {block['pair']} | {block['n_expressions']} | {family} | "
+                f"{_sig(mean['D_total'])} | {_sig(mean['D_label'])} | {_sig(mean['D_conf'])} | "
+                f"`{mean['ordering']}` |")
+    lines += ["", "Paired gap on the same intersection (shared image-cluster draws, so this CI is "
+              "the genuine paired-expression contrast):", "",
+              "| comparison | gap D_total | CI | gap D_label | CI | gap D_conf | CI |",
+              "|---|---|---|---|---|---|---|"]
+    for block in matched:
+        boot = block["bootstrap"]
+        gap = block["gap"]
+        lines.append(
+            f"| {block['pair']} | {_sig(gap['gap_total_degradation'])} | {_ci(boot, 'gap|D_total')} | "
+            f"{_sig(gap['gap_label_component'])} | {_ci(boot, 'gap|D_label')} | "
+            f"{_sig(gap['gap_conf_component'])} | {_ci(boot, 'gap|D_conf')} |")
+    lines += ["", "## 7. Figures (exactly three, per the frozen figure policy)", ""]
+    lines += [f"- `{name}`" for name in figures] or ["- figures disabled in this run"]
+    lines += ["", "## 8. Interpretation boundary (frozen wording)", "",
+              "Allowed:", ""]
+    lines += [f"- {sentence}" for sentence in boundary["allowed"]]
+    lines += ["", "Forbidden:", ""]
+    lines += [f"- {sentence}" for sentence in boundary["forbidden"]]
+    lines += ["", f"Phrase rule: {boundary['phrase_rule']}", "",
+              "The two research questions are answered only as far as this decomposition can answer "
+              "them: Q1 by the reported components per family, Q2 by the exact cross-family gap "
+              "split. `D_conf` is a confidence-**ranking**-change contribution, not a temperature or "
+              "calibration-scale change (AUROC is invariant to monotone score transforms).", "",
+              "Out of scope and not reported: " + "; ".join(verdict["out_of_scope_confirmed"]) + ".",
+              "",
+              "## 9. Provenance", "",
+              "- inputs: the 18 hashed prediction artifacts plus the published C1 reference listed in "
+              "`input_artifact_manifest.csv`; every real analysis consumes exactly those hashed files",
+              "- no model forward pass, no training, no feature extraction, no GPU, no temperature "
+              "refit, no new cohort / seed / family / threshold",
+              "- full machine-readable detail in `verdict.json` and `metadata.json`", ""]
+    path = OUT_DIR / "report.md"
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:                                  # rendered outside the repo (tests)
+        return str(path)
 
 
 # ---------------------------------------------------------------------------
