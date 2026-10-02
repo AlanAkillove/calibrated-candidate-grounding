@@ -115,6 +115,13 @@ mechanism: a detector tuned *by construction* to produce class-clustered
 redundancy amplifies C1 by ~2.8x over DETR without any change to the scorer, the
 temperature, the cohort rule, or the metric set.
 
+> **Superseded in part by V2-P2-M (see section 9 below).** The *count* exclusion in
+> this section stands (it is arithmetic). The mechanistic reading above - that
+> GDINO's slots are filled with *same-class* redundant boxes, and that this is what
+> amplifies C1 - was tested directly and did **not** survive: GDINO has the fewest
+> same-class distractors of the three banks and matching on that variable does not
+> shrink its excess harm. The confirmatory numbers in sections 1-5 are unaffected.
+
 ## 6. Like-for-like intersections (secondary, descriptive)
 
 Expression-level intersections (identical expressions in both families), from
@@ -155,3 +162,41 @@ E:\conda\envs\deepminer\python.exe -u scripts/p2_c1_cardinality.py              
 Outputs: `c1_point.csv`, `c1_bootstrap.csv`, `c1_secondary_raw_auroc.csv`,
 `p2_c1_verdict.json`, `figures/fig1_k_vs_auroc_three_families.png`,
 `figures/fig2_k_vs_eaurc_three_families.png`.
+
+## 9. Addendum (V2-P2-M, added after this report was committed at `7905aad`)
+
+Nothing above is rewritten; the only change outside this section is the marked
+pointer added under the section-5 reading. This addendum records what a later,
+independently frozen measurement (`V2-P2-M`, freeze commit `87009ac`, verdict
+`results/v2_proposal_robustness/p2_m_mechanism/p2_m_verdict.json`) showed about the
+*interpretation* in section 5.
+
+The P2-M diagnostic measured, per expression and per family, four pool-composition
+variables built only from bank boxes and COCO GT (`R1` same-class distractors,
+`R2` share of pool members matching no non-crowd GT object, `R4` geometric pair
+overlap at IoU > .7 / > .9) plus one Class-I CLIP descriptor
+(`query_cos_spread`), and related them to the per-expression pool-growth harm.
+
+* **Within family, composition is a real but weak channel** in the two deep families:
+  `rho(H1c, R1)` = +0.089 [.061, .119] (DETR) and +0.053 [.024, .081] (GDINO), CI
+  excluding 0 in 2 of 3 families; RPN shows no such association
+  (-0.014 [-.038, +.010]).
+* **The 2.8x amplification is not carried by that channel.** Stratifying expressions
+  into pooled R1 quintiles (0 bins dropped) leaves the GDINO-minus-RPN and
+  GDINO-minus-DETR harm gaps completely unshrunk - shrinkage -0.18 and -0.07 against
+  the frozen 0.50 bar. GDINO has the *fewest* same-class distractors
+  (mean 6.23 vs DETR 8.71 and RPN 11.51) and less geometric redundancy than DETR,
+  yet the largest harm. Frozen verdict: **MECHANISM_PARTIAL**.
+* **What GDINO does have, uniquely**, is the highest share of pool candidates that
+  match no non-crowd COCO object (`R2` 0.718 vs 0.611 / 0.564) - boxes on nothing
+  rather than boxes on a same-class competitor. Within GDINO that variable is not
+  associated with harm either (+0.004 [-.024, .032]), so it is reported as an open
+  description, not as a mechanism.
+
+Consequences for how this report should be cited: keep "candidate-cardinality
+degradation replicates and is amplified ~2.8x under a class-prompted detector, and it
+cannot be a candidate-*count* effect because all three banks hold exactly 64 proposals
+and are evaluated at the same presented K". Drop "the amplification is evidence for a
+same-class semantic-competition mechanism": the direct test contradicts its premise.
+The `composition, not count` phrase in section 5 should be read as *count is excluded;
+the measured composition channel does not account for the between-family gap*.

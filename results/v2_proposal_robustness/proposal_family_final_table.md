@@ -38,11 +38,20 @@ C4 verdict (DETR): **YES**
 C1 verdict (GDINO, V2-P2-C1): **YES - replicated and amplified (2.8x DETR, 4.6x RPN)**
 Overall P1 verdict: **CORE_FINDINGS_PROPOSAL_FAMILY_ROBUST** (YES)
 P2 extension verdict: **C1_REPLICATED_ON_THIRD_PROPOSAL_FAMILY** (C1 only; C4 not tested)
+P2 mechanism verdict (V2-P2-M): **MECHANISM_PARTIAL**
 
 candidate-cardinality degradation and hard-semantic amplification both replicate
 under DETR proposals. V2-P2 adds that candidate-cardinality degradation also
-replicates under a class-prompted detector whose proposals are structurally
-class-clustered, where it is ~3x larger - and that the amplification is a
-candidate-*composition* effect, not a candidate-*count* effect, since all three
-banks hold exactly 64 proposals per image and all three are evaluated at the same
-presented K (see `p2_c1_gdino/analysis_report.md`).
+replicates under a class-prompted detector, where it is ~3x larger, and that the
+amplification cannot be a candidate-*count* effect: all three banks hold exactly 64
+proposals per image and all three are evaluated at the same presented K.
+
+V2-P2-M then tested *why* it is larger, and the honest answer is "not for the reason
+first guessed". Within family, pool composition is a real but weak harm channel
+(rho(H1c, same-class distractors) = +0.089 DETR / +0.053 GDINO, both CIs excluding 0;
+RPN shows none). Across families it does not carry the amplification: matching
+expressions into same-class-redundancy quintiles leaves the GDINO gap completely
+unshrunk (shrinkage -0.18 vs the frozen 0.50 bar), because GDINO has the *fewest*
+same-class distractors of the three banks while suffering the *most* harm. See
+`p2_m_mechanism/mechanism_report.md` and the addendum in
+`p2_c1_gdino/analysis_report.md`.

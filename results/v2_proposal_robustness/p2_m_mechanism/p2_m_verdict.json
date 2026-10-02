@@ -1,0 +1,128 @@
+{
+  "artifact": "v2_p2_m_mechanism",
+  "protocol": "V2-P2-M",
+  "classification": "DESCRIPTIVE_MECHANISM",
+  "config_freeze": "F:\\DL Projects\\calibrated-candidate-grounding\\results\\v2_proposal_robustness\\p2_m_mechanism_config_freeze.json",
+  "families": [
+    "RPN",
+    "DETR",
+    "GDINO"
+  ],
+  "cohorts": {
+    "RPN": 10286,
+    "DETR": 9665,
+    "GDINO": 10402
+  },
+  "a1_cohorts": {
+    "RPN": {
+      "group_a_rows": 10286,
+      "group_b_r1_finite_rows": 10286
+    },
+    "DETR": {
+      "group_a_rows": 9665,
+      "group_b_r1_finite_rows": 9665
+    },
+    "GDINO": {
+      "group_a_rows": 10402,
+      "group_b_r1_finite_rows": 10402
+    }
+  },
+  "unknown_target_share": {
+    "RPN": 0.0,
+    "DETR": 0.0,
+    "GDINO": 0.0
+  },
+  "note_on_binary_harm": "H1a/H1c are discrete by construction; a rank correlation against a discrete indicator is a rank-biserial association and is reported as such, not as evidence of a continuous functional form",
+  "rule_a_within_family_rho": {
+    "measure": "rho(H1c_net_harm, R1_same_class_distractors)",
+    "per_family": {
+      "RPN": {
+        "rho_mean_of_seeds": -0.014419431575938476,
+        "rho_std_of_seeds": 0.004139750288862087,
+        "ci_low": -0.03832689758532276,
+        "ci_high": 0.009518253900603704,
+        "per_seed_rho": [
+          -0.01083673809566523,
+          -0.012200849482416542,
+          -0.020220707149733657
+        ],
+        "n": 10286
+      },
+      "DETR": {
+        "rho_mean_of_seeds": 0.08942433722207281,
+        "rho_std_of_seeds": 0.00509872575034399,
+        "ci_low": 0.06109647425604252,
+        "ci_high": 0.11912436559087355,
+        "per_seed_rho": [
+          0.09007298562582143,
+          0.0953193335499724,
+          0.0828806924904246
+        ],
+        "n": 9665
+      },
+      "GDINO": {
+        "rho_mean_of_seeds": 0.05252681393613263,
+        "rho_std_of_seeds": 0.003149256750247172,
+        "ci_low": 0.024217801153512044,
+        "ci_high": 0.08076295157986384,
+        "per_seed_rho": [
+          0.05468647529160666,
+          0.05482020489960452,
+          0.048073761617186704
+        ],
+        "n": 10402
+      }
+    },
+    "families_passing": [
+      "DETR",
+      "GDINO"
+    ],
+    "required": 2,
+    "passed": true,
+    "blocked_by_unknown_share": []
+  },
+  "rule_b_matched_strata": {
+    "bin_edges_R1": [
+      3.0,
+      5.0,
+      9.0,
+      14.0
+    ],
+    "bins_dropped": 0,
+    "unmatched_gap_H1c": {
+      "GDINO_minus_RPN": 0.04103499991258158,
+      "GDINO_minus_DETR": 0.10588572528019086
+    },
+    "matched_gap_H1c": {
+      "GDINO_minus_RPN": 0.04842723277515126,
+      "GDINO_minus_DETR": 0.11281678450046226
+    },
+    "shrinkage": {
+      "GDINO_minus_RPN": -0.18014458092646857,
+      "GDINO_minus_DETR": -0.0654579189208997
+    },
+    "shrinkage_min": 0.5,
+    "passed": false,
+    "note": ""
+  },
+  "verdict": "MECHANISM_PARTIAL",
+  "honesty_clause": "if MECHANISM_NOT_SUPPORTED or MECHANISM_GAP_PERSISTS, the report must state that the composition account is NOT established by this diagnostic and must not be used to explain the P2-C1 amplification; the P2-C1 numbers stand either way, since they are confirmatory and independent of this file",
+  "bootstrap": {
+    "convention": "frozen: image-cluster sampler, replicates/seed/ci from core",
+    "replicates": 5000,
+    "seed": 0,
+    "ci": 0.95,
+    "deviation": "replicate loop is local because phase0a.paired_cluster_bootstrap is hard-wired to metric(a)-metric(b) over two prediction sets",
+    "estimator": "the replicate resamples images and re-runs the point functional (mean over B3 seeds of the within-family per-seed Spearman rho)"
+  },
+  "new_training_parameters": 0,
+  "model_forward_passes": 0,
+  "out_of_scope_confirmed": [
+    "any C4 / hard-regime statement about GDINO (the B0 probe failed the same-category supply gate at 0.6892 vs 0.85; GDINO stays C1-only by user authorisation)",
+    "any claim that one detector is better than another",
+    "any causal language: this diagnostic is associational within family and stratified across families",
+    "any new model, feature, threshold, seed or dataset"
+  ],
+  "wall_seconds": 330.28,
+  "generated_utc": "2026-10-02T08:49:26Z"
+}
