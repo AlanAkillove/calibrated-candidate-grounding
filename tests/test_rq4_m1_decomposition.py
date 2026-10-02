@@ -102,13 +102,24 @@ def _module_identifiers(path: Path) -> set:
     return used
 
 
-def _doc_slice(path: Path, marker: str) -> str:
-    """The appended record only: from the first occurrence of *marker* to end of file."""
+def _doc_slice(path: Path, marker: str, end_marker: str | None = None) -> str:
+    """The appended record only: from the first occurrence of *marker*, stopping at
+    *end_marker* when given (the freeze records and the later result records are separate
+    appended sections, and a result record is allowed to carry result numbers)."""
     if not path.exists():
         pytest.skip(f"{path.name} absent")
     text = path.read_text(encoding="utf-8")
     index = text.find(marker)
-    return "" if index < 0 else text[index:]
+    if index < 0:
+        return ""
+    if end_marker is not None:
+        end = text.find(end_marker, index + len(marker))
+        return text[index:] if end < 0 else text[index:end]
+    return text[index:]
+
+
+#: the append-only boundary between the RQ4-M1 freeze record and the later result record
+LOG_RESULT_RECORD = "# ===== RQ4-M1 result record"
 
 
 def _module_string_constants(path: Path) -> list:
@@ -631,7 +642,7 @@ def test_freeze_and_docs_records_carry_the_freeze_classification_and_zero_delta_
         "research_protocol.md#RQ4-A1": _doc_slice(
             _ROOT / "docs" / "research_protocol.md", "RQ4-A1"),
         "experiment_log.md#RQ4-M1": _doc_slice(
-            _ROOT / "docs" / "experiment_log.md", "RQ4-M1（"),
+            _ROOT / "docs" / "experiment_log.md", "RQ4-M1（", LOG_RESULT_RECORD),
     }
     for name, text in records.items():
         assert text, f"{name}: record not found"
@@ -653,9 +664,12 @@ def test_freeze_documents_hold_no_real_decomposition_numbers():
         "protocol_freeze.json": FREEZE.read_text(encoding="utf-8"),
         "research_protocol.md": _doc_slice(
             _ROOT / "docs" / "research_protocol.md", "RQ4-A1"),
+        # only the pre-result freeze record: the result record registered afterwards is
+        # supposed to carry these numbers, so the scan must stop at its append-only boundary
         "experiment_log.md": _doc_slice(
-            _ROOT / "docs" / "experiment_log.md", "RQ4-M1（"),
+            _ROOT / "docs" / "experiment_log.md", "RQ4-M1（", LOG_RESULT_RECORD),
     }
+    assert all(scanned.values()), "a freeze record slice came back empty"
     for name, text in scanned.items():
         hits = pattern.findall(text)
         assert not hits, f"{name} already contains a computed degradation number: {hits[:3]}"

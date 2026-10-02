@@ -173,9 +173,32 @@ def _quoted_paths(block: str) -> list[str]:
     return [t for t in tokens if t.startswith("results/")]
 
 
+#: a log record may compress a run of same-shaped artifacts as ``fig1..fig3.png``, meaning
+#: the figures whose names start with fig1 / fig2 / fig3; the shorthand is only accepted when
+#: every index in the range actually resolves to at least one committed file
+_RANGE_SHORTHAND = re.compile(
+    r"^(?P<head>.*?)(?P<stem>[A-Za-z_-]*)(?P<first>\d+)\.\.(?P<stem2>[A-Za-z_-]*)"
+    r"(?P<last>\d+)(?P<ext>\.\w+)$")
+
+
+def _expand_range(rel: str) -> list[str]:
+    m = _RANGE_SHORTHAND.match(rel)
+    if not m or m.group("stem") != m.group("stem2"):
+        return []
+    first, last = int(m.group("first")), int(m.group("last"))
+    if last < first or last - first > 20:
+        return []
+    return [f"{m.group('head')}{m.group('stem')}{i}*{m.group('ext')}"
+            for i in range(first, last + 1)]
+
+
 def _resolves(rel: str) -> bool:
     if "*" in rel:
         return bool(list(_ROOT.glob(rel)))
+    if _RANGE_SHORTHAND.match(rel):
+        patterns = _expand_range(rel)
+        assert patterns, f"unparseable range shorthand in an artifact_paths block: {rel}"
+        return all(bool(list(_ROOT.glob(pattern))) for pattern in patterns)
     return (_ROOT / rel).exists()
 
 

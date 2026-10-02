@@ -2108,6 +2108,35 @@ implementation: >
   push v2-rq4-mechanism -> 之后才允许计算真实 RPN/DETR/GDINO 数字。
 ```
 
+## Amendment RQ4-A1 之后的程序状态（append-only 补充，2026-10 材料库 close-out）
+
+本节只登记程序状态与材料库去向，**不新增、不修改任何公式、估计量、门控、阈值或数字**。
+
+``` program status after RQ4-A1
+V2-G CLOSED
+V2-D CLOSED
+V2-M CLOSED
+V2-M3 CLOSED
+V2-P CLOSED
+RQ4-M1 CLOSED
+
+EXPERIMENTAL PROGRAM FROZEN
+
+No active experiment.
+
+Future causal mechanism work:
+out of scope / future work.
+```
+
+- RQ4-M1 已按 §11–§12 完成并收束；它建立的是一项 **exact transition–confidence
+accounting decomposition**，不是对置信排序为何变化的因果识别。
+- 仍开放的问题——what causally produces the confidence-ranking change——登记为
+  **out of scope / future work**；它不属于本协议的任何现有轴，启动它必须另立一条
+  结果前冻结的 intervention 协议（§21 的禁令仍有效）。
+- 论文写作阶段的数值一律只从 per-axis artifact 转录：V2 轴与 RQ4-M1 的值**不进入**
+  `results/final_registry/`（该 registry 不重新生成），材料库 `docs/final_result_summary.md` 只做
+  转录与溯源，不做重算。
+
 
 
 

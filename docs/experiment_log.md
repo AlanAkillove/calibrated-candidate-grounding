@@ -2170,3 +2170,58 @@ program_status_after_this: >
   其 confirmatory 数字、gate、threshold 未被触碰。
 ```
 
+## CLOSE-OUT RECORD — RQ4-M1 材料库关账与实验程序冻结（documentation/provenance only）
+
+```yaml
+date_utc: 2026-10-02
+status: DONE
+kind: documentation / provenance only
+classification: NO_NEW_RESULT（本轮不跑 GPU、不跑 bootstrap、不新增任何统计量、无 model forward）
+what_changed: >
+  docs/final_result_summary.md（材料库）新增 RQ4-M1 小节：headline 表（三族 D_total / D_label /
+  D_conf 与 A00→A11）、允许的论文措辞（含非因果边界句）、flip-rate 悖论说明、
+  matched-expression secondary 支持、bootstrap 区间转录、RQ4 状态由「open / not started」改为
+  **RQ4-M1 COMPLETED**（仍开放：what causally produces the confidence-ranking change，标为
+  OUT OF SCOPE FOR THIS PAPER / NO RQ4-M2 PLANNED）；新增第 4 节 program status 块。
+  docs/research_protocol.md 只以 append-only 方式追加同一 program status 块与去向声明。
+source_of_numbers: >
+  全部 RQ4-M1 数字从 results/v2_rq4_mechanism/m1_transition_confidence/{verdict.json,
+  point_decomposition.csv, bootstrap_decomposition.csv, cross_family_gap_decomposition.csv,
+  matched_intersection_decomposition.csv, transition_groups.csv, report.md} 转录；材料库不做任何
+  重算，也不把数字发明为记忆值。本轮校对发现并当场修正了两处从记忆写入的错误：
+  GDINO 的 D_label bootstrap 区间实际为 [-0.022816, +0.004701]（**含 0**，因此不得称其显著为负），
+  以及 GDINO 的 F 组占比实为 40.0% / 40.5% / 40.0%（非早期笔记中的 22.6%）。
+provenance_notes: >
+  (1) matched 的 paired gap 只存在于 report.md §6（matched_intersection_decomposition.csv 的 gap 列
+  为空），材料库已标明取数出处。(2) 上一轮删除的 run_summary.txt 是早期原型留下的
+  untracked 陈旧文件，**不**在 freeze 的 outputs 列表内，也不是本驱动的产物；freeze 列出的
+  12 个 artifact + 3 张图与实际落盘逐名一致。(3) results/final_registry/ **不重新生成**，
+  V2 与 RQ4-M1 的值继续从 per-axis artifact 取。
+  (4) 更正：上一轮结果记录里写的「结果轮后 full pytest = 1107」是在**追加该记录之前**跑的，
+  追加后未重跑就提交了；本轮重跑暴露出两处由该记录自身的文本引起的测试失败：
+  ① 冻结文档无数字扫描以「RQ4-M1（」为锚点到文件末尾，因而覆到了允许写数字的结果记录
+  （修法：扫描在结果记录的 append-only 边界处截止）；② 结果记录的 artifact_paths 用了
+  `figures/fig1..fig3.png` 压缩写法，存在性检查把它当作字面路径（真实文件名带描述后缀：
+  fig1_signed_decomposition / fig2_transition_group_confidence / fig3_cross_family_gap_components）。
+  修法：校验器把同前缀数字区间展开为逐索引前缀，并要求每个索引至少命中一个已提交文件，
+  所以区间内少一张图仍会报错。两项均只改测试，不改任何数字、公式、gate 或 threshold，
+  也不改写已提交的结果记录正文（append-only）。
+tests_and_suite: >
+  本轮新增 tests/test_rq4_m1_material_bank.py（15 项：材料库数字/标签与 artifact 反向校验、
+  非因果边界、program frozen、final_registry 未被重生）；修正
+  tests/test_rq4_m1_decomposition.py 的冻结文档切片边界与 tests/test_v2_governance_closeout.py
+  的 artifact 路径展开。本轮 close-out 后 full pytest = 1122 tests / 0 failed / 0 errors / 2 skipped。
+tests_added: >
+  tests/test_rq4_m1_material_bank.py：材料库的 headline 数字、verdict 与 ordering 标签、
+  D_total = D_label + D_conf、bootstrap 区间的符号、flip-rate 注记的 F 组占比、matched gap 与
+  matched artifact 分量的一致性，均从 verdict.json / point_decomposition.csv 等 artifact 读出后
+  反向校验材料库（不做独立硬编码）；并校验非因果边界句、RQ4-M1 CLOSED、
+  EXPERIMENTAL PROGRAM FROZEN / No active experiment.、NO RQ4-M2 PLANNED 与 final_registry 未被触碰。
+historical_records_untouched: >
+  RQ4-A1 之前写为 NOT STARTED / NOT AUTHORIZED 的历史协议记录与台账**不修改**；
+  两份治理文档均为严格 append-only（由 test_governance_docs_are_strictly_append_only_at_head 强制）。
+program_status_after_this: >
+  V2-G CLOSED / V2-D CLOSED / V2-M CLOSED / V2-M3 CLOSED / V2-P CLOSED / RQ4-M1 CLOSED；
+  EXPERIMENTAL PROGRAM FROZEN；No active experiment。后续均为论文写作（A 阶段）与 future work。
+```
+

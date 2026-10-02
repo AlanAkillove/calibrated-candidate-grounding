@@ -11,7 +11,11 @@
 > change of backbone, of annotation quality, of language distribution and of proposal family, and
 > they record the negative results of two attempted methods. **They change no mainline number.**
 > Their values come from the per-axis artifacts cited inline; `results/final_registry/` has **not**
-> been regenerated for V2, so do not expect to find V2 values there.
+> been regenerated for V2, so do not expect to find V2 values there. The same holds for **RQ4-M1**:
+> every RQ4-M1 value below is transcribed from `results/v2_rq4_mechanism/m1_transition_confidence/`
+> and nothing there is recomputed or re-derived in this document.
+>
+> **The experimental program is frozen** — see the program status block in §4.
 
 ---
 
@@ -96,6 +100,73 @@ zero-shot 外部确认：same-category ΔAUROC +0.0178、E-AURC 降低 20.4%，Q
   `results/v2_proposal_robustness/proposal_family_final_table.md`、
   `results/v2_proposal_robustness/p2_m_mechanism/mechanism_report.md`。
 
+### RQ4-M1｜过渡–置信度精确分解（机制轴，已收束）
+
+RQ4-M1 是**结果前冻结的描述性机制分解**（classification：`DESCRIPTIVE_MECHANISM_DECOMPOSITION`），
+它不做任何推断检验、不训练、无新模型前向 pass，只把 V2-P 已经发表的 K5→K50 AUROC 退化
+**精确地**拆成两个因子：correctness-state transition（哪些表达式从对变错）与 confidence-ranking
+change（固定标签时置信排序随 K 的改变）。全部数字来自
+`results/v2_rq4_mechanism/m1_transition_confidence/point_decomposition.csv`、
+`bootstrap_decomposition.csv`、`cross_family_gap_decomposition.csv`、
+`matched_intersection_decomposition.csv`、`verdict.json`（三种子均值）。
+
+**Headline（每族 mean over 3 seeds；D_total = D_label + D_conf 逐行精确成立，residual = 0）**
+
+| family | D_total | D_label | D_conf | A00 → A11 | 冻结判定 |
+|---|---|---|---|---|---|
+| RPN | 0.051698 | 0.002605 | 0.049093 | 0.840720 → 0.789022 | `CONFIDENCE_CHANGE_HEAVIER` |
+| DETR | 0.085157 | 0.006166 | 0.078991 | 0.799356 → 0.714199 | `CONFIDENCE_CHANGE_HEAVIER` |
+| GDINO | 0.236599 | **-0.009145** | 0.245744 | 0.830757 → 0.594158 | `CONFIDENCE_CHANGE_HEAVIER` |
+
+primary verdict：`DECOMPOSITION_REPORTED`；三个种子 × 三族全部为
+`CONFIDENCE_CHANGE_HEAVIER`；两个停止不变量（G 组非空、identity residual）均未触发；
+forbidden labels used = 无。
+
+**可以说什么（安全的论文措辞）**：Across all three proposal families, the K5→K50 AUROC
+degradation is accounted for **predominantly by changes in the ranking of confidence with respect
+to correctness**, rather than by the correctness-state transition component itself. 对 GDINO：
+The unusually large degradation is **almost entirely accounted for by the confidence-ranking
+component** in the exact decomposition; the correctness-transition component is **slightly
+negative**. 紧跟一句边界：This is an **exact statistical accounting decomposition, not a causal
+identification** of why the confidence ranking changes.
+
+**bootstrap（image-cluster，5000，95% CI，对三种子均值抽样）**：D_conf 三族区间全部排除 0
+（RPN [0.040877, 0.057612]、DETR [0.056062, 0.101692]、GDINO [0.227082, 0.265223]）；
+D_label 三族区间全部包含 0（RPN [−0.008428, 0.013571]、DETR [−0.008998, 0.021173]、
+GDINO [−0.022816, 0.004701]），因此**不得声称任何一个族的标签分量显著不为 0**（包括不得
+声称 GDINO 的标签分量显著为负，尽管其三个种子的点估计全为负）；同理 D_total 三族区间均排除 0
+（RPN [0.039978, 0.063555]、DETR [0.061427, 0.108942]、GDINO [0.217215, 0.256076]）。
+这些是**同族 own-cohort** 的描述性区间，不是 paired-expression CI。
+
+**跨族 exact gap（对 D_total / D_label / D_conf 逐种子成立）**：GDINO−RPN +0.184902 =
+−0.011750 + 0.196651；GDINO−DETR +0.151442 = −0.015311 + 0.166753；DETR−RPN +0.033459 =
++0.003561 + 0.029898。即**跨族差异几乎全部落在 D_conf 上**。
+
+**flip-rate 悖论（审稿人一定会问，必须主动写）**：确实有大量 K5 正确的预测在 K50 变错
+（GDINO 的 F 组 = K5 对而 K50 错，三种子下分别占该族行数的 40.0% / 40.5% / 40.0%，
+`transition_groups.csv`），但这**不**蕴含一个大的 D_label。原因是
+D_label 衡量的是「**在固定置信分数与固定分组权重下**把 correct 标签改成 incorrect」对 AUROC 的
+影响，而 AUROC 是**排序统计量、不是错误率统计量**：标签翻转只改变该行在成对比较中的归类，
+它的影响取决于翻转行与其他行在置信排序上的**相对位置**，而不是翻转的**数量**。
+GDINO 正是抵消最彻底的情形：变错的 F 行在 K50 的平均置信（0.8266 / 0.8275 / 0.8188）与一直
+错误的 E 行（0.8303 / 0.8289 / 0.8253）几乎落在同一区段，以两侧成对次序的得失相互抵消。
+因此 **high flip rate 与 small D_label 完全相容**，两者不是同一个量。
+
+**matched-expression 支持（仅记录重要者）**： paired gap 取自 `report.md` §6（其逐族 D_* 分量在
+`matched_intersection_decomposition.csv` 的 family_mean 行）：
+GDINO∩RPN gap_total +0.177824（gap_label −0.011598，gap_conf +0.189421）；
+GDINO∩DETR +0.134950（−0.012170 / +0.147120）；DETR∩RPN +0.022697，其 95% CI 跨 0。
+**不得**声称 DETR 与 RPN 的幅度差异显著；只可说：the confidence-heavy ordering survives
+matched-expression restriction。存活是指：`point_decomposition.csv` 与
+`matched_intersection_decomposition.csv` 的每一行（三族 × 三种子 × 两个匹配交集）的 `ordering`
+字段均为 `CONFIDENCE_CHANGE_HEAVIER`。
+
+**RQ4 状态更新（取代旧的「RQ4 open / not started」措辞）**：
+`RQ4-M1 COMPLETED`。机制分析建立的是一项**精确的过渡–置信度分解**；
+仍开放的问题是：**what causally produces the confidence-ranking change**，该项
+`OUT OF SCOPE FOR THIS PAPER`，且 `NO RQ4-M2 PLANNED`。
+（历史协议记录在 RQ4-A1 之前写的 `NOT STARTED` 是正确的，**不作修改**。）
+
 ### 局限（Limitations）
 主线 backbone 仍是单一冻结的 OpenCLIP ViT-B/32（V2-G 只是把它复制到另两个视觉编码器，仍在同一 COCO
 图像域内）；proposal 家族已复制到三个（RPN / DETR-R50 / Grounding DINO），但三者共享同一冻结打分栈与
@@ -103,7 +174,9 @@ zero-shot 外部确认：same-category ΔAUROC +0.0178、E-AURC 降低 20.4%，Q
 RefCOCO+/RefCOCOg/RefCOCO 共享 COCO 视觉域，V2-D2 是语言分布迁移而非图像不相交迁移；same-category 为
 GT 辅助诊断构造；外部 hard 放大不可评估（A11 Q2 = NOT ASSESSABLE）；random 分布外语义增益幅度温和；
 LCR v1 与自适应混合两条方法线均为负结果，无端到端定位性能提升主张；无跨视觉域复制；主线内无
-target-absence 结果；GDINO 放大现象的机制仍是**开放问题**（首个候选解释已被否证，未提出替代解释）。
+target-absence 结果；GDINO 放大现象的机制已得到一项**精确的过渡–置信度 accounting**（RQ4-M1，
+见上一节），但**什么因果地产生置信度排序变化仍未被回答**：RQ4-M1 是 statistical accounting，不是
+causal identification，且本轮不启动 RQ4-M2。
 
 ---
 
@@ -179,6 +252,70 @@ semantic competition is therefore withdrawn** (ledger item P2-A0 in
 since all three banks hold 64 proposals evaluated at the same presented K. Index:
 `results/v2_proposal_robustness/v2_p_program_summary.md`.
 
+*RQ4-M1 (transition–confidence decomposition; mechanism axis now closed).* A pre-result frozen
+**descriptive** mechanism analysis (`DESCRIPTIVE_MECHANISM_DECOMPOSITION`, zero new training
+parameters, zero model forward passes) splits the already-published K5→K50 AUROC degradation
+*exactly* into a correctness-state transition component and a confidence-ranking-change component,
+using a symmetric two-factor Shapley split of a group-weighted-AUROC reconstruction
+(`D_total = D_label + D_conf`, measured residual 0). Mean over three seeds
+(`results/v2_rq4_mechanism/m1_transition_confidence/point_decomposition.csv`):
+
+| family | D_total | D_label | D_conf | A00 → A11 | frozen verdict |
+|---|---|---|---|---|---|
+| RPN | 0.051698 | 0.002605 | 0.049093 | 0.840720 → 0.789022 | `CONFIDENCE_CHANGE_HEAVIER` |
+| DETR | 0.085157 | 0.006166 | 0.078991 | 0.799356 → 0.714199 | `CONFIDENCE_CHANGE_HEAVIER` |
+| GDINO | 0.236599 | **-0.009145** | 0.245744 | 0.830757 → 0.594158 | `CONFIDENCE_CHANGE_HEAVIER` |
+
+Primary verdict `DECOMPOSITION_REPORTED`; all three families × all three seeds are
+`CONFIDENCE_CHANGE_HEAVIER`; neither stop invariant (a non-empty G group, an identity residual) fired;
+no forbidden label was used.
+
+**Claim allowed**: across all three proposal families, the K5→K50 AUROC degradation is accounted for
+predominantly by changes in the ranking of confidence with respect to correctness, rather than by the
+correctness-state transition component itself. For GDINO, the unusually large degradation is almost
+entirely accounted for by the confidence-ranking component in the exact decomposition; the
+correctness-transition component is slightly negative. **This is an exact statistical accounting
+decomposition, not a causal identification of why the confidence ranking changes.**
+
+Under the frozen image-cluster bootstrap (5000 replicates, 95 % CI, taken on the three-seed mean) the
+D_conf interval excludes zero for all three families ([0.040877, 0.057612] / [0.056062, 0.101692] /
+[0.227082, 0.265223]), while **every D_label interval contains zero** (RPN [−0.008428, 0.013571],
+DETR [−0.008998, 0.021173], GDINO [−0.022816, 0.004701]) — so no family's label component may be called
+significant, including a claim that GDINO's is significantly negative even though all three of its per-seed
+point estimates are negative. All three D_total intervals exclude zero ([0.039978, 0.063555] /
+[0.061427, 0.108942] / [0.217215, 0.256076]). These are own-cohort descriptive intervals, **not**
+paired-expression CIs. The cross-family gaps decompose the same way — GDINO−RPN +0.184902 =
+−0.011750 + 0.196651, GDINO−DETR +0.151442 = −0.015311 + 0.166753, DETR−RPN +0.033459 =
++0.003561 + 0.029898 — so the between-family difference also sits almost entirely in the
+confidence-ranking component.
+
+**Why a high flip rate does not imply a large D_label** (a question reviewers will ask): many K5-correct
+predictions do become incorrect at K50 — the F group (correct at K5, incorrect at K50) is 40.0 % / 40.5 % /
+40.0 % of GDINO rows across the three seeds (`transition_groups.csv`) — but D_label measures the AUROC
+effect of changing correctness *labels* while holding the confidence scores and group weights fixed.
+AUROC is a ranking statistic, not an error-rate statistic: a label flip only reclassifies that row inside the
+pairwise ordering, so its effect is governed by *where the flipped rows sit in the score ranking relative to
+the other rows*, not by *how many* rows flip. GDINO is the case where the two directions cancel almost
+completely: the rows that became incorrect carry a mean K50 confidence (0.8266 / 0.8275 / 0.8188) that is
+essentially the same band as the rows that were always incorrect (0.8303 / 0.8289 / 0.8253). High flip rate
+and small D_label are therefore fully compatible — they are different quantities.
+
+**Matched-expression support (secondary).** The paired gaps are recorded in `report.md` §6 (their
+per-family components are the `family_mean` rows of `matched_intersection_decomposition.csv`); on each
+intersection both families are restricted to identical expression rows and resampled with shared
+image-cluster draws: GDINO∩RPN gap_total +0.177824 (gap_label −0.011598, gap_conf +0.189421);
+GDINO∩DETR +0.134950 (−0.012170 / +0.147120); DETR∩RPN +0.022697, whose 95 % CI crosses zero — so **no
+significant DETR-versus-RPN magnitude difference is claimed** (its confidence component alone, +0.027413,
+has a CI of [0.002957, 0.051526]). What may be claimed is only that the confidence-heavy ordering survives
+matched-expression restriction: every row of the point and matched artifacts — three families × three seeds ×
+both matched intersections — carries `CONFIDENCE_CHANGE_HEAVIER`.
+
+**RQ4 status.** The former material-bank wording *RQ4 open / not started* is superseded:
+**`RQ4-M1 COMPLETED`** — the mechanism analysis establishes an exact transition–confidence
+decomposition. The remaining open question is *what causally produces the confidence-ranking change*,
+which is **out of scope for this paper** and has **no RQ4-M2 planned**. Historical protocol records that
+state *NOT STARTED* prior to amendment RQ4-A1 are correct and are not altered.
+
 **Limitations.** The mainline backbone is a single frozen OpenCLIP ViT-B/32 (V2-G replicates on two
 further encoders, still inside the COCO image universe); the proposal family now spans three banks
 (RPN, DETR-R50, Grounding DINO) that share one frozen scorer stack and one image domain, and GDINO
@@ -188,9 +325,11 @@ language-distribution transfer, not an image-disjoint one; the same-category reg
 diagnostic construction; external amplification is unassessable (A11 Q2 = NOT ASSESSABLE); semantic
 gains are modest outside hard competition; both attempted methods (LCR v1, adaptive mixture) are
 negative results, so there is no end-to-end grounding-improvement claim; there is no cross-visual-domain
-replication and no target-absence result in this mainline; and the mechanism behind the Grounding DINO
-amplification remains **an open question** — the first candidate account has been refuted and no
-replacement is offered.
+replication and no target-absence result in this mainline. As for the mechanism behind the strong Grounding
+DINO amplification, the first candidate account (same-class semantic redundancy) was refuted by V2-P2-M, and
+RQ4-M1 subsequently gave an *exact statistical accounting* of the degradation into a transition part and a
+confidence-ranking part; **what causally produces the confidence-ranking change is still unanswered** and is
+explicitly out of scope for this paper (no intervention protocol was frozen and no RQ4-M2 is planned).
 
 ---
 
@@ -198,11 +337,36 @@ replacement is offered.
 
 RQ1 candidate-set growth effect on reliability；RQ2 score information sufficiency；
 RQ3 *when* candidate semantics add signal — primarily under strong local competition among
-semantically similar candidates；RQ4（V2-P2-M 之后仍开放）：在候选数量与打分栈都被冻结/控制之后，
-是什么可测量性质解释跨 proposal family 的放大差异——本轴只否证了第一个候选解释，没有提供替代解释，
-任何后续机制诊断都必须自带结果前冻结的判据。
+semantically similar candidates；RQ4（**RQ4-M1 COMPLETED**，V2-P2-M 之后曾经开放）：机制分析已
+建立一项**精确的过渡–置信度分解**（把已发表的 K5→K50 AUROC 退化拆成 correctness-transition 与
+confidence-ranking-change 两个分量）；仍开放的是 **what causally produces the confidence-ranking
+change**，但本文明确标为 `OUT OF SCOPE FOR THIS PAPER` / `NO RQ4-M2 PLANNED`，属 future work。
+（历史台账与旧记录中写的「RQ4 open / not started」属当时状态，不作修改。）
 论文叙事定位为 **controlled reliability study**，而非
 「提出新的 candidate-aware 架构」；V2-M 与 V2-M3 的两条负结果为这一定位提供了正面支撑。标题候选（暂不决定）：
 *Reliable Visual Grounding under Dynamic Candidate Sets*；
 *When Should a Visual Grounding Model Trust Its Choice?*；
 *Candidate-Set Shift and Semantic Ambiguity in Reliable Visual Grounding*.
+
+---
+
+## 4. 程序状态（program status）
+
+```
+V2-G CLOSED
+V2-D CLOSED
+V2-M CLOSED
+V2-M3 CLOSED
+V2-P CLOSED
+RQ4-M1 CLOSED
+
+EXPERIMENTAL PROGRAM FROZEN
+
+No active experiment.
+
+Future causal mechanism work:
+out of scope / future work.
+```
+
+没有任何进行中的实验。本文件后续只作为论文写作与溯源材料使用；任何新机制、新干预、
+新 detector / dataset / model 的工作都属于 future work，需另立结果前冻结的协议。
