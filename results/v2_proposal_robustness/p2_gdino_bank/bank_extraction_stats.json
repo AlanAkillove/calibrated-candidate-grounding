@@ -1,0 +1,50 @@
+{
+  "task": "p2_extract_gdino_proposals",
+  "config": {
+    "images_root": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\raw\\mscoco",
+    "manifest": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\full_image_manifest.csv",
+    "out": "cache\\proposals_gdino.h5",
+    "annotations": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\raw\\annotations\\instances_train2014.json",
+    "model_dir": "F:\\DL Projects\\calibrated-candidate-grounding\\cache\\hf_local\\IDEA-Research\\grounding-dino-base",
+    "top_n": 64,
+    "device": "cuda",
+    "max_images": 0,
+    "resume": true,
+    "repair": false,
+    "prefetch_workers": 8,
+    "autocast": false,
+    "schema_version": "bank-v1",
+    "checkpoint_id": "IDEA-Research/grounding-dino-base"
+  },
+  "versions": {
+    "python": "3.10.19",
+    "numpy": "1.26.4",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.57.6"
+  },
+  "n_images": 19992,
+  "n_crops_total": 1279488,
+  "per_image_K": {
+    "mean": 64.0,
+    "min": 64,
+    "max": 64,
+    "histogram": {
+      "64": 19992
+    }
+  },
+  "runtime_seconds": 15254.001388400036,
+  "images_per_second": 1.3128101117770692,
+  "peak_vram_mb": 2521.40673828125,
+  "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "failures": [],
+  "n_images_this_run": 19992,
+  "n_images_skipped_resume": 0,
+  "n_images_failed": 0,
+  "process_seconds": 15228.401899599994,
+  "notes": [
+    "Proposal-C Grounding DINO class-prompt, query-independent, frozen; written to a bank-v1 file distinct from the RPN / DETR banks (neither is re-run here).",
+    "one image per forward call; normalised boxes scale by each image's original (W,H).",
+    "sanitize/top-N shared with ccg.data.detr with a row-exact cross-check; labels carried aligned.",
+    "failures counted, never silent; resume skips stored images; --repair drops half-written groups."
+  ]
+}

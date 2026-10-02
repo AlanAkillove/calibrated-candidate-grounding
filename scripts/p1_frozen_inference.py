@@ -135,6 +135,12 @@ def run(args: argparse.Namespace) -> Dict[str, Any]:
                     verify_rpn=bool(args.verify_rpn and family == "RPN"),
                 ))
             # same-category (hard) cohort built from the manifests
+            # V2-P2 C1-only freeze: GDINO participates in random (C1) only, a
+            # GDINO same_category manifest/hard job is forbidden, so skip it.
+            if family == "GDINO":
+                job_report["same_category"] = "out_of_scope (V2-P2-C1 freeze: C1 only)"
+                reports.append(job_report)
+                continue
             hard = core.build_hard_samples(family)
             job_report["attrition"]["same_category"] = hard["attrition"]
             job_report["jobs"].append(score_job(
@@ -168,7 +174,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description="P1 frozen inference (nested-K + hard/random)")
     p.add_argument("--out-dir", type=Path, default=DEFAULT_OUT)
     p.add_argument("--frozen-models", type=Path, default=core.FROZEN_MODELS)
-    p.add_argument("--family", default="both", choices=["both", "RPN", "DETR"])
+    p.add_argument("--family", default="both", choices=["both", "RPN", "DETR", "GDINO"])
     p.add_argument("--device", default="cuda")
     p.add_argument("--batch-size", type=int, default=64)
     p.add_argument("--verify-rpn", action="store_true", default=True)

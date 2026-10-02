@@ -73,6 +73,12 @@ FAMILIES: Dict[str, Dict[str, Any]] = {
         "manifests_root": Path("cache/manifests_detr"),
         "bank": Path("cache/proposals_detr_r50.h5"),
     },
+    # V2-P2 Phase B: third proposal family (Grounding DINO class-prompt, C1 only).
+    "GDINO": {
+        "features_root": Path("cache/features_gdino"),
+        "manifests_root": Path("cache/gdino_stage/manifests"),
+        "bank": Path("cache/proposals_gdino.h5"),
+    },
 }
 
 B3_SEEDS: Tuple[int, ...] = (1, 2, 3)
