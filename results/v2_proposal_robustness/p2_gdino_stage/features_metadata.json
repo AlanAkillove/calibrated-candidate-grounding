@@ -1,0 +1,98 @@
+{
+  "backbone": {
+    "checkpoint_path": "cache\\hf_hub\\models--laion--CLIP-ViT-B-32-laion2B-s34B-b79K\\snapshots\\1a25a446712ba5ee05982a381eed697ef9b435cf\\open_clip_pytorch_model.bin",
+    "checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+    "embedding_dim": 512,
+    "library": "open_clip_torch",
+    "library_version": "3.3.0",
+    "model_name": "ViT-B-32",
+    "precision": "fp16",
+    "preprocessing": {
+      "antialias": true,
+      "center_crop": [
+        224,
+        224
+      ],
+      "crop_policy": "exact proposal crop (round->clamp), no context padding",
+      "interpolation": "bicubic",
+      "mean": [
+        0.48145466,
+        0.4578275,
+        0.40821073
+      ],
+      "min_crop_px": 1,
+      "resize_mode": "shortest",
+      "resize_size": 224,
+      "source": "introspected from the live open_clip val transform",
+      "std": [
+        0.26862954,
+        0.26130258,
+        0.27577711
+      ]
+    },
+    "pretrained": "laion2b_s34b_b79k",
+    "resolution": 224,
+    "tokenizer": {
+      "context_length": 77,
+      "name": "SimpleTokenizer"
+    }
+  },
+  "cache_version": "phase0a-v1",
+  "created_utc": "2026-10-02T05:16:18+00:00",
+  "extraction_args": {
+    "bank": "F:\\DL Projects\\calibrated-candidate-grounding\\cache\\proposals_gdino.h5",
+    "batch_size": 128,
+    "images_root": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\raw\\mscoco",
+    "max_images": 0,
+    "max_sentences": 0,
+    "precision": "fp16",
+    "refs": "F:\\DL Projects\\calibrated-candidate-grounding\\data\\raw\\refcoco+\\refcoco+\\refs(unc).p",
+    "resumed": true
+  },
+  "extraction_stats": {
+    "backbone_config": {
+      "backend": "open_clip",
+      "checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+      "feature_dim": 512,
+      "hf_endpoint": "https://hf-mirror.com",
+      "hf_endpoint_source": "hf-mirror-default",
+      "library_version": "3.3.0",
+      "model_name": "ViT-B-32",
+      "pretrained": "laion2b_s34b_b79k"
+    },
+    "batch_size": 128,
+    "cache_bytes": 1479833502,
+    "crops_per_second": 209.7,
+    "device": "cuda",
+    "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "finished_utc": "2026-10-02T06:44:40+00:00",
+    "global_images": 0,
+    "invalid_crop_count": 0,
+    "invalid_crop_rate": 0.0,
+    "max_images": 0,
+    "max_sentences": 0,
+    "n_sentences": 141564,
+    "n_target_images": 19992,
+    "peak_vram_mb": 833.0,
+    "precision": "fp16",
+    "region_crops_encoded": 1279488,
+    "region_crops_encoded_this_run": 1086976,
+    "region_crops_total_this_run": 1086976,
+    "region_extract_seconds": 5182.419,
+    "region_images": 19992,
+    "region_images_encoded_this_run": 16984,
+    "resumed": true,
+    "started_utc": "2026-10-02T05:16:18+00:00",
+    "text_seconds": 80.516,
+    "text_skipped_resume": false,
+    "texts_per_second": 1758.2,
+    "wall_seconds": 5301.572
+  },
+  "invalid_crop_count": 0,
+  "invalid_crop_rate": 0.0,
+  "n_crops": 1279488,
+  "n_images": 19992,
+  "n_sentences": 141564,
+  "native_logit_scale": 100.0,
+  "updated_utc": "2026-10-02T06:44:40+00:00"
+}

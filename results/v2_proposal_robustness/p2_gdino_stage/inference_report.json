@@ -1,0 +1,179 @@
+{
+  "artifact": "v2_p1_frozen_inference",
+  "protocol": "V2-P1 P1-F4/P1-F5 frozen inference (both proposal families)",
+  "families": [
+    {
+      "family": "GDINO",
+      "attrition": {
+        "random": {
+          "regime": "random",
+          "total_target_present_rows": 10547,
+          "eligible": {
+            "5": 10547,
+            "10": 10547,
+            "20": 10547,
+            "50": 10402
+          },
+          "primary_common_K50_rows": 10402,
+          "images": 1489,
+          "refs": 3695,
+          "k50_availability": 0.9863
+        }
+      },
+      "jobs": [
+        {
+          "family": "GDINO",
+          "regime": "random",
+          "job": "random_k5",
+          "K": 5,
+          "n_rows": 10547,
+          "images": 1498,
+          "refs": 3745,
+          "n_predictions_written": 3
+        },
+        {
+          "family": "GDINO",
+          "regime": "random",
+          "job": "random_k10",
+          "K": 10,
+          "n_rows": 10547,
+          "images": 1498,
+          "refs": 3745,
+          "n_predictions_written": 3
+        },
+        {
+          "family": "GDINO",
+          "regime": "random",
+          "job": "random_k20",
+          "K": 20,
+          "n_rows": 10547,
+          "images": 1498,
+          "refs": 3745,
+          "n_predictions_written": 3
+        },
+        {
+          "family": "GDINO",
+          "regime": "random",
+          "job": "random_k50",
+          "K": 50,
+          "n_rows": 10402,
+          "images": 1489,
+          "refs": 3695,
+          "n_predictions_written": 3
+        }
+      ],
+      "same_category": "out_of_scope (V2-P2-C1 freeze: C1 only)"
+    }
+  ],
+  "detr_text_cache": {
+    "text_features_sha256": "82c0d10195121bcefbf11e2adfab03348377e5aae6a7288e76568b8da25617a1",
+    "reused_text_index": true,
+    "n_sentences": 141564
+  },
+  "frozen_identity": {
+    "b3_checkpoints": {
+      "b3_seed1": {
+        "recorded_sha256": "396d90da2f4f402e0dba86f4956c12efdf19b6b0c76a542e5b60a281810a8e74",
+        "current_sha256": "396d90da2f4f402e0dba86f4956c12efdf19b6b0c76a542e5b60a281810a8e74",
+        "unchanged": true
+      },
+      "b3_seed2": {
+        "recorded_sha256": "6092592e6eef3cc031f9f3c0a33fcd296ea31061be80ab5008ceb8c6d7c910c4",
+        "current_sha256": "6092592e6eef3cc031f9f3c0a33fcd296ea31061be80ab5008ceb8c6d7c910c4",
+        "unchanged": true
+      },
+      "b3_seed3": {
+        "recorded_sha256": "b7671881b4c441d0ab01da1ee91572d2c3d66067c2a131e29e700460217d14ab",
+        "current_sha256": "b7671881b4c441d0ab01da1ee91572d2c3d66067c2a131e29e700460217d14ab",
+        "unchanged": true
+      }
+    },
+    "temperatures": {
+      "b3_seed1": {
+        "eval_metadata_temperature": 1.1153439683270872,
+        "bundle_temperature": 1.1153439683270872,
+        "unchanged": true
+      },
+      "b3_seed2": {
+        "eval_metadata_temperature": 1.116630407128927,
+        "bundle_temperature": 1.116630407128927,
+        "unchanged": true
+      },
+      "b3_seed3": {
+        "eval_metadata_temperature": 1.100524960810151,
+        "bundle_temperature": 1.100524960810151,
+        "unchanged": true
+      }
+    },
+    "text_cache": {
+      "v1_sha256": "82c0d10195121bcefbf11e2adfab03348377e5aae6a7288e76568b8da25617a1",
+      "detr_sha256": "82c0d10195121bcefbf11e2adfab03348377e5aae6a7288e76568b8da25617a1",
+      "unchanged": true
+    },
+    "openclip": {
+      "checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+      "recorded_identity": {
+        "checkpoint_path": "F:/DL Projects/calibrated-candidate-grounding/cache/hf_hub/models--laion--CLIP-ViT-B-32-laion2B-s34B-b79K/snapshots/1a25a446712ba5ee05982a381eed697ef9b435cf/open_clip_pytorch_model.bin",
+        "frozen": {
+          "cache_version": "phase0a-v1",
+          "checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+          "context_length": 77,
+          "embedding_dim": 512,
+          "library": "open_clip_torch",
+          "model_name": "ViT-B-32",
+          "precision": "fp16",
+          "pretrained": "laion2b_s34b_b79k",
+          "resolution": 224,
+          "tokenizer": "SimpleTokenizer"
+        },
+        "measured_checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+        "metadata": {
+          "cache_version": "phase0a-v1",
+          "checkpoint_path": "cache\\hf_hub\\models--laion--CLIP-ViT-B-32-laion2B-s34B-b79K\\snapshots\\1a25a446712ba5ee05982a381eed697ef9b435cf\\open_clip_pytorch_model.bin",
+          "context_length": 77,
+          "embedding_dim": 512,
+          "library": "open_clip_torch",
+          "library_version": "3.3.0",
+          "metadata_path": "cache/features/metadata.json",
+          "model_name": "ViT-B-32",
+          "precision": "fp16",
+          "preprocessing": {
+            "antialias": true,
+            "center_crop": [
+              224,
+              224
+            ],
+            "crop_policy": "exact proposal crop (round->clamp), no context padding",
+            "interpolation": "bicubic",
+            "mean": [
+              0.48145466,
+              0.4578275,
+              0.40821073
+            ],
+            "min_crop_px": 1,
+            "resize_mode": "shortest",
+            "resize_size": 224,
+            "source": "introspected from the live open_clip val transform",
+            "std": [
+              0.26862954,
+              0.26130258,
+              0.27577711
+            ]
+          },
+          "pretrained": "laion2b_s34b_b79k",
+          "recorded_checkpoint_sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+          "resolution": 224,
+          "tokenizer": "SimpleTokenizer"
+        },
+        "ok": true
+      }
+    },
+    "r1_e1b_bundle": {
+      "note": "R1/E1b are read from the checksum-verified bundle (models.sha256); load_models(verify_checksum=True) pinned them; they are never re-fitted.",
+      "bundle_checksum_verified": true
+    },
+    "grounding_invariant": true
+  },
+  "new_training_parameters": 0,
+  "generated_utc": "2026-10-02T06:48:39Z"
+}
