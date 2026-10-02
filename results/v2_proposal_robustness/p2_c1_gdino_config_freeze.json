@@ -1,0 +1,91 @@
+{
+  "protocol": "V2-P2-C1",
+  "schema": "p2-config-freeze-v1",
+  "frozen_utc": "2026-10-02T00:00:00Z",
+  "authorization": "User authorised 'GDINO participates in C1 only' (new protocol decision beyond the frozen audit on_failure rule) on 2026-10-02, BEFORE any P2 result exists. This file must be committed before any P2 numeric artifact is produced.",
+
+  "scope": {
+    "in_scope": ["C1 candidate-cardinality replication under the Grounding DINO class-prompt proposal family (third family after RPN, DETR-R50)"],
+    "explicitly_out_of_scope": [
+      "C4 / hard-semantic / SameCategory-K5 for GDINO: the E1 probe failed the frozen same-category supply gate (measured 0.6892 < 0.85, recorded in results/v2_proposal_robustness/p2_gdino_probe/probe_report.json). No GDINO same_category manifest is built, no hard_k5 job is scored, no C4 verdict may be computed or reported for GDINO. The probe number is final and never re-measured.",
+      "E2 query-conditioned GDINO top-K as any gate-bearing experiment",
+      "E3 DINO-DETR / DETR-R101 (only if a future protocol authorises it)",
+      "any change to N, K levels, truncation, NMS, thresholds, checkpoints, scorer heads, or metrics after results exist"
+    ]
+  },
+
+  "immutable_reuse_from_v2_p1": {
+    "note": "All analysis code below is IMPORTED VERBATIM from the frozen P1 stack; P2 adds only plumbing (a FAMILIES entry + CLI choices), never a new metric or gate.",
+    "primary_cohort": "common-K50 (target present AND >= 49 valid distractors); same rows carry every K via nested prefixes C5 subset C10 subset C20 subset C50",
+    "random_regime": "exact V1 seeded-random construction (scripts/build_candidate_sets.py --regime random --seed 20260927, target slot 0); detector confidence ordering is bank provenance ONLY, never a selection rule (P1-A0 applies unchanged)",
+    "ks": [5, 10, 20, 50],
+    "baseline_k": 5,
+    "primary_compare_pair": [5, 50],
+    "secondary_compare_pairs": [[5, 10], [5, 20]],
+    "scorer": "conf_msp = temperature-scaled frozen B3, per-seed temperatures, seeds {1,2,3} evaluated separately then mean +/- std",
+    "metrics": "Accuracy / AUROC / E-AURC / RER@50 / RER@80 via ccg.reliability.evaluate + core.c1_point_row (frozen)",
+    "bootstrap": "image-cluster paired bootstrap, 5000 replicates, seed 0, CI 0.95, core.C1_METRIC_SPECS verbatim (auroc absolute diff, e_aurc relative diff, rer50 absolute diff, rer80 optional key)",
+    "gate": "core.c1_gate verbatim: Route A = mean delta-AUROC(K5-K50) >= 0.03 AND every seed ci_low > 0; OR Route B = mean E-AURC relative worsening >= 0.20 AND mean RER50 drop >= 0.10, each with every-seed CI excluding 0. replicated = A or B. Verdict label C1_GDINO in {YES, NO}.",
+    "secondary_raw_profile": "core raw_top1 / raw_margin12 AUROC per K (calibration-independent), never gate-bearing",
+    "intersection": "GDINO-union-RPN and GDINO-union-DETR common-K50 expression intersections (core.matched_expression_ids), delta-AUROC and RER50-drop comparison, descriptive only",
+    "attrition_report": "bank universe -> expression universe -> per-K eligible counts, compared against frozen DETR attrition (10601 -> {10601,10601,10570,9665}, k50 availability 0.9117) and RPN (10425 -> 10286, 0.9867); no resampling, no top-ups",
+    "figures": "Fig1 K vs AUROC, Fig2 K vs E-AURC, three families side by side (RPN grey, DETR red, GDINO a new distinct colour), dpi 150, Agg backend"
+  },
+
+  "gdino_specific_freeze": {
+    "proposal_family": "GDINO",
+    "checkpoint": {
+      "repo": "IDEA-Research/grounding-dino-base",
+      "revision_sha": "12bdfa3120f3e7ec7b434d90674b3396eccf88eb",
+      "model_safetensors_sha256_prefix": "5548f844c928c4b6",
+      "identity_file": "results/v2_proposal_robustness/p2_gdino_probe/checkpoint_identity.json",
+      "usage": "class-prompt query-independent bank ONLY (fixed COCO-thing prompt from data/raw/annotations/instances_train2014.json, 80 classes, 113 token columns; expression never enters the detector)"
+    },
+    "bank": {
+      "path": "cache/proposals_gdino.h5",
+      "schema": "bank-v1 (identical layout to proposals.h5 / proposals_detr_r50.h5)",
+      "n": 64,
+      "score_definition": "max class-token sigmoid prob (ccg.data.gdino), descending stable sort, no threshold, never padded, sanitize/top-N shared with ccg.data.detr with row-exact cross-check",
+      "images": "full RefCOCO+ universe data/full_image_manifest.csv (19992 train2014)",
+      "extractor": "scripts/p2_extract_gdino_proposals.py (thin clone of scripts/p1_extract_detr_proposals.py; generator module swapped, writer/atomic-resume/stats identical)"
+    },
+    "features": {
+      "path": "cache/features_gdino",
+      "builder": "scripts/extract_features.py --bank cache/proposals_gdino.h5 --out cache/features_gdino",
+      "params": "identical to the frozen DETR feature run (OpenCLIP ViT-B/32 identity check enforced, batch-size 128, fp16, exact-crop policy, resume-enabled); OpenCLIP checkpoint identity must pass fi.assert_openclip_identity"
+    },
+    "manifests": {
+      "path": "cache/gdino_stage/manifests",
+      "builder": "scripts/build_candidate_sets.py --bank cache/proposals_gdino.h5 --out cache/gdino_stage --regime random --seed 20260927",
+      "regimes": ["random"],
+      "note": "same_category deliberately NOT built (C4 out of scope); a same_category artifact for GDINO is forbidden in P2"
+    },
+    "inference": {
+      "driver": "scripts/p1_frozen_inference.py --family GDINO",
+      "jobs": ["random_k5", "random_k10", "random_k20", "random_k50"],
+      "scorers": ["b3_seed1", "b3_seed2", "b3_seed3"],
+      "hard_jobs": "none (forbidden)",
+      "rpn_reproduction_check": "RPN is NOT re-run; its frozen predictions under results/v2_proposal_robustness/predictions are reused byte-for-byte"
+    },
+    "analysis": {
+      "driver": "scripts/p2_c1_cardinality.py",
+      "implementation": "imports p1_f4_cardinality.run_c1_for / common_k50_ids / gate wiring verbatim with family='GDINO'; additionally renders the three-family figures and intersections; zero new numeric code allowed",
+      "outputs_dir": "results/v2_proposal_robustness/p2_c1_gdino/"
+    }
+  },
+
+  "zero_fit": "0 new training parameters. B3 no retrain, temperature no refit, R1/E1b no refit, no new scorer, no NMS, no threshold change. The static no-fit scan (tests) covers ccg/data/gdino.py, scripts/p2_extract_gdino_proposals.py, scripts/p2_c1_cardinality.py.",
+
+  "stop_conditions": [
+    "After the C1_GDINO verdict + secondary artifacts are committed, V2-P2 Phase B STOPS. Grounding DINO hard-regime, E3 families, and any fourth proposal family require a NEW authorized protocol.",
+    "If any frozen gate fails at a plumbing stage (bank corruption unresumable, OpenCLIP identity mismatch, common-K50 cohort < 8000 expressions), STOP and report; do not rescue by changing parameters."
+  ],
+
+  "git_plan": [
+    "commit A (this file): config freeze, before ANY P2 number exists",
+    "commit B: extractor + plumbing (gdino module already landed in probe commit; FAMILIES entry, CLI choices, p2 extractor) + bank extraction report",
+    "commit C: manifests + features + frozen inference report",
+    "commit D: C1_GDINO verdict + secondary + figures + tests",
+    "L3 deep review (0 blocking) before every push, per standing rule"
+  ]
+}
