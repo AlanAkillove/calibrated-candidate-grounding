@@ -1,0 +1,286 @@
+{
+  "protocol": "RQ4-M1",
+  "title": "RQ4-M1 Transition-Confidence Decomposition: decomposing cardinality-induced reliability degradation into correctness-state transition and confidence-ranking change",
+  "created_utc": "2026-10-02T12:05:00Z",
+  "authored_before_any_result": true,
+  "freeze_audit_utc": "2026-10-02T20:45:00Z",
+  "amendments_before_any_result": [
+    "tail-pressure status corrected from a duplicate-of-existing wording to NOT USED with the accurate reason (per-candidate raw scores absent from the frozen artifacts; a new model forward would be required and is forbidden)",
+    "input_artifact_manifest.csv added (18 hashed prediction artifacts + the published C1 reference) and registered here as input_manifest_sha256",
+    "D_conf clarified as a confidence-RANKING-change contribution, explicitly not a temperature / calibration-scale change (AUROC is invariant to monotone score transforms)",
+    "cross-family own-cohort CIs renamed as descriptive under independent-family resampling and explicitly not paired-expression"
+  ],
+  "amendment_discipline": "all four items are wording / inventory corrections made while no real RPN, DETR or GDINO number had been computed; no formula, estimator, cohort, coverage, threshold or verdict label was changed",
+  "real_results_seen_before_freeze": false,
+  "classification": "DESCRIPTIVE_MECHANISM_DECOMPOSITION",
+  "classification_meaning": "An exact accounting decomposition of an already-settled confirmatory effect (V2-P C1: the K5->K50 AUROC degradation replicates on RPN, DETR-R50 and GDINO). It creates no existence claim, tests no intervention, and authorises no new method. It may say that one measured component 'accounts for' more of a measured difference than another; it may never say 'causes', 'is the mechanism', or 'discovered the mechanism'.",
+  "not": [
+    "causal mechanism proof",
+    "confirmatory causal test",
+    "new method or new model",
+    "new GO/NO-GO gate or new threshold hunt"
+  ],
+  "authorisation": {
+    "granted_by": "user instruction, 2026-10-02",
+    "unblocks": "the RQ4 status 'OPEN / NOT STARTED / NOT AUTHORIZED' registered in docs/research_protocol.md section 'V2 Post-A11 Program Result Record' (Program status, RQ4), commit 42fe6ad",
+    "required_by_that_registration": "a new pre-result frozen mechanism amendment, which is this file",
+    "governance_note": "The V2 close-out at 42fe6ad stays in force and unmodified: V2-G/D/M/M3/P remain CLOSED, and no V2 number, gate or threshold is touched here. RQ4-M1 is a NEW analysis line on a NEW branch (v2-rq4-mechanism, created from v2-proposal-robustness @ 42fe6ad, never merged to main)."
+  },
+  "parent_artifacts": {
+    "governance_closeout_commit": "42fe6ad",
+    "C1_confirmatory_source": "results/v2_proposal_robustness/p2_c1_gdino/p2_c1_verdict.json",
+    "C1_point_reference": "results/v2_proposal_robustness/p2_c1_gdino/c1_point.csv",
+    "P1_reference": "results/v2_proposal_robustness/p1_f4_c1/f4_verdict.json",
+    "axis_index": "results/v2_proposal_robustness/v2_p_program_summary.md",
+    "algebra_module": "src/ccg/rq4/decomposition.py",
+    "driver": "scripts/rq4_m1_decomposition.py",
+    "tests": "tests/test_rq4_m1_decomposition.py"
+  },
+  "scientific_question": {
+    "RQ4-M1-Q1": "Is the K5->K50 reliability degradation primarily associated with correctness-state transitions, confidence reordering, or both?",
+    "RQ4-M1-Q2": "Which of these two structural components accounts for the unusually large GDINO AUROC degradation relative to RPN and DETR?",
+    "wording_rule": "answer with 'accounts for in the exact statistical decomposition'; never with 'causes' or 'is the causal mechanism'"
+  },
+  "why_this_is_not_variable_fishing": "The previously observed candidate properties (R1 same-class distractors, R2 unmatched COCO fraction, R4 geometric redundancy, R5 query cosine spread, H2a delta margin) were all seen inside the V2-P2-M result and remain 'candidate observations' only. RQ4-M1 uses none of them as an explanatory variable. It uses exactly two things that were already published and are not chosen by significance: the correctness state (r5, r50) and the frozen confidence (p5, p50), in one pre-defined exact decomposition. Nothing is selected because it looks significant.",
+  "data": {
+    "families": ["RPN", "DETR", "GDINO"],
+    "seeds": [1, 2, 3],
+    "comparison": "K5 (baseline) vs K50 (primary), nested seeded-random regime, pooled test (testA + testB)",
+    "files_read": [
+      "results/v2_proposal_robustness/predictions/p1__{RPN,DETR,GDINO}__random_k5__b3_seed{1,2,3}.npz",
+      "results/v2_proposal_robustness/predictions/p1__{RPN,DETR,GDINO}__random_k50__b3_seed{1,2,3}.npz",
+      "results/v2_proposal_robustness/p2_c1_gdino/c1_point.csv (read-only reference for the reproduction check)",
+      "results/v2_proposal_robustness/p2_c1_gdino/p2_c1_verdict.json and p1_f4_c1/f4_verdict.json (read-only cohort_rows reference)"
+    ],
+    "columns_used": ["sentence_id", "ref_id", "image_id", "correct", "conf_msp"],
+    "confidence_definition": "conf_msp is the frozen global_T_corrected confidence (B3 max-softmax at the frozen per-seed temperature) - the identical column the confirmatory C1 gate used. It is read as stored; it is never recomputed, recalibrated or refit.",
+    "correctness_definition": "'correct' is the stored binary 1[argmax == target] per (family, K, seed), the identical column the confirmatory C1 gate used.",
+    "cohort": "per family, the common-K50 cohort = the sentence_id set of that family's own random_k50 npz, intersected with its random_k5 npz; rows are sorted by sentence_id so K5 and K50 align row-for-row. This must equal the published cohort_rows (RPN 10286 / DETR 9665 / GDINO 10402) and the published per-seed n; any mismatch is a stop condition, not a repair opportunity.",
+    "forbidden_inputs": [
+      "any model forward pass, detector/CLIP/B3 inference, or GPU use",
+      "any new feature extraction or candidate generation",
+      "any proposal bank (cache/*.h5), corpus construction or manifest read: RQ4-M1 needs only the stored per-row prediction columns",
+      "any temperature refit or recalibration",
+      "any new proposal family, new dataset, new split, new seed, new training",
+      "any recomputation of the confirmatory C1 numbers: they are read, not re-derived, and any drift stops the run"
+    ],
+    "new_parameters": 0,
+    "new_training_parameters": 0,
+    "new_model_forward": 0,
+    "new_features": 0,
+    "gpu_required": false,
+    "zero_delta_attestation": "this amendment adds no trained parameter, no model forward pass, no feature and no GPU use; it consumes only the 18 frozen prediction artifacts hashed in input_artifact_manifest"
+  },
+  "input_artifact_manifest": {
+    "path": "results/v2_rq4_mechanism/m1_transition_confidence/input_artifact_manifest.csv",
+    "built_in": "the freeze round, by scripts/rq4_m1_decomposition.py --write-input-manifest: file metadata and sha256 only, no prediction array was loaded",
+    "columns": ["family", "K", "seed", "role", "path", "sha256", "file_size", "row_count_from_metadata_if_available", "row_count_source"],
+    "rows": "18 prediction artifacts (3 families x {K5, K50} x 3 frozen B3 seeds) plus 1 published reference artifact (results/v2_proposal_robustness/p2_c1_gdino/c1_point.csv)",
+    "row_count_provenance": "row_count_from_metadata_if_available is the already-published c1_point.csv 'n' column for that family / seed / K (cohort rows). The npz file's OWN row count is DEFERRED to the result round, because obtaining it would require loading a prediction array; leaving it deferred keeps 'no real row access before freeze' true instead of being violated just to fill a column.",
+    "consumption_rule": "all real analyses must consume exactly these hashed artifacts: the result round re-hashes every path in this manifest and aborts (FreezeViolation / StopCondition) on any sha256 or file_size drift, so the decomposition can only run on the frozen inputs registered here",
+    "no_new_artifacts": "the manifest is an inventory of existing frozen artifacts; it authorises no additional prediction file, model, dataset or seed"
+  },
+  "input_manifest_sha256": "096357ae300bbb16874691725db48d7d9f50fffd3a2670a2fa31543e90fb608a",
+  "definitions": {
+    "per_row_inputs": "for one family, one seed, one aligned common-K50 cohort: r5 = correct@K5, r50 = correct@K50, p5 = conf_msp@K5, p50 = conf_msp@K50",
+    "auroc_estimator": "ccg.metrics.discrimination.auroc_correct - the tie-correct Mann-Whitney average-rank statistic, identical to sklearn.metrics.roc_auc_score (0.5 credit for ties). Single-class inputs give nan and are a stop condition, never silently dropped.",
+    "corners": {
+      "A00": "AUROC(r5,  p5)",
+      "A10": "AUROC(r50, p5)",
+      "A01": "AUROC(r5,  p50)",
+      "A11": "AUROC(r50, p50)"
+    },
+    "reproduction_constraint": "A00 must reproduce the published K5 auroc_correct and A11 the published K50 auroc_correct for the same (family, seed) to 1e-12; the check compares against c1_point.csv, it does not replace it",
+    "observed_change": "delta_total = A11 - A00 (negative when reliability degrades)",
+    "degradation": "D_total = A00 - A11 = -delta_total (positive when reliability degrades)",
+    "d_conf_meaning": "D_conf is a CONFIDENCE-RANKING-CHANGE contribution: with correctness labels held fixed at a Shapley corner, it measures the AUROC change induced by the K5 -> K50 confidence ordering across expressions. It is NOT a temperature or calibration-scale change: AUROC is invariant to monotone transforms of the score, so a pure rescaling of confidence (a refit temperature applied uniformly) contributes exactly zero to D_conf. Only a re-ordering of expressions by confidence can move it. This clarification changes no formula: the corners A00/A10/A01/A11, the Shapley weights L/C and the definitions D_label = -L, D_conf = -C are exactly as frozen above."
+  },
+  "decomposition": {
+    "factors": {
+      "L (label transition)": "the correctness labels move r5 -> r50",
+      "C (confidence change)": "the frozen confidences move p5 -> p50, i.e. the cross-expression confidence ORDERING changes (a ranking effect, not a scale/temperature effect - AUROC is invariant to monotone score transforms)"
+    },
+    "formulas": {
+      "L": "0.5 * ((A10 - A00) + (A11 - A01))",
+      "C": "0.5 * ((A01 - A00) + (A11 - A10))",
+      "identity": "L + C == A11 - A00 (symmetric two-factor Shapley; exact by construction)",
+      "D_label": "-L",
+      "D_conf": "-C",
+      "degradation_identity": "D_label + D_conf == D_total"
+    },
+    "residual_rule": "the float64 residual of both identities is recorded per family and seed and must be <= 1e-12 in absolute value",
+    "sign_policy": "D_label and D_conf are SIGNED and may be positive, negative, or larger than D_total; a negative component means that factor improved reliability while the other worsened it more. Clipping to zero, absolute-value renormalisation and forcing shares to sum to 100% are all forbidden.",
+    "shares": {
+      "definition": "share_label = D_label / D_total, share_conf = D_conf / D_total",
+      "kind": "signed descriptive share; values below 0 or above 1 are legitimate and are reported as they are",
+      "denominator_safety": "shares are omitted (reported as empty with a flag) when |D_total| < 1e-3. The floor is 1/50th of the SMALLEST published degradation in this program (RPN delta AUROC 0.0517), chosen before results so that it can only ever exclude a numerically degenerate denominator; all three families are expected to clear it comfortably.",
+      "aggregation": "family-level quantities are the mean over the 3 frozen B3 seeds (the same headline convention as C1); every per-seed value is also written"
+    }
+  },
+  "transition_groups": {
+    "S_stable_correct": "r5 == 1 and r50 == 1",
+    "F_lost_flipped": "r5 == 1 and r50 == 0",
+    "E_stable_error": "r5 == 0 and r50 == 0",
+    "G_gained_correct": "r5 == 0 and r50 == 1",
+    "partition_rule": "the four groups are exhaustive and disjoint by construction; the driver asserts the union covers every row",
+    "structural_invariant": "G == 0 is EXPECTED (C5 is a subset of C50 and the scorer is per-candidate independent, so a target that lost top-1 inside C5 cannot regain it by adding candidates), but it is treated as a RUNTIME invariant, not as an assumption",
+    "invariant_failure": "if G > 0 for ANY family or seed -> STRUCTURAL_INVARIANT_FAILURE, STOP, report, do not continue the analysis and do not rescue it"
+  },
+  "group_weight_identities": {
+    "precondition": "G == 0 (else the label sets below are not the corner label sets)",
+    "at_K5": "positives = S union F, negatives = E; A00 = (nS*AUC(S,E;p5) + nF*AUC(F,E;p5)) / (nS + nF)",
+    "at_K50": "positives = S, negatives = F union E; A11 = (nF*AUC(S,F;p50) + nE*AUC(S,E;p50)) / (nF + nE)",
+    "cross_corners": "A01 and A10 carry the same partition at the other score level, so all four corners are reconstructed from group pairs",
+    "pairwise_auc_definition": "AUC(X,Y;p) = P(p_X > p_Y) + 0.5 * P(p_X == p_Y), the same average-rank estimator restricted to the two groups; exact because the corner's pair set partitions into the two cross-group pair families, each normalised by its own pair count",
+    "tolerance": "reconstructed minus direct must be <= 1e-12 in absolute value for every corner"
+  },
+  "transition_diagnostics": {
+    "per_family_seed": ["S/F/E row counts", "F rate", "E rate", "mean and median p5 in S/F/E", "mean and median p50 in S/F/E"],
+    "key_quantity": "AUC(S,F;p50): a low value means the newly introduced errors keep a high confidence at K50 and therefore damage the ranking specifically; reported next to AUC(S,E;p50) to separate newly introduced from persistent errors"
+  },
+  "selective_error_sources": {
+    "purpose": "explain the composition of the accepted errors behind the published RER@50 / RER@80 degradation. This is NOT a new gate and adds no new decision.",
+    "acceptance_rule": "at K50, accept the most confident rows under the frozen selective convention: n_keep = max(1, ceil(coverage * n)), rows in descending p50 with a stable sort (identical to ccg.metrics.selective.selective_accuracy)",
+    "coverages": [0.5, 0.8],
+    "reported": ["accepted F count (newly introduced errors)", "accepted E count (persistent errors)", "fraction of accepted errors coming from F", "risk of the accepted set"],
+    "per": "family x seed"
+  },
+  "cross_family_gap": {
+    "identity": "D_total(a) - D_total(b) = (D_label(a) - D_label(b)) + (D_conf(a) - D_conf(b)), exact by subtraction of two exact identities",
+    "comparisons": ["GDINO_minus_RPN", "GDINO_minus_DETR", "DETR_minus_RPN"],
+    "reported": "gap total, label component, confidence component, residual, signed shares, and which component is heavier",
+    "prejudgement": "the decomposition does NOT presuppose whether label transitions or confidence changes carry the gap; both components are reported and the heavier one is named descriptively"
+  },
+  "statistics": {
+    "bootstrap": {
+      "unit": "image (image_id clusters)",
+      "replicates": 5000,
+      "seed": 0,
+      "ci": "95% percentile",
+      "sampler": "ccg.experiment.phase0a._ClusterSampler - the frozen design used by every C1 CI in this program",
+      "quantities": ["D_total", "D_label", "D_conf", "share_label", "share_conf", "A00", "A11", "cross-family gap components"],
+      "shared_draws_within_family": "one draw per replicate is applied to r5, r50, p5 and p50 simultaneously (they are the same rows), so every identity holds inside each replicate",
+      "seed_handling": "each replicate re-runs the SAME estimator (mean over the 3 seeds) as the point estimate",
+      "cross_family_rule": "family-specific bootstraps are run SEPARATELY on each family's own cohort; the gap CI is built from replicate-index-aligned differences of those independent draws. NAME DISCIPLINE: these cross-family own-cohort CIs are DESCRIPTIVE under independent-family resampling and are NOT paired-expression CIs - the two families' cohorts differ, so no expression-level pairing is claimed and the interval is always labelled 'independent-family resampling, not paired-expression'. Genuine paired secondary inference comes ONLY from the matched-expression intersection resampled with SHARED image-cluster draws (see secondary_matched). The statistical method itself is unchanged by this naming tightening."
+    },
+    "secondary_matched": {
+      "cohorts": ["GDINO intersection RPN", "GDINO intersection DETR", "DETR intersection RPN"],
+      "cohort_rule": "deterministic sentence_id intersection of the two families' own common-K50 cohorts (the same construction the frozen C1 intersections used)",
+      "design": "on a matched intersection both families are restricted to identical expression rows and resampled with SHARED image-cluster draws, so the gap there is paired-expression",
+      "classification": "SECONDARY_MATCHED_DIAGNOSTIC",
+      "authority": "never overrides the primary own-cohort result; it only reports whether the same decomposition ordering survives cohort matching"
+    },
+    "no_new_tests": "no p-values, no significance language, no new statistical test. Bootstrap intervals describe sampling variability of a descriptive quantity."
+  },
+  "excluded_from_primary": {
+    "previously_observed_candidate_properties": ["R1_same_class_distractors", "R2_unmatched_fraction", "R4_geometric_redundancy", "R5_query_cos_spread", "H2a_delta_margin"],
+    "status": "candidate observations only, already seen inside the V2-P2-M result; they may be cited in a Discussion as previously measured properties but may not enter the primary decomposition, may not be re-selected for significance, and may not be renamed as the mechanism",
+    "added_candidate_tail_pressure": {
+      "decision": "NOT USED in this round",
+      "frozen_definition": "A = C50 \\ C5; tail_pressure = (max raw score over A - s1_5) / (abs(s1_5 - s2_5) + 1e-8)",
+      "reason": "required per-candidate raw scores are unavailable in the frozen prediction artifacts; computing this quantity would require a new model forward / new score extraction, which is forbidden by RQ4-M1",
+      "evidence": "the 18 frozen prediction npz files store only per-row aggregates (sentence_id, ref_id, image_id, correct, conf_msp, conf_stats, conf_e1b, sem14, raw_top1, raw_margin12) - there is no per-candidate score array and no record of the scores of the added candidates C50 \\ C5, so the quantity cannot be recovered offline from the frozen artifacts",
+      "duplicate_of_existing_claim": "NOT MADE. No mathematically equivalent quantity is frozen in this repository: raw_top1@K50 minus raw_top1@K5 is a per-row top-1 score SHIFT of the whole cohort, not a margin-normalised intrusion of the added-candidate tail, and it is not the same functional. Inability to compute is recorded as inability to compute, not as duplication.",
+      "consequence": "no secondary score-intrusion metric is reported this round, and no replacement variable is added in its place"
+    }
+  },
+  "verdict": {
+    "primary": "DECOMPOSITION_REPORTED - this value is a constant, because an exact accounting decomposition cannot succeed or fail; the identity either holds (checked) or the run stops",
+    "descriptive_ordering_per_family": {
+      "TRANSITION_HEAVIER": "D_label > D_conf",
+      "CONFIDENCE_CHANGE_HEAVIER": "D_conf > D_label",
+      "EXACT_TIE": "D_label == D_conf in float64",
+      "no_tolerance": "no approximate-equality band is invented; the two values and their difference are reported and the ordering is stated mechanically"
+    },
+    "forbidden_labels": ["GO", "NO_GO", "SUCCESS", "FAIL", "MECHANISM_FOUND", "MECHANISM_PROVED", "PREREGISTERED_HYPOTHESIS_CONFIRMED"],
+    "no_thresholds": "this round deliberately introduces no 0.50 / 0.70 / 2-of-3 style bar: those belong to intervention or replication gates, not to an exact decomposition"
+  },
+  "stop_conditions": {
+    "structural_invariant": "G > 0 in any family or seed -> STRUCTURAL_INVARIANT_FAILURE, STOP before any decomposition output is written",
+    "reproduction": "A00 or A11 differs from the published per-seed C1 AUROC by more than 1e-12 -> STOP (the frozen predictions or the cohort are not the ones the confirmatory result used)",
+    "cohort_identity": "derived cohort size differs from the published cohort_rows / per-seed n -> STOP, no rescue by loosening the cohort",
+    "degenerate_groups": "any of S, F, E empty for a family-seed -> STOP and report; a corner with a single class yields nan, which is never dropped or averaged away",
+    "identity_residual": "any Shapley or group-reconstruction residual above 1e-12 -> STOP and report the residual; do not widen the tolerance after the fact",
+    "seed_count": "fewer than 3 seeds available for a family -> STOP (the analysis is defined on exactly the frozen B3 seeds)"
+  },
+  "outputs": {
+    "dir": "results/v2_rq4_mechanism/m1_transition_confidence",
+    "files": [
+      "protocol_freeze.json (this file, committed in the freeze round)",
+      "input_artifact_manifest.csv (freeze round: sha256 + size of the 18 prediction artifacts and the published C1 table; no row payload read)",
+      "point_decomposition.csv (family x seed x {A00,A10,A01,A11,D_total,D_label,D_conf,residual,signed shares,ordering} + family 3-seed mean rows)",
+      "bootstrap_decomposition.csv (family x quantity x point/ci_low/ci_high/std/n_clusters/design)",
+      "transition_groups.csv (family x seed x S/F/E/G counts, rates, mean/median p5 and p50 per group)",
+      "pairwise_auc_components.csv (family x seed x corner x {AUC(S,E),AUC(F,E),AUC(S,F)} at both score levels, with group sizes, direct and reconstructed corner, residual)",
+      "selective_error_sources.csv (family x seed x coverage x accepted S/F/E counts, risk, F-share)",
+      "cross_family_gap_decomposition.csv (3 comparisons x gap/label/confidence/residual/shares + independent-family bootstrap CI)",
+      "matched_intersection_decomposition.csv (3 intersections x family x components, shared-draw paired gap CI, SECONDARY_MATCHED_DIAGNOSTIC)",
+      "verdict.json",
+      "metadata.json (classification, inputs, sha256 of the prediction files read, runtime, zero-fit attestation)",
+      "report.md"
+    ],
+    "figures_exactly_three": {
+      "fig1": "per family: D_total as a stacked SIGNED contribution bar (D_label + D_conf), negative parts drawn below the zero line",
+      "fig2": "transition groups S / F / E: box + quantile summary of p50 (no violins)",
+      "fig3": "cross-family total-degradation gaps split into label and confidence components"
+    },
+    "figure_policy": "exactly these three figures; no exploratory figure set"
+  },
+  "tests": {
+    "file": "tests/test_rq4_m1_decomposition.py",
+    "algebra_tier_runs_anytime": [
+      "G == 0 on synthetic nested cohorts and StructuralInvariantError when it is violated",
+      "transition groups are exhaustive and disjoint",
+      "Shapley identity L + C == A11 - A00 is exact, and D_label + D_conf == D_total",
+      "group-weight reconstruction of all four corners matches the direct AUROC to <= 1e-12",
+      "pairwise group AUC matches auroc_correct on the same two groups (0.5 tie convention)",
+      "signed shares are not clipped (values outside [0,1] survive) and are suppressed under the denominator floor",
+      "selective acceptance reproduces the frozen selective_accuracy convention (risk@coverage)",
+      "cross-family gap identity is exact",
+      "bootstrap uses image clusters (a permuted-cluster control narrows the interval)",
+      "input_artifact_manifest.csv lists exactly 18 family x K x seed prediction artifacts plus the published C1 reference, with non-empty sha256 fields",
+      "protocol input_manifest_sha256 equals the hash of the committed manifest file",
+      "the tail-pressure decision is NOT USED and its recorded reason mentions missing per-candidate scores and the forbidden new forward (no duplicate-of-existing claim)",
+      "the freeze documents (protocol_freeze.json + the two docs records) carry classification DESCRIPTIVE_MECHANISM_DECOMPOSITION and contain no real RPN/DETR/GDINO D_total / D_label / D_conf number",
+      "static check: no forbidden model/fit import and no excluded candidate-mechanism variable in the primary path",
+      "freeze integrity: protocol_freeze.json exists, is valid JSON, and is authored before any result file"
+    ],
+    "artifact_tier_skipped_until_results_exist": [
+      "A00 / A11 reproduce the published per-seed K5 / K50 C1 AUROC to 1e-12",
+      "G == 0 holds on the real cohorts",
+      "matched intersections are deterministic and symmetric",
+      "metadata classification is DESCRIPTIVE_MECHANISM_DECOMPOSITION and reports 0 new parameters / 0 model forwards"
+    ],
+    "freeze_round_rule": "no real RPN / DETR / GDINO row is computed before the freeze commit is pushed; smoke testing is allowed on synthetic arrays only"
+  },
+  "interpretation_boundary": {
+    "allowed": [
+      "The observed AUROC degradation can be exactly decomposed into a correctness-transition component and a confidence-change component.",
+      "The larger GDINO degradation is statistically accounted for more by X than by Y in this decomposition."
+    ],
+    "forbidden": [
+      "X causes the degradation.",
+      "We discovered the true mechanism.",
+      "unmatched boxes / H2a / semantic ambiguity is the cause",
+      "any causal or intervention wording without a separate pre-result frozen intervention protocol"
+    ],
+    "phrase_rule": "use 'accounts for in the exact statistical decomposition', never 'causes' or 'is the causal mechanism'"
+  },
+  "commit_plan": {
+    "A_freeze_round": "branch creation + this protocol_freeze.json + input_artifact_manifest.csv + src/ccg/rq4/decomposition.py + scripts/rq4_m1_decomposition.py + algebra tests + .gitignore + docs append (research_protocol amendment RQ4-A1 and experiment_log pre-result freeze record) -> full pytest with 0 failed / 0 errors -> commit 'Freeze RQ4-M1 transition-confidence decomposition' -> L3 deep review with 0 blocking findings -> push v2-rq4-mechanism",
+    "A2_freeze_audit": "the protocol audit round (tail-pressure status correction, input-artifact manifest, D_conf ranking-change clarification, cross-family CI naming) is allowed only because NO real RPN/DETR/GDINO result had been computed at that point; it corrects wording and adds an input inventory, it changes no formula, no estimator, no cohort, no threshold",
+    "B_result_round": "only after A is pushed: verify_input_manifest re-hashes every registered artifact, then run the driver on the frozen predictions, write outputs and the three figures, complete the artifact-tier tests, then a separate result commit + report",
+    "branch": "v2-rq4-mechanism (from v2-proposal-robustness @ 42fe6ad; main is never merged in)",
+    "no_other_branch_push": "never push v2-proposal-robustness or main from this round"
+  },
+  "out_of_scope": {
+    "this_round_stops_at": "the RQ4-M1 decomposition",
+    "explicitly_not_authorized": [
+      "new candidate-property search",
+      "RQ4-M2 or any follow-up mechanism experiment",
+      "a new detector, dataset, model or proposal family",
+      "any intervention / ablation / causal test",
+      "any change to a V2 or V2-P confirmatory number, gate or threshold"
+    ]
+  }
+}

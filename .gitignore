@@ -47,9 +47,13 @@ results/*
 !results/v2_d2_refcoco_lang/**
 !results/v2_proposal_robustness/
 !results/v2_proposal_robustness/**
+!results/v2_rq4_mechanism/
+!results/v2_rq4_mechanism/**
 # V2-P1 banks / per-image dumps are reproducible - never committed under results/
 results/v2_proposal_robustness/**/*.h5
 results/v2_proposal_robustness/**/*.npz
+results/v2_rq4_mechanism/**/*.h5
+results/v2_rq4_mechanism/**/*.npz
 # per-row frozen predictions are reproducible from scripts/d2_frozen_inference.py - not committed
 results/v2_d2_refcoco_lang/predictions/
 experiments/**/outputs/

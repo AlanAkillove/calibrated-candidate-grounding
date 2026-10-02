@@ -2021,5 +2021,93 @@ results/v2_*/                      （per-axis artifacts：label 的唯一来源
 不重跑任何实验（无 GPU run / 无 model forward / 无新 bootstrap / 无新统计检验 / 无新机制诊断 /
 无新结果数字）。
 
+## 11. RQ4-A1 — Transition–Confidence Decomposition：**PRE-RESULT FROZEN MECHANISM AMENDMENT**
+
+```yaml
+# ===== RQ4-A1（结果前冻结机制修正案；不是 result tampering，也不是对已完成实验的追溯预注册）=====
+record_class: pre-result frozen mechanism amendment
+amendment_id: RQ4-A1
+protocol_id: RQ4-M1
+protocol_title: >
+  RQ4-M1 Transition-Confidence Decomposition — decomposing cardinality-induced reliability
+  degradation into correctness-state transition and confidence-ranking change.
+branch: v2-rq4-mechanism
+branched_from: v2-proposal-robustness @ 42fe6ad（不 merge main，不回推 v2-proposal-robustness）
+classification: DESCRIPTIVE_MECHANISM_DECOMPOSITION
+not: >
+  causal mechanism proof / confirmatory causal test / new method or new model /
+  new GO-NO-GO gate or new threshold hunt
+real_results_seen_before_freeze: false
+new_training_parameters: 0
+new_model_forward: 0
+new_features: 0
+new_dataset_or_seed_or_family: 0
+temperature_refit_or_recalibration: 0
+frozen_artifact: >
+  results/v2_rq4_mechanism/m1_transition_confidence/protocol_freeze.json（公式、cohort、容差、bootstrap、
+  stop rule、verdict 词汇、artifact 清单、三张图、测试清单全部结果前冻结）
+input_artifact_manifest: >
+  results/v2_rq4_mechanism/m1_transition_confidence/input_artifact_manifest.csv —— 18 个冻结 prediction
+  artifact（3 family × {K5,K50} × 3 B3 seed）+ published C1 参考表 `c1_point.csv`，逐条登记 sha256 与
+  file_size；row_count 只引用已发布的 `c1_point.csv` `n` 列，npz 自身行数 **deferred**（freeze 轮不加载
+  prediction array）。规则：all real analyses must consume exactly these hashed artifacts。
+research_questions:
+  RQ4-M1-Q1: >
+    Is the K5->K50 reliability degradation primarily associated with correctness-state transitions,
+    confidence reordering, or both?
+  RQ4-M1-Q2: >
+    Which of these two structural components accounts for the unusually large GDINO AUROC degradation
+    relative to RPN and DETR?
+  wording_rule: "accounts for in the exact statistical decomposition"；禁止 causes / is the causal mechanism
+method: >
+  对每个 family / seed / 对齐 common-K50 cohort：A00=AUROC(r5,p5)、A10=AUROC(r50,p5)、
+  A01=AUROC(r5,p50)、A11=AUROC(r50,p50)；D_total=A00-A11；对称两因子 Shapley
+  L=0.5[(A10-A00)+(A11-A01)]、C=0.5[(A01-A00)+(A11-A10)]，恒等式 L+C=A11-A00 与
+  D_label+D_conf=D_total 必须在 1e-12 内成立。A00 / A11 必须逐位复现 published C1 K5 / K50 AUROC。
+  S/F/E/G 转移分组中 **G=0 是 runtime invariant**（C5 ⊂ C50 + per-candidate independent scorer），
+  违反即 STRUCTURAL_INVARIANT_FAILURE 停止。
+  D_conf 是 confidence-**RANKING**-change 贡献（labels 固定在某个 Shapley 角上时，K5→K50 跨表达式置信
+  排序变化 induced 的 AUROC 改变），**不是** temperature / calibration-scale change：AUROC 对单调分数
+  变换不变，因此纯 rescaling 对 D_conf 恰好贡献 0。
+cross_family_primary: >
+  本轮最核心结果是 cross-family exact gap decomposition：D_total(a)-D_total(b) =
+  (D_label(a)-D_label(b)) + (D_conf(a)-D_conf(b))，对 GDINO-RPN / GDINO-DETR / DETR-RPN 三个比较报告，
+  不预设哪个成分更重。
+statistics: >
+  image-cluster bootstrap，5000 reps，seed 0，95% percentile CI；同一 family 内 r5/r50/p5/p50 使用
+  shared draws（每个 replicate 内恒等式仍成立）。cross-family primary 为 family-specific bootstrap
+  后按 replicate index 对齐做 **descriptive** gap CI：these cross-family own-cohort CIs are descriptive
+  under independent-family resampling，它们**不是** paired-expression CI；真正的 paired secondary 只能来自
+  matched-expression intersection + shared image-cluster draws（SECONDARY_MATCHED_DIAGNOSTIC，不覆盖 primary）。
+no_new_thresholds: >
+  本轮不新造 0.50 / 0.70 / 2-of-3 之类门槛，也不设近似相等容差带；verdict 为常量
+  DECOMPOSITION_REPORTED，附纯描述性 ordering（TRANSITION_HEAVIER / CONFIDENCE_CHANGE_HEAVIER /
+  EXACT_TIE）与数值本身。
+excluded_from_primary: >
+  R1 same-class distractors / R2 unmatched fraction / R4 geometric redundancy / R5 query_cos_spread /
+  H2a_delta_margin 均**不**进入 primary decomposition，只可作为 previously observed candidate properties
+  在 Discussion 中被引用。ADDED-CANDIDATE TAIL PRESSURE：decision **NOT USED**，原因为 frozen prediction
+  artifacts 只有 per-row 聚合列（含 raw_top1 / raw_margin12），缺少 per-candidate raw scores 与
+  C50\C5 的分数记录，计算它需要新的 model forward / 新的分数抽取，为本协议禁止；本轮**不**声称它是
+  duplicate-of-existing（不可计算 ≠ 已有等价量），也不以任何替代变量补足。
+relation_to_section_8_and_9: >
+  §8 要求 RQ4 在出现「一个新的 pre-result frozen mechanism amendment」前保持 NOT STARTED / NOT AUTHORIZED；
+  本条即该修正案，因此 RQ4 的执行状态自本条起变为 **ACTIVE，仅限 RQ4-M1 这一条 decomposition 线**。
+  §8 / §9 原文按 append-only 保持不动，其状态更新以本条为唯一依据；§9 的三条禁宣布（unmatched COCO
+  fraction / margin collapse / H2a is the mechanism）继续有效，RQ4-M1 不使用其中任何一个作为解释变量。
+scope_stop: >
+  完成 RQ4-M1 即停止。RQ4-M2、新的 candidate-property search、新 detector / dataset / model、
+  任何 intervention / ablation / causal test 均未获授权；V2 与 V2-P 的任何 confirmatory 数字、gate、
+  threshold 不被触碰。
+implementation: >
+  src/ccg/rq4/decomposition.py（纯代数 + cluster bootstrap 包装，不读文件、不 fit、不 forward）；
+  scripts/rq4_m1_decomposition.py（驱动，真实数据受 --allow-real-data 与 freeze 文件 git-tracked 双门控）；
+  tests/test_rq4_m1_decomposition.py（algebra tier 随时可跑，artifact tier 在结果存在前 skip）。
+入库顺序（§20 纪律）: create branch -> protocol freeze -> algebra tests -> (--write-input-manifest) ->
+  full pytest 0 failed / 0 errors -> commit "Freeze RQ4-M1 transition-confidence decomposition" -> L3 ->
+  push v2-rq4-mechanism -> 之后才允许计算真实 RPN/DETR/GDINO 数字。
+```
+
+
 
 

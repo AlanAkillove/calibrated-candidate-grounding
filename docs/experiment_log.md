@@ -2023,3 +2023,73 @@ artifact_paths: >
 > `results/v2_proposal_robustness/v2_p_program_summary.md` 的既有数字在本节中只被**引用**，未被改写。
 > **RQ4（GDINO 放大的机制）此刻只登记为 open question：NOT STARTED、NOT AUTHORIZED**，
 > 详见 `docs/research_protocol.md` 的「V2 Post-A11 Program Result Record」与「Program status」。
+
+# RQ4-M1（Transition–Confidence Decomposition）—— pre-result freeze record
+
+> 本节是**结果前登记**：到本节入库为止，**未计算任何真实 RPN / DETR / GDINO 的 RQ4-M1 数字**。
+> 它不新增任何 V2 / V2-P confirmatory 结果，也不修改任何已发布数字、gate 或 threshold。
+
+```yaml
+# ===== RQ4-M1 pre-result freeze record =====
+record_class: pre-result freeze（mechanism decomposition line, not an intervention test）
+protocol_id: RQ4-M1
+amendment_id: RQ4-A1（见 docs/research_protocol.md 第 11 节）
+classification: DESCRIPTIVE_MECHANISM_DECOMPOSITION
+real_results_seen_before_freeze: false
+new_training_parameters: 0
+new_model_forward: 0
+new_features: 0
+branch: v2-rq4-mechanism
+parent_branch_and_commit: v2-proposal-robustness @ 42fe6ad（五轴 CLOSED 保持不动；不 merge main）
+program_status_delta: >
+  V2-G / V2-D / V2-M / V2-M3 / V2-P 仍为 CLOSED。RQ4 由 OPEN / NOT STARTED / NOT AUTHORIZED 转为
+  ACTIVE，但**仅覆盖 RQ4-M1 这一条 exact decomposition**；RQ4-M2 与任何新机制搜索 / 新干预未获授权。
+frozen_inputs: >
+  只读已冻结的三族 common-K50 cohort 上的 K5 / K50 `correct` 与 `conf_msp`（= frozen
+  global_T_corrected），3 个 B3 seed，以及 published C1 参考表。禁：new forward / new feature /
+  new candidate generation / new training / temperature refit / recalibration / new family / new
+  dataset / new cohort。0 new parameters，0 GPU。
+input_artifact_manifest: >
+  results/v2_rq4_mechanism/m1_transition_confidence/input_artifact_manifest.csv —— 18 个 prediction
+  artifact + published C1 表的 sha256 / file_size 清单（freeze 轮只做文件 metadata 与 hash，不加载
+  prediction array，因此未违反「结果前不读 real row」）；row_count 来自已发布的 `c1_point.csv` `n` 列，
+  npz 自身行数 deferred。结果轮由 verify_input_manifest() 重新逐条 hash，任一 drift 即中止：
+  all real analyses must consume exactly these hashed artifacts。
+frozen_formulas: >
+  A00=AUROC(r5,p5) / A10=AUROC(r50,p5) / A01=AUROC(r5,p50) / A11=AUROC(r50,p50)；
+  D_total=A00-A11；L=0.5[(A10-A00)+(A11-A01)]；C=0.5[(A01-A00)+(A11-A10)]；
+  恒等式 L+C=A11-A00 与 D_label+D_conf=D_total，residual 要求 <= 1e-12；A00 / A11 必须复现 published
+  C1 K5 / K50 AUROC（否则 STOP，不放宽）。D_label / D_conf 保持**有符号**，不 clip、不归一化、不强凑 100%；
+  |D_total| < 1e-3 时不报 share。
+  D_conf 的解释被收紧为 confidence-**ranking**-change（labels 固定在 Shapley 角上时跨表达式置信排序
+  变化 induced 的 AUROC 改变），**明确不是** temperature / calibration-scale change（AUROC 对单调分数
+  变换不变）；公式本身未改。
+groups_and_invariant: >
+  S=(1,1) / F=(1,0) / E=(0,0) / G=(0,1)；分组穷尽且互斥；**G=0 作为 runtime invariant**，任一 family/seed
+  出现 G>0 即 STRUCTURAL_INVARIANT_FAILURE 并停止分析（不做补救）。
+audit_log_before_commit: >
+  commit 前的 protocol audit 包四个修正：(A) tail-pressure 状态由 duplicate-of-existing 表述改为
+  NOT USED + 正确原因（frozen artifacts 缺 per-candidate raw scores，计算需新的 model forward，被禁止；
+  不可计算不等于已有等价量）；(B) 新增 frozen input-artifact manifest；(C) D_conf 解释收紧为 ranking
+  change；(D) cross-family own-cohort CI 改名为 descriptive under independent-family resampling，
+  明确不是 paired-expression CI（paired secondary 只能来自 matched intersection + shared cluster draws）。
+  四项均只改文字 / 新增清单，不改公式、estimator、cohort、coverage、threshold 或 verdict 词汇。
+planned_outputs: >
+  results/v2_rq4_mechanism/m1_transition_confidence/：protocol_freeze.json,
+  input_artifact_manifest.csv, point_decomposition.csv, bootstrap_decomposition.csv,
+  transition_groups.csv, pairwise_auc_components.csv, selective_error_sources.csv,
+  cross_family_gap_decomposition.csv, matched_intersection_decomposition.csv, verdict.json,
+  metadata.json, report.md, figures/（恰好三张）。
+statistics_frozen: image-cluster bootstrap，5000 reps，seed 0，95% percentile CI；family 内 shared draws；
+  cross-family primary = 各 family 自己的 cohort 独立重采样 + replicate-index-aligned descriptive gap CI；
+  secondary = 三个 matched-expression intersection 上共享 draws 的 paired 分解（SECONDARY_MATCHED_DIAGNOSTIC）。
+forbidden_wording_now: >
+  「X causes the degradation」/「we discovered the true mechanism」/「unmatched boxes、H2a、semantic
+  ambiguity is the cause」。允许的表述上限：the observed AUROC degradation can be exactly decomposed …；
+  the larger GDINO degradation is statistically accounted for more by X than by Y in this decomposition。
+next_allowed_step: >
+  full pytest（0 failed / 0 errors）-> commit "Freeze RQ4-M1 transition-confidence decomposition" -> L3 ->
+  push v2-rq4-mechanism；然后才运行 scripts/rq4_m1_decomposition.py --allow-real-data。结果轮禁止修改
+  公式 / bootstrap / family pair / share 定义 / group 定义 / verdict wording，禁止新增机制变量。
+```
+
