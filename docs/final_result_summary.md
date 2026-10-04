@@ -2,7 +2,7 @@
 
 Independent review conditionally accepted the core evidence and required three
 implementation/report corrections. All three are now implemented and verified.
-The new full suite has 1,238 passed and two original opt-in skips; 263 source/config
+The repair-closeout full suite had 1,238 passed and two original opt-in skips; 263 source/config
 files remained unchanged. Versioned execution acceptance is PASS; the earlier
 PASS and original independent conditional verdict remain preserved. See the
 [closeout](../results/research_repair_v1/independent_closeouts/20261004T031921Z/closeout.md).
@@ -78,3 +78,19 @@ On pooled testA+testB, stored paired estimates show condition-specific increment
 Verified candidate audit: 138 mismatching rows among 21,026 family–expression audit records (RPN 86/10,425; DETR 52/10,601; 10,607 distinct sentence_id values; mismatches involve 47 family–target-object pairs). Sensitivity stage: **FORMAL_COMPLETE**; independent raw numerical QA: **PASS**.
 
 Observed label path means have opposite signs in RPN, DETR, GDINO. The signed Shapley mean can conceal this cancellation; the accounting does not identify a cause.
+
+## Post-repair theoretical analysis
+
+The [theory chapter draft](theory_analysis_v1.md) now gives explicit assumptions,
+proofs, counterexamples and label-path bounds. It retains the historical notation
+S=stable correct, F=flipped to error, E=persistent error.
+The [frozen-prediction pair analysis](../results/research_repair_v1/theory_analysis/v1/analysis_report.md)
+adds shared-draw intervals for pair ranking changes and signed path terms.
+RPN/DETR improve S-versus-F ranking while worsening S-versus-E and F-versus-E
+ranking; GDINO worsens all three. Positive I can reflect different rates of ranking
+decline, rather than semantic synergy. These are descriptive, fixed-model,
+reused-test analyses; they do not identify an internal causal mechanism.
+This supplementary export is separate from the existing 59-job publication registry;
+it does not retroactively alter its estimate count, gates or completion status.
+Latest theory-stage test and numerical verification is recorded in
+[verification.json](../results/research_repair_v1/theory_analysis/v1/verification.json).

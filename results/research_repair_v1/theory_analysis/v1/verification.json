@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "full_suite": {
+    "exit_code": 0,
+    "collected_tests": 1248,
+    "passed_tests": 1246,
+    "skipped_tests": 2,
+    "command": "python -m pytest -q (PYTHONPATH=src; BLAS/OMP threads=2)",
+    "count_checked_by_collect_only": true
+  },
+  "source_and_output_hashes_verified": true,
+  "local_document_links_verified": 41,
+  "math_and_reference_checks": true,
+  "formal_analysis_checks": {
+    "point_anchor_tolerance": 1e-12,
+    "max_point_residual": 2.220446049250313e-16,
+    "max_historical_pair_residual": 0.0,
+    "max_bootstrap_anchor_residual": 3.3306690738754696e-16,
+    "G_total": 0,
+    "frozen_input_hashes_unchanged": true,
+    "all_draws_valid": true,
+    "n_quantities": 99
+  },
+  "integration_checks": {
+    "per_seed_rows": 297,
+    "all_seed_draws_valid": true,
+    "maximum_identity_residual_over_all_saved_draws": 3.7470027081099033e-16
+  },
+  "new_test_source_sha256": "e186fb9b76a7c1a2d0996c942f0a1909ca426230233e256bf54179d912635804",
+  "baseline_and_supplemental_input_verification": {
+    "status": "PASS",
+    "unique_files": 834,
+    "evidence_path": "results/research_repair_v1/theory_analysis/v1/input_verification/final_input_verification.json",
+    "sha256": "3ec55a766f44ba676a526e02f3212d6b46524e164dd254494b46451a43ceed1e"
+  },
+  "publication_checks": {
+    "hash_bound_staged_files_verified": 11,
+    "raw_distribution_bytes": 13462659,
+    "raw_distributions_explicitly_staged": true,
+    "code_and_text_whitespace_check": "PASS with cr-at-eol; generated SVG excluded",
+    "generated_svg_whitespace": "matplotlib path formatting retained to preserve output hash"
+  }
+}

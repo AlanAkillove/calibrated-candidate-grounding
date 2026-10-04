@@ -110,6 +110,9 @@ Thumbs.db
 /reviews/acceptance_2026-10-04/temp_recheck/
 results/research_repair_v1/**/*.tmp
 
+# Diagnostic short runs are retained locally; only the formal analysis is published.
+/results/research_repair_v1/theory_analysis/pilot_*/
+
 # Large text evidence is committed as SHA-verified gzip; restore with scripts/restore_repair_text_artifacts.py.
 /results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/candidate_geometry_historical_source_per_expression.csv
 /results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/candidate_geometry_sensitivity_per_expression.csv

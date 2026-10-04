@@ -4,3 +4,6 @@ reviews/** -text
 src/ccg/repairs/** -text
 scripts/*repair*.py -text
 tests/test_repair*.py -text
+
+# This generated theory draft is identified by SHA256 in the analysis export.
+docs/theory_analysis_v1.md -text

@@ -1,0 +1,19 @@
+{
+  "status": "COMPLETE",
+  "role": "derived exports only; no new resampling or model evaluation",
+  "analysis_manifest_sha256": "bd1672043da94f0cf2711a44f7c67a180d94324db75be7dd8c1dc901804add65",
+  "source_script_sha256": "a7e541631a01fc389d4eb1ec9f28edf871df0fb0d8348f35ab055c30bacf2b8b",
+  "per_seed_rows": 297,
+  "all_seed_draws_valid": true,
+  "maximum_identity_residual_over_all_saved_draws": 3.7470027081099033e-16,
+  "outputs": [
+    {
+      "path": "results/research_repair_v1/theory_analysis/v1/bootstrap_per_seed_ci.csv",
+      "sha256": "b0c792d5c17ba0f39ad8bf8ad0bb4a49366fa34e5ed400e7219a9150bd05af52"
+    },
+    {
+      "path": "docs/theory_analysis_v1.md",
+      "sha256": "c00f002d35f79f7a4c32e7c3b90837d5c494fda4bcd3701c60a88e7eb224c908"
+    }
+  ]
+}

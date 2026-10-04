@@ -101,8 +101,10 @@ resampling, then verify the baseline and supplemental input identities:
 Fresh environment installation: `pip install -e ".[dev]"`.
 
 Data setup and attribution: [data/README.md](data/README.md) and
-[dataset protocol](docs/dataset_protocol.md). Verified core references:
-[literature notes](docs/literature_notes.md). This work makes no universal reliability
+[dataset protocol](docs/dataset_protocol.md). Primary-source analysis references:
+[literature review](reviews/analysis_literature_review_2026-10-04.md).
+The [historical notes](docs/literature_notes.md) contain entries still requiring verification.
+This work makes no universal reliability
 repair, architecture innovation, or first-benchmark claim.
 
 ## Paper assessment and public text evidence
@@ -110,3 +112,27 @@ repair, architecture innovation, or first-benchmark claim.
 [Current scientific assessment and writing plan](reviews/paper_assessment_2026-10-04.md) evaluates the conditional findings, remaining logic gaps and contribution boundaries.
 
 Large JSON/CSV evidence is published as byte-identical gzip with SHA-256 metadata. After cloning, run `python scripts/restore_repair_text_artifacts.py` to restore these text files; `--verify-only` checks archive identities without restoring missing files. See [text archive manifest](results/research_repair_v1/text_artifacts/manifest.json). Frozen data/features, model weights and raw bootstrap arrays remain local prerequisites; the public text export is not a cache-free reproduction of the entire study.
+
+## Theory and pairwise analysis
+
+[Theory draft](docs/theory_analysis_v1.md) gives assumptions, proofs and counterexamples
+for structural accuracy monotonicity, AUROC pair accounting, label-path bounds,
+interaction and the limits of causal interpretation.
+[Saved-prediction analysis](results/research_repair_v1/theory_analysis/v1/analysis_report.md)
+connects path cancellation to changes in S/F/E pair rankings, with 5,000 shared image
+draws, per-seed intervals and raw distributions. This is a result-driven analytical
+extension; the existing publication registry and historical gates retain their identities.
+
+With the frozen prediction/cache prerequisites available, reproduce in a new directory:
+
+```powershell
+$env:PYTHONPATH = 'src'
+$env:OPENBLAS_NUM_THREADS = '2'
+$env:MKL_NUM_THREADS = '2'
+$env:OMP_NUM_THREADS = '2'
+& 'E:/conda/envs/deepminer/python.exe' scripts/analyze_repair_pairwise.py --output results/research_repair_v1/theory_analysis/replay_v1
+```
+
+Existing output directories are retained. `scripts/export_repair_pairwise_theory.py`
+derives per-seed interval tables and the theory draft's numerical section from the
+published `v1` distributions. This stage requires no model training or feature extraction.

@@ -79,6 +79,12 @@ Display A00/A10/A01/A11, label-first and confidence-first paths, signed Shapley
 components, and I=A11−A10−A01+A00 with shared CIs. Opposing paths can cancel in
 small net label components; mean confidence cannot determine pairwise AUROC.
 Ratios above 100% are signed accounting ratios, not exclusive causal shares.
+Use the [theory analysis](theory_analysis_v1.md) to connect those paths to the
+historical groups S (stable correct), F (flipped to error), E (persistent error).
+Show L(p)=beta*(U_SF-U_SE)+alpha*(U_SE-U_FE), and the pair changes underlying C0/C1.
+The [frozen-prediction analysis](../results/research_repair_v1/theory_analysis/v1/analysis_report.md)
+adds shared-draw intervals for these terms while reproducing the existing corner
+distributions. Explain which comparisons change; do not infer unique internal causes.
 H1c is accuracy harm and cannot explain an AUROC gap by identity. The tested
 same-class redundancy channel did not explain between-family amplification in the
 [historical P2-M analysis](../results/v2_proposal_robustness/p2_m_mechanism/mechanism_report.md);
