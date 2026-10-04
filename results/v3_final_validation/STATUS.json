@@ -1,0 +1,95 @@
+{
+  "program": "V3 Final Validation",
+  "status": "COMPLETE",
+  "historical_baseline": "947b8b2e87cb754853a6bb7ff1fd140a5229b3a5",
+  "confirmation_performance_observed": true,
+  "formal_freeze_sealed": true,
+  "legacy_input_verification": {
+    "status": "PASS",
+    "unique_files": 834,
+    "changed": 0,
+    "artifact": "legacy_inputs_final.json"
+  },
+  "stages": {
+    "protocol_and_barrier": "UNIT_TESTS_PASS_10",
+    "novelty_review": "COMPLETE_PRIMARY_SOURCE_REVIEW",
+    "exposure_audit": "PASS_3107_IMAGES_7993_EXPRESSIONS",
+    "b16_replication": "PASS_DEVELOPMENTAL_CONFIGURATION_REPLICATION",
+    "development_pipeline": "PASS_REVALIDATED_UNCHANGED_200_522",
+    "formal_confirmation": "COMPLETE_FIRST_FROZEN_FORWARD_AND_5000_DRAWS",
+    "natural_evaluation": "COMPLETE_WHOLE_AND_COVERED_FLOW_5000_DRAWS",
+    "paper_integration": "COMPLETE_EVIDENCE_CONSISTENT_ARGUMENT_DRAFT",
+    "full_tests": "PASS_1298_WITH_2_ORIGINAL_SKIPS",
+    "confirmation_preparation": "PASS_3107_7993_198848",
+    "scientific_acceptance": "PASS_RAW_PREDICTIONS_DISTRIBUTIONS_GT_AND_IDENTITIES"
+  },
+  "stage_evidence": {
+    "historical_pixels": {
+      "status": "PASS",
+      "files": 22094,
+      "decode_failures": 0,
+      "artifact": "exposure/historical_fingerprint_status.json"
+    },
+    "b16_fitting": {
+      "models": 12,
+      "train_images": 523,
+      "tune_images": 224,
+      "artifact": "replication/replication_summary.json"
+    },
+    "b16_forward_anchors": {
+      "checks": 6,
+      "status": "PASS",
+      "unchanged_tolerance": 0.0001,
+      "artifact": "replication/anchor_forward.json"
+    },
+    "preparation_authorization": {
+      "inputs": 3291,
+      "path": "confirmation_prepare_authorization.json",
+      "sha256": "e616048f9cd3d18cc0f74b0a090faa0c9df1cf018595023571f9dd50a7ac68ec"
+    },
+    "formal_freeze": {
+      "inputs": 3307,
+      "path": "protocol_freeze.json",
+      "sha256": "e1d3e33c61b4ff82c5e71ab2cb9953b618418b1bc3d84f1830bc1197d3728613"
+    },
+    "final_acceptance": {
+      "status": "PASS",
+      "path": "final_acceptance.json",
+      "expressions": 7993,
+      "images": 3107,
+      "prediction_rows": 383664,
+      "controlled_estimates": 60,
+      "natural_estimates": 592,
+      "invalid_estimate_draws": 0
+    }
+  },
+  "execution_agents": {
+    "v3_literature_data": "gpt-6-luna/max",
+    "v3_b16_replication": "gpt-6-luna/max",
+    "v3_natural_pipeline": "gpt-6-luna/max"
+  },
+  "resources": {
+    "gpu_processes": 1,
+    "training_processes": 1,
+    "heavy_statistical_or_audit_processes": 1,
+    "blas_threads_per_process": 2
+  },
+  "completion_requires": [
+    "traceable_novelty_position",
+    "credible_confirmation_identity",
+    "b16_feature_source_replication_results",
+    "natural_candidate_measured_results",
+    "formal_confirmation_or_explicit_unresolved_block",
+    "evidence_consistent_paper_material",
+    "unchanged_historical_input_hashes",
+    "relevant_and_existing_full_tests"
+  ],
+  "completed_utc": "2026-10-04T17:00:26.139046+00:00",
+  "main_comparison_judgments": {
+    "C1": "NOT_CONFIRMED_NOT_EQUIVALENCE",
+    "C2": "POSITIVE_ADJUSTED_CI",
+    "C3": "POSITIVE_ADJUSTED_CI",
+    "C4": "POSITIVE_ADJUSTED_CI"
+  },
+  "stopping_rule": "No additional experiments; thesis formatting and presentation may continue. M3 remains unverifiable."
+}

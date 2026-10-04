@@ -1,0 +1,362 @@
+{
+  "schema": "v3-model-replay-v1",
+  "archive": "results/v3_final_validation/model_replay/fitted_source_models.zip",
+  "archive_sha256": "7496208c2a189609348db01e312e0b6951af5a86f4b058cca8122a34cef9b049",
+  "inputs": [
+    {
+      "path": "results/phase0b_independent/seed_1/model.npz",
+      "sha256": "396d90da2f4f402e0dba86f4956c12efdf19b6b0c76a542e5b60a281810a8e74",
+      "size_bytes": 858590,
+      "included": true
+    },
+    {
+      "path": "results/phase0b_independent/seed_1/training.json",
+      "sha256": "b680a6784092d10c9a7408bffcba57a1b7cf498b41bac8b341fc808914598ea1",
+      "size_bytes": 2452,
+      "included": true
+    },
+    {
+      "path": "results/phase0b_independent/seed_1/eval_metadata.json",
+      "sha256": "7bcc8d58616f8b2f626fec3726ab3d4cfe2d13b1f7aa95a20af75a063bfcad84",
+      "size_bytes": 7814,
+      "included": true
+    },
+    {
+      "path": "results/v2_backbone_generalization/b1_phase0b/seed_1/model.npz",
+      "sha256": "c9a58eb135c88bd5907f34e0374ed1430f508a38ce8e30c306b5d294034d3973",
+      "size_bytes": 858590,
+      "included": true
+    },
+    {
+      "path": "results/v2_backbone_generalization/b1_phase0b/seed_1/training.json",
+      "sha256": "33eeddb133833d2c14488088586be168fabd52ad5233f1747c2afd19190e4d9c",
+      "size_bytes": 2065,
+      "included": true
+    },
+    {
+      "path": "results/v2_backbone_generalization/b1_phase0b/seed_1/eval_metadata.json",
+      "sha256": "29a3d5fab86995792e75d3825a18e0da531498d21c8510c107c67bebc2bc0b9c",
+      "size_bytes": 7403,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed1/ablation_S.json",
+      "sha256": "1035d88f3e6d58e986398aae4d23aaf56363b3886f11b52ab637083feef592d2",
+      "size_bytes": 2361,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed1/ablation_S_plus_Q.json",
+      "sha256": "2f7814afd8e058c20b2add32cfdef490b8978d1c847aed9a61528b644ad5fb61",
+      "size_bytes": 3189,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed1/ablation_S_plus_V.json",
+      "sha256": "6d0b58097c101b1b5b06ca80df0b9fcbba46cdf39e65ea9d48854f06852dd4c0",
+      "size_bytes": 3186,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed1/ablation_Full.json",
+      "sha256": "a730fe81604bbff19a8cd0e83baa2d7376f403e2cfe9b795fbb982f959919db5",
+      "size_bytes": 4011,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed1/score_deepsets_smallK5_10.json",
+      "sha256": "642efaa254641863abd2fc9ac37bf348621d7d5370951fc83e0a993e6d00cfbe",
+      "size_bytes": 1704,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed1/score_deepsets_smallK5_10.pt",
+      "sha256": "928122e08f8e93f6125fe54144aa477cf03c1538fa31d6e824cfcb78e3fad2e5",
+      "size_bytes": 12632,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed1/score_deepsets_largeK20_50.json",
+      "sha256": "fc54ec3e4736dc62fd110f7dd1e08b22ed7fdf0c13bf5132f5085da0f467cfeb",
+      "size_bytes": 1706,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed1/score_deepsets_largeK20_50.pt",
+      "sha256": "81d109278b8d349ffd2c8dc7c1276a9a49d37600ab75e74fbddd2768fa4c0c5a",
+      "size_bytes": 12644,
+      "included": true
+    },
+    {
+      "path": "results/v3_final_validation/replication/models/b3_seed1/S.json",
+      "sha256": "ed1a5eeded7790bb5710deb1db62e52a35006640b4c61f581ffd5276f2c07368",
+      "size_bytes": 4542,
+      "included": true
+    },
+    {
+      "path": "results/v3_final_validation/replication/models/b3_seed1/S+Q.json",
+      "sha256": "55497752b6a83b04d0982cbd8b0ebf158749b16bc97b93611ce5d90b061d4671",
+      "size_bytes": 5543,
+      "included": true
+    },
+    {
+      "path": "results/v3_final_validation/replication/models/b3_seed1/S+V.json",
+      "sha256": "3e137479474b6a6c323725cbb1c2cd18afbf90854a149dc5bcd9ae29bc65508b",
+      "size_bytes": 5562,
+      "included": true
+    },
+    {
+      "path": "results/v3_final_validation/replication/models/b3_seed1/Full.json",
+      "sha256": "4b6cae8bcd1e8478210ffc71629777ca886e885ce79c7f1b173bee93db2c9385",
+      "size_bytes": 6559,
+      "included": true
+    },
+    {
+      "path": "results/phase0b_independent/seed_2/model.npz",
+      "sha256": "6092592e6eef3cc031f9f3c0a33fcd296ea31061be80ab5008ceb8c6d7c910c4",
+      "size_bytes": 858590,
+      "included": true
+    },
+    {
+      "path": "results/phase0b_independent/seed_2/training.json",
+      "sha256": "9dc0bab998b71aab3cc2c969217acf7d6ab218dc401a4edfd7db493b943408d2",
+      "size_bytes": 2558,
+      "included": true
+    },
+    {
+      "path": "results/phase0b_independent/seed_2/eval_metadata.json",
+      "sha256": "8b76053c3da2305a50bdab78789479df9dfc60a176b2fcc1afc77c70d568f3ec",
+      "size_bytes": 7922,
+      "included": true
+    },
+    {
+      "path": "results/v2_backbone_generalization/b1_phase0b/seed_2/model.npz",
+      "sha256": "a573acbc357482903d4fa474f1c7b086ec2811270c21c6f6d82c23d807e53d61",
+      "size_bytes": 858590,
+      "included": true
+    },
+    {
+      "path": "results/v2_backbone_generalization/b1_phase0b/seed_2/training.json",
+      "sha256": "44e676cf5552f558ab02ba076fef5a136be14cf11f688fffa410d7b001ddaf63",
+      "size_bytes": 1753,
+      "included": true
+    },
+    {
+      "path": "results/v2_backbone_generalization/b1_phase0b/seed_2/eval_metadata.json",
+      "sha256": "90cd4145beb002c5f701b6d26ea1137bbd9f7e179e01d753b06a76749ad16ddc",
+      "size_bytes": 7066,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed2/ablation_S.json",
+      "sha256": "2e8e28e3b5e241799842eb5df07378d416a38afda45a8325b13582c50c6ccc09",
+      "size_bytes": 2363,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed2/ablation_S_plus_Q.json",
+      "sha256": "df84a64ed91e8414b726c12f355f7ba35f8a917026b64166c8a55b5130b06dcd",
+      "size_bytes": 3197,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed2/ablation_S_plus_V.json",
+      "sha256": "29ed24b33dcca5ff2e01c073783b9e161cb99640900c1642f85b45f287867490",
+      "size_bytes": 3194,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed2/ablation_Full.json",
+      "sha256": "c3058d07c0d742008d9573e3cbbde5de26e76fbbf953ce334a7de3ed909255e9",
+      "size_bytes": 4024,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed2/score_deepsets_smallK5_10.json",
+      "sha256": "bc6ed607c2e1cb4547677c3d5e5c1870f1359dd71ad632146af02613bb92d719",
+      "size_bytes": 1704,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed2/score_deepsets_smallK5_10.pt",
+      "sha256": "21d9c0f25e49a1da6f70e84057708b7a19d82a2614859636bc8768de0462f960",
+      "size_bytes": 12632,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed2/score_deepsets_largeK20_50.json",
+      "sha256": "c824ae869dd546219dcde906ca47f04fc743f151be9ff9e13505835aad90129c",
+      "size_bytes": 1707,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed2/score_deepsets_largeK20_50.pt",
+      "sha256": "549f5460c26981ee289e3bc8eb359ed87f43e557febdae282c33452d7c4176bc",
+      "size_bytes": 12644,
+      "included": true
+    },
+    {
+      "path": "results/v3_final_validation/replication/models/b3_seed2/S.json",
+      "sha256": "d9122a351cc3b344b1b02401dfe51838550e5a4c17cd090e296841fe933c4f94",
+      "size_bytes": 4545,
+      "included": true
+    },
+    {
+      "path": "results/v3_final_validation/replication/models/b3_seed2/S+Q.json",
+      "sha256": "d7bc814d7a8760996887b22cb36971a3b92cac18d9b753ab9ab685804cbc0267",
+      "size_bytes": 5544,
+      "included": true
+    },
+    {
+      "path": "results/v3_final_validation/replication/models/b3_seed2/S+V.json",
+      "sha256": "2f6a33cdb26b75dce4c3d2c395860eb23ea9e80977aee54819319bb460dca997",
+      "size_bytes": 5567,
+      "included": true
+    },
+    {
+      "path": "results/v3_final_validation/replication/models/b3_seed2/Full.json",
+      "sha256": "c9f69d5c43da180ca3acbfeeb46c396a06258c8d180f5dde2c692343f79c21b2",
+      "size_bytes": 6570,
+      "included": true
+    },
+    {
+      "path": "results/phase0b_independent/seed_3/model.npz",
+      "sha256": "b7671881b4c441d0ab01da1ee91572d2c3d66067c2a131e29e700460217d14ab",
+      "size_bytes": 858590,
+      "included": true
+    },
+    {
+      "path": "results/phase0b_independent/seed_3/training.json",
+      "sha256": "7ea10c653636d4645ec9ad6ab9126940bc38cf1ae0a64ee6d9d1453240a7e43f",
+      "size_bytes": 2347,
+      "included": true
+    },
+    {
+      "path": "results/phase0b_independent/seed_3/eval_metadata.json",
+      "sha256": "94b8f02084aac3e03d2b1af96da87cfe657b0f36a684a459083aab671b3dc80c",
+      "size_bytes": 7704,
+      "included": true
+    },
+    {
+      "path": "results/v2_backbone_generalization/b1_phase0b/seed_3/model.npz",
+      "sha256": "9c10a0e73af877977f2640c3dd3133e43dd5fb8dc5073a11ac6e626515c94151",
+      "size_bytes": 858590,
+      "included": true
+    },
+    {
+      "path": "results/v2_backbone_generalization/b1_phase0b/seed_3/training.json",
+      "sha256": "f929b1b8bd3811e7f247663bf5dd2b9820a6d3e31e117a7a3284490b7e382c50",
+      "size_bytes": 1755,
+      "included": true
+    },
+    {
+      "path": "results/v2_backbone_generalization/b1_phase0b/seed_3/eval_metadata.json",
+      "sha256": "a1e6237248f8e912d9a8737a11d4c0163fddce131e8957b3e8c3a23bcb9ed143",
+      "size_bytes": 7065,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed3/ablation_S.json",
+      "sha256": "5e3783ed7333f076fa2881cd2fac166eacf73e9380cc61d0e274a1b744262558",
+      "size_bytes": 2363,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed3/ablation_S_plus_Q.json",
+      "sha256": "5d885ae7484d00f493ae92c1207cfbac0cc4ce23f8852f4f6c6664d40a458eea",
+      "size_bytes": 3192,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed3/ablation_S_plus_V.json",
+      "sha256": "5f2397a13ecc7e73108b2421c8766d50c0203b90bcf1c072e48411418956025e",
+      "size_bytes": 3194,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed3/ablation_Full.json",
+      "sha256": "2d117c964cfec9e6244f5e324cf49e694aa8997f4322efdfb76d60e64a8bb236",
+      "size_bytes": 4023,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed3/score_deepsets_smallK5_10.json",
+      "sha256": "457d4675810981100cc2047756adf56e0e6ca1ea51a6bd781b5eba16b91532f5",
+      "size_bytes": 1703,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed3/score_deepsets_smallK5_10.pt",
+      "sha256": "487a3fcc9f6f17f780aef5cf60e6220268d5154564717a8b16b663f79eab2521",
+      "size_bytes": 12632,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed3/score_deepsets_largeK20_50.json",
+      "sha256": "0884cb8ae3046ad04931712f12f1aabd85cb0dedab4370ff940fa8f531a33df3",
+      "size_bytes": 1706,
+      "included": true
+    },
+    {
+      "path": "results/research_repair_v1/information/models/b3_seed3/score_deepsets_largeK20_50.pt",
+      "sha256": "afba4ced7408607679ed81734c30008da10b40c1334863d184ece6cf710819ad",
+      "size_bytes": 12644,
+      "included": true
+    },
+    {
+      "path": "results/v3_final_validation/replication/models/b3_seed3/S.json",
+      "sha256": "f584a9cbc2c67d9caf09ba903015d430f465260018e05a844dcc507d3a894251",
+      "size_bytes": 4540,
+      "included": true
+    },
+    {
+      "path": "results/v3_final_validation/replication/models/b3_seed3/S+Q.json",
+      "sha256": "8835b4b2639993ee280fa43f7600069e0b13246803260f9bdfb2cde7901fdec4",
+      "size_bytes": 5542,
+      "included": true
+    },
+    {
+      "path": "results/v3_final_validation/replication/models/b3_seed3/S+V.json",
+      "sha256": "36bbfbbeb6ce308a83403a0a8aa578b0dfb9a575bcfe6e1700005d2a374b4ecc",
+      "size_bytes": 5560,
+      "included": true
+    },
+    {
+      "path": "results/v3_final_validation/replication/models/b3_seed3/Full.json",
+      "sha256": "1476e1c459f10a10dd92c2fc482350c825ffaeb9c36db10ff9fdadc2f25edae0",
+      "size_bytes": 6559,
+      "included": true
+    },
+    {
+      "path": "cache/hf_hub/models--laion--CLIP-ViT-B-32-laion2B-s34B-b79K/snapshots/1a25a446712ba5ee05982a381eed697ef9b435cf/open_clip_pytorch_model.bin",
+      "sha256": "1bd3c7172de5b207ceac554f5ab5266166f3b9baccc9af5989bc801016d080ad",
+      "size_bytes": 605219813,
+      "included": false
+    },
+    {
+      "path": "cache/features/metadata.json",
+      "sha256": "c8cb592ae28ee5c498218a2b0a3d7e02de1472e3ab858040e397a0508e59883b",
+      "size_bytes": 3263,
+      "included": true
+    },
+    {
+      "path": "cache/hf_local/openclip_b16/open_clip_pytorch_model.bin",
+      "sha256": "1f16b1274ca25493b1f36225efe81d05f66a3f33c487acd1a07c5ba87920de6f",
+      "size_bytes": 598529951,
+      "included": false
+    },
+    {
+      "path": "cache/v2_backbones/openclip_b16/metadata.json",
+      "sha256": "8106f02c39f44a2502485e1f274d187685f33e9b0c1e8984ad46b281b5ed3eb5",
+      "size_bytes": 3247,
+      "included": true
+    },
+    {
+      "path": "cache/v3/source_weights/torch_hub/checkpoints/fasterrcnn_resnet50_fpn_coco-258fb6c6.pth",
+      "sha256": "258fb6c638b15964ddcdd1ae0748c5eef1be9e732750120cc857feed3faac384",
+      "size_bytes": 167502836,
+      "included": false
+    }
+  ],
+  "scope": "Exact fitted scorer/reliability bytes and metadata; public encoder/RPN weights omitted, identified by SHA. No training or inference."
+}

@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "original_path": "cache/v3/confirmation/proposals.h5",
+  "saved_path": "results/v3_final_validation/pipeline/confirmation/frozen_proposals.h5",
+  "sha256": "2d78d00cd961266359fb272c0d46f7e4fbd3dc710377e2268a895a156e884a12",
+  "size_bytes": 9940848,
+  "role": "existing frozen RPN bank copied byte-for-byte for saved prediction/GT verification; no detector rerun, no pixels or embedding cache"
+}

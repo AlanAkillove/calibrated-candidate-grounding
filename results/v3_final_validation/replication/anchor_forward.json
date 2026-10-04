@@ -1,0 +1,67 @@
+{
+  "status": "PASS",
+  "tolerance": 0.0001,
+  "method": "ccg.semantic.hard_scores.verify_against_raw_scores",
+  "rows": [
+    {
+      "seed": "b3_seed1",
+      "K": 5,
+      "n": 20799,
+      "max_abs_error": 1.33514404296875e-05,
+      "tolerance": 0.0001,
+      "status": "PASS",
+      "checkpoint": "results\\v2_backbone_generalization\\b1_phase0b\\seed_1\\model.npz",
+      "raw_score_anchor": "results\\v2_backbone_generalization\\b1_phase0b\\seed_1\\raw_scores\\K5.npz"
+    },
+    {
+      "seed": "b3_seed1",
+      "K": 10,
+      "n": 20799,
+      "max_abs_error": 1.52587890625e-05,
+      "tolerance": 0.0001,
+      "status": "PASS",
+      "checkpoint": "results\\v2_backbone_generalization\\b1_phase0b\\seed_1\\model.npz",
+      "raw_score_anchor": "results\\v2_backbone_generalization\\b1_phase0b\\seed_1\\raw_scores\\K10.npz"
+    },
+    {
+      "seed": "b3_seed2",
+      "K": 5,
+      "n": 20799,
+      "max_abs_error": 1.1444091796875e-05,
+      "tolerance": 0.0001,
+      "status": "PASS",
+      "checkpoint": "results\\v2_backbone_generalization\\b1_phase0b\\seed_2\\model.npz",
+      "raw_score_anchor": "results\\v2_backbone_generalization\\b1_phase0b\\seed_2\\raw_scores\\K5.npz"
+    },
+    {
+      "seed": "b3_seed2",
+      "K": 10,
+      "n": 20799,
+      "max_abs_error": 1.33514404296875e-05,
+      "tolerance": 0.0001,
+      "status": "PASS",
+      "checkpoint": "results\\v2_backbone_generalization\\b1_phase0b\\seed_2\\model.npz",
+      "raw_score_anchor": "results\\v2_backbone_generalization\\b1_phase0b\\seed_2\\raw_scores\\K10.npz"
+    },
+    {
+      "seed": "b3_seed3",
+      "K": 5,
+      "n": 20799,
+      "max_abs_error": 1.1444091796875e-05,
+      "tolerance": 0.0001,
+      "status": "PASS",
+      "checkpoint": "results\\v2_backbone_generalization\\b1_phase0b\\seed_3\\model.npz",
+      "raw_score_anchor": "results\\v2_backbone_generalization\\b1_phase0b\\seed_3\\raw_scores\\K5.npz"
+    },
+    {
+      "seed": "b3_seed3",
+      "K": 10,
+      "n": 20799,
+      "max_abs_error": 1.239776611328125e-05,
+      "tolerance": 0.0001,
+      "status": "PASS",
+      "checkpoint": "results\\v2_backbone_generalization\\b1_phase0b\\seed_3\\model.npz",
+      "raw_score_anchor": "results\\v2_backbone_generalization\\b1_phase0b\\seed_3\\raw_scores\\K10.npz"
+    }
+  ]
+}

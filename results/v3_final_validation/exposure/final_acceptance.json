@@ -1,0 +1,152 @@
+{
+  "schema": "v3-data-exposure-acceptance-v1",
+  "status": "PASS",
+  "audit_rule_version": "v3-image-exposure-v1",
+  "confirmation_label": "independent image-level confirmation only if status is PASS; FineCops annotations are newly acquired official positive val expressions, and no FineCops scorer training/reliability score was run by this audit",
+  "pretraining_exposure_claim": "not assessed; no claim that any image or annotation was unseen during foundation-model pretraining",
+  "official_positive_val_identity_eligible_image_count": 3110,
+  "source_mapping_status_counts_over_candidate_manifest": {
+    "mapped_to_coco_id": 17072,
+    "vg_record_has_null_coco_id": 18290,
+    "missing_visual_genome_source_id": 0
+  },
+  "source_ids_missing_from_visual_genome_mapping_in_final_cohorts": [],
+  "val_images_downloaded_and_hashed": 3110,
+  "sample_flow": {
+    "official_positive_val_images": 3567,
+    "official_positive_val_expressions": 9426,
+    "metadata_identity_clean_val_images": 3110,
+    "downloaded_and_fingerprinted_val_images": 3110,
+    "historical_exact_pixel_excluded_val_images": 0,
+    "historical_dhash_le4_excluded_val_images": 2,
+    "within_confirmation_dhash_excluded_val_images": 0,
+    "pre_annotation_rule_image_screen_eligible_val_images": 3108,
+    "pre_annotation_rule_image_screen_eligible_val_expressions": 7994,
+    "prescore_positive_box_excluded_val_images": 1,
+    "prescore_positive_box_excluded_val_expressions": 1,
+    "final_confirmation_val_images": 3107,
+    "final_confirmation_val_expressions": 7993,
+    "official_positive_train_images": 31795,
+    "official_positive_train_expressions": 83341,
+    "metadata_identity_clean_train_images": 27110,
+    "development_candidates_scanned_in_frozen_order": 250,
+    "development_candidates_rejected": 1,
+    "development_cross_confirmation_rejected_candidates": 1,
+    "historical_exact_pixel_matches_in_selected_dev": 0,
+    "historical_dhash_le4_matches_in_selected_dev": 0,
+    "final_development_images": 200,
+    "final_development_expressions": 522
+  },
+  "prescore_annotation_exclusion_report": "prescore_annotation_exclusions.json",
+  "val_images_final_eligible": 3107,
+  "val_expressions_final_eligible": 7993,
+  "train_images_selected": 200,
+  "development_image_cap": 200,
+  "development_image_shortfall_from_cap": 0,
+  "development_candidate_order_exhausted": false,
+  "train_expressions_selected": 522,
+  "dev_candidate_images_scanned": 250,
+  "dev_candidate_images_rejected": 1,
+  "released_expression_bbox_validation": {
+    "schema": "v3-positive-bbox-dimension-audit-v1",
+    "policy": "Validate each official COCO xywh box for finite values, positive extents, and positive-area image intersection against source metadata and decoded JPEG dimensions for every released expression. An edge overhang is reported, not clipped or automatically rejected. Preserve official coordinates exactly; do not union, impute, or silently drop annotations.",
+    "source_annotation_count_train_val": 92767,
+    "source_metadata_bbox_invalid_count_train_val": 1,
+    "source_metadata_bbox_invalid_expr_ids_train_val": [
+      "64719"
+    ],
+    "source_metadata_bbox_overhang_by_split": {
+      "train": {
+        "expression_count_with_overhang": 1028,
+        "unique_image_count_with_overhang": 680,
+        "max_overhang_px": 158.0,
+        "max_overhang_bins_expression_count": {
+          "le_1px": 929,
+          "gt_1_le_2px": 90,
+          "gt_2_le_5px": 6,
+          "gt_5px": 3
+        },
+        "overhang_edge_counts_nonexclusive": {
+          "bbox_overhang_bottom_px": 592,
+          "bbox_overhang_right_px": 440
+        }
+      },
+      "val": {
+        "expression_count_with_overhang": 103,
+        "unique_image_count_with_overhang": 70,
+        "max_overhang_px": 167.0,
+        "max_overhang_bins_expression_count": {
+          "le_1px": 92,
+          "gt_1_le_2px": 9,
+          "gt_2_le_5px": 1,
+          "gt_5px": 1
+        },
+        "overhang_edge_counts_nonexclusive": {
+          "bbox_overhang_right_px": 38,
+          "bbox_overhang_bottom_px": 65
+        }
+      }
+    },
+    "released_expression_count": 8515,
+    "released_bbox_invalid_count": 0,
+    "released_bbox_invalid_expr_ids": [],
+    "released_image_dimension_mismatch_expression_count": 0,
+    "released_image_dimension_mismatch_gqa_ids": [],
+    "released_decoded_jpeg_bbox_overhang": {
+      "expression_count_with_overhang": 99,
+      "unique_image_count_with_overhang": 66,
+      "max_overhang_px": 4.0,
+      "max_overhang_bins_expression_count": {
+        "le_1px": 89,
+        "gt_1_le_2px": 9,
+        "gt_2_le_5px": 1,
+        "gt_5px": 0
+      },
+      "overhang_edge_counts_nonexclusive": {
+        "bbox_overhang_bottom_px": 65,
+        "bbox_overhang_right_px": 34
+      }
+    },
+    "released_gqa_target_object_box_comparison": {
+      "graph_image_record_missing_count": 0,
+      "target_instance_missing_count": 0,
+      "target_box_exact_match_count": 8515,
+      "target_box_mismatch_count": 0,
+      "target_box_unverifiable_count": 0,
+      "target_box_mismatch_expr_ids": [],
+      "target_box_unverifiable_expr_ids": []
+    },
+    "status": "PASS"
+  },
+  "image_collection_hashes": {
+    "historical_path_inventory_sha256": "86d640303cbc6ebe8fd9387e31ec17ffd1eea149637b7cf37ada2a1629b44a54",
+    "historical_fingerprint_manifest_sha256": "eeab8259ac47dfecdfabc9bb9d8f78416b7f5fb63c778db8468742aac3bad511",
+    "confirmation_final_image_inventory_sha256": "5006fa9d27383268f2eec4129c4cf728348c96f4300cc4e4f515acc5ed5bc028",
+    "confirmation_image_manifest_csv_sha256": "61094b1291d362074963b4632465b4877821897e17113b85ad85a3ea9cb247f5",
+    "dev_selected_image_inventory_sha256": "bd084ebeade6bf120eb4996f760141b4cd6c3384aea457393752a6cc137ebfe1",
+    "dev_image_manifest_csv_sha256": "99bbe18f1a4c2087f11e02266adb394f74ceaf044df469b481230fd2ba552e79"
+  },
+  "confirmation_download_report": "fetch_confirmation.json",
+  "history_fingerprint_report": "historical_fingerprint_status.json",
+  "known_annotation_metadata_exposure": "GQA train/val scene graph JSON files were bulk downloaded; prior FineCops feasibility loaded the full GQA val dictionary and queried the old FineCops test IDs. This exposure is logged separately from model training/reliability scoring; see identity_audit.json.",
+  "unresolved_conditions": [],
+  "artifacts": {
+    "source_identity_counts": "source_identity_counts.json",
+    "identity_candidate_manifest": "identity_candidate_manifest.csv",
+    "historical_identity_registry": "historical_identity_registry.csv",
+    "historical_image_fingerprints": "historical_image_fingerprints.csv",
+    "historical_fingerprint_status": "historical_fingerprint_status.json",
+    "dev_images": "dev_image_manifest.csv",
+    "confirmation_images": "confirmation_image_manifest.csv",
+    "dev_expressions": "dev_cohort_manifest.jsonl",
+    "confirmation_expressions": "confirmation_cohort_manifest.jsonl",
+    "bbox_annotation_audit": "bbox_annotation_audit.csv",
+    "bbox_annotation_audit_report": "bbox_annotation_audit.json",
+    "prescore_annotation_exclusions": "prescore_annotation_exclusions.json",
+    "prescore_annotation_exclusion_rows": "prescore_annotation_exclusions.csv",
+    "acquisition_attempts": "acquisition_attempts.jsonl",
+    "all_cohort_exposure": "exposure_cohort_manifest.csv",
+    "rejected_dev_candidates": "dev_rejected_candidates.csv"
+  },
+  "generated_at_utc": "2026-10-04T09:34:51+00:00"
+}

@@ -69,6 +69,19 @@ results/research_repair_v1/**/*.joblib
 results/research_repair_v1/**/*.h5
 results/research_repair_v1/**/predictions/
 results/research_repair_v1/**/*.csv.gz
+# V3: publish protocols/compact evidence; retain raw media and large caches locally.
+!results/v3_final_validation/
+!results/v3_final_validation/**
+results/v3_final_validation/**/*.npz
+results/v3_final_validation/**/*.npy
+results/v3_final_validation/**/*.h5
+results/v3_final_validation/**/*.pt
+results/v3_final_validation/**/*.pth
+results/v3_final_validation/**/*.pkl
+results/v3_final_validation/**/*.csv.gz
+results/v3_final_validation/pipeline/**/predictions.jsonl
+results/v3_final_validation/pipeline/**/predictions.jsonl.tmp
+results/v3_final_validation/publication/git_whitespace_check.log
 experiments/**/outputs/
 
 # Local logs / scratch

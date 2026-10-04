@@ -1,0 +1,255 @@
+{
+  "status": "PASS",
+  "source_only": true,
+  "b0_scorer_max_abs_logit_delta": 7.62939453125e-06,
+  "b0_repaired_logistic_s_full_max_abs_probability_delta": 3.3306690738754696e-16,
+  "b0_repaired_sds_max_abs_probability_delta": 1.1102230246251565e-16,
+  "b0_scorer_tolerance": 0.0001,
+  "b0_probability_tolerance": 1e-09,
+  "b0_scorer_anchor_rows": 72,
+  "b0_logistic_anchor_rows": 1536,
+  "b0_sds_anchor_rows": 1536,
+  "source_reference": "results\\research_repair_v1\\information\\cross_k_predictions.csv.gz",
+  "source_mapping": [
+    {
+      "backbone": "b0",
+      "seed": 1,
+      "source_k": 5,
+      "group": "S",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed1/ablation_S.json",
+      "checkpoint_sha256": "1035d88f3e6d58e986398aae4d23aaf56363b3886f11b52ab637083feef592d2",
+      "reference": "semantic_ablation_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 1,
+      "source_k": 5,
+      "group": "Full",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed1/ablation_Full.json",
+      "checkpoint_sha256": "a730fe81604bbff19a8cd0e83baa2d7376f403e2cfe9b795fbb982f959919db5",
+      "reference": "semantic_ablation_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 1,
+      "source_k": 5,
+      "group": "SDS_small",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed1/score_deepsets_smallK5_10.pt",
+      "checkpoint_sha256": "928122e08f8e93f6125fe54144aa477cf03c1538fa31d6e824cfcb78e3fad2e5",
+      "reference": "results/research_repair_v1/information/cross_k_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 1,
+      "source_k": 5,
+      "group": "SDS_large",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed1/score_deepsets_largeK20_50.pt",
+      "checkpoint_sha256": "81d109278b8d349ffd2c8dc7c1276a9a49d37600ab75e74fbddd2768fa4c0c5a",
+      "reference": "results/research_repair_v1/information/cross_k_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 1,
+      "source_k": 10,
+      "group": "S",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed1/ablation_S.json",
+      "checkpoint_sha256": "1035d88f3e6d58e986398aae4d23aaf56363b3886f11b52ab637083feef592d2",
+      "reference": "semantic_ablation_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 1,
+      "source_k": 10,
+      "group": "Full",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed1/ablation_Full.json",
+      "checkpoint_sha256": "a730fe81604bbff19a8cd0e83baa2d7376f403e2cfe9b795fbb982f959919db5",
+      "reference": "semantic_ablation_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 1,
+      "source_k": 10,
+      "group": "SDS_small",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed1/score_deepsets_smallK5_10.pt",
+      "checkpoint_sha256": "928122e08f8e93f6125fe54144aa477cf03c1538fa31d6e824cfcb78e3fad2e5",
+      "reference": "results/research_repair_v1/information/cross_k_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 1,
+      "source_k": 10,
+      "group": "SDS_large",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed1/score_deepsets_largeK20_50.pt",
+      "checkpoint_sha256": "81d109278b8d349ffd2c8dc7c1276a9a49d37600ab75e74fbddd2768fa4c0c5a",
+      "reference": "results/research_repair_v1/information/cross_k_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 2,
+      "source_k": 5,
+      "group": "S",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed2/ablation_S.json",
+      "checkpoint_sha256": "2e8e28e3b5e241799842eb5df07378d416a38afda45a8325b13582c50c6ccc09",
+      "reference": "semantic_ablation_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 2,
+      "source_k": 5,
+      "group": "Full",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed2/ablation_Full.json",
+      "checkpoint_sha256": "c3058d07c0d742008d9573e3cbbde5de26e76fbbf953ce334a7de3ed909255e9",
+      "reference": "semantic_ablation_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 2,
+      "source_k": 5,
+      "group": "SDS_small",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed2/score_deepsets_smallK5_10.pt",
+      "checkpoint_sha256": "21d9c0f25e49a1da6f70e84057708b7a19d82a2614859636bc8768de0462f960",
+      "reference": "results/research_repair_v1/information/cross_k_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 2,
+      "source_k": 5,
+      "group": "SDS_large",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed2/score_deepsets_largeK20_50.pt",
+      "checkpoint_sha256": "549f5460c26981ee289e3bc8eb359ed87f43e557febdae282c33452d7c4176bc",
+      "reference": "results/research_repair_v1/information/cross_k_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 2,
+      "source_k": 10,
+      "group": "S",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed2/ablation_S.json",
+      "checkpoint_sha256": "2e8e28e3b5e241799842eb5df07378d416a38afda45a8325b13582c50c6ccc09",
+      "reference": "semantic_ablation_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 2,
+      "source_k": 10,
+      "group": "Full",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed2/ablation_Full.json",
+      "checkpoint_sha256": "c3058d07c0d742008d9573e3cbbde5de26e76fbbf953ce334a7de3ed909255e9",
+      "reference": "semantic_ablation_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 2,
+      "source_k": 10,
+      "group": "SDS_small",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed2/score_deepsets_smallK5_10.pt",
+      "checkpoint_sha256": "21d9c0f25e49a1da6f70e84057708b7a19d82a2614859636bc8768de0462f960",
+      "reference": "results/research_repair_v1/information/cross_k_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 2,
+      "source_k": 10,
+      "group": "SDS_large",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed2/score_deepsets_largeK20_50.pt",
+      "checkpoint_sha256": "549f5460c26981ee289e3bc8eb359ed87f43e557febdae282c33452d7c4176bc",
+      "reference": "results/research_repair_v1/information/cross_k_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 3,
+      "source_k": 5,
+      "group": "S",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed3/ablation_S.json",
+      "checkpoint_sha256": "5e3783ed7333f076fa2881cd2fac166eacf73e9380cc61d0e274a1b744262558",
+      "reference": "semantic_ablation_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 3,
+      "source_k": 5,
+      "group": "Full",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed3/ablation_Full.json",
+      "checkpoint_sha256": "2d117c964cfec9e6244f5e324cf49e694aa8997f4322efdfb76d60e64a8bb236",
+      "reference": "semantic_ablation_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 3,
+      "source_k": 5,
+      "group": "SDS_small",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed3/score_deepsets_smallK5_10.pt",
+      "checkpoint_sha256": "487a3fcc9f6f17f780aef5cf60e6220268d5154564717a8b16b663f79eab2521",
+      "reference": "results/research_repair_v1/information/cross_k_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 3,
+      "source_k": 5,
+      "group": "SDS_large",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed3/score_deepsets_largeK20_50.pt",
+      "checkpoint_sha256": "afba4ced7408607679ed81734c30008da10b40c1334863d184ece6cf710819ad",
+      "reference": "results/research_repair_v1/information/cross_k_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 3,
+      "source_k": 10,
+      "group": "S",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed3/ablation_S.json",
+      "checkpoint_sha256": "5e3783ed7333f076fa2881cd2fac166eacf73e9380cc61d0e274a1b744262558",
+      "reference": "semantic_ablation_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 3,
+      "source_k": 10,
+      "group": "Full",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed3/ablation_Full.json",
+      "checkpoint_sha256": "2d117c964cfec9e6244f5e324cf49e694aa8997f4322efdfb76d60e64a8bb236",
+      "reference": "semantic_ablation_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 3,
+      "source_k": 10,
+      "group": "SDS_small",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed3/score_deepsets_smallK5_10.pt",
+      "checkpoint_sha256": "487a3fcc9f6f17f780aef5cf60e6220268d5154564717a8b16b663f79eab2521",
+      "reference": "results/research_repair_v1/information/cross_k_predictions.csv.gz",
+      "reference_rows_checked": 128
+    },
+    {
+      "backbone": "b0",
+      "seed": 3,
+      "source_k": 10,
+      "group": "SDS_large",
+      "checkpoint": "results/research_repair_v1/information/models/b3_seed3/score_deepsets_largeK20_50.pt",
+      "checkpoint_sha256": "afba4ced7408607679ed81734c30008da10b40c1334863d184ece6cf710819ad",
+      "reference": "results/research_repair_v1/information/cross_k_predictions.csv.gz",
+      "reference_rows_checked": 128
+    }
+  ]
+}

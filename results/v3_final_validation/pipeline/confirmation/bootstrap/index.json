@@ -1,0 +1,24 @@
+{
+  "schema": "v3-formal-statistics-v1",
+  "status": "COMPLETE",
+  "replicates": 5000,
+  "bootstrap_seed": 0,
+  "freeze_sha256": "e1d3e33c61b4ff82c5e71ab2cb9953b618418b1bc3d84f1830bc1197d3728613",
+  "predictions_sha256": "a4e909abf4cc7ab520667685a35d884f70fa6c601c43abf1a4d384f4e1d0c173",
+  "cohort_manifest": "results/v3_final_validation/exposure/confirmation_cohort_manifest.jsonl",
+  "cohort_sha256": "cac1b7221ba5efc5849d145bc688ca136edb5efe559ca3f35651f570dc395887",
+  "started_utc": "2026-10-04T16:39:37.556557+00:00",
+  "stages": {
+    "controlled": {
+      "status": "COMPLETE",
+      "path": "controlled/summary.json",
+      "sha256": "2918d4076f29842c3535bb4819379128789c3acfefc6c30e37f78bb180152200"
+    },
+    "natural": {
+      "status": "COMPLETE",
+      "path": "natural/summary.json",
+      "sha256": "9767c8a37879964d55cde06a05f1bb8d4c244a6c161063ee61b072a2d2fb66d3"
+    }
+  },
+  "finished_utc": "2026-10-04T16:50:28.104023+00:00"
+}

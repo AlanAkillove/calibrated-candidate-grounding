@@ -1,0 +1,113 @@
+{
+  "status": "PASS",
+  "verified_utc": "2026-10-04T17:08:45.653940+00:00",
+  "expressions": 7993,
+  "images": 3107,
+  "prediction_rows": 383664,
+  "common_expressions": 7004,
+  "controlled": {
+    "estimates": 60,
+    "total_invalid_estimate_draws": 0,
+    "summary_sha256": "2918d4076f29842c3535bb4819379128789c3acfefc6c30e37f78bb180152200",
+    "draws_sha256": "99d5b012956c5d99d25d9a19e9c48b1b4bb072d8790cab546ca455a791bc98d1"
+  },
+  "natural": {
+    "estimates": 592,
+    "total_invalid_estimate_draws": 0,
+    "summary_sha256": "9767c8a37879964d55cde06a05f1bb8d4c244a6c161063ee61b072a2d2fb66d3",
+    "draws_sha256": "f5ecbac6fdb64da61986990a63435b583c0764a10fd53aa56ff1489fe92a2bec"
+  },
+  "raw_logits_pointers_verified": 383664,
+  "controlled_exclusion_reasons": {
+    "no_valid_target_proposal": 859,
+    "insufficient_control_distractors": 130
+  },
+  "controlled_accuracy_points": {
+    "b0/K5": {
+      "mean": 0.641347801256425,
+      "per_seed": {
+        "b3_seed1": 0.6424900057110223,
+        "b3_seed2": 0.6320673900628212,
+        "b3_seed3": 0.6494860079954312
+      }
+    },
+    "b0/K10": {
+      "mean": 0.5112316771368742,
+      "per_seed": {
+        "b3_seed1": 0.5172758423757853,
+        "b3_seed2": 0.500428326670474,
+        "b3_seed3": 0.5159908623643632
+      }
+    },
+    "b0/K20": {
+      "mean": 0.40134209023415196,
+      "per_seed": {
+        "b3_seed1": 0.4109080525414049,
+        "b3_seed2": 0.39020559680182754,
+        "b3_seed3": 0.4029126213592233
+      }
+    },
+    "b0/K50": {
+      "mean": 0.2862173995811917,
+      "per_seed": {
+        "b3_seed1": 0.29683038263849226,
+        "b3_seed2": 0.2737007424328955,
+        "b3_seed3": 0.2881210736721873
+      }
+    },
+    "b16/K5": {
+      "mean": 0.6396820864268037,
+      "per_seed": {
+        "b3_seed1": 0.6400628212450029,
+        "b3_seed2": 0.6367789834380354,
+        "b3_seed3": 0.642204454597373
+      }
+    },
+    "b16/K10": {
+      "mean": 0.507376737102608,
+      "per_seed": {
+        "b3_seed1": 0.5079954311821816,
+        "b3_seed2": 0.5034266133637921,
+        "b3_seed3": 0.5107081667618504
+      }
+    },
+    "b16/K20": {
+      "mean": 0.3951551494384162,
+      "per_seed": {
+        "b3_seed1": 0.39705882352941174,
+        "b3_seed2": 0.3917761279268989,
+        "b3_seed3": 0.39663049685893775
+      }
+    },
+    "b16/K50": {
+      "mean": 0.2764610698648391,
+      "per_seed": {
+        "b3_seed1": 0.2801256424900057,
+        "b3_seed2": 0.27341519131924613,
+        "b3_seed3": 0.27584237578526555
+      }
+    }
+  },
+  "freeze_sha256": "e1d3e33c61b4ff82c5e71ab2cb9953b618418b1bc3d84f1830bc1197d3728613",
+  "predictions_sha256": "a4e909abf4cc7ab520667685a35d884f70fa6c601c43abf1a4d384f4e1d0c173",
+  "saved_proposal_bank_sha256": "2d78d00cd961266359fb272c0d46f7e4fbd3dc710377e2268a895a156e884a12",
+  "saved_proposal_bank_original_identity": {
+    "path": "cache/v3/confirmation/proposals.h5",
+    "sha256": "2d78d00cd961266359fb272c0d46f7e4fbd3dc710377e2268a895a156e884a12",
+    "size_bytes": 9940848,
+    "role": "proposals"
+  },
+  "checks": [
+    "complete sentence/seed/configuration grid",
+    "all candidate IDs match prescore frozen manifest across seeds/configurations",
+    "own winner correctness independently recomputed against GT and saved logits with stable float32 ties",
+    "same-draw seed means and both percentile levels",
+    "raw signed ranking identity per seed and draw",
+    "controlled nested correctness",
+    "whole natural flow",
+    "source point estimators agree",
+    "tested source unchanged",
+    "834 legacy inputs unchanged"
+  ],
+  "limits": "Acceptance checks computation and recorded identities, not causal identification, foundation pretraining exposure, or correctness of all source annotations."
+}

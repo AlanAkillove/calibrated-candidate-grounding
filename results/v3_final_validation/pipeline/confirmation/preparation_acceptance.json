@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "verified_utc": "2026-10-04T15:44:30.223650+00:00",
+  "n_images": 3107,
+  "n_expressions": 7993,
+  "n_proposals": 198848,
+  "min_bank_rows": 64,
+  "max_bank_rows": 64,
+  "candidate_identities_match_frozen_construction": true,
+  "cohort_sha256": "cac1b7221ba5efc5849d145bc688ca136edb5efe559ca3f35651f570dc395887",
+  "candidate_manifest_sha256": "c20c2656708cd82403d3ae3614dfec5b93a6821a936f5987d5c2e4eff46f0b55",
+  "preparation_manifest_sha256": "a0b1d469ff2ecbafcff48352a4d06e046a0df15fa42cf1e75f64d866836b7847",
+  "feature_metadata": {
+    "b0": {
+      "n_images": 3107,
+      "n_sentences": 7993,
+      "extraction_stats": {
+        "invalid_crop_count": 0,
+        "region": {
+          "crops_per_second": 165.4,
+          "invalid_crop_count": 0,
+          "invalid_crop_rate": 0.0,
+          "n_crops_total": 198848,
+          "n_images_encoded": 3107,
+          "region_crops_encoded": 198848,
+          "region_encoded_utc": "2026-10-04T10:21:34+00:00",
+          "region_extract_seconds": 1202.46
+        }
+      },
+      "text_stats": {
+        "max_sentence_tokens": 43,
+        "n_sentences": 7993,
+        "n_sentences_truncated": 0,
+        "skipped": false,
+        "text_encoded_utc": "2026-10-04T10:21:51+00:00",
+        "text_seconds": 4.792,
+        "texts_per_second": 1668.2
+      }
+    },
+    "b16": {
+      "n_images": 3107,
+      "n_sentences": 7993,
+      "extraction_stats": {
+        "invalid_crop_count": 0,
+        "region": {
+          "crops_per_second": 135.1,
+          "invalid_crop_count": 0,
+          "invalid_crop_rate": 0.0,
+          "n_crops_total": 198848,
+          "n_images_encoded": 3107,
+          "region_crops_encoded": 198848,
+          "region_encoded_utc": "2026-10-04T10:46:35+00:00",
+          "region_extract_seconds": 1471.7
+        }
+      },
+      "text_stats": {
+        "max_sentence_tokens": 43,
+        "n_sentences": 7993,
+        "n_sentences_truncated": 0,
+        "skipped": false,
+        "text_encoded_utc": "2026-10-04T10:46:50+00:00",
+        "text_seconds": 5.111,
+        "texts_per_second": 1564.0
+      }
+    }
+  },
+  "scorer_forward": false,
+  "reliability_forward": false,
+  "performance_aggregation": false,
+  "supervision_note": "Subagent usage-limit failure after launch; preparation completed unattended at 10:47 UTC. Parent revalidated closed artifacts before freeze or any scorer call."
+}

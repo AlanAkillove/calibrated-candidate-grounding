@@ -138,12 +138,16 @@ split 的样本成员定义；若为了对齐 baseline 需要引用 `.mats`，�
     train/val 标注文件。但本项目按指令 §3 **只用官方 test split**，train/val 标注**刻意不下载**
     （记录于 `dataset_card.json` 的 `deliberately_not_fetched`），因此不存在任何用 FineCops
     train/val 训练/调参/校准的可能路径；FineCops 角色仍是 frozen external evaluation。
-  - ~~图像是否落在 COCO 图像域内（能否复用 proposal bank）~~ → **实测：不在 COCO 域内**。
+  - **来源纠正（2026-10-04 V3）：GQA/VG 身份不等于非 COCO 图像来源。**
     标注的 `file_name` 为 `<gqa_image_id>.jpg`，4,313 个 image id **100% 可在 GQA
-    `val_sceneGraphs.json` 中解析**（`n_images_without_graph = 0`），即图像域为 **GQA / Visual Genome**。
-    因此必须用**同一冻结** COCO-pretrained RPN 重新生成 proposal bank（generator 冻结且
-    query-independent，允许），并单独报告其 proposal recall —— 该 recall 与 RefCOCO+ 侧的差值
-    本身就是要披露的 **COCO-RPN → GQA 感知域偏移**。
+    `val_sceneGraphs.json` 中解析**（`n_images_without_graph = 0`）；这只确认 GQA/VG 标注与命名空间。
+    VG 官方图像元数据还包含 `coco_id` 与 `flickr_id`，必须核查跨来源重叠，不能据此直接
+    宣称“跨视觉域”或与现有图像独立。[VG 官方数据定义](https://visualgenome.org/api/v0/api_readme)。
+    冻结 RPN 在该图像集合上重新生成 bank，并单独报告 proposal recall；与 RefCOCO+ 的差值
+    是这些数据集合上的实测差异，不能单独识别视觉域偏移的因果贡献。历史 EXTERNAL STOP 不变；
+    新划分及独立性核验采用[独立 V3 协议](../reviews/v3_protocol.md)。
+    来源计数与身份映射由 [V3 生成式审计工件](../results/v3_final_validation/exposure/source_identity_counts.json)
+    留档；映射结果不是确认集性能结果，也不代表暴露审计已经通过。
   - 图像获取：不下载 GQA **21,817,965,542 B**（148,855 members）`images.zip` 整包；该 host 支持
     HTTP `Range`，`ccg/external/gqa_images.py` 只读一次 zip 尾部中心目录，再按成员定位抽取。
     实测两个约束：(a) host **按 IP 限流**（额外并行流立即返回 **503**），因此并发固定 3 +
@@ -338,8 +342,8 @@ COCO object ontology / 冻结 proposal pipeline 可比性**的前提下引入**�
    **N = 64（2026-09-27 按 A2.4 预注册规则选定：N=64 支持 K=50 比例 0.9912046908315565 ≥ 90%；见 `research_protocol.md` Amendment A3）**，取 RPN NMS 后按 objectness top-64；IoU ≥ 0.5 的等价 proposal 移除，target 为唯一
    max-IoU proposal。
 4. **External stress test**：FineCops-Ref（EMNLP 2024；**实测**：figshare 26048050 / CC BY 4.0 /
-   test 9,605 pos + 9,814 neg text + 8,507 neg image / 图像域为 GQA-Visual Genome 而非 COCO /
-   存在 train-val 标注但刻意不下载，详见 §2）→ **F0–F4 可行性审计已完成并判为 EXTERNAL STOP**：
+   test 9,605 pos + 9,814 neg text + 8,507 neg image / GQA-Visual Genome 标注来源，含 COCO 图像关联 /
+   历史阶段存在 train-val 标注但刻意不下载；V3 另行审计新划分，详见 §2）→ **F0–F4 可行性审计已完成并判为 EXTERNAL STOP**：
    同一冻结 N=64 RPN 在 GQA 上 target recall@0.5 仅 **0.7579**（< 0.80 停止线），
    same-category K5 可用性仅 **0.1861** → F5–F10 未获授权（见 **A9.13**）。
 5. **预算**：feature cache 约 1.3 GB region embeddings (FP16) + ~0.15 GB query embeddings，

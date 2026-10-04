@@ -1,0 +1,1 @@
+V3 confirmation preparation stdout capture. Partial capture: the earliest proposal-bank output was consumed by earlier PTY polls and not written to disk; this file records all later stdout chunks successfully captured through process completion. Use the closed preparation manifest and proposal/features caches for authoritative counts.

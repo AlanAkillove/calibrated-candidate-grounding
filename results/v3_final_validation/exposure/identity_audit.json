@@ -1,0 +1,315 @@
+{
+  "schema": "v3-source-identity-audit-v1",
+  "audit_date": "2026-10-04",
+  "audit_rule_version": "v3-image-exposure-v1",
+  "vg_mapping_sha256": "b87a94918cb2ff4d952cf1dfeca0b9cf6cd6fd204c2f8704645653be1163681a",
+  "finecops_positive_counts": {
+    "train": {
+      "expressions": 83341,
+      "unique_gqa_images": 31795,
+      "unique_mapped_coco_ids": 15339,
+      "source_mapping_status_counts": {
+        "mapped_to_coco_id": 15384,
+        "vg_record_has_null_coco_id": 16411,
+        "missing_visual_genome_source_id": 0
+      },
+      "metadata_identity_eligible_images": 27110,
+      "metadata_excluded_images": 4685,
+      "exclusions_by_reason_nonexclusive": {
+        "historical_refcoco_plus_coco_image": 2982,
+        "historical_refcocog_umd_coco_image": 3894,
+        "historical_human_reviewed_coco_image": 436,
+        "ambiguous_duplicate_coco_mapping_within_split": 90,
+        "old_finecops_test_mapped_coco_image": 14,
+        "cross_split_mapped_coco_identity": 9
+      }
+    },
+    "val": {
+      "expressions": 9426,
+      "unique_gqa_images": 3567,
+      "unique_mapped_coco_ids": 1687,
+      "source_mapping_status_counts": {
+        "mapped_to_coco_id": 1688,
+        "vg_record_has_null_coco_id": 1879,
+        "missing_visual_genome_source_id": 0
+      },
+      "metadata_identity_eligible_images": 3110,
+      "metadata_excluded_images": 457,
+      "exclusions_by_reason_nonexclusive": {
+        "historical_refcoco_plus_coco_image": 304,
+        "historical_refcocog_umd_coco_image": 359,
+        "cross_split_mapped_coco_identity": 9,
+        "historical_human_reviewed_coco_image": 46,
+        "old_finecops_test_mapped_coco_image": 1,
+        "ambiguous_duplicate_coco_mapping_within_split": 2
+      }
+    }
+  },
+  "historical_sources": {
+    "refcoco_plus_images_by_split": {
+      "testA": 750,
+      "testB": 750,
+      "train": 16992,
+      "val": 1500
+    },
+    "refcocog_umd_images_by_split": {
+      "test": 2600,
+      "train": 21899,
+      "val": 1300
+    },
+    "manual_review_files": [
+      {
+        "path": "data/reviewed_refcocoplus/raw/refcoco+_testA_reviewed.json",
+        "sha256": "9e03439fc8ed189d169d65d6cb6ad455c7798b6de4109a4ebabcf7067b4987f8",
+        "image_records": 5726,
+        "unique_original_coco_ids": 750
+      },
+      {
+        "path": "data/reviewed_refcocoplus/raw/refcoco+_testB_reviewed.json",
+        "sha256": "1057944a4a1cc0ce2b8b8ac693be2144f736ee6bba640a656459bbbdc2fdb76f",
+        "image_records": 4889,
+        "unique_original_coco_ids": 750
+      },
+      {
+        "path": "data/reviewed_refcocoplus/raw/refcoco+_val_reviewed.json",
+        "sha256": "c61080db850708f343f9bef5f408bc7c358a364d09f9fd843765a6ab0ceb262f",
+        "image_records": 10758,
+        "unique_original_coco_ids": 1500
+      }
+    ],
+    "unique_manual_review_coco_ids": 3000,
+    "old_finecops_test_images": 4313,
+    "old_finecops_test_expressions": 9605,
+    "old_finecops_proposal_audit_images": 1000,
+    "old_refcoco_plus_audit_subset_images": 1500,
+    "local_historical_image_files": 22094,
+    "historical_identity_registry_rows": 77698,
+    "local_historical_coco_ids": 21094,
+    "local_historical_gqa_ids": 1000,
+    "unidentified_local_image_files": [],
+    "historical_image_use_roles": {
+      "refcoco_plus": "original train/val/testA/testB cohort; older model train/tune/test roles are source split-specific and conservatively excluded as a full image pool",
+      "refcocog_umd": "official train/val/test image pool, conservatively excluded as a full source pool",
+      "reviewed_refcoco_plus": "manual annotation review source; original COCO IDs mapped through annotations, conservatively excluded",
+      "finecops_test": "old positive test metadata 4,313 GQA images; prior proposal/RPN audit used a 1,000-image subset; no old V3 scorer fit authorized"
+    },
+    "unknown_scope_note": "Image files under audit/ and data/reviewed_refcocoplus were enumerated read-only; image files with unparseable source identity remain a conservative audit blocker until pixel matching resolves them.",
+    "historical_identity_registry_sha256": "fdea37c082791b110d8f7bb1b0770c748bf1267d571eed5aa9df6695975bb03d"
+  },
+  "mapping_ambiguity": {
+    "train_val_shared_coco_ids_excluded_from_both": 9,
+    "within_split_duplicate_coco_groups_excluded": 46,
+    "within_split_duplicate_coco_images_excluded": 92,
+    "groups": {
+      "train:251344": [
+        "61536",
+        "2377833"
+      ],
+      "train:140244": [
+        "61571",
+        "2389777"
+      ],
+      "train:517807": [
+        "107941",
+        "2319818"
+      ],
+      "train:525559": [
+        "285663",
+        "2352563"
+      ],
+      "train:30187": [
+        "285709",
+        "2413718"
+      ],
+      "train:523560": [
+        "285815",
+        "2322399"
+      ],
+      "train:104800": [
+        "285822",
+        "2367272"
+      ],
+      "train:124279": [
+        "285891",
+        "2416061"
+      ],
+      "train:184184": [
+        "285930",
+        "2338056"
+      ],
+      "train:68287": [
+        "285997",
+        "2343513"
+      ],
+      "train:185291": [
+        "286032",
+        "2349215"
+      ],
+      "train:175126": [
+        "497925",
+        "2342580"
+      ],
+      "train:201141": [
+        "497934",
+        "2400990"
+      ],
+      "train:451154": [
+        "497936",
+        "2411622"
+      ],
+      "train:159465": [
+        "498015",
+        "2391499"
+      ],
+      "train:284925": [
+        "498093",
+        "2409715"
+      ],
+      "train:392170": [
+        "498158",
+        "2417967"
+      ],
+      "train:505243": [
+        "498241",
+        "2334627"
+      ],
+      "train:526098": [
+        "498391",
+        "2410970"
+      ],
+      "train:526126": [
+        "712951",
+        "2340773"
+      ],
+      "train:93329": [
+        "713191",
+        "2408327"
+      ],
+      "train:402228": [
+        "713302",
+        "2415726"
+      ],
+      "train:373574": [
+        "713350",
+        "2403964"
+      ],
+      "train:335037": [
+        "713433",
+        "2319890"
+      ],
+      "train:261185": [
+        "713533",
+        "2394646"
+      ],
+      "train:435005": [
+        "713534",
+        "2344987"
+      ],
+      "train:285170": [
+        "713551",
+        "2351926"
+      ],
+      "train:393896": [
+        "713581",
+        "2390084"
+      ],
+      "train:554636": [
+        "713725",
+        "2327297"
+      ],
+      "train:391235": [
+        "713902",
+        "2355814"
+      ],
+      "train:261298": [
+        "1159298",
+        "2397542"
+      ],
+      "train:542442": [
+        "1159574",
+        "2367912"
+      ],
+      "train:489415": [
+        "1159599",
+        "2394765"
+      ],
+      "train:402531": [
+        "1159623",
+        "2399671"
+      ],
+      "train:167397": [
+        "1159637",
+        "2396738"
+      ],
+      "train:99681": [
+        "1160149",
+        "2399796"
+      ],
+      "train:380499": [
+        "1592092",
+        "2319432"
+      ],
+      "train:371364": [
+        "1592391",
+        "2322557"
+      ],
+      "train:5587": [
+        "1592798",
+        "2375659"
+      ],
+      "train:58766": [
+        "1592994",
+        "2367294"
+      ],
+      "train:447084": [
+        "1593053",
+        "2368402"
+      ],
+      "train:539962": [
+        "1593185",
+        "2365990"
+      ],
+      "train:306570": [
+        "1593191",
+        "2393473"
+      ],
+      "train:303956": [
+        "1593251",
+        "2354994"
+      ],
+      "train:180869": [
+        "1593256",
+        "2417674"
+      ],
+      "val:293576": [
+        "1160002",
+        "2411795"
+      ]
+    }
+  },
+  "development_selection": {
+    "seed": 20261004,
+    "rng": "numpy.random.default_rng(20261004) over sorted metadata-eligible train GQA image IDs",
+    "maximum_images": 200,
+    "selection": "walk frozen permutation; hash selected candidate images; exclude exact/near historical matches and candidates duplicating confirmation/previous dev, then continue in order until 200 pass or pool exhausted",
+    "candidate_order_sha256": "9b68b7fb2c2acaff70f7ef3f263a0bc0dae709ba86716fa421b59ff326953eed",
+    "candidate_order_count": 27110
+  },
+  "perceptual_rule_frozen_before_confirmation_scores": {
+    "version": "v3-image-exposure-v1",
+    "pixel_identity": "SHA-256 over EXIF-oriented RGB decoded pixels preceded by version tag and little-endian width/height",
+    "near_duplicate_screen": "Pillow EXIF-transposed RGB -> L -> 9x8 LANCZOS -> adjacent horizontal left>right bits; Hamming distance <= 4",
+    "limits": "A dHash match is a conservative screening flag, not proof of identity; missed crop, resize, color, or small-content changes remain possible. Ambiguous matches are excluded; no conclusion that every near duplicate is found."
+  },
+  "gqa_annotation_metadata_exposure": {
+    "train_sceneGraphs_image_ids": 74942,
+    "val_sceneGraphs_image_ids": 10696,
+    "historically_loaded_val_sceneGraphs": true,
+    "historical_val_graph_use": "The prior FineCops feasibility stage loaded the full val graph dictionary and queried it for old FineCops test image IDs only; graph file availability is not scored/model exposure for all IDs.",
+    "train_sceneGraphs_loaded_during_this_read_only_identity_audit": true,
+    "v3_train_ids_with_graph_metadata": 31795,
+    "v3_val_ids_with_graph_metadata": 3567,
+    "interpretation": "Bulk scene-graph metadata availability is disclosed separately; this audit does not claim the FineCops expressions were previously scored or that images/annotations were unseen by pretraining."
+  },
+  "status": "IDENTITY_FILTERS_BUILT_PIXEL_AUDIT_PENDING"
+}

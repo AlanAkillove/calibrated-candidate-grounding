@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "ccg"
 version = "0.1.0"
-description = "Calibrated Candidate Grounding: reliable visual grounding under dynamic candidate-set shift (calibration, abstention, hard negatives, target omission) with frozen vision-language features."
+description = "Visual grounding correctness-ranking reliability under candidate-set changes with frozen vision-language features, selective-risk evaluation, and auditable research evidence."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }

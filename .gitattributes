@@ -7,3 +7,8 @@ tests/test_repair*.py -text
 
 # This generated theory draft is identified by SHA256 in the analysis export.
 docs/theory_analysis_v1.md -text
+results/v3_final_validation/** -text
+src/ccg/v3/** -text
+scripts/v3_*.py -text
+scripts/build_v3*.py -text
+tests/test_v3_*.py -text

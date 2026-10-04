@@ -1,0 +1,17 @@
+{
+  "requested": 3110,
+  "fetched": 4,
+  "skipped_existing": 3106,
+  "present_after_run": 3110,
+  "n_missing_in_archive": 0,
+  "missing_in_archive": [],
+  "n_failed": 0,
+  "failed": [],
+  "bytes_written": 540707,
+  "bytes_transferred": 547707,
+  "requests": 4,
+  "seconds": 25.44,
+  "eligible_identity_clean_val_image_ids": 3110,
+  "image_root": "data/raw/v3_finecops/images",
+  "historical_namespace_mutated": false
+}

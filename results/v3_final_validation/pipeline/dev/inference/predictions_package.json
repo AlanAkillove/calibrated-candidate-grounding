@@ -1,0 +1,10 @@
+{
+  "schema": "v3-lossless-predictions-v1",
+  "original": "results/v3_final_validation/pipeline/dev/inference/predictions.jsonl",
+  "original_sha256": "dc1dcbec072731e2d9864c34546c724d618409771b7e0c998c612ab9341cd372",
+  "original_size_bytes": 22620643,
+  "compressed": "results/v3_final_validation/pipeline/dev/inference/predictions.jsonl.gz",
+  "compressed_sha256": "0786ac437082910e40a00e9619621efafcdc6248bb01a6d6d81d8006684685cb",
+  "compressed_size_bytes": 3276326,
+  "restore": "python scripts/v3_package_predictions.py restore results/v3_final_validation/pipeline/dev/inference/predictions_package.json"
+}

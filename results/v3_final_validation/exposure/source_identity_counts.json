@@ -1,0 +1,108 @@
+{
+  "audit_date": "2026-10-04",
+  "audit_rule_version": "v3-image-exposure-v1",
+  "official_finecops_positive": {
+    "train": {
+      "unique_gqa_image_ids": 31795,
+      "vg_metadata_id_covered": 31795,
+      "vg_metadata_id_missing": 0,
+      "mapped_to_coco_image_ids": 15384,
+      "vg_records_with_null_coco_id": 16411,
+      "unique_coco_ids": 15339,
+      "gqa_train_scenegraph_ids_with_metadata": 31666,
+      "gqa_val_scenegraph_ids_with_metadata": 129,
+      "gqa_scenegraph_union_ids_with_metadata": 31795,
+      "coco_ids_overlapping_refcoco_plus_images": 2969,
+      "coco_ids_overlapping_refcocog_umd_images": 3877,
+      "coco_ids_overlapping_finecops_other_splits": {
+        "val": 9,
+        "test": 14
+      }
+    },
+    "val": {
+      "unique_gqa_image_ids": 3567,
+      "vg_metadata_id_covered": 3567,
+      "vg_metadata_id_missing": 0,
+      "mapped_to_coco_image_ids": 1688,
+      "vg_records_with_null_coco_id": 1879,
+      "unique_coco_ids": 1687,
+      "gqa_train_scenegraph_ids_with_metadata": 3546,
+      "gqa_val_scenegraph_ids_with_metadata": 21,
+      "gqa_scenegraph_union_ids_with_metadata": 3567,
+      "coco_ids_overlapping_refcoco_plus_images": 304,
+      "coco_ids_overlapping_refcocog_umd_images": 359,
+      "coco_ids_overlapping_finecops_other_splits": {
+        "train": 9,
+        "test": 1
+      }
+    },
+    "test": {
+      "unique_gqa_image_ids": 4313,
+      "vg_metadata_id_covered": 4313,
+      "vg_metadata_id_missing": 0,
+      "mapped_to_coco_image_ids": 2107,
+      "vg_records_with_null_coco_id": 2206,
+      "unique_coco_ids": 2107,
+      "gqa_train_scenegraph_ids_with_metadata": 0,
+      "gqa_val_scenegraph_ids_with_metadata": 4313,
+      "gqa_scenegraph_union_ids_with_metadata": 4313,
+      "coco_ids_overlapping_refcoco_plus_images": 296,
+      "coco_ids_overlapping_refcocog_umd_images": 436,
+      "coco_ids_overlapping_finecops_other_splits": {
+        "train": 14,
+        "val": 1
+      }
+    }
+  },
+  "source_pools": {
+    "refcoco_plus_images_all_splits": 19992,
+    "refcoco_plus_images_by_split": {
+      "testA": 750,
+      "testB": 750,
+      "train": 16992,
+      "val": 1500
+    },
+    "refcocog_umd_images_by_split": {
+      "test": 2600,
+      "train": 21899,
+      "val": 1300
+    },
+    "refcocog_umd_images_all_splits": 25799,
+    "finecops_old_positive_test_metadata_images": 4313,
+    "finecops_old_local_audit_images": 1000,
+    "coco_local_images": 19992,
+    "refcocog_local_images": 1102
+  },
+  "gqa_scene_graph_metadata": {
+    "train_graph_image_ids": 74942,
+    "val_graph_image_ids": 10696,
+    "train_val_id_overlap": 0,
+    "historical_role": "GQA train_sceneGraphs.json and val_sceneGraphs.json were already downloaded; the old FineCops feasibility audit loaded the full val graph file. This records metadata availability, not model training/scoring."
+  },
+  "cross_split_image_identity": {
+    "train__val": {
+      "gqa_image_id_overlap": 0,
+      "coco_id_overlap": 9
+    },
+    "train__test": {
+      "gqa_image_id_overlap": 0,
+      "coco_id_overlap": 14
+    },
+    "val__test": {
+      "gqa_image_id_overlap": 0,
+      "coco_id_overlap": 1
+    }
+  },
+  "input_sha256": {
+    "data/full_image_manifest.csv": "86badb74f4a7689b3bf7bfb553032d899af351456ccf44d81448419ace42cacc",
+    "data/audit_subset.csv": "1111dd942124e877f4aa8a6b6ddcc54b29e8ecd89424fe53a750ff12590dc163",
+    "data/raw/finecops/test_expression_pos.json": "dec95f7360abf2b4af16376f84d20f799b2d2c0a30ee5a05eb55993cea430bd7",
+    "data/raw/gqa/train_sceneGraphs.json": "db9de9f9ec49336e85b02d4e3b8588ccc8f72365e6d60839344c294c093bc00b",
+    "data/raw/gqa/val_sceneGraphs.json": "3224baf1e87e56d0faa52a9d62bbd5cd79a6528e15957d0bd886de7f0d6c9a41",
+    "data/raw/refcoco+/refcoco+/refs(unc).p": "7de24c182449758b9d9ae87d968b1f25831236a54d38d45408e2e0fdd318e802",
+    "data/raw/refcocog/refcocog/refs(umd).p": "0331c7533537b67c2f7ac8c8bab0da2d379d1754c6f5c110fd79f70e17e7bddb",
+    "results/v3_final_validation/exposure/source/visual_genome_image_data.json.zip": "b87a94918cb2ff4d952cf1dfeca0b9cf6cd6fd204c2f8704645653be1163681a"
+  },
+  "visual_genome_mapping_sha256": "b87a94918cb2ff4d952cf1dfeca0b9cf6cd6fd204c2f8704645653be1163681a",
+  "note": "Identity intersections are conservative exclusions; mapped COCO image identity is not a COCO category mapping and does not imply historical model scoring."
+}

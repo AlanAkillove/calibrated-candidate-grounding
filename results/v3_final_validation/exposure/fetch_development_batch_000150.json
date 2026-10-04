@@ -1,0 +1,18 @@
+{
+  "requested": 50,
+  "fetched": 0,
+  "skipped_existing": 50,
+  "present_after_run": 50,
+  "n_missing_in_archive": 0,
+  "missing_in_archive": [],
+  "n_failed": 0,
+  "failed": [],
+  "bytes_written": 0,
+  "bytes_transferred": 0,
+  "requests": 0,
+  "seconds": 0.0,
+  "requested_image_ids_sha256": "bf22495eac2160fc3fcaf55d17d363e7758981a1bd0ae41b1ea9138801c72e33",
+  "workers": 3,
+  "out_dir": "data/raw/v3_finecops/images",
+  "completed_at_utc": "2026-10-04T09:34:15+00:00"
+}

@@ -1,0 +1,97 @@
+{
+  "files": {
+    "results\\phase05_score_sufficiency\\split_manifest.json": {
+      "sha256": "badd94bc88c1f0ba87c7136e2b33cb5b427a73fe0e112dc39d4260cb62b5b7c0",
+      "size_bytes": 10132
+    },
+    "cache\\v2_backbones\\openclip_b16\\metadata.json": {
+      "sha256": "8106f02c39f44a2502485e1f274d187685f33e9b0c1e8984ad46b281b5ed3eb5",
+      "size_bytes": 3247
+    },
+    "cache\\v2_semantic\\openclip_b16\\embedding_index.json": {
+      "sha256": "0ed9673b63a3f46a066bc9dfa9663ac4da7e3977fe769ecda7cec5b3fc743345",
+      "size_bytes": 1824
+    },
+    "cache\\v2_semantic\\openclip_b16\\embeddings_K5.npz": {
+      "sha256": "527eb1ffb60707c6890ea4b1d04e5abc395475f620b005eb94a1ee6d87c517f5",
+      "size_bytes": 129205140
+    },
+    "cache\\v2_semantic\\openclip_b16\\embeddings_K10.npz": {
+      "sha256": "41698f472f499ecb5385925b0e90538c1ae441310714be7c2c2b3b518c2edc9e",
+      "size_bytes": 235696020
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_1\\model.npz": {
+      "sha256": "c9a58eb135c88bd5907f34e0374ed1430f508a38ce8e30c306b5d294034d3973",
+      "size_bytes": 858590
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_1\\training.json": {
+      "sha256": "33eeddb133833d2c14488088586be168fabd52ad5233f1747c2afd19190e4d9c",
+      "size_bytes": 2065
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_1\\eval_metadata.json": {
+      "sha256": "29a3d5fab86995792e75d3825a18e0da531498d21c8510c107c67bebc2bc0b9c",
+      "size_bytes": 7403
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_1\\raw_scores\\K5.npz": {
+      "sha256": "2111ce8e88cedee1398dad91d149c8a2acecb4c6b93715f3913c431777f7a190",
+      "size_bytes": 410852
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_1\\raw_scores\\K10.npz": {
+      "sha256": "5a80882c8c1b61a85ae878d91195532cc271b1a0fbc5ddfaefc13ceefc42d4f9",
+      "size_bytes": 755679
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_2\\model.npz": {
+      "sha256": "a573acbc357482903d4fa474f1c7b086ec2811270c21c6f6d82c23d807e53d61",
+      "size_bytes": 858590
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_2\\training.json": {
+      "sha256": "44e676cf5552f558ab02ba076fef5a136be14cf11f688fffa410d7b001ddaf63",
+      "size_bytes": 1753
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_2\\eval_metadata.json": {
+      "sha256": "90cd4145beb002c5f701b6d26ea1137bbd9f7e179e01d753b06a76749ad16ddc",
+      "size_bytes": 7066
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_2\\raw_scores\\K5.npz": {
+      "sha256": "e65c2a288fd614f3ba7318276d42f116c7bfa9976fc74e99188d7c45fc04edf3",
+      "size_bytes": 410352
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_2\\raw_scores\\K10.npz": {
+      "sha256": "abb169498e79ac891a1901e4958bf2cba873e06a2e18f5bd190d6f08a25892b3",
+      "size_bytes": 753937
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_3\\model.npz": {
+      "sha256": "9c10a0e73af877977f2640c3dd3133e43dd5fb8dc5073a11ac6e626515c94151",
+      "size_bytes": 858590
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_3\\training.json": {
+      "sha256": "f929b1b8bd3811e7f247663bf5dd2b9820a6d3e31e117a7a3284490b7e382c50",
+      "size_bytes": 1755
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_3\\eval_metadata.json": {
+      "sha256": "a1e6237248f8e912d9a8737a11d4c0163fddce131e8957b3e8c3a23bcb9ed143",
+      "size_bytes": 7065
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_3\\raw_scores\\K5.npz": {
+      "sha256": "59a27b1f86666a9ec9da62ea56c083b9802592fcfe25ae05ec9ba63bfa844201",
+      "size_bytes": 409718
+    },
+    "results\\v2_backbone_generalization\\b1_phase0b\\seed_3\\raw_scores\\K10.npz": {
+      "sha256": "700c8c85880999e60f7d891bedf32d472ff2481d7164be8b2dfd9c7fed0f6c4e",
+      "size_bytes": 751937
+    },
+    "src\\ccg\\repairs\\information.py": {
+      "sha256": "ec000c68e27b8ff8027bc07daa62c4390438c5ebd119605baed0fb038f476c62",
+      "size_bytes": 22125
+    },
+    "src\\ccg\\semantic\\features.py": {
+      "sha256": "2d976a1ba61b95c7df4caa343984c9e80d96ed1e834b2b35cc8306390ef86d91",
+      "size_bytes": 10615
+    },
+    "src\\ccg\\reliability\\features.py": {
+      "sha256": "acb43bc90d1f55b739206994fca6466b18a82ea643b0185a5f3f44c4d13840e8",
+      "size_bytes": 19156
+    }
+  },
+  "created_utc": "2026-10-04T08:12:23Z"
+}

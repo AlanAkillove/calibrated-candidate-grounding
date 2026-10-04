@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "checked_utc": "2026-10-04T17:05:05.778072+00:00",
+  "method": "rendered PNG inspection: complete axes, legible labels and legends; figures read saved formal outputs only",
+  "figures": {
+    "figure_b16_source_replication.png": "35244f92c5bdbd498a85d2d129e6707e48791595d140821fca1eaf1cf29485a3",
+    "figure_b16_source_replication.svg": "00c90487531e6614fea8ce4cd761b92319bf69ae54a5e72ceb1b786caa584f0a",
+    "figure_independent_confirmation.png": "8461e3f9be6a38b58b3f23db55db99f2a9decca73cdb33a317bac8c37cd2d19f",
+    "figure_independent_confirmation.svg": "e707a9b63f8cfd875970481554bf0a6ce1747743743505a4cdc334ed6a2dfd37",
+    "figure_natural_interface.png": "702a43cbb60d14cd4f4f01161a1358ddc484bfbf28072a1f8a4eaecdd8b73a1e",
+    "figure_natural_interface.svg": "d1d26efdacd3eaa6126be1fae616c85dfc40f745ab865ec56ab1d22e9d7d1e5a"
+  },
+  "display_driver_sha256": "e44b5cadbba1eda273beffc051d955354df989f3f5362c7a98783081d84709af",
+  "source_statistics_unchanged": true
+}

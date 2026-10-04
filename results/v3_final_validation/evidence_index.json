@@ -1,0 +1,131 @@
+{
+  "schema": "v3-evidence-index-v1",
+  "sources": [
+    {
+      "path": "legacy_inputs_initial.json",
+      "sha256": "6a1031896f54ebd4cda1e090e378d450b654dba711069ffabf32fc9e965c2463",
+      "size_bytes": 1584
+    },
+    {
+      "path": "legacy_inputs_final.json",
+      "sha256": "92cf482aa5ba7e2ac96a062b83924802e490dfb834df3c914eab51997065664e",
+      "size_bytes": 1584
+    },
+    {
+      "path": "config.json",
+      "sha256": "a3f592903104554b2466e4f23d223dc1769d8a4098af93d33bcece6cb9888381",
+      "size_bytes": 2375
+    },
+    {
+      "path": "STATUS.json",
+      "sha256": "efcc9ec282685e48e9f7002a294a08d5ea94e5af94ff23bcc05c16dbf55f7a8b",
+      "size_bytes": 3410
+    },
+    {
+      "path": "exposure/source_identity_counts.json",
+      "sha256": "251ebb9f04a1945447197afd08e24150d6e722f08f90f31d4d83b5a1b3293326",
+      "size_bytes": 4471
+    },
+    {
+      "path": "exposure/historical_fingerprint_status.json",
+      "sha256": "d15f08e1171a62a5e2c01f8094b2120cd9a7bdbb28ca6ab3ca74f08fc392869c",
+      "size_bytes": 448
+    },
+    {
+      "path": "exposure/final_acceptance.json",
+      "sha256": "3a05b6e1c2b82b2edb5082da978f05235fb710d1dedab04e0141e82bd5f51ff5",
+      "size_bytes": 7597
+    },
+    {
+      "path": "replication/replication_summary.json",
+      "sha256": "bc4a59fd9e478637675495c8e28e9d52658172672044a436b69e1c57be5da9df",
+      "size_bytes": 5014
+    },
+    {
+      "path": "replication/bootstrap_summary.json",
+      "sha256": "75a69b53d633017ebd0bb3fd2386b2b5b77eb7b4c8a359608523d24d222747c8",
+      "size_bytes": 379598
+    },
+    {
+      "path": "replication/replication_acceptance.json",
+      "sha256": "d7a8dc93fc5daf45d18d9eef8204dd8103fbdfeac292f6ae47863eeee3a24ccc",
+      "size_bytes": 11877
+    },
+    {
+      "path": "pipeline/dev_acceptance.json",
+      "sha256": "d7280342ce1b82c75c78e92e66ba64893ee51ff812c4ed160b539a2fcfb331f3",
+      "size_bytes": 81271
+    },
+    {
+      "path": "pipeline/dev_revalidation.json",
+      "sha256": "cb93d439c0eb5c5c25b3a55985eed02a6ad944c81b979f713b7f90f291588792",
+      "size_bytes": 7065
+    },
+    {
+      "path": "pipeline/confirmation/preparation_acceptance.json",
+      "sha256": "b2d166e1a418d98cfbb11533dfb85d1b51a16c2b37382376104fee663536806f",
+      "size_bytes": 2467
+    },
+    {
+      "path": "tests_before_confirmation.json",
+      "sha256": "89a0742124e0d92bbabab21ec1d9d77dc630ccf2f468233756a8797271bd28a5",
+      "size_bytes": 22685
+    },
+    {
+      "path": "protocol_freeze.json",
+      "sha256": "e1d3e33c61b4ff82c5e71ab2cb9953b618418b1bc3d84f1830bc1197d3728613",
+      "size_bytes": 675425
+    },
+    {
+      "path": "confirmation_run.json",
+      "sha256": "0e6c6016d9e89e101894090c31c8b3637faf1be896fa927f6d13be021c5a9c64",
+      "size_bytes": 699
+    },
+    {
+      "path": "final_acceptance.json",
+      "sha256": "fa80845010deb5e908981576feb81a34ca8c25ff26e0b2eb27378acc834b7488",
+      "size_bytes": 3864
+    },
+    {
+      "path": "model_replay/manifest.json",
+      "sha256": "951ec8778609e3a12711e9aa9352dffd4e1ef221e3a350cd16ac2a2385e67634",
+      "size_bytes": 14501
+    },
+    {
+      "path": "pipeline/confirmation/candidate_geometry_identity.json",
+      "sha256": "5fad3c32d9a722b5a0256f797d6839a89a1a950012d0e4425ed549db387375cb",
+      "size_bytes": 427
+    },
+    {
+      "path": "publication/visual_acceptance.json",
+      "sha256": "dbba7917632d65cc4fc0c46517ad451a4f0f04ce6810b39896bd5ae0ad3d2a78",
+      "size_bytes": 1014
+    },
+    {
+      "path": "pipeline/dev/inference/predictions_package.json",
+      "sha256": "6f486c6cf4851a7ba779272a9b8e95789ba0120c4d2e143c21b7c37bf914e8b1",
+      "size_bytes": 624
+    },
+    {
+      "path": "pipeline/confirmation/inference/predictions_package.json",
+      "sha256": "aac35bf0d98571f7184308987aa1d1e84fede044a78976ab66fccc8c41d524d8",
+      "size_bytes": 653
+    },
+    {
+      "path": "pipeline/confirmation/bootstrap/index.json",
+      "sha256": "e151bd1189dba539aaf7bcd5f0e171d1b5a45e6ffcf08076e9156bc68123afc3",
+      "size_bytes": 974
+    },
+    {
+      "path": "pipeline/confirmation/bootstrap/controlled/summary.json",
+      "sha256": "2918d4076f29842c3535bb4819379128789c3acfefc6c30e37f78bb180152200",
+      "size_bytes": 188472
+    },
+    {
+      "path": "pipeline/confirmation/bootstrap/natural/summary.json",
+      "sha256": "9767c8a37879964d55cde06a05f1bb8d4c244a6c161063ee61b072a2d2fb66d3",
+      "size_bytes": 1872929
+    }
+  ],
+  "publication_rule": "completed stored formal 5000 seed0 outputs only; developmental and confirmation kept separate"
+}

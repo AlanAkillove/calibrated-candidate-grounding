@@ -1,0 +1,88 @@
+[2026-10-04T08:12:26Z] seed1 randomK5: computed 20799 feature rows using cached B16 embeddings
+[2026-10-04T08:12:27Z] seed2 randomK5: computed 20799 feature rows using cached B16 embeddings
+[2026-10-04T08:12:27Z] seed3 randomK5: computed 20799 feature rows using cached B16 embeddings
+[2026-10-04T08:12:28Z] seed1 randomK10: computed 20799 feature rows using cached B16 embeddings
+[2026-10-04T08:12:29Z] seed2 randomK10: computed 20799 feature rows using cached B16 embeddings
+[2026-10-04T08:12:30Z] seed3 randomK10: computed 20799 feature rows using cached B16 embeddings
+[2026-10-04T08:12:31Z] seed1 S: selected C=0.1, tune AUROC=0.819699, rows=7372
+[2026-10-04T08:12:31Z] seed1 S+Q: selected C=0.1, tune AUROC=0.819776, rows=7372
+[2026-10-04T08:12:32Z] seed1 S+V: selected C=0.1, tune AUROC=0.823162, rows=7372
+[2026-10-04T08:12:32Z] seed1 Full: selected C=0.1, tune AUROC=0.823264, rows=7372
+[2026-10-04T08:12:32Z] seed2 S: selected C=0.1, tune AUROC=0.821535, rows=7372
+[2026-10-04T08:12:33Z] seed2 S+Q: selected C=0.1, tune AUROC=0.821040, rows=7372
+[2026-10-04T08:12:33Z] seed2 S+V: selected C=0.1, tune AUROC=0.825198, rows=7372
+[2026-10-04T08:12:33Z] seed2 Full: selected C=0.1, tune AUROC=0.826580, rows=7372
+[2026-10-04T08:12:34Z] seed3 S: selected C=0.1, tune AUROC=0.825122, rows=7372
+[2026-10-04T08:12:34Z] seed3 S+Q: selected C=0.1, tune AUROC=0.822939, rows=7372
+[2026-10-04T08:12:34Z] seed3 S+V: selected C=0.1, tune AUROC=0.828245, rows=7372
+[2026-10-04T08:12:35Z] seed3 Full: selected C=0.1, tune AUROC=0.826855, rows=7372
+[2026-10-04T08:12:36Z] B16 fit stage complete; portable model paths are available for C3 inference
+[2026-10-04T08:15:34Z] fingerprinted 38 frozen inputs
+[2026-10-04T08:15:56Z] fingerprinted 38 frozen inputs
+[2026-10-04T08:18:15Z] fingerprinted 38 frozen inputs
+[2026-10-04T08:18:39Z] Phase 0A K5: 20799 canonical scorer rows align; 574 non-cohort Phase 0A rows excluded
+[2026-10-04T08:18:39Z] Phase 0A K10: 20799 canonical scorer rows align; 574 non-cohort Phase 0A rows excluded
+[2026-10-04T08:18:39Z] Phase 0A K50: 20799 canonical scorer rows align; 574 non-cohort Phase 0A rows excluded
+[2026-10-04T08:18:41Z] seed1 randomK5: loaded identity-checked semantic feature cache
+[2026-10-04T08:18:41Z] seed2 randomK5: loaded identity-checked semantic feature cache
+[2026-10-04T08:18:41Z] seed3 randomK5: loaded identity-checked semantic feature cache
+[2026-10-04T08:18:44Z] seed1 randomK10: loaded identity-checked semantic feature cache
+[2026-10-04T08:18:44Z] seed2 randomK10: loaded identity-checked semantic feature cache
+[2026-10-04T08:18:44Z] seed3 randomK10: loaded identity-checked semantic feature cache
+[2026-10-04T08:18:54Z] randomK50 B16 cached-feature semantic summaries: 4096/20799 rows
+[2026-10-04T08:18:56Z] randomK50 B16 cached-feature semantic summaries: 8192/20799 rows
+[2026-10-04T08:18:58Z] randomK50 B16 cached-feature semantic summaries: 12288/20799 rows
+[2026-10-04T08:19:12Z] randomK50 B16 cached-feature semantic summaries: 16384/20799 rows
+[2026-10-04T08:19:25Z] randomK50 B16 cached-feature semantic summaries: 20480/20799 rows
+[2026-10-04T08:19:25Z] randomK50 B16 cached-feature semantic summaries: 20799/20799 rows
+[2026-10-04T08:19:26Z] seed1 randomK50: computed 20799 feature rows using cached B16 embeddings
+[2026-10-04T08:19:27Z] randomK50 B16 cached-feature semantic summaries: 4096/20799 rows
+[2026-10-04T08:19:28Z] randomK50 B16 cached-feature semantic summaries: 8192/20799 rows
+[2026-10-04T08:19:28Z] randomK50 B16 cached-feature semantic summaries: 12288/20799 rows
+[2026-10-04T08:19:29Z] randomK50 B16 cached-feature semantic summaries: 16384/20799 rows
+[2026-10-04T08:19:30Z] randomK50 B16 cached-feature semantic summaries: 20480/20799 rows
+[2026-10-04T08:19:30Z] randomK50 B16 cached-feature semantic summaries: 20799/20799 rows
+[2026-10-04T08:19:31Z] seed2 randomK50: computed 20799 feature rows using cached B16 embeddings
+[2026-10-04T08:19:32Z] randomK50 B16 cached-feature semantic summaries: 4096/20799 rows
+[2026-10-04T08:19:33Z] randomK50 B16 cached-feature semantic summaries: 8192/20799 rows
+[2026-10-04T08:19:34Z] randomK50 B16 cached-feature semantic summaries: 12288/20799 rows
+[2026-10-04T08:19:34Z] randomK50 B16 cached-feature semantic summaries: 16384/20799 rows
+[2026-10-04T08:19:35Z] randomK50 B16 cached-feature semantic summaries: 20480/20799 rows
+[2026-10-04T08:19:35Z] randomK50 B16 cached-feature semantic summaries: 20799/20799 rows
+[2026-10-04T08:19:37Z] seed3 randomK50: computed 20799 feature rows using cached B16 embeddings
+[2026-10-04T08:20:03Z] seed1 K5: frozen B16 forward anchor PASS, max|delta|=1.335e-05 (atol 1.0e-04)
+[2026-10-04T08:20:59Z] seed1 K10: frozen B16 forward anchor PASS, max|delta|=1.526e-05 (atol 1.0e-04)
+[2026-10-04T08:21:32Z] seed2 K5: frozen B16 forward anchor PASS, max|delta|=1.144e-05 (atol 1.0e-04)
+[2026-10-04T08:22:24Z] seed2 K10: frozen B16 forward anchor PASS, max|delta|=1.335e-05 (atol 1.0e-04)
+[2026-10-04T08:23:01Z] seed3 K5: frozen B16 forward anchor PASS, max|delta|=1.144e-05 (atol 1.0e-04)
+[2026-10-04T08:24:06Z] seed3 K10: frozen B16 forward anchor PASS, max|delta|=1.240e-05 (atol 1.0e-04)
+[2026-10-04T08:24:06Z] restored all 12 fit-stage JSON checkpoints; no duplicate fitting
+[2026-10-04T08:24:06Z] rand5: exact candidate identities verified against B16 random K5; rows=9487
+[2026-10-04T08:24:14Z] hard5: frozen B16 scorer forwards from cached embeddings 2048/9487 rows
+[2026-10-04T08:24:22Z] hard5: frozen B16 scorer forwards from cached embeddings 4096/9487 rows
+[2026-10-04T08:24:30Z] hard5: frozen B16 scorer forwards from cached embeddings 6144/9487 rows
+[2026-10-04T08:24:38Z] hard5: frozen B16 scorer forwards from cached embeddings 8192/9487 rows
+[2026-10-04T08:24:42Z] hard5: frozen B16 scorer forwards from cached embeddings 9487/9487 rows
+[2026-10-04T08:24:43Z] hard5: saved exact-identity B16 derived inputs and frozen scores (9487 rows, K=5)
+[2026-10-04T08:24:57Z] expb_m0: frozen B16 scorer forwards from cached embeddings 2048/7410 rows
+[2026-10-04T08:25:12Z] expb_m0: frozen B16 scorer forwards from cached embeddings 4096/7410 rows
+[2026-10-04T08:25:26Z] expb_m0: frozen B16 scorer forwards from cached embeddings 6144/7410 rows
+[2026-10-04T08:25:35Z] expb_m0: frozen B16 scorer forwards from cached embeddings 7410/7410 rows
+[2026-10-04T08:25:36Z] expb_m0: saved exact-identity B16 derived inputs and frozen scores (7410 rows, K=10)
+[2026-10-04T08:25:50Z] expb_m8: frozen B16 scorer forwards from cached embeddings 2048/7410 rows
+[2026-10-04T08:26:05Z] expb_m8: frozen B16 scorer forwards from cached embeddings 4096/7410 rows
+[2026-10-04T08:26:20Z] expb_m8: frozen B16 scorer forwards from cached embeddings 6144/7410 rows
+[2026-10-04T08:26:29Z] expb_m8: frozen B16 scorer forwards from cached embeddings 7410/7410 rows
+[2026-10-04T08:26:29Z] expb_m8: saved exact-identity B16 derived inputs and frozen scores (7410 rows, K=10)
+[2026-10-04T08:26:29Z] seed1 rand5/hard5: target score invariant PASS, max|delta|=1.144e-05
+[2026-10-04T08:26:29Z] seed1 expb_m0/expb_m8: target score invariant PASS, max|delta|=0.000e+00
+[2026-10-04T08:26:29Z] seed2 rand5/hard5: target score invariant PASS, max|delta|=1.144e-05
+[2026-10-04T08:26:29Z] seed2 expb_m0/expb_m8: target score invariant PASS, max|delta|=0.000e+00
+[2026-10-04T08:26:29Z] seed3 rand5/hard5: target score invariant PASS, max|delta|=1.144e-05
+[2026-10-04T08:26:29Z] seed3 expb_m0/expb_m8: target score invariant PASS, max|delta|=0.000e+00
+[2026-10-04T08:26:42Z] wrote test metrics for 84 seed/cell/group rows and per-sentence predictions
+[2026-10-04T08:27:43Z] starting formal shared image-cluster bootstrap reps=5000, seed=0
+[2026-10-04T08:35:51Z] bootstrap cohort random_all: completed 5000 shared image draws
+[2026-10-04T08:41:29Z] bootstrap cohort same4: completed 5000 shared image draws
+[2026-10-04T08:46:19Z] bootstrap cohort same8: completed 5000 shared image draws
+[2026-10-04T08:46:26Z] formal bootstrap complete

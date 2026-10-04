@@ -1,0 +1,14 @@
+{
+  "download_url": "https://huggingface.co/datasets/jn12/VisualGenome/resolve/main/image_data.json.zip",
+  "original_authoritative_url": "https://visualgenome.org/static/data/dataset/image_data.json.zip",
+  "official_api_reference": "https://homes.cs.washington.edu/~ranjay/visualgenome/api_readme.html",
+  "mirror_repository": "https://huggingface.co/datasets/jn12/VisualGenome",
+  "bytes": 1780854,
+  "sha256": "b87a94918cb2ff4d952cf1dfeca0b9cf6cd6fd204c2f8704645653be1163681a",
+  "verified_against_official_visual_genome_dataset_info_checksum": true,
+  "official_sha256": "b87a94918cb2ff4d952cf1dfeca0b9cf6cd6fd204c2f8704645653be1163681a",
+  "archive_entries": [
+    "image_data.json"
+  ],
+  "role": "identity map image_id -> coco_id only; no category mapping"
+}

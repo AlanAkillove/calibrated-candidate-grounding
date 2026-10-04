@@ -1,0 +1,72 @@
+{
+  "schema": "v3-prescore-positive-box-exclusion-v1",
+  "rule_id": "official-positive-box-visible-intersection",
+  "rule_frozen_at_utc": "2026-10-04T09:34:31+00:00",
+  "performance_results_observed_before_rule": false,
+  "model_training_observed": false,
+  "reliability_scoring_observed": false,
+  "performance_metrics_observed": false,
+  "rule": "For a candidate confirmation image, exclude the whole image before scoring if any official positive-expression xywh annotation is nonfinite, has nonpositive extent, or has no positive-area intersection with the decoded JPEG. Preserve the original annotation and image in the source records and exclusion ledger. Never clip, impute, union, or silently drop boxes. Intersecting edge overhangs remain eligible and are reported. Source/GQA/JPEG dimension or identity disagreement blocks rather than being handled by this annotation rule.",
+  "excluded_image_count": 1,
+  "excluded_offending_expression_count": 1,
+  "excluded_images": [
+    {
+      "source_split": "val",
+      "gqa_image_id": "2326431",
+      "excluded_image_path": "data/raw/v3_finecops/images/2326431.jpg",
+      "official_expression_ids_preserved_in_source": [
+        "64719"
+      ],
+      "offending_annotations": [
+        {
+          "expr_id": "64719",
+          "sentence_id": "64719",
+          "target_instance_id": "3178991",
+          "source_bbox_xywh": [
+            536,
+            130,
+            131,
+            152
+          ],
+          "decoded_jpeg_bbox_validation_reasons": [
+            "bbox_has_no_positive_image_intersection"
+          ],
+          "reason": "official_gt_box_has_no_image_intersection"
+        }
+      ],
+      "decoded_jpeg_dimensions": [
+        500,
+        375
+      ],
+      "decoded_jpeg_file_sha256": "3556a019de5e5d3b4fb869dacd69f176c39872c5bacb683269880fb91463b7cd",
+      "decoded_pixel_sha256": "cc905edbe1d25bc31b75373422842a99a25ccf81421d276c12d569ae18c986fa",
+      "dhash64": "3b37327644445456",
+      "historical_exact_pixel_matches": [],
+      "historical_dhash_le4_matches": [],
+      "source_metadata_dimensions": [
+        500,
+        375
+      ],
+      "gqa_graph_dimensions": [
+        500,
+        375
+      ],
+      "source_agreement_with_gqa_target": [
+        {
+          "target_instance_id": "3178991",
+          "gqa_target_bbox_xywh": [
+            536,
+            130,
+            131,
+            152
+          ],
+          "exact_match": true
+        }
+      ],
+      "reason": "official_gt_box_has_no_image_intersection",
+      "model_training_observed": false,
+      "reliability_scoring_observed": false,
+      "performance_metrics_observed": false
+    }
+  ]
+}

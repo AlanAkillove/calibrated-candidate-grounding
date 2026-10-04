@@ -1,0 +1,141 @@
+{
+  "schema": "v3-development-revalidation-v1",
+  "status": "PASS",
+  "created_utc": "2026-10-04T09:51:32+00:00",
+  "scope": "Revalidate the already completed dev acceptance against the final exposure audit after the prescore exclusion of one structurally unusable confirmation image. No inference, cache regeneration, model change, or prediction rewrite was performed for this revalidation.",
+  "original_dev_acceptance": {
+    "path": "results/v3_final_validation/pipeline/dev_acceptance.json",
+    "sha256": "d7280342ce1b82c75c78e92e66ba64893ee51ff812c4ed160b539a2fcfb331f3",
+    "status": "PASS",
+    "preserved_unchanged": true,
+    "input_count": 299,
+    "rehash": {
+      "matching_inputs": 298,
+      "mismatching_inputs": 1,
+      "missing_inputs": 0,
+      "mismatches": [
+        {
+          "role": "exposure",
+          "path": "results/v3_final_validation/exposure/exposure_cohort_manifest.csv",
+          "expected_sha256": "fd0c99f1e708e3da905b6b658663864a9b3ace8890ee6ffb48b1faeaf3930547",
+          "actual_sha256": "511095dc6deb5a4df97a8afa2e0bf4e6733bd7df3a5877dedf302b46006bf75e",
+          "status": "CONTENT_CHANGED"
+        }
+      ]
+    },
+    "preparation_manifest_sha256": "1b45c4ba9c8b0b5a2700037d464bc309080687d046b5ad0acb998d3d74bcf602",
+    "inference_summary_sha256": "02fae08e145c7d67defc4c4ee5736d3766c67e378db8fb1bc602c14b2ae50512",
+    "source_anchor_sha256": "b3370bd81ed84996f4dcc0111ab7eba5397c577b146e53615b391ec86bc5a440"
+  },
+  "exposure_diff": {
+    "accepted_snapshot_path": "results/v3_final_validation/exposure/pre_correction_blocked/exposure_cohort_manifest.csv",
+    "accepted_snapshot_sha256": "fd0c99f1e708e3da905b6b658663864a9b3ace8890ee6ffb48b1faeaf3930547",
+    "accepted_sha256_in_dev_inputs": "fd0c99f1e708e3da905b6b658663864a9b3ace8890ee6ffb48b1faeaf3930547",
+    "current_final_path": "results/v3_final_validation/exposure/exposure_cohort_manifest.csv",
+    "current_final_sha256": "511095dc6deb5a4df97a8afa2e0bf4e6733bd7df3a5877dedf302b46006bf75e",
+    "accepted_row_count": 8516,
+    "current_row_count": 8515,
+    "sequence_diff_opcodes": [
+      {
+        "tag": "delete",
+        "old_range": [
+          2990,
+          2991
+        ],
+        "new_range": [
+          2990,
+          2990
+        ]
+      }
+    ],
+    "only_change": {
+      "type": "single confirmation-row deletion",
+      "source_split": "val",
+      "image_id": "2326431",
+      "expression_id": "64719",
+      "reason": "prescore exclusion recorded in final exposure acceptance; official released box has zero JPEG intersection",
+      "dev_rows_byte_for_byte_unchanged": true
+    }
+  },
+  "final_exposure_acceptance": {
+    "path": "results/v3_final_validation/exposure/final_acceptance.json",
+    "sha256": "3a05b6e1c2b82b2edb5082da978f05235fb710d1dedab04e0141e82bd5f51ff5",
+    "status": "PASS",
+    "final_confirmation_images": 3107,
+    "final_confirmation_expressions": 7993,
+    "final_development_images": 200,
+    "final_development_expressions": 522,
+    "dev_image_manifest": {
+      "path": "results/v3_final_validation/exposure/dev_image_manifest.csv",
+      "sha256": "99bbe18f1a4c2087f11e02266adb394f74ceaf044df469b481230fd2ba552e79",
+      "acceptance_expected_sha256": "99bbe18f1a4c2087f11e02266adb394f74ceaf044df469b481230fd2ba552e79"
+    },
+    "confirmation_image_manifest": {
+      "path": "results/v3_final_validation/exposure/confirmation_image_manifest.csv",
+      "sha256": "61094b1291d362074963b4632465b4877821897e17113b85ad85a3ea9cb247f5",
+      "acceptance_expected_sha256": "61094b1291d362074963b4632465b4877821897e17113b85ad85a3ea9cb247f5"
+    }
+  },
+  "dev_subset_revalidation": {
+    "cohort_path": "results/v3_final_validation/exposure/dev_cohort_manifest.jsonl",
+    "cohort_sha256": "21898b22998c845e57a068eebcd12ad6792acdf83a80118bf60d629b9d39240a",
+    "originally_accepted_cohort_sha256": "21898b22998c845e57a068eebcd12ad6792acdf83a80118bf60d629b9d39240a",
+    "expression_rows": 522,
+    "unique_images": 200,
+    "current_selected_train_audit_rows": 522,
+    "unique_current_selected_train_audit_images": 200,
+    "dev_rows_equal_between_preserved_old_and_final_global_audit_csv": true,
+    "selected_image_hash_checks_passed": 200,
+    "selected_image_hash_checks_total": 200,
+    "all_dev_audit_rows_final_eligible_audited_and_downloaded": true,
+    "all_dev_audit_rows_model_training_reliability_scoring_and_proposal_scoring_false": true,
+    "pipeline_output_hashes_unchanged": true
+  },
+  "source_code_binding": {
+    "source_code_paths_count": 21,
+    "current_paths_exactly_match_original_accepted_code_role": true,
+    "current_source_code_hash_mismatches": [],
+    "default_exposure_path": "results/v3_final_validation/exposure/exposure_cohort_manifest.csv"
+  },
+  "repository_test_acceptance": {
+    "path": "results/v3_final_validation/tests_before_confirmation.json",
+    "sha256": "89a0742124e0d92bbabab21ec1d9d77dc630ccf2f468233756a8797271bd28a5",
+    "status": "PASS",
+    "exit_code": 0,
+    "tests": 1300,
+    "passed": 1298,
+    "skipped": 2,
+    "changed_during_tests": []
+  },
+  "dev_preparation_timing": {
+    "proposal_bank_metadata_created_utc": "2026-10-04T09:25:17Z",
+    "preparation_manifest_created_utc": "2026-10-04T09:28:04Z",
+    "proposal_bank_to_preparation_manifest_artifact_timestamp_span_seconds": 167.0,
+    "measurement_note": "Artifact timestamp span, not a process timer. Proposal/RPN and candidate-generation durations were not separately logged, so no RPN elapsed-time or throughput estimate is reported.",
+    "backbone_region_and_text_observations": {
+      "b0": {
+        "dev_region_extract_seconds_logged": 58.611,
+        "dev_region_crops_logged": 12800,
+        "dev_region_crops_per_second_logged": 218.4,
+        "dev_text_encode_seconds_logged": 0.567,
+        "dev_texts_logged": 522,
+        "dev_texts_per_second_logged": 920.5,
+        "confirmation_region_crops_at_fixed_top_n": 198848,
+        "confirmation_region_seconds_at_observed_dev_throughput": 910.476,
+        "confirmation_text_encode_seconds_at_observed_dev_throughput": 8.683
+      },
+      "b16": {
+        "dev_region_extract_seconds_logged": 79.197,
+        "dev_region_crops_logged": 12800,
+        "dev_region_crops_per_second_logged": 161.6,
+        "dev_text_encode_seconds_logged": 0.453,
+        "dev_texts_logged": 522,
+        "dev_texts_per_second_logged": 1153.4,
+        "confirmation_region_crops_at_fixed_top_n": 198848,
+        "confirmation_region_seconds_at_observed_dev_throughput": 1230.495,
+        "confirmation_text_encode_seconds_at_observed_dev_throughput": 6.93
+      }
+    },
+    "confirmation_region_projection_note": "Measured development crops/texts per second scaled to 3107 images, top_n=64 (198848 region crops per backbone), and 7993 expressions. Encoder-only projection; excludes proposal generation, image decode, candidate processing, filesystem overhead, and cold-start variance."
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "experiment": "V3 OpenCLIP B16 S/Q/V replication",
+  "stages": {
+    "fit_stage_inputs": {
+      "started_utc": "2026-10-04T08:12:18Z",
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-04T08:12:23Z",
+      "detail": "K5/K10 scores, embeddings and split align; only small fit inputs fingerprinted",
+      "finished_utc": "2026-10-04T08:12:23Z"
+    },
+    "training": {
+      "started_utc": "2026-10-04T08:12:30Z",
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-04T08:24:06Z",
+      "detail": "twelve portable per-seed/per-group JSON models fit and round-tripped",
+      "finished_utc": "2026-10-04T08:24:06Z"
+    },
+    "fit_stage": {
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-04T08:12:36Z",
+      "detail": "all train/tune model artifacts and random K5/K10 point predictions are ready",
+      "finished_utc": "2026-10-04T08:12:36Z"
+    },
+    "input_fingerprints": {
+      "started_utc": "2026-10-04T08:15:33Z",
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-04T08:18:15Z",
+      "detail": "exact B16 caches, scorer checkpoints, split, code and candidate manifest hashes recorded",
+      "finished_utc": "2026-10-04T08:18:15Z"
+    },
+    "overall": {
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-04T08:46:26Z",
+      "detail": "B16 S/Q/V replication, point metrics and formal bootstrap complete",
+      "finished_utc": "2026-10-04T08:46:26Z"
+    },
+    "data_alignment": {
+      "started_utc": "2026-10-04T08:15:56Z",
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-04T08:18:15Z",
+      "detail": "all seed/K identities and nested correctness align",
+      "finished_utc": "2026-10-04T08:18:15Z"
+    },
+    "cached_features": {
+      "started_utc": "2026-10-04T08:15:56Z",
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-04T08:19:37Z",
+      "detail": "random K5/K10 used frozen B16 embedding NPZs; K50 and COCO inputs use cached feature H5 with chunked semantic summaries",
+      "finished_utc": "2026-10-04T08:19:37Z"
+    },
+    "anchor_forward": {
+      "started_utc": "2026-10-04T08:19:37Z",
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-04T08:24:06Z",
+      "detail": "all six seed/K forward anchors passed unchanged tolerance",
+      "finished_utc": "2026-10-04T08:24:06Z"
+    },
+    "alternative_cells": {
+      "started_utc": "2026-10-04T08:24:06Z",
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-04T08:26:29Z",
+      "detail": "exact saved candidate identities evaluated; paired target-score checks passed",
+      "finished_utc": "2026-10-04T08:26:29Z"
+    },
+    "point_evaluation": {
+      "started_utc": "2026-10-04T08:26:29Z",
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-04T08:26:42Z",
+      "detail": "wrote 84 group/cell test metric rows and per-sentence probabilities",
+      "finished_utc": "2026-10-04T08:26:42Z"
+    },
+    "bootstrap": {
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-04T08:46:26Z",
+      "detail": "three shared-draw cohorts completed",
+      "finished_utc": "2026-10-04T08:46:26Z",
+      "started_utc": "2026-10-04T08:27:43Z"
+    }
+  },
+  "current_stage": "overall",
+  "status": "COMPLETE",
+  "updated_utc": "2026-10-04T08:46:26Z"
+}

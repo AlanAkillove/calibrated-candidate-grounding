@@ -1,0 +1,309 @@
+{
+  "schema": "v3-b16-replication-acceptance-v1",
+  "created_utc": "2026-10-04T08:47:00Z",
+  "decision": "PASS_FOR_B16_MODEL_HANDOFF_AND_DEVELOPMENTAL_REPLICATION",
+  "confirmation_scope": "The COCO B16 replication is developmental/configuration evidence on an already-observed test set, not independent confirmation C3.",
+  "checks": {
+    "frozen_feature_groups_s17_q8_v8_full33": "PASS",
+    "original_train_tune_split_523_224_images": "PASS",
+    "training_only_standardization_and_original_C_tie_rule": "PASS",
+    "twelve_portable_seed_group_models": "PASS",
+    "cached_features_reused_without_visual_reextraction": "PASS",
+    "six_source_forward_anchors_at_unchanged_1e-4": "PASS",
+    "candidate_identities_target_column_and_paired_score_invariance": "PASS",
+    "fractional_boundary_tie_risk_convention": "PASS",
+    "per_sentence_outputs_and_84_metric_rows": "PASS",
+    "three_shared_image_bootstrap_cohorts_5000_reps_seed0": "PASS",
+    "95_percent_marginal_descriptive_intervals_no_invalid_draws": "PASS",
+    "raw_draw_npz_and_sha_manifest_verified": "PASS",
+    "independent_confirmation": "NOT_CLAIMED"
+  },
+  "source_anchors": {
+    "count": 6,
+    "rows": [
+      {
+        "seed": "b3_seed1",
+        "K": 5,
+        "n": 20799,
+        "max_abs_error": 1.33514404296875e-05,
+        "tolerance": 0.0001,
+        "status": "PASS",
+        "checkpoint": "results\\v2_backbone_generalization\\b1_phase0b\\seed_1\\model.npz",
+        "raw_score_anchor": "results\\v2_backbone_generalization\\b1_phase0b\\seed_1\\raw_scores\\K5.npz"
+      },
+      {
+        "seed": "b3_seed1",
+        "K": 10,
+        "n": 20799,
+        "max_abs_error": 1.52587890625e-05,
+        "tolerance": 0.0001,
+        "status": "PASS",
+        "checkpoint": "results\\v2_backbone_generalization\\b1_phase0b\\seed_1\\model.npz",
+        "raw_score_anchor": "results\\v2_backbone_generalization\\b1_phase0b\\seed_1\\raw_scores\\K10.npz"
+      },
+      {
+        "seed": "b3_seed2",
+        "K": 5,
+        "n": 20799,
+        "max_abs_error": 1.1444091796875e-05,
+        "tolerance": 0.0001,
+        "status": "PASS",
+        "checkpoint": "results\\v2_backbone_generalization\\b1_phase0b\\seed_2\\model.npz",
+        "raw_score_anchor": "results\\v2_backbone_generalization\\b1_phase0b\\seed_2\\raw_scores\\K5.npz"
+      },
+      {
+        "seed": "b3_seed2",
+        "K": 10,
+        "n": 20799,
+        "max_abs_error": 1.33514404296875e-05,
+        "tolerance": 0.0001,
+        "status": "PASS",
+        "checkpoint": "results\\v2_backbone_generalization\\b1_phase0b\\seed_2\\model.npz",
+        "raw_score_anchor": "results\\v2_backbone_generalization\\b1_phase0b\\seed_2\\raw_scores\\K10.npz"
+      },
+      {
+        "seed": "b3_seed3",
+        "K": 5,
+        "n": 20799,
+        "max_abs_error": 1.1444091796875e-05,
+        "tolerance": 0.0001,
+        "status": "PASS",
+        "checkpoint": "results\\v2_backbone_generalization\\b1_phase0b\\seed_3\\model.npz",
+        "raw_score_anchor": "results\\v2_backbone_generalization\\b1_phase0b\\seed_3\\raw_scores\\K5.npz"
+      },
+      {
+        "seed": "b3_seed3",
+        "K": 10,
+        "n": 20799,
+        "max_abs_error": 1.239776611328125e-05,
+        "tolerance": 0.0001,
+        "status": "PASS",
+        "checkpoint": "results\\v2_backbone_generalization\\b1_phase0b\\seed_3\\model.npz",
+        "raw_score_anchor": "results\\v2_backbone_generalization\\b1_phase0b\\seed_3\\raw_scores\\K10.npz"
+      }
+    ],
+    "max_abs_error": 1.52587890625e-05,
+    "tolerance": 0.0001
+  },
+  "candidate_identity_checks": {
+    "status": "PASS",
+    "matched_pairs": [
+      "rand5/hard5",
+      "expb_m0/expb_m8"
+    ],
+    "candidate_index_anchor": "saved Phase 1F manifests, loaded verbatim",
+    "target_score_atol": 0.0001,
+    "cells": [
+      {
+        "cell": "rand5",
+        "K": 5,
+        "n_rows": 9487,
+        "n_images": 1424,
+        "manifest": "results\\phase1f_hard_semantic\\manifests\\rand5_candidates.npz",
+        "manifest_sha256": "c287bc96cdea7a8ab8ba138fb7664b31172338aba38bcefba9e6c43ee75bf913",
+        "sentence_id_sha256": "7c4c332d15bc01ca83a886867005bee1c89718dcedc6dd1fcc2d583518842743",
+        "candidate_indices_sha256": "ba4247ba63bf91ffbe2f85fe7b28bb509eb0bea90a73fe89442a52e45a558663"
+      },
+      {
+        "cell": "hard5",
+        "K": 5,
+        "n_rows": 9487,
+        "n_images": 1424,
+        "manifest": "results\\phase1f_hard_semantic\\manifests\\hard5_candidates.npz",
+        "manifest_sha256": "1ffbdbbaa8fd8338734e7fd4ded9a70b62190f6b81f9963db8f7912e1e12a460",
+        "sentence_id_sha256": "7c4c332d15bc01ca83a886867005bee1c89718dcedc6dd1fcc2d583518842743",
+        "candidate_indices_sha256": "1be93902bd0c9f676cf50084d3f4b6d1dbff6dc38863fb5dcaccd7b351a44346"
+      },
+      {
+        "cell": "expb_m0",
+        "K": 10,
+        "n_rows": 7410,
+        "n_images": 1189,
+        "manifest": "results\\phase1f_hard_semantic\\manifests\\expb_m0_candidates.npz",
+        "manifest_sha256": "f987c200ef4e556a66a4f172d0864dc295b35c35d36a91351606d71c00ff06ab",
+        "sentence_id_sha256": "60bc3e8d5428adeb1a6f1287ea63e3d331532ab842ce7f9f8a53ce16ebe9b0b8",
+        "candidate_indices_sha256": "2074c6c2c34a9f64c7d5d68cb26bad0e3ad4dce0142a2e3196b02ab9e320630e"
+      },
+      {
+        "cell": "expb_m8",
+        "K": 10,
+        "n_rows": 7410,
+        "n_images": 1189,
+        "manifest": "results\\phase1f_hard_semantic\\manifests\\expb_m8_candidates.npz",
+        "manifest_sha256": "9d91d08437379021b3564346210aaf9b1879524d56f8741b7e019b19926a1664",
+        "sentence_id_sha256": "60bc3e8d5428adeb1a6f1287ea63e3d331532ab842ce7f9f8a53ce16ebe9b0b8",
+        "candidate_indices_sha256": "b8c8ecdff4ab0d384b6a75174d9d477619f1be1bab13a6e4343997d8f0d0fdf4"
+      }
+    ]
+  },
+  "models": [
+    {
+      "path": "models/b3_seed1/S.json",
+      "sha256": "ed1a5eeded7790bb5710deb1db62e52a35006640b4c61f581ffd5276f2c07368",
+      "size_bytes": 4542
+    },
+    {
+      "path": "models/b3_seed1/S+Q.json",
+      "sha256": "55497752b6a83b04d0982cbd8b0ebf158749b16bc97b93611ce5d90b061d4671",
+      "size_bytes": 5543
+    },
+    {
+      "path": "models/b3_seed1/S+V.json",
+      "sha256": "3e137479474b6a6c323725cbb1c2cd18afbf90854a149dc5bcd9ae29bc65508b",
+      "size_bytes": 5562
+    },
+    {
+      "path": "models/b3_seed1/Full.json",
+      "sha256": "4b6cae8bcd1e8478210ffc71629777ca886e885ce79c7f1b173bee93db2c9385",
+      "size_bytes": 6559
+    },
+    {
+      "path": "models/b3_seed2/S.json",
+      "sha256": "d9122a351cc3b344b1b02401dfe51838550e5a4c17cd090e296841fe933c4f94",
+      "size_bytes": 4545
+    },
+    {
+      "path": "models/b3_seed2/S+Q.json",
+      "sha256": "d7bc814d7a8760996887b22cb36971a3b92cac18d9b753ab9ab685804cbc0267",
+      "size_bytes": 5544
+    },
+    {
+      "path": "models/b3_seed2/S+V.json",
+      "sha256": "2f6a33cdb26b75dce4c3d2c395860eb23ea9e80977aee54819319bb460dca997",
+      "size_bytes": 5567
+    },
+    {
+      "path": "models/b3_seed2/Full.json",
+      "sha256": "c9f69d5c43da180ca3acbfeeb46c396a06258c8d180f5dde2c692343f79c21b2",
+      "size_bytes": 6570
+    },
+    {
+      "path": "models/b3_seed3/S.json",
+      "sha256": "f584a9cbc2c67d9caf09ba903015d430f465260018e05a844dcc507d3a894251",
+      "size_bytes": 4540
+    },
+    {
+      "path": "models/b3_seed3/S+Q.json",
+      "sha256": "8835b4b2639993ee280fa43f7600069e0b13246803260f9bdfb2cde7901fdec4",
+      "size_bytes": 5542
+    },
+    {
+      "path": "models/b3_seed3/S+V.json",
+      "sha256": "36bbfbbeb6ce308a83403a0a8aa578b0dfb9a575bcfe6e1700005d2a374b4ecc",
+      "size_bytes": 5560
+    },
+    {
+      "path": "models/b3_seed3/Full.json",
+      "sha256": "1476e1c459f10a10dd92c2fc482350c825ffaeb9c36db10ff9fdadc2f25edae0",
+      "size_bytes": 6559
+    }
+  ],
+  "outputs": {
+    "fit_stage": "fit_stage.json",
+    "metrics": "metrics.csv",
+    "paired_point_effects": "point_effects.csv",
+    "predictions": "semantic_ablation_predictions.csv.gz",
+    "bootstrap_summary": "bootstrap_summary.json",
+    "bootstrap_raw_draws": "bootstrap_draws.npz",
+    "bootstrap_draw_manifest": "bootstrap_draws_manifest.json",
+    "bootstrap_cleanup_validation": "bootstrap_export_cleanup.json",
+    "status": "STATUS.json",
+    "attempt_history": "run_attempts.json",
+    "report": "../../../reviews/v3_replication_report.md"
+  },
+  "bootstrap": {
+    "method": "ccg.repairs.bootstrap.shared_image_cluster_bootstrap",
+    "replicates": 5000,
+    "seed": 0,
+    "marginal_ci": 0.95,
+    "cohorts": {
+      "random_all": {
+        "n_images": 1490,
+        "n_rows": 10286,
+        "estimate_count": 45
+      },
+      "same4": {
+        "n_images": 1424,
+        "n_rows": 9487,
+        "estimate_count": 33
+      },
+      "same8": {
+        "n_images": 1189,
+        "n_rows": 7410,
+        "estimate_count": 33
+      }
+    },
+    "summary_records_checked": 111,
+    "raw_arrays_checked": 444,
+    "draws_per_array": 5000,
+    "invalid_mean_and_per_seed_draws": 0,
+    "raw_draws_sha256": "9ff33ce1a0b7c98d8003ff9f69d9abee9890777fe7f259f351a2dd039133b97b"
+  },
+  "historical_image_audit": {
+    "image_files_discovered": 22094,
+    "images_decoded_and_hashed": 22094,
+    "decode_failures": [],
+    "seconds": 197.11,
+    "status": "PASS"
+  },
+  "test_metrics_rows": 84,
+  "paired_effect_records": 333,
+  "run_status": "COMPLETE",
+  "replication_summary_status": "COMPLETE",
+  "artifact_fingerprints": [
+    {
+      "path": "results/v3_final_validation/replication/semantic_ablation_predictions.csv.gz",
+      "size_bytes": 14518292,
+      "sha256": "9f1433419406075936b18ed9bdb39156160e0970affc37304f89d06fcd34a93a"
+    },
+    {
+      "path": "results/v3_final_validation/replication/bootstrap_draws.npz",
+      "size_bytes": 15719480,
+      "sha256": "9ff33ce1a0b7c98d8003ff9f69d9abee9890777fe7f259f351a2dd039133b97b"
+    },
+    {
+      "path": "results/v3_final_validation/replication/bootstrap_summary.json",
+      "size_bytes": 379598,
+      "sha256": "75a69b53d633017ebd0bb3fd2386b2b5b77eb7b4c8a359608523d24d222747c8"
+    },
+    {
+      "path": "results/v3_final_validation/replication/bootstrap_draws_manifest.json",
+      "size_bytes": 29028,
+      "sha256": "b344f0b4f201e744dc3774b87fd2a4526e7856af0957385265999ced261f3da8"
+    },
+    {
+      "path": "results/v3_final_validation/replication/metrics.csv",
+      "size_bytes": 12111,
+      "sha256": "b128c83fda348bf5afa7b097ed5e7be3e393ba924d1e590a69a7db982bc42144"
+    },
+    {
+      "path": "results/v3_final_validation/replication/point_effects.csv",
+      "size_bytes": 37662,
+      "sha256": "dae32e59e5fa891b4e96e313ea7a384111e72d219fe73991da3ecbe3698cf506"
+    }
+  ],
+  "primary_developmental_effects": {
+    "Full_minus_SQ__randomK50__auroc_correct": {
+      "point": 0.01432211716939021,
+      "ci_low": 0.011671290477369733,
+      "ci_high": 0.016967242356406502,
+      "invalid_replicates": 0,
+      "interpretation": "positive AUROC effect favors Full; negative risk effect favors Full"
+    },
+    "Full_minus_SQ__randomK50__risk_at_50": {
+      "point": -0.01153671657268777,
+      "ci_low": -0.014606734331938027,
+      "ci_high": -0.007333785519507014,
+      "invalid_replicates": 0,
+      "interpretation": "positive AUROC effect favors Full; negative risk effect favors Full"
+    },
+    "Full_minus_SQ__randomK50__risk_at_80": {
+      "point": -0.005144533022230872,
+      "ci_low": -0.007052665902718285,
+      "ci_high": -0.0034718478202693964,
+      "invalid_replicates": 0,
+      "interpretation": "positive AUROC effect favors Full; negative risk effect favors Full"
+    }
+  },
+  "status": "PASS"
+}

@@ -1,0 +1,334 @@
+seed,cell,group,metric,effect,contrast,interpretation
+b3_seed1,randomK5,S,auroc_correct,0.841060531496063,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK10,S,auroc_correct,0.8147892589711387,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK50,S,auroc_correct,0.7866493673230527,absolute,higher AUROC is better; lower risk is better
+b3_seed1,rand5,S,auroc_correct,0.8373111711544783,absolute,higher AUROC is better; lower risk is better
+b3_seed1,hard5,S,auroc_correct,0.8149777715313558,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m0,S,auroc_correct,0.8334184993555638,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m8,S,auroc_correct,0.8162293542190867,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK5,S,risk_at_50,0.04199883336573984,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK10,S,risk_at_50,0.1277464514874587,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK50,S,risk_at_50,0.379156134551818,absolute,higher AUROC is better; lower risk is better
+b3_seed1,rand5,S,risk_at_50,0.04659007062295773,absolute,higher AUROC is better; lower risk is better
+b3_seed1,hard5,S,risk_at_50,0.1542110256139981,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m0,S,risk_at_50,0.06261808367071525,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m8,S,risk_at_50,0.2205128205128205,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK5,S,risk_at_80,0.13963153801283296,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK10,S,risk_at_80,0.2566352323546569,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK50,S,risk_at_80,0.5117149523624345,absolute,higher AUROC is better; lower risk is better
+b3_seed1,rand5,S,risk_at_80,0.14461895225044802,absolute,higher AUROC is better; lower risk is better
+b3_seed1,hard5,S,risk_at_80,0.3000948666596395,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m0,S,risk_at_80,0.18269230769230768,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m8,S,risk_at_80,0.37871120107962214,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK5,S+Q,auroc_correct,0.841705325896763,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK10,S+Q,auroc_correct,0.8165888217314299,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK50,S+Q,auroc_correct,0.790873665337216,absolute,higher AUROC is better; lower risk is better
+b3_seed1,rand5,S+Q,auroc_correct,0.8370223199724856,absolute,higher AUROC is better; lower risk is better
+b3_seed1,hard5,S+Q,auroc_correct,0.8228222104616741,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m0,S+Q,auroc_correct,0.8292816701004521,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m8,S+Q,auroc_correct,0.8249937368987176,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK5,S+Q,risk_at_50,0.04024888197550068,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK10,S+Q,risk_at_50,0.12619093914057944,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK50,S+Q,risk_at_50,0.3787672564650982,absolute,higher AUROC is better; lower risk is better
+b3_seed1,rand5,S+Q,risk_at_50,0.0446927374301676,absolute,higher AUROC is better; lower risk is better
+b3_seed1,hard5,S+Q,risk_at_50,0.14641087804363867,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m0,S+Q,risk_at_50,0.0669365721997301,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m8,S+Q,risk_at_50,0.21133603238866397,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK5,S+Q,risk_at_80,0.13865934279603342,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK10,S+Q,risk_at_80,0.25493389072525774,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK50,S+Q,risk_at_80,0.5112288547540347,absolute,higher AUROC is better; lower risk is better
+b3_seed1,rand5,S+Q,risk_at_80,0.14382839675345213,absolute,higher AUROC is better; lower risk is better
+b3_seed1,hard5,S+Q,risk_at_80,0.2964056076736587,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m0,S+Q,risk_at_80,0.18556005398110662,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m8,S+Q,risk_at_80,0.37634952766531715,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK5,S+V,auroc_correct,0.8404948053368329,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK10,S+V,auroc_correct,0.8176227014152538,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK50,S+V,auroc_correct,0.7983543902417738,absolute,higher AUROC is better; lower risk is better
+b3_seed1,rand5,S+V,auroc_correct,0.83648643503577,absolute,higher AUROC is better; lower risk is better
+b3_seed1,hard5,S+V,auroc_correct,0.827195425666279,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m0,S+V,auroc_correct,0.8343035350346056,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m8,S+V,auroc_correct,0.8288547546304975,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK5,S+V,risk_at_50,0.042387711452459655,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK10,S+V,risk_at_50,0.12657981722729925,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK50,S+V,risk_at_50,0.36807310908030333,absolute,higher AUROC is better; lower risk is better
+b3_seed1,rand5,S+V,risk_at_50,0.04722251502055444,absolute,higher AUROC is better; lower risk is better
+b3_seed1,hard5,S+V,risk_at_50,0.14535680404764414,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m0,S+V,risk_at_50,0.06450742240215925,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m8,S+V,risk_at_50,0.2067476383265857,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK5,S+V,risk_at_80,0.1376871475792339,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK10,S+V,risk_at_80,0.2539616955084582,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK50,S+V,risk_at_80,0.5073400738868366,absolute,higher AUROC is better; lower risk is better
+b3_seed1,rand5,S+V,risk_at_80,0.14269526720775796,absolute,higher AUROC is better; lower risk is better
+b3_seed1,hard5,S+V,risk_at_80,0.2913197006429851,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m0,S+V,risk_at_80,0.1815114709851552,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m8,S+V,risk_at_80,0.37314439946018896,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK5,Full,auroc_correct,0.8413466754155731,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK10,Full,auroc_correct,0.8195706380685316,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK50,Full,auroc_correct,0.8006674598764804,absolute,higher AUROC is better; lower risk is better
+b3_seed1,rand5,Full,auroc_correct,0.8364486787850482,absolute,higher AUROC is better; lower risk is better
+b3_seed1,hard5,Full,auroc_correct,0.8319479795719468,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m0,Full,auroc_correct,0.8306768690687618,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m8,Full,auroc_correct,0.8341642955350924,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK5,Full,risk_at_50,0.04180439432237994,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK10,Full,risk_at_50,0.1223021582733813,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK50,Full,risk_at_50,0.36826754812366325,absolute,higher AUROC is better; lower risk is better
+b3_seed1,rand5,Full,risk_at_50,0.04553599662696321,absolute,higher AUROC is better; lower risk is better
+b3_seed1,hard5,Full,risk_at_50,0.1399810266680721,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m0,Full,risk_at_50,0.06774628879892038,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m8,Full,risk_at_50,0.201889338731444,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK5,Full,risk_at_80,0.1393884892086331,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK10,Full,risk_at_80,0.2537186467042583,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK50,Full,risk_at_80,0.5085553179078359,absolute,higher AUROC is better; lower risk is better
+b3_seed1,rand5,Full,risk_at_80,0.14533045219774426,absolute,higher AUROC is better; lower risk is better
+b3_seed1,hard5,Full,risk_at_80,0.2905291451459892,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m0,Full,risk_at_80,0.18387314439946018,absolute,higher AUROC is better; lower risk is better
+b3_seed1,expb_m8,Full,risk_at_80,0.3733130904183536,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK5,S,auroc_correct,0.8368093607305936,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK10,S,auroc_correct,0.8063234175375977,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK50,S,auroc_correct,0.7822307183730364,absolute,higher AUROC is better; lower risk is better
+b3_seed2,rand5,S,auroc_correct,0.832753330206934,absolute,higher AUROC is better; lower risk is better
+b3_seed2,hard5,S,auroc_correct,0.8056534394869533,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m0,S,auroc_correct,0.8311140888549245,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m8,S,auroc_correct,0.8157421520678301,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK5,S,risk_at_50,0.04647093136301769,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK10,S,risk_at_50,0.13338518374489597,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK50,S,risk_at_50,0.3828504763756562,absolute,higher AUROC is better; lower risk is better
+b3_seed2,rand5,S,risk_at_50,0.04954147781174238,absolute,higher AUROC is better; lower risk is better
+b3_seed2,hard5,S,risk_at_50,0.15990302519236851,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m0,S,risk_at_50,0.06612685560053981,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m8,S,risk_at_50,0.2242914979757085,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK5,S,risk_at_80,0.14361753840171118,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK10,S,risk_at_80,0.25724285436515665,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK50,S,risk_at_80,0.518763367684231,absolute,higher AUROC is better; lower risk is better
+b3_seed2,rand5,S,risk_at_80,0.1499420259302203,absolute,higher AUROC is better; lower risk is better
+b3_seed2,hard5,S,risk_at_80,0.3069463476336039,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m0,S,risk_at_80,0.18775303643724697,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m8,S,risk_at_80,0.3785425101214575,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK5,S+Q,auroc_correct,0.8358546566726975,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK10,S+Q,auroc_correct,0.8049371071224819,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK50,S+Q,auroc_correct,0.7712836071064826,absolute,higher AUROC is better; lower risk is better
+b3_seed2,rand5,S+Q,auroc_correct,0.831454130677264,absolute,higher AUROC is better; lower risk is better
+b3_seed2,hard5,S+Q,auroc_correct,0.8042934477727846,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m0,S+Q,auroc_correct,0.8319392528019719,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m8,S+Q,auroc_correct,0.8126347539109099,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK5,S+Q,risk_at_50,0.04627649231965779,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK10,S+Q,risk_at_50,0.1343573789616955,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK50,S+Q,risk_at_50,0.3929613066303714,absolute,higher AUROC is better; lower risk is better
+b3_seed2,rand5,S+Q,risk_at_50,0.050068514809739645,absolute,higher AUROC is better; lower risk is better
+b3_seed2,hard5,S+Q,risk_at_50,0.16106250658796248,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m0,S+Q,risk_at_50,0.06666666666666667,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m8,S+Q,risk_at_50,0.22348178137651822,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK5,S+Q,risk_at_80,0.14604802644371,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK10,S+Q,risk_at_80,0.2598191716896753,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK50,S+Q,risk_at_80,0.5238673925724286,absolute,higher AUROC is better; lower risk is better
+b3_seed2,rand5,S+Q,risk_at_80,0.15191841467271003,absolute,higher AUROC is better; lower risk is better
+b3_seed2,hard5,S+Q,risk_at_80,0.3077369031305998,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m0,S+Q,risk_at_80,0.18539136302294196,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m8,S+Q,risk_at_80,0.3817476383265857,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK5,S+V,auroc_correct,0.8363433165331265,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK10,S+V,auroc_correct,0.8104006803329676,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK50,S+V,auroc_correct,0.8005004269160082,absolute,higher AUROC is better; lower risk is better
+b3_seed2,rand5,S+V,auroc_correct,0.832049578963692,absolute,higher AUROC is better; lower risk is better
+b3_seed2,hard5,S+V,auroc_correct,0.8241968297322617,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m0,S+V,auroc_correct,0.8307604078129721,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m8,S+V,auroc_correct,0.8374103793724587,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK5,S+V,risk_at_50,0.04841532179661676,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK10,S+V,risk_at_50,0.1310519152245771,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK50,S+V,risk_at_50,0.37176745090414154,absolute,higher AUROC is better; lower risk is better
+b3_seed2,rand5,S+V,risk_at_50,0.05196584800252978,absolute,higher AUROC is better; lower risk is better
+b3_seed2,hard5,S+V,risk_at_50,0.15083798882681565,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m0,S+V,risk_at_50,0.0680161943319838,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m8,S+V,risk_at_50,0.203778677462888,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK5,S+V,risk_at_80,0.14373906280381113,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK10,S+V,risk_at_80,0.2529895002916587,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK50,S+V,risk_at_80,0.5092844643204356,absolute,higher AUROC is better; lower risk is better
+b3_seed2,rand5,S+V,risk_at_80,0.1497575629809213,absolute,higher AUROC is better; lower risk is better
+b3_seed2,hard5,S+V,risk_at_80,0.29390218193317175,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m0,S+V,risk_at_80,0.1879217273954116,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m8,S+V,risk_at_80,0.37044534412955465,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK5,Full,auroc_correct,0.8358240716808822,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK10,Full,auroc_correct,0.8103352282452995,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK50,Full,auroc_correct,0.7911463828526709,absolute,higher AUROC is better; lower risk is better
+b3_seed2,rand5,Full,auroc_correct,0.8312652388612682,absolute,higher AUROC is better; lower risk is better
+b3_seed2,hard5,Full,auroc_correct,0.8234618371393636,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m0,Full,auroc_correct,0.8324514108632416,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m8,Full,auroc_correct,0.8360574436933429,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK5,Full,risk_at_50,0.04802644370989695,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK10,Full,risk_at_50,0.13241298852809644,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK50,Full,risk_at_50,0.3783783783783784,absolute,higher AUROC is better; lower risk is better
+b3_seed2,rand5,Full,risk_at_50,0.05101718140613471,absolute,higher AUROC is better; lower risk is better
+b3_seed2,hard5,Full,risk_at_50,0.14988932223042056,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m0,Full,risk_at_50,0.06774628879892038,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m8,Full,risk_at_50,0.20215924426450743,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK5,Full,risk_at_80,0.14388489208633093,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK10,Full,risk_at_80,0.2550554151273577,absolute,higher AUROC is better; lower risk is better
+b3_seed2,randomK50,Full,risk_at_80,0.5158467820338325,absolute,higher AUROC is better; lower risk is better
+b3_seed2,rand5,Full,risk_at_80,0.15046906292821755,absolute,higher AUROC is better; lower risk is better
+b3_seed2,hard5,Full,risk_at_80,0.2954832929271635,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m0,Full,risk_at_80,0.1870782726045884,absolute,higher AUROC is better; lower risk is better
+b3_seed2,expb_m8,Full,risk_at_80,0.3707827260458839,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK5,S,auroc_correct,0.8352332301266561,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK10,S,auroc_correct,0.8110370699704375,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK50,S,auroc_correct,0.7941024246124597,absolute,higher AUROC is better; lower risk is better
+b3_seed3,rand5,S,auroc_correct,0.8312661783264538,absolute,higher AUROC is better; lower risk is better
+b3_seed3,hard5,S,auroc_correct,0.8124717349542663,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m0,S,auroc_correct,0.8367803120986326,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m8,S,auroc_correct,0.8152632933534021,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK5,S,risk_at_50,0.043359906669259186,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK10,S,risk_at_50,0.12405210966362046,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK50,S,risk_at_50,0.36748979195022363,absolute,higher AUROC is better; lower risk is better
+b3_seed3,rand5,S,risk_at_50,0.04827658901654896,absolute,higher AUROC is better; lower risk is better
+b3_seed3,hard5,S,risk_at_50,0.15473806261199535,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m0,S,risk_at_50,0.0620782726045884,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m8,S,risk_at_50,0.2205128205128205,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK5,S,risk_at_80,0.14291269686953137,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK10,S,risk_at_80,0.25362142718257824,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK50,S,risk_at_80,0.5090414155162357,absolute,higher AUROC is better; lower risk is better
+b3_seed3,rand5,S,risk_at_80,0.147306840940234,absolute,higher AUROC is better; lower risk is better
+b3_seed3,hard5,S,risk_at_80,0.30496995889111417,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m0,S,risk_at_80,0.18606612685560053,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m8,S,risk_at_80,0.3800607287449393,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK5,S+Q,auroc_correct,0.8342354556453356,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK10,S+Q,auroc_correct,0.8108178043358114,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK50,S+Q,auroc_correct,0.7920388033548456,absolute,higher AUROC is better; lower risk is better
+b3_seed3,rand5,S+Q,auroc_correct,0.8300158982713162,absolute,higher AUROC is better; lower risk is better
+b3_seed3,hard5,S+Q,auroc_correct,0.8167718234312512,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m0,S+Q,auroc_correct,0.8329952712912331,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m8,S+Q,auroc_correct,0.8185660927500489,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK5,S+Q,risk_at_50,0.043943223799338904,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK10,S+Q,risk_at_50,0.12677425627065914,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK50,S+Q,risk_at_50,0.36885086525374294,absolute,higher AUROC is better; lower risk is better
+b3_seed3,rand5,S+Q,risk_at_50,0.04848740381574786,absolute,higher AUROC is better; lower risk is better
+b3_seed3,hard5,S+Q,risk_at_50,0.15168124802361127,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m0,S+Q,risk_at_50,0.06666666666666667,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m8,S+Q,risk_at_50,0.21754385964912282,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK5,S+Q,risk_at_80,0.14327727007583121,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK10,S+Q,risk_at_80,0.25386447598677814,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK50,S+Q,risk_at_80,0.5115934279603345,absolute,higher AUROC is better; lower risk is better
+b3_seed3,rand5,S+Q,risk_at_80,0.14817645198692952,absolute,higher AUROC is better; lower risk is better
+b3_seed3,hard5,S+Q,risk_at_80,0.30101718140613476,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m0,S+Q,risk_at_80,0.1850539811066127,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m8,S+Q,risk_at_80,0.3776990553306343,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK5,S+V,auroc_correct,0.8342390634421782,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK10,S+V,auroc_correct,0.8150043364183949,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK50,S+V,auroc_correct,0.8070692320054305,absolute,higher AUROC is better; lower risk is better
+b3_seed3,rand5,S+V,auroc_correct,0.8300008354187156,absolute,higher AUROC is better; lower risk is better
+b3_seed3,hard5,S+V,auroc_correct,0.8340621937073396,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m0,S+V,auroc_correct,0.8356475251518618,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m8,S+V,auroc_correct,0.8377030648755684,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK5,S+V,risk_at_50,0.04472097997277853,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK10,S+V,risk_at_50,0.1252187439237799,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK50,S+V,risk_at_50,0.3556290103052693,absolute,higher AUROC is better; lower risk is better
+b3_seed3,rand5,S+V,risk_at_50,0.04827658901654896,absolute,higher AUROC is better; lower risk is better
+b3_seed3,hard5,S+V,risk_at_50,0.14145673026246441,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m0,S+V,risk_at_50,0.06531713900134953,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m8,S+V,risk_at_50,0.19838056680161945,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK5,S+V,risk_at_80,0.14072525763173244,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK10,S+V,risk_at_80,0.25116663426015956,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK50,S+V,risk_at_80,0.5045693175189577,absolute,higher AUROC is better; lower risk is better
+b3_seed3,rand5,S+V,risk_at_80,0.14585748919574154,absolute,higher AUROC is better; lower risk is better
+b3_seed3,hard5,S+V,risk_at_80,0.2935069041846738,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m0,S+V,risk_at_80,0.18387314439946018,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m8,S+V,risk_at_80,0.36875843454790824,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK5,Full,auroc_correct,0.8335950170421936,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK10,Full,auroc_correct,0.8150042521178817,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK50,Full,auroc_correct,0.8053485845775635,absolute,higher AUROC is better; lower risk is better
+b3_seed3,rand5,Full,auroc_correct,0.8291732645758415,absolute,higher AUROC is better; lower risk is better
+b3_seed3,hard5,Full,auroc_correct,0.8358795575362286,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m0,Full,auroc_correct,0.8329229637890819,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m8,Full,auroc_correct,0.8391297868361717,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK5,Full,risk_at_50,0.04433210188605872,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK10,Full,risk_at_50,0.1252187439237799,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK50,Full,risk_at_50,0.35932335212910754,absolute,higher AUROC is better; lower risk is better
+b3_seed3,rand5,Full,risk_at_50,0.04764414461895225,absolute,higher AUROC is better; lower risk is better
+b3_seed3,hard5,Full,risk_at_50,0.13808369347528196,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m0,Full,risk_at_50,0.07017543859649122,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m8,Full,risk_at_50,0.19946018893387316,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK5,Full,risk_at_80,0.14145440404433207,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK10,Full,risk_at_80,0.25046179272797975,absolute,higher AUROC is better; lower risk is better
+b3_seed3,randomK50,Full,risk_at_80,0.5068539762784368,absolute,higher AUROC is better; lower risk is better
+b3_seed3,rand5,Full,risk_at_80,0.1463845261937388,absolute,higher AUROC is better; lower risk is better
+b3_seed3,hard5,Full,risk_at_80,0.2908717191946875,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m0,Full,risk_at_80,0.18404183535762483,absolute,higher AUROC is better; lower risk is better
+b3_seed3,expb_m8,Full,risk_at_80,0.3682523616734143,absolute,higher AUROC is better; lower risk is better
+b3_seed1,randomK5,Full_minus_S_plus_Q,auroc_correct,-0.00035865048118988163,Full_minus_S_plus_Q,positive favors Full
+b3_seed1,randomK5,Full_minus_S_plus_Q,risk_at_50,0.0015555123468792564,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,randomK5,Full_minus_S_plus_Q,risk_at_80,0.0007291464125996627,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,randomK10,Full_minus_S_plus_Q,auroc_correct,0.002981816337101706,Full_minus_S_plus_Q,positive favors Full
+b3_seed1,randomK10,Full_minus_S_plus_Q,risk_at_50,-0.003888780867198141,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,randomK10,Full_minus_S_plus_Q,risk_at_80,-0.0012152440209994286,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,randomK50,Full_minus_S_plus_Q,auroc_correct,0.009793794539264322,Full_minus_S_plus_Q,positive favors Full
+b3_seed1,randomK50,Full_minus_S_plus_Q,risk_at_50,-0.010499708341434932,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,randomK50,Full_minus_S_plus_Q,risk_at_80,-0.002673536846198754,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,rand5,Full_minus_S_plus_Q,auroc_correct,-0.0005736411874373015,Full_minus_S_plus_Q,positive favors Full
+b3_seed1,rand5,Full_minus_S_plus_Q,risk_at_50,0.0008432591967956135,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,rand5,Full_minus_S_plus_Q,risk_at_80,0.001502055444292133,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,hard5,Full_minus_S_plus_Q,auroc_correct,0.00912576911027263,Full_minus_S_plus_Q,positive favors Full
+b3_seed1,hard5,Full_minus_S_plus_Q,risk_at_50,-0.006429851375566564,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,hard5,Full_minus_S_plus_Q,risk_at_80,-0.00587646252766949,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,expb_m0,Full_minus_S_plus_Q,auroc_correct,0.001395198968309752,Full_minus_S_plus_Q,positive favors Full
+b3_seed1,expb_m0,Full_minus_S_plus_Q,risk_at_50,0.0008097165991902827,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,expb_m0,Full_minus_S_plus_Q,risk_at_80,-0.0016869095816464397,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,expb_m8,Full_minus_S_plus_Q,auroc_correct,0.009170558636374837,Full_minus_S_plus_Q,positive favors Full
+b3_seed1,expb_m8,Full_minus_S_plus_Q,risk_at_50,-0.009446693657219979,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,expb_m8,Full_minus_S_plus_Q,risk_at_80,-0.0030364372469635637,Full_minus_S_plus_Q,negative favors Full
+b3_seed1,hard5_vs_rand5,Hard_minus_random__Full_minus_SQ,auroc_correct,0.009699410297709932,paired_difference_of_differences,positive means the high-hardness cell increases Full's AUROC gain
+b3_seed1,hard5_vs_rand5,Hard_minus_random__Full_minus_SQ,risk_at_50,-0.007273110572362178,paired_difference_of_differences,negative means the high-hardness cell increases Full's risk reduction
+b3_seed1,hard5_vs_rand5,Hard_minus_random__Full_minus_SQ,risk_at_80,-0.007378517971961623,paired_difference_of_differences,negative means the high-hardness cell increases Full's risk reduction
+b3_seed1,expb_m8_vs_expb_m0,m8_minus_m0__Full_minus_SQ,auroc_correct,0.007775359668065085,paired_difference_of_differences,positive means the high-hardness cell increases Full's AUROC gain
+b3_seed1,expb_m8_vs_expb_m0,m8_minus_m0__Full_minus_SQ,risk_at_50,-0.010256410256410262,paired_difference_of_differences,negative means the high-hardness cell increases Full's risk reduction
+b3_seed1,expb_m8_vs_expb_m0,m8_minus_m0__Full_minus_SQ,risk_at_80,-0.001349527665317124,paired_difference_of_differences,negative means the high-hardness cell increases Full's risk reduction
+b3_seed2,randomK5,Full_minus_S_plus_Q,auroc_correct,-3.0584991815296725e-05,Full_minus_S_plus_Q,positive favors Full
+b3_seed2,randomK5,Full_minus_S_plus_Q,risk_at_50,0.00174995139023916,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,randomK5,Full_minus_S_plus_Q,risk_at_80,-0.0021631343573790818,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,randomK10,Full_minus_S_plus_Q,auroc_correct,0.005398121122817567,Full_minus_S_plus_Q,positive favors Full
+b3_seed2,randomK10,Full_minus_S_plus_Q,risk_at_50,-0.0019443904335990636,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,randomK10,Full_minus_S_plus_Q,risk_at_80,-0.004763756562317589,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,randomK50,Full_minus_S_plus_Q,auroc_correct,0.019862775746188333,Full_minus_S_plus_Q,positive favors Full
+b3_seed2,randomK50,Full_minus_S_plus_Q,risk_at_50,-0.014582928251992977,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,randomK50,Full_minus_S_plus_Q,risk_at_80,-0.008020610538596151,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,rand5,Full_minus_S_plus_Q,auroc_correct,-0.0001888918159957953,Full_minus_S_plus_Q,positive favors Full
+b3_seed2,rand5,Full_minus_S_plus_Q,risk_at_50,0.0009486665963950661,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,rand5,Full_minus_S_plus_Q,risk_at_80,-0.001449351744492483,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,hard5,Full_minus_S_plus_Q,auroc_correct,0.019168389366579053,Full_minus_S_plus_Q,positive favors Full
+b3_seed2,hard5,Full_minus_S_plus_Q,risk_at_50,-0.011173184357541915,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,hard5,Full_minus_S_plus_Q,risk_at_80,-0.012253610203436294,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,expb_m0,Full_minus_S_plus_Q,auroc_correct,0.0005121580612696963,Full_minus_S_plus_Q,positive favors Full
+b3_seed2,expb_m0,Full_minus_S_plus_Q,risk_at_50,0.0010796221322537103,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,expb_m0,Full_minus_S_plus_Q,risk_at_80,0.0016869095816464397,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,expb_m8,Full_minus_S_plus_Q,auroc_correct,0.023422689782433004,Full_minus_S_plus_Q,positive favors Full
+b3_seed2,expb_m8,Full_minus_S_plus_Q,risk_at_50,-0.021322537112010792,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,expb_m8,Full_minus_S_plus_Q,risk_at_80,-0.010964912280701788,Full_minus_S_plus_Q,negative favors Full
+b3_seed2,hard5_vs_rand5,Hard_minus_random__Full_minus_SQ,auroc_correct,0.019357281182574848,paired_difference_of_differences,positive means the high-hardness cell increases Full's AUROC gain
+b3_seed2,hard5_vs_rand5,Hard_minus_random__Full_minus_SQ,risk_at_50,-0.012121850953936981,paired_difference_of_differences,negative means the high-hardness cell increases Full's risk reduction
+b3_seed2,hard5_vs_rand5,Hard_minus_random__Full_minus_SQ,risk_at_80,-0.01080425845894381,paired_difference_of_differences,negative means the high-hardness cell increases Full's risk reduction
+b3_seed2,expb_m8_vs_expb_m0,m8_minus_m0__Full_minus_SQ,auroc_correct,0.022910531721163307,paired_difference_of_differences,positive means the high-hardness cell increases Full's AUROC gain
+b3_seed2,expb_m8_vs_expb_m0,m8_minus_m0__Full_minus_SQ,risk_at_50,-0.022402159244264502,paired_difference_of_differences,negative means the high-hardness cell increases Full's risk reduction
+b3_seed2,expb_m8_vs_expb_m0,m8_minus_m0__Full_minus_SQ,risk_at_80,-0.012651821862348228,paired_difference_of_differences,negative means the high-hardness cell increases Full's risk reduction
+b3_seed3,randomK5,Full_minus_S_plus_Q,auroc_correct,-0.0006404386031420017,Full_minus_S_plus_Q,positive favors Full
+b3_seed3,randomK5,Full_minus_S_plus_Q,risk_at_50,0.0003888780867198141,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,randomK5,Full_minus_S_plus_Q,risk_at_80,-0.001822866031499143,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,randomK10,Full_minus_S_plus_Q,auroc_correct,0.004186447782070335,Full_minus_S_plus_Q,positive favors Full
+b3_seed3,randomK10,Full_minus_S_plus_Q,risk_at_50,-0.0015555123468792287,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,randomK10,Full_minus_S_plus_Q,risk_at_80,-0.003402683258798389,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,randomK50,Full_minus_S_plus_Q,auroc_correct,0.013309781222717976,Full_minus_S_plus_Q,positive favors Full
+b3_seed3,randomK50,Full_minus_S_plus_Q,risk_at_50,-0.0095275131246354,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,randomK50,Full_minus_S_plus_Q,risk_at_80,-0.004739451681897711,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,rand5,Full_minus_S_plus_Q,auroc_correct,-0.0008426336954746594,Full_minus_S_plus_Q,positive favors Full
+b3_seed3,rand5,Full_minus_S_plus_Q,risk_at_50,-0.0008432591967956135,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,rand5,Full_minus_S_plus_Q,risk_at_80,-0.001791925793190735,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,hard5,Full_minus_S_plus_Q,auroc_correct,0.019107734104977347,Full_minus_S_plus_Q,positive favors Full
+b3_seed3,hard5,Full_minus_S_plus_Q,risk_at_50,-0.01359755454832931,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,hard5,Full_minus_S_plus_Q,risk_at_80,-0.010145462211447243,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,expb_m0,Full_minus_S_plus_Q,auroc_correct,-7.230750215114767e-05,Full_minus_S_plus_Q,positive favors Full
+b3_seed3,expb_m0,Full_minus_S_plus_Q,risk_at_50,0.0035087719298245584,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,expb_m0,Full_minus_S_plus_Q,risk_at_80,-0.0010121457489878638,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,expb_m8,Full_minus_S_plus_Q,auroc_correct,0.020563694086122797,Full_minus_S_plus_Q,positive favors Full
+b3_seed3,expb_m8,Full_minus_S_plus_Q,risk_at_50,-0.01808367071524966,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,expb_m8,Full_minus_S_plus_Q,risk_at_80,-0.009446693657220007,Full_minus_S_plus_Q,negative favors Full
+b3_seed3,hard5_vs_rand5,Hard_minus_random__Full_minus_SQ,auroc_correct,0.019950367800452007,paired_difference_of_differences,positive means the high-hardness cell increases Full's AUROC gain
+b3_seed3,hard5_vs_rand5,Hard_minus_random__Full_minus_SQ,risk_at_50,-0.012754295351533697,paired_difference_of_differences,negative means the high-hardness cell increases Full's risk reduction
+b3_seed3,hard5_vs_rand5,Hard_minus_random__Full_minus_SQ,risk_at_80,-0.008353536418256508,paired_difference_of_differences,negative means the high-hardness cell increases Full's risk reduction
+b3_seed3,expb_m8_vs_expb_m0,m8_minus_m0__Full_minus_SQ,auroc_correct,0.020636001588273944,paired_difference_of_differences,positive means the high-hardness cell increases Full's AUROC gain
+b3_seed3,expb_m8_vs_expb_m0,m8_minus_m0__Full_minus_SQ,risk_at_50,-0.02159244264507422,paired_difference_of_differences,negative means the high-hardness cell increases Full's risk reduction
+b3_seed3,expb_m8_vs_expb_m0,m8_minus_m0__Full_minus_SQ,risk_at_80,-0.008434547908232143,paired_difference_of_differences,negative means the high-hardness cell increases Full's risk reduction

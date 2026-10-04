@@ -1,0 +1,11 @@
+{
+  "schema": "v3-historical-image-fingerprint-audit-v1",
+  "audit_rule_version": "v3-image-exposure-v1",
+  "image_files_discovered": 22094,
+  "images_decoded_and_hashed": 22094,
+  "decode_failures": [],
+  "path_inventory_sha256": "86d640303cbc6ebe8fd9387e31ec17ffd1eea149637b7cf37ada2a1629b44a54",
+  "fingerprint_csv_sha256": "eeab8259ac47dfecdfabc9bb9d8f78416b7f5fb63c778db8468742aac3bad511",
+  "seconds": 197.11,
+  "status": "PASS"
+}

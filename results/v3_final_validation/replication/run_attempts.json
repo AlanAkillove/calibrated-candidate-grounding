@@ -1,0 +1,39 @@
+{
+  "schema": "v3-b16-replication-attempt-history-v1",
+  "attempts": [
+    {
+      "attempt": 1,
+      "phase": "run",
+      "started_utc": "2026-10-04T08:15:33Z",
+      "finished_utc": "2026-10-04T08:15:34Z",
+      "status": "FAILED",
+      "error": "KeyError: Windows backslash path did not match normalized forward-slash fingerprint key",
+      "recovery": "Normalize relative manifest lookup path separators."
+    },
+    {
+      "attempt": 2,
+      "phase": "run",
+      "started_utc": "2026-10-04T08:15:56Z",
+      "finished_utc": "2026-10-04T08:16:22Z",
+      "status": "FAILED",
+      "error": "AssertionError: generic Phase 0A rows were required to equal the frozen Phase 0.5 scorer cohort",
+      "recovery": "Require all canonical scorer sentence IDs in Phase 0A rows; exclude non-cohort rows and validate ref/image/split for every included row."
+    },
+    {
+      "attempt": 3,
+      "phase": "run",
+      "started_utc": "2026-10-04T08:18:15Z",
+      "finished_utc": "2026-10-04T08:26:42Z",
+      "status": "COMPLETE",
+      "result": "All point metrics and exact-identity alternatives complete; six raw-score anchors pass unchanged atol 1e-4."
+    },
+    {
+      "attempt": 4,
+      "phase": "bootstrap",
+      "started_utc": "2026-10-04T08:27:43Z",
+      "finished_utc": "2026-10-04T08:46:26Z",
+      "status": "COMPLETE",
+      "result": "Three shared image-cluster cohorts, each 5,000 draws with seed 0."
+    }
+  ]
+}

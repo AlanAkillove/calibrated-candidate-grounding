@@ -1,0 +1,71 @@
+{
+  "schema": "v3-positive-bbox-dimension-audit-v1",
+  "policy": "Validate each official COCO xywh box for finite values, positive extents, and positive-area image intersection against source metadata and decoded JPEG dimensions for every released expression. An edge overhang is reported, not clipped or automatically rejected. Preserve official coordinates exactly; do not union, impute, or silently drop annotations.",
+  "source_annotation_count_train_val": 92767,
+  "source_metadata_bbox_invalid_count_train_val": 1,
+  "source_metadata_bbox_invalid_expr_ids_train_val": [
+    "64719"
+  ],
+  "source_metadata_bbox_overhang_by_split": {
+    "train": {
+      "expression_count_with_overhang": 1028,
+      "unique_image_count_with_overhang": 680,
+      "max_overhang_px": 158.0,
+      "max_overhang_bins_expression_count": {
+        "le_1px": 929,
+        "gt_1_le_2px": 90,
+        "gt_2_le_5px": 6,
+        "gt_5px": 3
+      },
+      "overhang_edge_counts_nonexclusive": {
+        "bbox_overhang_bottom_px": 592,
+        "bbox_overhang_right_px": 440
+      }
+    },
+    "val": {
+      "expression_count_with_overhang": 103,
+      "unique_image_count_with_overhang": 70,
+      "max_overhang_px": 167.0,
+      "max_overhang_bins_expression_count": {
+        "le_1px": 92,
+        "gt_1_le_2px": 9,
+        "gt_2_le_5px": 1,
+        "gt_5px": 1
+      },
+      "overhang_edge_counts_nonexclusive": {
+        "bbox_overhang_right_px": 38,
+        "bbox_overhang_bottom_px": 65
+      }
+    }
+  },
+  "released_expression_count": 8515,
+  "released_bbox_invalid_count": 0,
+  "released_bbox_invalid_expr_ids": [],
+  "released_image_dimension_mismatch_expression_count": 0,
+  "released_image_dimension_mismatch_gqa_ids": [],
+  "released_decoded_jpeg_bbox_overhang": {
+    "expression_count_with_overhang": 99,
+    "unique_image_count_with_overhang": 66,
+    "max_overhang_px": 4.0,
+    "max_overhang_bins_expression_count": {
+      "le_1px": 89,
+      "gt_1_le_2px": 9,
+      "gt_2_le_5px": 1,
+      "gt_5px": 0
+    },
+    "overhang_edge_counts_nonexclusive": {
+      "bbox_overhang_bottom_px": 65,
+      "bbox_overhang_right_px": 34
+    }
+  },
+  "released_gqa_target_object_box_comparison": {
+    "graph_image_record_missing_count": 0,
+    "target_instance_missing_count": 0,
+    "target_box_exact_match_count": 8515,
+    "target_box_mismatch_count": 0,
+    "target_box_unverifiable_count": 0,
+    "target_box_mismatch_expr_ids": [],
+    "target_box_unverifiable_expr_ids": []
+  },
+  "status": "PASS"
+}

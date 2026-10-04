@@ -1,13 +1,44 @@
-# Confidence Reliability under Candidate-Set Expansion
+# Correctness Reliability under Candidate-Set Changes
 
 A controlled empirical study of candidate-based visual grounding: how do accuracy,
 confidence discrimination, calibration, and selective utility change when the same
 image and referring expression receive an expanding candidate set?
 
-The evaluation uses GT assistance: it forces in a target proposal, removes other
+The controlled evaluation uses GT assistance: it forces in a target proposal, removes other
 valid target boxes, and conditions the common cohort on maximum-K feasibility.
-Conclusions concern this target-present interface. RefCOCO+, RefCOCO, and RefCOCOg
+Controlled conclusions concern this target-present interface. RefCOCO+, RefCOCO, and RefCOCOg
 share the COCO visual domain.
+
+V3 is complete: an exposure-audited FineCops positive-val confirmation,
+OpenCLIP B/16 feature-source replication, and natural detector top-K evaluation.
+The natural interface retains proposal misses and multiple valid target boxes.
+Source-split identity,
+research independence, and cross-visual-domain evidence are assessed separately;
+GQA/Visual Genome provenance does not by itself prove a non-COCO image source.
+See the [prospective protocol](reviews/v3_protocol.md) and
+[actual execution status](results/v3_final_validation/STATUS.json).
+The first frozen confirmation, 5,000-draw shared-image bootstrap and saved-output
+acceptance passed. The full suite passed 1,298 tests with two original opt-in skips;
+834 historical frozen files remained unchanged. The [completion review](reviews/v3_completion.md)
+records actual evidence and remaining limits. The [V3 paper blueprint](docs/paper_blueprint_v3.md) follows the
+questions through controlled findings, information sources, explanation audits
+and external boundaries. [Replay instructions](docs/v3_reproduction.md) distinguish
+saved-evidence verification from full image/model reconstruction.
+
+The confirmation qualifies the central claims:
+
+- FineCops did **not confirm** B0 MSP AUROC degradation from K5 to K50; the
+  interval crosses zero. Accuracy and selective risk still deteriorate.
+- Controlled K50 supports Full−S+Q in both configurations and large-K-trained
+  versus small-K-trained ScoreDeepSets. Full is not universally best, and the
+  large-K ScoreDeepSets remains below simpler baseline point performances.
+- Natural K5 reverses the Full−S+Q gain. At K20, overall gains mostly account for
+  ranking proposal-miss errors. At K50, B0 gains are supported, while B/16 is
+  inconclusive. Natural secondary intervals are marginal, not additional primary confirmations.
+
+See [artifact-generated main results](results/v3_final_validation/publication/key_findings.md),
+[all denominators and intervals](results/v3_final_validation/evidence_index.md),
+and the [paper argument draft](docs/paper_draft_v3.md).
 
 ## Research questions
 
@@ -17,6 +48,8 @@ share the COCO visual domain.
    candidate–candidate feature blocks add reliability information?
 3. How do four corners, two paths, and their interaction account for AUROC changes,
    and what remains unexplained?
+4. Which controlled findings transfer to project-unexposed FineCops images and
+   natural detector candidates, and where do they fail?
 
 With fixed independent scoring and tie-breaking, adding distractors cannot correct
 an already wrong choice. Accuracy decline is partly structural; AUROC decline requires
@@ -27,8 +60,8 @@ but can change cross-expression maximum-softmax-confidence ordering.
 
 ## Current evidence and repair
 
-The three independent-review corrections are complete and regression-verified,
-executed by the specified `gpt-6-luna/max` agents. The new full suite passed
+The historical repair's three independent-review corrections are complete and regression-verified,
+executed by the specified `gpt-6-luna/max` agents. Its closeout full suite passed
 1,238 tests with two original opt-in skips; all 263 source/config files remained
 unchanged. Five input manifests and 834 files passed verification; all 9,955
 stored estimates and 77 raw archive identities remain unchanged.
@@ -38,7 +71,8 @@ scientific and provenance limits retained. State:
 [STATUS.json](results/research_repair_v1/STATUS.json); details:
 [review closeout](results/research_repair_v1/independent_closeouts/20261004T031921Z/closeout.md).
 
-Recheck the current source against the new evidence with
+The following command rechecks the historical repair source state against its dated evidence;
+the current V3 source is validated by the separate V3 test and acceptance records:
 `python scripts/check_repair_acceptance.py --evidence-dir results/research_repair_v1/independent_closeouts/20261004T031921Z/logs`.
 The original `logs/` records describe the earlier delivery.
 
@@ -69,8 +103,8 @@ V2-G trained scorer/reliability heads for two additional frozen encoders. V2-P u
 shared frozen scorer on different proposal families. V2-M/M3 train or fit reliability
 models. These separate axes do not form a full backbone × proposal factorial study.
 Strict RefCOCOg is image-disjoint within COCO; its invalid hard manipulation does not
-confirm external amplification. Target absence and natural detector top-K evaluation
-are outside this repair.
+confirm external amplification. Target absence remains outside the study. Natural
+detector top-K is measured in V3, separately from the historical repair.
 
 ## Reproduction and provenance
 

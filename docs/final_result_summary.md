@@ -1,4 +1,30 @@
-# Current result summary — Research Repair v1
+# Current result summary — Repair v1 and V3
+
+V3 completed its [prospective protocol](../reviews/v3_protocol.md): exposure audit,
+repaired-definition B/16 replication, natural interface, a first frozen FineCops
+confirmation, 5,000 shared-image draws, and saved-output acceptance. The main
+numerical table is [artifact-generated](../results/v3_final_validation/publication/key_findings.md);
+all endpoints, denominators, per-seed uncertainty and raw-distribution identities
+are in the [V3 evidence index](../results/v3_final_validation/evidence_index.md).
+
+FineCops controlled C1 did not confirm MSP AUROC degradation, even though accuracy
+and selective utility deteriorated. C2 and C3 separately support the K50 Full−S+Q
+increment; C4 supports large-K-trained versus small-K-trained ScoreDeepSets, whose
+absolute point performance remains below MSP/Stats. These results establish
+conditional signals and training-support effects, not universal architecture advantages.
+
+Natural K5 gives negative Full−S+Q increments in both configurations. K20 overall
+gains mostly account for ranking proposal-miss errors; covered-only increments are
+inconclusive. At K50 B0 overall and covered AUROC gains have marginal support,
+while B/16 is inconclusive. B0 Risk@50 gain is also inconclusive; Risk@80 improves.
+These are predeclared secondary analyses, not extra family-wise primary confirmations.
+Do not infer a configuration interaction from one supported and one inconclusive interval.
+
+[Completion review](../reviews/v3_completion.md) and [paper draft](paper_draft_v3.md)
+preserve these boundaries. New GQA/VG split identity alone does not establish
+independence or a non-COCO visual domain; foundation pretraining exposure is unknown.
+The V3 full suite passed 1,298 tests with two original opt-in skips; all previously
+tested source bytes and 834 frozen historical files passed final verification.
 
 Independent review conditionally accepted the core evidence and required three
 implementation/report corrections. All three are now implemented and verified.
@@ -20,7 +46,9 @@ original mechanism sources remain in `results/v2_rq4_mechanism/m1_transition_con
 
 ## Scientific scope and questions
 
-GT-assisted target-present candidate grounding within the shared COCO visual domain.
+The historical core is GT-assisted target-present candidate grounding within the
+shared COCO visual domain. V3 adds audited FineCops positive expressions and natural
+top-K evaluation; it does not establish a pure visual-domain effect or a NONE task.
 RQ1: expansion effects on accuracy, discrimination, calibration and selective utility.
 RQ2: score extrapolation limits and query–crop versus candidate–candidate information.
 RQ3: four-corner accounting, paths, interaction and explanation limits.

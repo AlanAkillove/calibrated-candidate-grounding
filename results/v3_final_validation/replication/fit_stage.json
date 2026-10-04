@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "completed_utc": "2026-10-04T08:12:36Z",
+  "backbone": "openclip_b16",
+  "train_images": 523,
+  "tune_images": 224,
+  "n_models": 12,
+  "model_paths": [
+    "models/b3_seed1/S.json",
+    "models/b3_seed1/S+Q.json",
+    "models/b3_seed1/S+V.json",
+    "models/b3_seed1/Full.json",
+    "models/b3_seed2/S.json",
+    "models/b3_seed2/S+Q.json",
+    "models/b3_seed2/S+V.json",
+    "models/b3_seed2/Full.json",
+    "models/b3_seed3/S.json",
+    "models/b3_seed3/S+Q.json",
+    "models/b3_seed3/S+V.json",
+    "models/b3_seed3/Full.json"
+  ],
+  "selection_grid": "selection_grid.csv",
+  "random_k5_k10_point_metrics": "train_stage_point_metrics.csv",
+  "fit_input_fingerprints": "fit_stage_fingerprints.json",
+  "selection_rule": "C grid 0.1/1/10, equal mean reliability_tune AUROC K5/K10, lower C wins if within 0.002"
+}

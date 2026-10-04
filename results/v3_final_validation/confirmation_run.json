@@ -1,0 +1,17 @@
+{
+  "schema": "v3-confirmation-run-v1",
+  "freeze_sha256": "e1d3e33c61b4ff82c5e71ab2cb9953b618418b1bc3d84f1830bc1197d3728613",
+  "status": "INFERENCE_COMPLETE",
+  "started_utc": "2026-10-04T15:51:53.092952+00:00",
+  "pid": 59248,
+  "corrections": [],
+  "completed_utc": "2026-10-04T16:37:55Z",
+  "predictions": {
+    "path": "results/v3_final_validation/pipeline/confirmation/inference/predictions.jsonl",
+    "sha256": "a4e909abf4cc7ab520667685a35d884f70fa6c601c43abf1a4d384f4e1d0c173"
+  },
+  "summary": {
+    "path": "results/v3_final_validation/pipeline/confirmation/inference/summary.json",
+    "sha256": "121ab6e485084da3a0ae19ac30760a6ccb399a4489ed72403f83bf7e9e3559d8"
+  }
+}

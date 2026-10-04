@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "verified_utc": "2026-10-04T07:53:56.217939+00:00",
+  "unique_files": 834,
+  "changed": [],
+  "manifests": [
+    {
+      "path": "results/research_repair_v1/input_manifest.json",
+      "sha256": "511499c47659bde0bdf207befac4e6efb41975a8b4f1623b10e469c0b89a334f"
+    },
+    {
+      "path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward_preflight_rows2_20261003T155906_55728/supplemental_input_manifest.json",
+      "sha256": "7b57d233258f742aae296f67514275c5a4750b9e7923240c9dbb2f9421bd54df"
+    },
+    {
+      "path": "results/research_repair_v1/candidates/supplemental_input_manifest.json",
+      "sha256": "8929d4f5078b9eb4ea9aa6ad3086d1074608f03a3dcee1037de7435f2c5191e5"
+    },
+    {
+      "path": "results/research_repair_v1/statistics/recovery/runs/20261003T090447Z/supplemental_input_manifest.json",
+      "sha256": "ef27319bdc53de56d2d568e7a902c107ac130c7e7e130d803689a5643ed48f71"
+    },
+    {
+      "path": "results/research_repair_v1/statistics/recovery/runs/20261003T092746Z/supplemental_input_manifest.json",
+      "sha256": "b10f965725f6a10ef259f89d3d9c5a7d2d4af3fd6985f43a5491d0fba418e05c"
+    }
+  ],
+  "prefix_checks": [
+    {
+      "path": "docs/research_protocol.md",
+      "preserved": true,
+      "base_blob_sha256": "ff76ae285812143355243d5c415ad9dd63a4f64dc5fbcb8db22aecebeee13548"
+    },
+    {
+      "path": "docs/experiment_log.md",
+      "preserved": true,
+      "base_blob_sha256": "4e4057e2cbe68677ffbcd05809daf5eda459dff0adc679485819d6d764c59ac7"
+    }
+  ]
+}

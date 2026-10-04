@@ -11,7 +11,8 @@ Start with a changing candidate interface and distinguish accuracy, correctness
 AUROC, calibration, and selective utility. State the GT-assisted target-present
 conditions immediately. Ask three questions: reliability under expansion; score
 extrapolation and extra information sources; four-corner accounting and its limits.
-Target absence is future work. Contributions are controlled observations and evidence
+Natural candidate coverage failures are now measured in V3; expressions with
+no target in the image remain future work. Contributions are controlled observations and evidence
 integrity, not a new architecture, universal repair, information necessity, or causal
 mechanism. Repairs are result-driven supplements on previously observed test sets.
 
@@ -92,7 +93,43 @@ that result does not exclude other semantic or redundancy mechanisms.
 IoU-unmatched proposals are unmatched to the annotations used, not
 necessarily empty background. Exact statistical accounting is not causal identification.
 
-## 7. Conclusions and limitations
+## 7. Prospective confirmation and the natural interface
+
+V3 is now completed; use the [updated question-based blueprint](paper_blueprint_v3.md)
+and [argument draft](paper_draft_v3.md) for the final narrative. The
+[V3 protocol](../reviews/v3_protocol.md) fixes the confirmation comparisons and
+[execution status](../results/v3_final_validation/STATUS.json) records actual completion.
+Keep source identity/exposure audit, model freeze and actual measurements separate.
+The new FineCops pool must exclude historical and duplicate images before it can
+be called independent; GQA/VG image namespace alone does not establish a non-COCO
+visual domain. Report source overlap rather than promising cross-domain generality.
+
+Compare four predeclared effects on the controlled common random cohort: B0 MSP
+K5-minus-K50 correctness AUROC; B0 Full-minus-S+Q at K50; the corresponding B/16
+feature-source effect; and B0 large-versus-small-K-trained ScoreDeepSets at K50.
+The completed B/16 COCO replication uses the same repair S17/Q8/V8/Full33
+definitions and train-only selection, but remains a reused-test configuration
+replication. Cite the [artifact-generated V3 evidence table](../results/v3_final_validation/evidence_index.md)
+and [replication report](../reviews/v3_replication_report.md) for numerical results.
+The four absolute groups matter: Full-minus-S+Q is a conditional feature-block
+increment, not evidence that Full beats S+V or that Q always helps. In the B/16
+K50 replication S+V has the highest point AUROC, while S+Q is below S. This
+qualifies the signal-source argument and does not justify retuning after seeing
+the test results.
+
+Natural top-K evaluation retains candidate coverage failures and multiple valid
+target proposals. Decompose target coverage and correctness conditional on
+coverage, then compare whole-cohort and covered-cohort correctness AUROC and
+Risk@50/80. Do not require the natural K trend to match the controlled trend.
+Keep unsupported low-K rows in sample flow and basic accuracy summaries. Natural
+coverage absence means a proposal miss, not a semantically absent target.
+
+V3 risk uses fractional boundary ties at nominal coverage; legacy risks retain
+their ceil/stable-sort definition. Never put those definitions into one unlabeled
+comparison. Formal interval adjustment applies only to the four primary contrasts;
+other analyses are predeclared secondary or explicitly exploratory.
+
+## 8. Conclusions and limitations
 
 Answer the three questions in order with artifacts. State GT conditioning, shared
 visual domain, proposal/scorer adaptation, conditional feature gains, staged test-set
@@ -106,6 +143,8 @@ place each result beside the proposition it tests.
 2. Accuracy/AUROC/calibration/selective utility panels with corrected intervals.
 3. Feature-source gains under matched composition/dose and ID/OOD contrast.
 4. Four corners, both paths, signed contributions and interaction.
+5. Completed V3: a compact controlled-versus-natural validation figure showing
+   coverage, correctness, ranking and selective risk, with scope and sample attrition.
 
 Rendered design schematic: [controlled interface](../results/research_repair_v1/publication/figure_controlled_interface.svg).
 The [artifact-derived publication export](../results/research_repair_v1/publication/evidence.json)

@@ -1,0 +1,51 @@
+{
+  "status": "PASS",
+  "matched_pairs": [
+    "rand5/hard5",
+    "expb_m0/expb_m8"
+  ],
+  "candidate_index_anchor": "saved Phase 1F manifests, loaded verbatim",
+  "target_score_atol": 0.0001,
+  "cells": [
+    {
+      "cell": "rand5",
+      "K": 5,
+      "n_rows": 9487,
+      "n_images": 1424,
+      "manifest": "results\\phase1f_hard_semantic\\manifests\\rand5_candidates.npz",
+      "manifest_sha256": "c287bc96cdea7a8ab8ba138fb7664b31172338aba38bcefba9e6c43ee75bf913",
+      "sentence_id_sha256": "7c4c332d15bc01ca83a886867005bee1c89718dcedc6dd1fcc2d583518842743",
+      "candidate_indices_sha256": "ba4247ba63bf91ffbe2f85fe7b28bb509eb0bea90a73fe89442a52e45a558663"
+    },
+    {
+      "cell": "hard5",
+      "K": 5,
+      "n_rows": 9487,
+      "n_images": 1424,
+      "manifest": "results\\phase1f_hard_semantic\\manifests\\hard5_candidates.npz",
+      "manifest_sha256": "1ffbdbbaa8fd8338734e7fd4ded9a70b62190f6b81f9963db8f7912e1e12a460",
+      "sentence_id_sha256": "7c4c332d15bc01ca83a886867005bee1c89718dcedc6dd1fcc2d583518842743",
+      "candidate_indices_sha256": "1be93902bd0c9f676cf50084d3f4b6d1dbff6dc38863fb5dcaccd7b351a44346"
+    },
+    {
+      "cell": "expb_m0",
+      "K": 10,
+      "n_rows": 7410,
+      "n_images": 1189,
+      "manifest": "results\\phase1f_hard_semantic\\manifests\\expb_m0_candidates.npz",
+      "manifest_sha256": "f987c200ef4e556a66a4f172d0864dc295b35c35d36a91351606d71c00ff06ab",
+      "sentence_id_sha256": "60bc3e8d5428adeb1a6f1287ea63e3d331532ab842ce7f9f8a53ce16ebe9b0b8",
+      "candidate_indices_sha256": "2074c6c2c34a9f64c7d5d68cb26bad0e3ad4dce0142a2e3196b02ab9e320630e"
+    },
+    {
+      "cell": "expb_m8",
+      "K": 10,
+      "n_rows": 7410,
+      "n_images": 1189,
+      "manifest": "results\\phase1f_hard_semantic\\manifests\\expb_m8_candidates.npz",
+      "manifest_sha256": "9d91d08437379021b3564346210aaf9b1879524d56f8741b7e019b19926a1664",
+      "sentence_id_sha256": "60bc3e8d5428adeb1a6f1287ea63e3d331532ab842ce7f9f8a53ce16ebe9b0b8",
+      "candidate_indices_sha256": "b8c8ecdff4ab0d384b6a75174d9d477619f1be1bab13a6e4343997d8f0d0fdf4"
+    }
+  ]
+}

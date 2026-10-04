@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "summary_records_checked": 111,
+  "duplicate_per_seed_raw_arrays_removed": 111,
+  "npz_arrays_checked": 444,
+  "npz_arrays_each_length": 5000,
+  "mean_draws_match_per_seed_draws": true,
+  "aggregate_invalid_draw_count_sum": 0,
+  "npz_sha256": "9ff33ce1a0b7c98d8003ff9f69d9abee9890777fe7f259f351a2dd039133b97b",
+  "npz_size_bytes": 15719480,
+  "summary_bytes_after_compaction": 379598,
+  "source_sha256_at_bootstrap_launch": "df8d17158f19a37ed4628208ec8ad812b2f5305119747acb575ff187d665069f",
+  "current_exporter_source_sha256": "d66d81ea4080b2dd11d745a6d0c1f5046e297e996255d445a74836ab912a004c"
+}

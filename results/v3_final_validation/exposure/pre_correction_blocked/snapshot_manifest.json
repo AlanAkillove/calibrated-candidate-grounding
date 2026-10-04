@@ -1,0 +1,51 @@
+{
+  "captured_at_utc": "2026-10-04T09:24:06Z",
+  "status": "BLOCKED_CONFIRMATION",
+  "artifacts": [
+    {
+      "file": "acquisition_attempts.jsonl",
+      "sha256": "2729c67b20cfe927ac20bc5260d72aef52ed9f0b1bac0e776eddec27d98f388c",
+      "bytes": 1619
+    },
+    {
+      "file": "bbox_annotation_audit.csv",
+      "sha256": "4359391196a9479aa8deb390c8c25743361ae50f537183ab1f599aa757b7a7c9",
+      "bytes": 1716724
+    },
+    {
+      "file": "bbox_annotation_audit.json",
+      "sha256": "ce17bee3de32662fd82703e0117d40d5a0472aa67b0e9cb3a64d5f74637ed28d",
+      "bytes": 2602
+    },
+    {
+      "file": "confirmation_cohort_manifest.jsonl",
+      "sha256": "e725f23ff6462957dd2ae2226a58ba2817eee85c8a4f0bab11fcf9604178083f",
+      "bytes": 4598162
+    },
+    {
+      "file": "confirmation_image_manifest.csv",
+      "sha256": "d342342d68b33a2c28dd0655bb5474622629037df363e1231c0cdc41e7c47dbe",
+      "bytes": 807541
+    },
+    {
+      "file": "dev_cohort_manifest.jsonl",
+      "sha256": "21898b22998c845e57a068eebcd12ad6792acdf83a80118bf60d629b9d39240a",
+      "bytes": 302553
+    },
+    {
+      "file": "dev_image_manifest.csv",
+      "sha256": "99bbe18f1a4c2087f11e02266adb394f74ceaf044df469b481230fd2ba552e79",
+      "bytes": 57351
+    },
+    {
+      "file": "exposure_cohort_manifest.csv",
+      "sha256": "fd0c99f1e708e3da905b6b658663864a9b3ace8890ee6ffb48b1faeaf3930547",
+      "bytes": 2697188
+    },
+    {
+      "file": "final_acceptance.json",
+      "sha256": "475a08620d65a16ca88fbad05cd2f7212cfe25d4f5c2113107af952de7ff3fad",
+      "bytes": 6349
+    }
+  ]
+}
