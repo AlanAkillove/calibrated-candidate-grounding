@@ -1,3 +1,5 @@
+# Research Repair v1: legacy transcription is checked in its preserved appendix;
+# current scientific conclusions are checked by test_repair_integration.py.
 """RQ4-M1 material-bank close-out: the paper-facing summary must transcribe the artifacts.
 
 ``docs/final_result_summary.md`` is the material bank the paper will be drafted from. This
@@ -37,7 +39,7 @@ import pytest
 
 _ROOT = Path(__file__).resolve().parents[1]
 _RESULT = _ROOT / "results" / "v2_rq4_mechanism" / "m1_transition_confidence"
-_PAPER = _ROOT / "docs" / "final_result_summary.md"
+_PAPER = _ROOT / "docs" / "appendix" / "final_result_summary_pre_repair.md"
 _PROTOCOL = _ROOT / "docs" / "research_protocol.md"
 _REGISTRY = _ROOT / "results" / "final_registry"
 

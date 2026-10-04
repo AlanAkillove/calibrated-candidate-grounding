@@ -1,0 +1,32 @@
+{
+  "slot": "B-SLOT-ATTEMPT2-2026-10-03",
+  "pid": 56844,
+  "exec_session": 14666,
+  "state": "COMPLETE",
+  "started_local": "2026-10-03T16:03:00.5168407+08:00",
+  "command": "E:/conda/envs/deepminer/python.exe -B -u scripts/repair_information_bootstrap.py --out results/research_repair_v1/information --replicates 5000",
+  "working_directory": "F:/DL Projects/calibrated-candidate-grounding",
+  "blas_threads": 2,
+  "stdout": "information_bootstrap_attempt2.log",
+  "stderr": "information_bootstrap_attempt2.err.log",
+  "recovery": "first call adopted the preserved original 5000-draw arrays after strict fingerprint validation; one schema/key diagnostic draw generated and discarded",
+  "exit_code": 0,
+  "finished_utc": "2026-10-03T08:30:47Z",
+  "completed_calls": 9,
+  "formal_replicates": 5000,
+  "formal_source_sha256": {
+    "runner_sha256": "d472ddf455eda32e77b61727b6c2dccef3c76a18611ad0725c94f217590bb4d1",
+    "atomic_replace_sha256": "f798a06d10e3c43dcd0dd1e89112611cc728d199f9332c90c4c19a1ec755bcc2",
+    "shared_bootstrap_sha256": "67a26f3768f921a5429124b9d0d490bb8e62fb5a2ec1977f6108313cb93126da",
+    "statistics_sha256": "820c58b6ef02346976f772a3a6d514e20c89d2d7ed5e9ffa340068d60733a4ca",
+    "protocol_sha256": "0a16ecfdcc7fc47f2bf75996ccaf53fecbb0f863a5b11972d3bad6575acc67e8",
+    "semantic_predictions_sha256": "1f2540e9cde8a769af9a4ff4c90258a8486a352ae781467884d444618f9249d3",
+    "cross_k_predictions_sha256": "5c45506a8dcb63855ceba34aae83dd1b8ce39202a252184a04dd21b7cc73efcb"
+  },
+  "final_files": {
+    "flat_csv": "information_bootstrap.csv",
+    "summary_json": "information_bootstrap.json",
+    "raw_replicates": "information_bootstrap_raw.npz",
+    "per_call_checkpoints": "information_bootstrap_call_checkpoints"
+  }
+}

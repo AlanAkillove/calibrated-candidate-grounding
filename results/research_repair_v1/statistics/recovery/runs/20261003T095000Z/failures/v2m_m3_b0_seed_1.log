@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_legacy_model_recovery.py", line 916, in _recover_m25_and_b0
+    b0_anchor_checks = _check_existing_point_table(
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_legacy_model_recovery.py", line 1030, in _check_existing_point_table
+    raise AssertionError(
+AssertionError: M3_B0_committed_point_metrics ('m0', 'AdaptiveMix', 1)/auroc_correct: observed=0.83556321140940337 expected=0.83556273495669664 abs_error=4.765e-07 > 1e-09
+

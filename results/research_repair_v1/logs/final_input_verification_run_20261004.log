@@ -1,0 +1,6 @@
+Verified input_manifest.json (794 inputs)
+Verified candidates\audit_run_20261003_Cslot_audit4\forward_preflight_rows2_20261003T155906_55728\supplemental_input_manifest.json (5 inputs)
+Verified candidates\supplemental_input_manifest.json (1 inputs)
+Verified statistics\recovery\runs\20261003T090447Z\supplemental_input_manifest.json (46 inputs)
+Verified statistics\recovery\runs\20261003T092746Z\supplemental_input_manifest.json (67 inputs)
+PASS: 834 unique baseline/supplemental inputs

@@ -1,5 +1,16 @@
 # Phase 0A 修正后解释（Phase 0A.1 / Metric & Temperature Validity Correction）
 
+> Research Repair v1 (2026-10-03): the values below are a historical Phase0A.1
+> record. The claim that E-AURC/RER isolate discrimination beyond accuracy is
+> withdrawn: both retain accuracy dependence. Cosine AUROC evidence must be
+> assessed separately. Interior global-T and small per-K temperature drift cannot
+> exclude scale effects; direct repaired diagnostics supersede that interpretation.
+> See `results/research_repair_v1/statistics/` and `docs/final_result_summary.md`.
+> Independent-review correction (2026-10-04): finite-sample trapezoidal AURC
+> minus the continuous oracle reference can be negative even at ideal ranking.
+> The continuous reference is not a finite-sample lower bound; the saved values
+> keep their existing definition and are not clipped.
+
 - 状态：**post-hoc 解释文档**（依据 `docs/research_protocol.md` Amendment A5）。它在 Phase 0A
   cosine results 已可见之后产生，**不构成 preregistration**，不得被引用为“事前预注册的判据”。
 - 数据来源：`results/phase0a_corrected/`（修正温度 + base-rate-aware 指标，cohort 与 Phase 0A 完全一致，

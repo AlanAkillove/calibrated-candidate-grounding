@@ -1,0 +1,364 @@
+{
+  "status": "PASS",
+  "failures": [],
+  "checks": [
+    {
+      "check": "main seed alignment 2",
+      "max_abs_error": 0.0,
+      "atol": 0
+    },
+    {
+      "check": "main seed alignment 3",
+      "max_abs_error": 0.0,
+      "atol": 0
+    },
+    {
+      "check": "main AUROC gap seed1 drawpoint",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed2 drawpoint",
+      "max_abs_error": 1.1102230246251565e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed3 drawpoint",
+      "max_abs_error": 1.1102230246251565e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap mean drawpoint",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed1 draw0",
+      "max_abs_error": 1.1102230246251565e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed2 draw0",
+      "max_abs_error": 1.1102230246251565e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed3 draw0",
+      "max_abs_error": 1.1102230246251565e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap mean draw0",
+      "max_abs_error": 3.469446951953614e-17,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed1 draw17",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed2 draw17",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed3 draw17",
+      "max_abs_error": 1.1102230246251565e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap mean draw17",
+      "max_abs_error": 4.163336342344337e-17,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed1 draw1024",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed2 draw1024",
+      "max_abs_error": 1.1102230246251565e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed3 draw1024",
+      "max_abs_error": 1.1102230246251565e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap mean draw1024",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed1 draw4999",
+      "max_abs_error": 3.3306690738754696e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed2 draw4999",
+      "max_abs_error": 1.1102230246251565e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap seed3 draw4999",
+      "max_abs_error": 1.1102230246251565e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "main AUROC gap mean draw4999",
+      "max_abs_error": 1.8735013540549517e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "interaction all5000 RPN/mean3",
+      "max_abs_error": 4.440892098500626e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "Shapley all5000 RPN/mean3",
+      "max_abs_error": 1.3877787807814457e-17,
+      "atol": 1e-12
+    },
+    {
+      "check": "first path all5000 RPN/mean3",
+      "max_abs_error": 2.636779683484747e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "second path all5000 RPN/mean3",
+      "max_abs_error": 2.636779683484747e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "interaction all5000 RPN/seed1",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "Shapley all5000 RPN/seed1",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "first path all5000 RPN/seed1",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "second path all5000 RPN/seed1",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "interaction all5000 RPN/seed2",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "Shapley all5000 RPN/seed2",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "first path all5000 RPN/seed2",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "second path all5000 RPN/seed2",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "interaction all5000 RPN/seed3",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "Shapley all5000 RPN/seed3",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "first path all5000 RPN/seed3",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "second path all5000 RPN/seed3",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "interaction all5000 DETR/mean3",
+      "max_abs_error": 3.885780586188048e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "Shapley all5000 DETR/mean3",
+      "max_abs_error": 1.3877787807814457e-17,
+      "atol": 1e-12
+    },
+    {
+      "check": "first path all5000 DETR/mean3",
+      "max_abs_error": 2.914335439641036e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "second path all5000 DETR/mean3",
+      "max_abs_error": 3.0531133177191805e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "interaction all5000 DETR/seed1",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "Shapley all5000 DETR/seed1",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "first path all5000 DETR/seed1",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "second path all5000 DETR/seed1",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "interaction all5000 DETR/seed2",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "Shapley all5000 DETR/seed2",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "first path all5000 DETR/seed2",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "second path all5000 DETR/seed2",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "interaction all5000 DETR/seed3",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "Shapley all5000 DETR/seed3",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "first path all5000 DETR/seed3",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "second path all5000 DETR/seed3",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "interaction all5000 GDINO/mean3",
+      "max_abs_error": 3.7470027081099033e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "Shapley all5000 GDINO/mean3",
+      "max_abs_error": 5.551115123125783e-17,
+      "atol": 1e-12
+    },
+    {
+      "check": "first path all5000 GDINO/mean3",
+      "max_abs_error": 2.498001805406602e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "second path all5000 GDINO/mean3",
+      "max_abs_error": 2.7755575615628914e-16,
+      "atol": 1e-12
+    },
+    {
+      "check": "interaction all5000 GDINO/seed1",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "Shapley all5000 GDINO/seed1",
+      "max_abs_error": 2.7755575615628914e-17,
+      "atol": 1e-12
+    },
+    {
+      "check": "first path all5000 GDINO/seed1",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "second path all5000 GDINO/seed1",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "interaction all5000 GDINO/seed2",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "Shapley all5000 GDINO/seed2",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "first path all5000 GDINO/seed2",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "second path all5000 GDINO/seed2",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "interaction all5000 GDINO/seed3",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "Shapley all5000 GDINO/seed3",
+      "max_abs_error": 2.7755575615628914e-17,
+      "atol": 1e-12
+    },
+    {
+      "check": "first path all5000 GDINO/seed3",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    },
+    {
+      "check": "second path all5000 GDINO/seed3",
+      "max_abs_error": 0.0,
+      "atol": 1e-12
+    }
+  ],
+  "category_annotation_rows_checked": 21026,
+  "audit_units": {
+    "family_expression_rows": 21026,
+    "unique_sentence_ids": 10607,
+    "mismatch_rows": 138,
+    "mismatch_family_object_pairs": 47
+  },
+  "scope": "main B3 AUROC gap point/four fresh draws; mechanism identities across every saved draw; target category IDs and availability flags"
+}

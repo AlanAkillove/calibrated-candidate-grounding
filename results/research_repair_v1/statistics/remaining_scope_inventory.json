@@ -1,0 +1,626 @@
+{
+  "schema": "ccg.research_repair_v1.statistics.remaining_scope_inventory.v1",
+  "audit_kind": "read_only_source_and_identity_inventory",
+  "created_utc": "2026-10-03T08:21:43.926872+00:00",
+  "frozen_manifest_verification": {
+    "input_index": "results/research_repair_v1/statistics/v2_source_inventory.json",
+    "npz_artifacts_verified": 102,
+    "summary_artifacts_verified": 61,
+    "unique_frozen_files_verified": 163,
+    "status": "PASS"
+  },
+  "scopes": [
+    {
+      "scope_id": "V2G_G3_cardinality",
+      "main_endpoint_or_gate": "Per-backbone native/global_T_corrected K5-to-K10/20/50 reliability; frozen G3 gate on K5-vs-K50.",
+      "expected_jobs": [
+        "v2g_g3_b1_val_select",
+        "v2g_g3_b1_val_calib",
+        "v2g_g3_b1_testA",
+        "v2g_g3_b1_testB",
+        "v2g_g3_b1___all_common__",
+        "v2g_g3_b1___pooled_test__",
+        "v2g_g3_b2_val_select",
+        "v2g_g3_b2_val_calib",
+        "v2g_g3_b2_testA",
+        "v2g_g3_b2_testB",
+        "v2g_g3_b2___all_common__",
+        "v2g_g3_b2___pooled_test__"
+      ],
+      "expected_job_count": 12,
+      "prediction_recovery": "Direct per_sentence_predictions.npz for both backbones × 3 seeds; native sentence/ref/image/split IDs; no model recovery.",
+      "legacy_pool_identity": "Historical __pooled__ in seed bootstrap.csv has n=20,799 over val_select+val_calib+testA+testB (no train). New testA+testB pool n=10,286 is supplemental and is not anchored to old __pooled__.",
+      "preflight": {
+        "by_backbone": {
+          "b1_phase0b": {
+            "n_all_common_rows": 20799,
+            "n_all_common_images": 2981,
+            "n_testA_testB_rows": 10286,
+            "n_testA_testB_images": 1490,
+            "split_rows": {
+              "testB": 4640,
+              "testA": 5646,
+              "val_calib": 5231,
+              "val_select": 5282
+            },
+            "seeds": [
+              1,
+              2,
+              3
+            ],
+            "identity_columns": [
+              "sentence_ids",
+              "ref_ids",
+              "image_ids",
+              "eval_split"
+            ],
+            "seed_identity_status": "PASS"
+          },
+          "b2_phase0b": {
+            "n_all_common_rows": 20799,
+            "n_all_common_images": 2981,
+            "n_testA_testB_rows": 10286,
+            "n_testA_testB_images": 1490,
+            "split_rows": {
+              "testB": 4640,
+              "testA": 5646,
+              "val_calib": 5231,
+              "val_select": 5282
+            },
+            "seeds": [
+              1,
+              2,
+              3
+            ],
+            "identity_columns": [
+              "sentence_ids",
+              "ref_ids",
+              "image_ids",
+              "eval_split"
+            ],
+            "seed_identity_status": "PASS"
+          }
+        },
+        "observed_point_jobs": [
+          {
+            "job_id": "v2g_g3_b1_testA",
+            "n_rows": 5646,
+            "n_images": 750,
+            "n_seeds": 3,
+            "n_conditions": 12,
+            "n_estimates": 144,
+            "observed_anchor_count": 432,
+            "anchor_status": "PASS",
+            "legacy_cohort_classification": "HISTORICAL_SPLIT"
+          },
+          {
+            "job_id": "v2g_g3_b1_testB",
+            "n_rows": 4640,
+            "n_images": 740,
+            "n_seeds": 3,
+            "n_conditions": 12,
+            "n_estimates": 144,
+            "observed_anchor_count": 432,
+            "anchor_status": "PASS",
+            "legacy_cohort_classification": "HISTORICAL_SPLIT"
+          },
+          {
+            "job_id": "v2g_g3_b1_val_calib",
+            "n_rows": 5231,
+            "n_images": 747,
+            "n_seeds": 3,
+            "n_conditions": 12,
+            "n_estimates": 144,
+            "observed_anchor_count": 432,
+            "anchor_status": "PASS",
+            "legacy_cohort_classification": "HISTORICAL_SPLIT"
+          },
+          {
+            "job_id": "v2g_g3_b1_val_select",
+            "n_rows": 5282,
+            "n_images": 744,
+            "n_seeds": 3,
+            "n_conditions": 12,
+            "n_estimates": 144,
+            "observed_anchor_count": 432,
+            "anchor_status": "PASS",
+            "legacy_cohort_classification": "HISTORICAL_SPLIT"
+          },
+          {
+            "job_id": "v2g_g3_b1___pooled_test__",
+            "n_rows": 10286,
+            "n_images": 1490,
+            "n_seeds": 3,
+            "n_conditions": 12,
+            "n_estimates": 144,
+            "observed_anchor_count": 0,
+            "anchor_status": "NEW_COHORT_NO_HISTORICAL_ANCHOR",
+            "legacy_cohort_classification": "NEW_TESTA_TESTB_POOL_NO_MATCHED_LEGACY_TEST_POOL"
+          },
+          {
+            "job_id": "v2g_g3_b1___all_common__",
+            "n_rows": 20799,
+            "n_images": 2981,
+            "n_seeds": 3,
+            "n_conditions": 12,
+            "n_estimates": 144,
+            "observed_anchor_count": 432,
+            "anchor_status": "PASS",
+            "legacy_cohort_classification": "ALL_COMMON_INCLUDES_VALIDATION_NO_TRAIN"
+          },
+          {
+            "job_id": "v2g_g3_b2_testA",
+            "n_rows": 5646,
+            "n_images": 750,
+            "n_seeds": 3,
+            "n_conditions": 12,
+            "n_estimates": 144,
+            "observed_anchor_count": 432,
+            "anchor_status": "PASS",
+            "legacy_cohort_classification": "HISTORICAL_SPLIT"
+          },
+          {
+            "job_id": "v2g_g3_b2_testB",
+            "n_rows": 4640,
+            "n_images": 740,
+            "n_seeds": 3,
+            "n_conditions": 12,
+            "n_estimates": 144,
+            "observed_anchor_count": 432,
+            "anchor_status": "PASS",
+            "legacy_cohort_classification": "HISTORICAL_SPLIT"
+          },
+          {
+            "job_id": "v2g_g3_b2_val_calib",
+            "n_rows": 5231,
+            "n_images": 747,
+            "n_seeds": 3,
+            "n_conditions": 12,
+            "n_estimates": 144,
+            "observed_anchor_count": 432,
+            "anchor_status": "PASS",
+            "legacy_cohort_classification": "HISTORICAL_SPLIT"
+          },
+          {
+            "job_id": "v2g_g3_b2_val_select",
+            "n_rows": 5282,
+            "n_images": 744,
+            "n_seeds": 3,
+            "n_conditions": 12,
+            "n_estimates": 144,
+            "observed_anchor_count": 432,
+            "anchor_status": "PASS",
+            "legacy_cohort_classification": "HISTORICAL_SPLIT"
+          },
+          {
+            "job_id": "v2g_g3_b2___pooled_test__",
+            "n_rows": 10286,
+            "n_images": 1490,
+            "n_seeds": 3,
+            "n_conditions": 12,
+            "n_estimates": 144,
+            "observed_anchor_count": 0,
+            "anchor_status": "NEW_COHORT_NO_HISTORICAL_ANCHOR",
+            "legacy_cohort_classification": "NEW_TESTA_TESTB_POOL_NO_MATCHED_LEGACY_TEST_POOL"
+          },
+          {
+            "job_id": "v2g_g3_b2___all_common__",
+            "n_rows": 20799,
+            "n_images": 2981,
+            "n_seeds": 3,
+            "n_conditions": 12,
+            "n_estimates": 144,
+            "observed_anchor_count": 432,
+            "anchor_status": "PASS",
+            "legacy_cohort_classification": "ALL_COMMON_INCLUDES_VALIDATION_NO_TRAIN"
+          }
+        ]
+      },
+      "status": "READY_OBSERVED_POINT_ANCHORS_PASS_HISTORICAL_COHORTS_NEW_TEST_POOL_UNANCHORED",
+      "original_method_note": "Old G3 gate reads frozen per-seed bootstrap.csv; rebootstrap from image clusters, keep transformed E-AURC worsening denominator K5 explicit."
+    },
+    {
+      "scope_id": "V2G_G4_hard_semantic",
+      "main_endpoint_or_gate": "G4 hard5 semantic delta and hard-minus-random amplification, with frozen manipulation check and gate.",
+      "expected_jobs": [
+        "v2g_g4_b1",
+        "v2g_g4_b2"
+      ],
+      "expected_job_count": 2,
+      "prediction_recovery": "No row-wise hard/random prediction archive is present; reconstruct with frozen B3 scorers, frozen PhaseA R1/R2 artifacts, and original hard/random candidate source; do not fit/retrain models.",
+      "status": "FROZEN_FORWARD_REQUIRED_NOT_STARTED",
+      "source_artifacts": [
+        "results/v2_backbone_generalization/g4_phaseA",
+        "results/v2_backbone_generalization/g4_phaseB",
+        "scripts/run_v2g_hard.py"
+      ],
+      "recovery_note": "Need separate frozen forward lane and repair-owned prediction NPZ before observed anchor preflight; aggregate CSVs alone cannot establish rowwise image-cluster bootstrap."
+    },
+    {
+      "scope_id": "D1_clean_robustness",
+      "main_endpoint_or_gate": "C1 cardinality and C4 hard-semantic amplification on the frozen D1_clean subset.",
+      "expected_jobs": [
+        "d1_c1_clean",
+        "d1_c4_clean"
+      ],
+      "expected_job_count": 2,
+      "prediction_recovery": "Filter frozen Phase0A/Phase0B/Phase1F native-ID predictions by clean_manifest.sent_id; no model recovery.",
+      "preflight": {
+        "clean_manifest_rows": 15966,
+        "clean_in_phase0b_rows": 15762,
+        "clean_rows_by_split": {
+          "testA": 4176,
+          "testB": 3711,
+          "val": 7875
+        },
+        "unique_sentence_ids": true,
+        "prediction_route": "Filter frozen Phase0A/Phase0B/Phase1F native-ID predictions by clean_manifest.sent_id; no model recovery."
+      },
+      "status": "DIRECT_NATIVE_ID_INPUTS_ADAPTER_NOT_REGISTERED",
+      "source_artifacts": [
+        "results/v2_data_robustness/d1_reviewed_annotations/clean_manifest.csv",
+        "results/phase0a_corrected/per_sentence_predictions.npz",
+        "results/phase0b_independent/seed_{1,2,3}/per_sentence_predictions.npz",
+        "results/phase1f_hard_semantic/predictions/*.npz"
+      ],
+      "original_method_note": "C1 includes frozen cosine B0 plus three frozen B3 seeds; C4 retains the Phase1F same4 mask filtered by clean sent_id."
+    },
+    {
+      "scope_id": "D2_language_robustness",
+      "main_endpoint_or_gate": "C1 cardinality G3 replication and C4 hard-semantic G4 replication.",
+      "expected_jobs": [
+        "d2_c1_common_k50",
+        "d2_c4_random_hard5"
+      ],
+      "expected_job_count": 2,
+      "prediction_recovery": "Direct native-ID D2 NPZs; random K intersection is derived from all K IDs; C4 is matched only by shared sentence IDs.",
+      "preflight": {
+        "random_k5": {
+          "n_rows": 10541,
+          "n_images": 1494,
+          "unique_sentence_ids": true,
+          "seed_identity_status": "PASS"
+        },
+        "random_k10": {
+          "n_rows": 10541,
+          "n_images": 1494,
+          "unique_sentence_ids": true,
+          "seed_identity_status": "PASS"
+        },
+        "random_k20": {
+          "n_rows": 10541,
+          "n_images": 1494,
+          "unique_sentence_ids": true,
+          "seed_identity_status": "PASS"
+        },
+        "random_k50": {
+          "n_rows": 10400,
+          "n_images": 1490,
+          "unique_sentence_ids": true,
+          "seed_identity_status": "PASS"
+        },
+        "hard_k5": {
+          "n_rows": 9748,
+          "n_images": 1430,
+          "unique_sentence_ids": true,
+          "seed_identity_status": "PASS"
+        },
+        "random_common_k50": {
+          "n_rows": 10400,
+          "status": "DERIVED_FROM_NATIVE_SENTENCE_IDS"
+        },
+        "hard_random5_intersection": {
+          "n_rows": 9748,
+          "status": "NATIVE_ID_INTERSECTION_ONLY"
+        }
+      },
+      "status": "SOURCE_IDENTITY_PASS_ADAPTER_NOT_REGISTERED",
+      "source_artifacts": [
+        "results/v2_d2_refcoco_lang/predictions/d2__random_k5__b3_seed{1,2,3}.npz",
+        "results/v2_d2_refcoco_lang/predictions/d2__random_k10__b3_seed{1,2,3}.npz",
+        "results/v2_d2_refcoco_lang/predictions/d2__random_k20__b3_seed{1,2,3}.npz",
+        "results/v2_d2_refcoco_lang/predictions/d2__random_k50__b3_seed{1,2,3}.npz",
+        "results/v2_d2_refcoco_lang/predictions/d2__hard_k5__b3_seed{1,2,3}.npz"
+      ],
+      "original_method_note": "Preserve per-seed model effects first, then seed mean; apply D2 C1/C4 legacy gates after CI adequacy checks."
+    },
+    {
+      "scope_id": "Proposal_P1_P2",
+      "main_endpoint_or_gate": "P1 F4 C1 cardinality for RPN/DETR, P2 C1 for GDINO, P1 F5 C4 hard-semantic for available RPN/DETR.",
+      "expected_jobs": [
+        "p1_c1_RPN",
+        "p1_c1_DETR",
+        "p2_c1_GDINO",
+        "p1_c4_RPN",
+        "p1_c4_DETR"
+      ],
+      "expected_job_count": 5,
+      "prediction_recovery": "Direct row-level per-family NPZs with sentence/ref/image IDs; derive each family common-K50 via exact sentence_id intersection and C4 only for families with hard_k5 archives.",
+      "preflight": {
+        "RPN": {
+          "random_rows_by_k": {
+            "5": {
+              "n_rows": 10425,
+              "n_images": 1494
+            },
+            "10": {
+              "n_rows": 10425,
+              "n_images": 1494
+            },
+            "20": {
+              "n_rows": 10425,
+              "n_images": 1494
+            },
+            "50": {
+              "n_rows": 10286,
+              "n_images": 1490
+            }
+          },
+          "common_k50_rows": 10286,
+          "has_hard_k5_archive": true,
+          "hard_k5_rows": 9623
+        },
+        "DETR": {
+          "random_rows_by_k": {
+            "5": {
+              "n_rows": 10601,
+              "n_images": 1500
+            },
+            "10": {
+              "n_rows": 10601,
+              "n_images": 1500
+            },
+            "20": {
+              "n_rows": 10570,
+              "n_images": 1499
+            },
+            "50": {
+              "n_rows": 9665,
+              "n_images": 1421
+            }
+          },
+          "common_k50_rows": 9665,
+          "has_hard_k5_archive": true,
+          "hard_k5_rows": 8376
+        },
+        "GDINO": {
+          "random_rows_by_k": {
+            "5": {
+              "n_rows": 10547,
+              "n_images": 1498
+            },
+            "10": {
+              "n_rows": 10547,
+              "n_images": 1498
+            },
+            "20": {
+              "n_rows": 10547,
+              "n_images": 1498
+            },
+            "50": {
+              "n_rows": 10402,
+              "n_images": 1489
+            }
+          },
+          "common_k50_rows": 10402,
+          "has_hard_k5_archive": false,
+          "hard_k5_rows": null
+        }
+      },
+      "status": "SOURCE_IDENTITY_PASS_ADAPTER_NOT_REGISTERED",
+      "original_method_note": "RPN/DETR/GDINO are separate proposal-family cohorts. Do not transfer a missing hard5 cell across families; keep raw_top1/raw_margin AUROC secondary to the frozen gate."
+    },
+    {
+      "scope_id": "V2M_M1_LCR",
+      "main_endpoint_or_gate": "M1 LCR vs E1b/Aggregate-MLP main GO/STRONG comparisons, matched hard cohort, and LCR-vs-noGate contribution.",
+      "expected_jobs": [
+        "m1_random_k5",
+        "m1_random_k5_matched",
+        "m1_samecategory_k5",
+        "m1_k20_random",
+        "m1_k50_random"
+      ],
+      "expected_job_count": 5,
+      "prediction_recovery": "Bridge existing confidence arrays to exact sorted K5/K20/K50 scorer IDs and Phase1F hard5 IDs; verify per-row image_id/correct where archived and historical points before bootstrap.",
+      "preflight": {
+        "seed_archives": [
+          "results/v2_local_competition/m1_random_only/seed_1/confidences.npz",
+          "results/v2_local_competition/m1_random_only/seed_2/confidences.npz",
+          "results/v2_local_competition/m1_random_only/seed_3/confidences.npz"
+        ],
+        "cohort_lengths_by_seed": [
+          {
+            "Random-K5__correct": 10286,
+            "Random-K5-matched__correct": 9487,
+            "SameCategory-K5__correct": 9487,
+            "K20-random__correct": 10286,
+            "K50-random__correct": 10286
+          },
+          {
+            "Random-K5__correct": 10286,
+            "Random-K5-matched__correct": 9487,
+            "SameCategory-K5__correct": 9487,
+            "K20-random__correct": 10286,
+            "K50-random__correct": 10286
+          },
+          {
+            "Random-K5__correct": 10286,
+            "Random-K5-matched__correct": 9487,
+            "SameCategory-K5__correct": 9487,
+            "K20-random__correct": 10286,
+            "K50-random__correct": 10286
+          }
+        ],
+        "native_sentence_id_in_archive": false,
+        "prediction_route": "Bridge existing confidence arrays to exact sorted K5/K20/K50 scorer IDs and Phase1F hard5 IDs; verify per-row image_id/correct where archived and historical points before bootstrap.",
+        "recovery_status": "VERIFIED_RUNNER_ORDER_AND_POINT_ANCHORS",
+        "observed_point_preflight": [
+          {
+            "job_id": "m1_random_k5",
+            "n_rows": 10286,
+            "n_images": 1490,
+            "n_seeds": 3,
+            "n_conditions": 5,
+            "n_estimates": 58,
+            "observed_anchor_count": 144,
+            "anchor_status": "CORE_FINITE_ANCHORS_PASS_AUX_METRICS_UNREPORTED",
+            "sentence_id_status": "RECONSTRUCTED_FROM_FROZEN_RUNNER_ORDER_AND_VERIFIED_CORRECTNESS",
+            "evidence": "M1 confidence rows are mapped using run_v2m_m1._load_store_bundle/_cohort_data; random rows use Phase0B sentence-sorted per-row predictions, matched/hard rows use aligned Phase1F rand5/hard5 archives; all archived correctness and historical point rows are checked."
+          },
+          {
+            "job_id": "m1_random_k5_matched",
+            "n_rows": 9487,
+            "n_images": 1424,
+            "n_seeds": 3,
+            "n_conditions": 5,
+            "n_estimates": 52,
+            "observed_anchor_count": 126,
+            "anchor_status": "CORE_FINITE_ANCHORS_PASS_AUX_METRICS_UNREPORTED",
+            "sentence_id_status": "RECONSTRUCTED_FROM_FROZEN_RUNNER_ORDER_AND_VERIFIED_CORRECTNESS",
+            "evidence": "M1 confidence rows are mapped using run_v2m_m1._load_store_bundle/_cohort_data; random rows use Phase0B sentence-sorted per-row predictions, matched/hard rows use aligned Phase1F rand5/hard5 archives; all archived correctness and historical point rows are checked."
+          },
+          {
+            "job_id": "m1_samecategory_k5",
+            "n_rows": 9487,
+            "n_images": 1424,
+            "n_seeds": 3,
+            "n_conditions": 5,
+            "n_estimates": 58,
+            "observed_anchor_count": 144,
+            "anchor_status": "CORE_FINITE_ANCHORS_PASS_AUX_METRICS_UNREPORTED",
+            "sentence_id_status": "RECONSTRUCTED_FROM_FROZEN_RUNNER_ORDER_AND_VERIFIED_CORRECTNESS",
+            "evidence": "M1 confidence rows are mapped using run_v2m_m1._load_store_bundle/_cohort_data; random rows use Phase0B sentence-sorted per-row predictions, matched/hard rows use aligned Phase1F rand5/hard5 archives; all archived correctness and historical point rows are checked."
+          },
+          {
+            "job_id": "m1_k20_random",
+            "n_rows": 10286,
+            "n_images": 1490,
+            "n_seeds": 3,
+            "n_conditions": 5,
+            "n_estimates": 52,
+            "observed_anchor_count": 126,
+            "anchor_status": "CORE_FINITE_ANCHORS_PASS_AUX_METRICS_UNREPORTED",
+            "sentence_id_status": "RECONSTRUCTED_FROM_FROZEN_RUNNER_ORDER_AND_VERIFIED_CORRECTNESS",
+            "evidence": "M1 confidence rows are mapped using run_v2m_m1._load_store_bundle/_cohort_data; random rows use Phase0B sentence-sorted per-row predictions, matched/hard rows use aligned Phase1F rand5/hard5 archives; all archived correctness and historical point rows are checked."
+          },
+          {
+            "job_id": "m1_k50_random",
+            "n_rows": 10286,
+            "n_images": 1490,
+            "n_seeds": 3,
+            "n_conditions": 5,
+            "n_estimates": 52,
+            "observed_anchor_count": 126,
+            "anchor_status": "CORE_FINITE_ANCHORS_PASS_AUX_METRICS_UNREPORTED",
+            "sentence_id_status": "RECONSTRUCTED_FROM_FROZEN_RUNNER_ORDER_AND_VERIFIED_CORRECTNESS",
+            "evidence": "M1 confidence rows are mapped using run_v2m_m1._load_store_bundle/_cohort_data; random rows use Phase0B sentence-sorted per-row predictions, matched/hard rows use aligned Phase1F rand5/hard5 archives; all archived correctness and historical point rows are checked."
+          }
+        ]
+      },
+      "status": "READY_CORE_POINT_ANCHORS_PASS_AUX_RER80_90_UNANCHORED",
+      "source_artifacts": [
+        "results/v2_local_competition/m1_random_only/seed_1/confidences.npz",
+        "results/v2_local_competition/m1_random_only/seed_2/confidences.npz",
+        "results/v2_local_competition/m1_random_only/seed_3/confidences.npz",
+        "results/phase0b_independent/seed_{1,2,3}/per_sentence_predictions.npz",
+        "results/phase1f_hard_semantic/predictions/rand5__b3_seed*.npz",
+        "results/phase1f_hard_semantic/predictions/hard5__b3_seed*.npz"
+      ],
+      "original_method_note": "LCR is an M1 condition; retain original cohort-specific pair plans and separately report LCR-noGate contrasts."
+    },
+    {
+      "scope_id": "V2M_M2_curriculum",
+      "main_endpoint_or_gate": "M2 m0/m2/m4/m8 severity-level comparisons and original m8 GO gate.",
+      "expected_jobs": [
+        "m2_curriculum_m0_m2_m4_m8"
+      ],
+      "expected_job_count": 1,
+      "prediction_recovery": "Use original runner's expb_m{0,2,4,8} frozen Phase1F source row order; compare image_id/correct arrays elementwise and recover sentence/ref IDs positionally only after those checks.",
+      "preflight": {
+        "seed_archives": [
+          {
+            "path": "results/v2_local_competition/m2_curriculum/seed_1/confidences.npz",
+            "rows_by_level": {
+              "m0": 7410,
+              "m2": 7410,
+              "m4": 7410,
+              "m8": 7410
+            },
+            "image_ids_match_across_levels": true,
+            "native_sentence_id_in_archive": false
+          },
+          {
+            "path": "results/v2_local_competition/m2_curriculum/seed_2/confidences.npz",
+            "rows_by_level": {
+              "m0": 7410,
+              "m2": 7410,
+              "m4": 7410,
+              "m8": 7410
+            },
+            "image_ids_match_across_levels": true,
+            "native_sentence_id_in_archive": false
+          },
+          {
+            "path": "results/v2_local_competition/m2_curriculum/seed_3/confidences.npz",
+            "rows_by_level": {
+              "m0": 7410,
+              "m2": 7410,
+              "m4": 7410,
+              "m8": 7410
+            },
+            "image_ids_match_across_levels": true,
+            "native_sentence_id_in_archive": false
+          }
+        ],
+        "prediction_route": "Use original runner's expb_m{0,2,4,8} frozen Phase1F source row order; compare image_id/correct arrays elementwise and recover sentence/ref IDs positionally only after those checks.",
+        "recovery_status": "EXISTING_CONFIDENCES_SOURCE_ROW_BRIDGE_REQUIRED"
+      },
+      "status": "IDENTITY_BRIDGE_REQUIRED_NO_MODEL_RECOVERY_EXPECTED",
+      "source_artifacts": [
+        "results/v2_local_competition/m2_curriculum/seed_1/confidences.npz",
+        "results/v2_local_competition/m2_curriculum/seed_2/confidences.npz",
+        "results/v2_local_competition/m2_curriculum/seed_3/confidences.npz",
+        "results/phase1f_hard_semantic/predictions/expb_m{0,2,4,8}__b3_seed*.npz"
+      ],
+      "original_method_note": "Severity macro metrics must be computed inside each shared image-cluster replicate; original m8 gate rule and threshold remain unchanged."
+    },
+    {
+      "scope_id": "V2M_M25_specialist",
+      "main_endpoint_or_gate": "M25 specialist-vs-generalist severity contrasts and frozen diagnostic verdict.",
+      "expected_jobs": [
+        "m25_specialist_m0_m2_m4_m8"
+      ],
+      "expected_job_count": 1,
+      "prediction_recovery": "No rowwise test predictions archived. Re-run only frozen M1/M2 model scoring on the original severity feature rows; no fit/retraining.",
+      "status": "FROZEN_MODEL_FORWARD_REQUIRED_NOT_STARTED",
+      "source_artifacts": [
+        "results/v2_local_competition/m25_specialist_audit",
+        "scripts/run_v2m_m25.py",
+        "results/v2_local_competition/m1_random_only",
+        "results/v2_local_competition/m2_curriculum"
+      ],
+      "recovery_note": "Do not use published point/paired_bootstrap aggregates as a substitute for shared-draw raw predictions."
+    },
+    {
+      "scope_id": "V2M_M3_mixture",
+      "main_endpoint_or_gate": "B0 exploratory; B1/B2 confirmatory severity-macro mixture effects and unchanged gate.",
+      "expected_jobs": [
+        "m3_b0_severity_macro",
+        "m3_b1_severity_macro",
+        "m3_b2_severity_macro"
+      ],
+      "expected_job_count": 3,
+      "prediction_recovery": "No rowwise mixture prediction archives; reproduce the deterministic frozen expert/mixture fitting and test scoring under the original parameters, then retain rowwise image IDs.",
+      "status": "ORIGINAL_DETERMINISTIC_FIT_AND_FORWARD_REQUIRED_NOT_STARTED",
+      "source_artifacts": [
+        "results/v2_local_competition/m3_mixture",
+        "scripts/run_v2m_m3_b0.py",
+        "scripts/run_v2m_m3_conf.py",
+        "scripts/audit_v2m_m3_b0.py",
+        "scripts/audit_v2m_m3_conf.py"
+      ],
+      "recovery_note": "Use original frozen data/model identities and deterministic training configuration; resource slot required before executing any fit/forward.",
+      "original_method_note": "Compute severity macro within each image-cluster replicate. B0 remains exploratory and has no success gate; B1/B2 use the frozen gate only."
+    }
+  ]
+}

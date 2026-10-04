@@ -1,0 +1,455 @@
+{
+  "cells": [
+    {
+      "K": 5,
+      "cell": "rand5",
+      "max_feature_delta_over_seeds": {
+        "sem16": 0.0,
+        "stats17": 0.0
+      },
+      "seeds": [
+        {
+          "canonical_vs_saved_raw_score_check": "PASS_WITHIN_STOP_ATOL",
+          "canonical_vs_saved_raw_score_max_abs": 1.1444091796875e-05,
+          "canonical_vs_saved_raw_score_ranking_identical": true,
+          "conf_e1b_max_abs_vs_phase1f": 2.220446049250313e-16,
+          "conf_stats_max_abs_vs_phase1f": 2.220446049250313e-16,
+          "feature_rebuild_score_source": "saved Phase1F scores; canonical Phase0B comparison is separate diagnostic",
+          "materialised_candidate_dtype": "float32",
+          "materialised_query_dtype": "float32",
+          "n_rows": 9487,
+          "prediction_check": "PASS",
+          "promoted_score_dtype": "float64",
+          "row_identity": {
+            "correct": true,
+            "image_id": true,
+            "ref_id": true,
+            "sentence_id": true
+          },
+          "seed": "b3_seed1",
+          "sem16_vs_B_derived": {
+            "max_abs_by_feature": {
+              "cand_top12_sim": 0.0,
+              "cand_top13_sim": 0.0,
+              "cand_top15_mean": 0.0,
+              "cand_vmax": 0.0,
+              "cand_vmean": 0.0,
+              "cand_vstd": 0.0,
+              "clip_entropy": 0.0,
+              "clip_margin12": 0.0,
+              "clip_normH": 0.0,
+              "clip_rank_top1": 0.0,
+              "clip_top1": 0.0,
+              "clip_top2": 0.0,
+              "density_070": 0.0,
+              "density_080": 0.0,
+              "q_margin13": 0.0,
+              "q_top3": 0.0
+            },
+            "max_abs_overall": 0.0,
+            "n_features_nonzero_delta": 0
+          },
+          "stats17_vs_B_derived": {
+            "max_abs_by_feature": {
+              "entropy": 0.0,
+              "entropy_over_logk": 0.0,
+              "log_k": 0.0,
+              "logsumexp": 0.0,
+              "margin_12": 0.0,
+              "margin_23": 0.0,
+              "mean": 0.0,
+              "msp": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0,
+              "std": 0.0,
+              "top1": 0.0,
+              "top2": 0.0,
+              "top3": 0.0,
+              "z_margin": 0.0,
+              "z_top1": 0.0
+            },
+            "max_abs_overall": 0.0,
+            "n_features_nonzero_delta": 0
+          },
+          "stored_score_dtype": "float32",
+          "tolerance": 1e-09
+        },
+        {
+          "canonical_vs_saved_raw_score_check": "PASS_WITHIN_STOP_ATOL",
+          "canonical_vs_saved_raw_score_max_abs": 1.2874603271484375e-05,
+          "canonical_vs_saved_raw_score_ranking_identical": true,
+          "conf_e1b_max_abs_vs_phase1f": 2.220446049250313e-16,
+          "conf_stats_max_abs_vs_phase1f": 2.220446049250313e-16,
+          "feature_rebuild_score_source": "saved Phase1F scores; canonical Phase0B comparison is separate diagnostic",
+          "materialised_candidate_dtype": "float32",
+          "materialised_query_dtype": "float32",
+          "n_rows": 9487,
+          "prediction_check": "PASS",
+          "promoted_score_dtype": "float64",
+          "row_identity": {
+            "correct": true,
+            "image_id": true,
+            "ref_id": true,
+            "sentence_id": true
+          },
+          "seed": "b3_seed2",
+          "sem16_vs_B_derived": {
+            "max_abs_by_feature": {
+              "cand_top12_sim": 0.0,
+              "cand_top13_sim": 0.0,
+              "cand_top15_mean": 0.0,
+              "cand_vmax": 0.0,
+              "cand_vmean": 0.0,
+              "cand_vstd": 0.0,
+              "clip_entropy": 0.0,
+              "clip_margin12": 0.0,
+              "clip_normH": 0.0,
+              "clip_rank_top1": 0.0,
+              "clip_top1": 0.0,
+              "clip_top2": 0.0,
+              "density_070": 0.0,
+              "density_080": 0.0,
+              "q_margin13": 0.0,
+              "q_top3": 0.0
+            },
+            "max_abs_overall": 0.0,
+            "n_features_nonzero_delta": 0
+          },
+          "stats17_vs_B_derived": {
+            "max_abs_by_feature": {
+              "entropy": 0.0,
+              "entropy_over_logk": 0.0,
+              "log_k": 0.0,
+              "logsumexp": 0.0,
+              "margin_12": 0.0,
+              "margin_23": 0.0,
+              "mean": 0.0,
+              "msp": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0,
+              "std": 0.0,
+              "top1": 0.0,
+              "top2": 0.0,
+              "top3": 0.0,
+              "z_margin": 0.0,
+              "z_top1": 0.0
+            },
+            "max_abs_overall": 0.0,
+            "n_features_nonzero_delta": 0
+          },
+          "stored_score_dtype": "float32",
+          "tolerance": 1e-09
+        },
+        {
+          "canonical_vs_saved_raw_score_check": "PASS_WITHIN_STOP_ATOL",
+          "canonical_vs_saved_raw_score_max_abs": 1.239776611328125e-05,
+          "canonical_vs_saved_raw_score_ranking_identical": true,
+          "conf_e1b_max_abs_vs_phase1f": 2.220446049250313e-16,
+          "conf_stats_max_abs_vs_phase1f": 2.220446049250313e-16,
+          "feature_rebuild_score_source": "saved Phase1F scores; canonical Phase0B comparison is separate diagnostic",
+          "materialised_candidate_dtype": "float32",
+          "materialised_query_dtype": "float32",
+          "n_rows": 9487,
+          "prediction_check": "PASS",
+          "promoted_score_dtype": "float64",
+          "row_identity": {
+            "correct": true,
+            "image_id": true,
+            "ref_id": true,
+            "sentence_id": true
+          },
+          "seed": "b3_seed3",
+          "sem16_vs_B_derived": {
+            "max_abs_by_feature": {
+              "cand_top12_sim": 0.0,
+              "cand_top13_sim": 0.0,
+              "cand_top15_mean": 0.0,
+              "cand_vmax": 0.0,
+              "cand_vmean": 0.0,
+              "cand_vstd": 0.0,
+              "clip_entropy": 0.0,
+              "clip_margin12": 0.0,
+              "clip_normH": 0.0,
+              "clip_rank_top1": 0.0,
+              "clip_top1": 0.0,
+              "clip_top2": 0.0,
+              "density_070": 0.0,
+              "density_080": 0.0,
+              "q_margin13": 0.0,
+              "q_top3": 0.0
+            },
+            "max_abs_overall": 0.0,
+            "n_features_nonzero_delta": 0
+          },
+          "stats17_vs_B_derived": {
+            "max_abs_by_feature": {
+              "entropy": 0.0,
+              "entropy_over_logk": 0.0,
+              "log_k": 0.0,
+              "logsumexp": 0.0,
+              "margin_12": 0.0,
+              "margin_23": 0.0,
+              "mean": 0.0,
+              "msp": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0,
+              "std": 0.0,
+              "top1": 0.0,
+              "top2": 0.0,
+              "top3": 0.0,
+              "z_margin": 0.0,
+              "z_top1": 0.0
+            },
+            "max_abs_overall": 0.0,
+            "n_features_nonzero_delta": 0
+          },
+          "stored_score_dtype": "float32",
+          "tolerance": 1e-09
+        }
+      ]
+    },
+    {
+      "K": 5,
+      "cell": "hard5",
+      "max_feature_delta_over_seeds": {
+        "sem16": 0.0,
+        "stats17": 0.0
+      },
+      "seeds": [
+        {
+          "canonical_vs_saved_raw_score_check": "NOT_APPLICABLE_HARD_CANDIDATES",
+          "canonical_vs_saved_raw_score_max_abs": 0.0,
+          "canonical_vs_saved_raw_score_ranking_identical": true,
+          "conf_e1b_max_abs_vs_phase1f": 2.7755575615628914e-16,
+          "conf_stats_max_abs_vs_phase1f": 2.220446049250313e-16,
+          "feature_rebuild_score_source": "saved Phase1F scores; canonical Phase0B comparison is separate diagnostic",
+          "materialised_candidate_dtype": "float32",
+          "materialised_query_dtype": "float32",
+          "n_rows": 9487,
+          "prediction_check": "PASS",
+          "promoted_score_dtype": "float64",
+          "row_identity": {
+            "correct": true,
+            "image_id": true,
+            "ref_id": true,
+            "sentence_id": true
+          },
+          "seed": "b3_seed1",
+          "sem16_vs_B_derived": {
+            "max_abs_by_feature": {
+              "cand_top12_sim": 0.0,
+              "cand_top13_sim": 0.0,
+              "cand_top15_mean": 0.0,
+              "cand_vmax": 0.0,
+              "cand_vmean": 0.0,
+              "cand_vstd": 0.0,
+              "clip_entropy": 0.0,
+              "clip_margin12": 0.0,
+              "clip_normH": 0.0,
+              "clip_rank_top1": 0.0,
+              "clip_top1": 0.0,
+              "clip_top2": 0.0,
+              "density_070": 0.0,
+              "density_080": 0.0,
+              "q_margin13": 0.0,
+              "q_top3": 0.0
+            },
+            "max_abs_overall": 0.0,
+            "n_features_nonzero_delta": 0
+          },
+          "stats17_vs_B_derived": {
+            "max_abs_by_feature": {
+              "entropy": 0.0,
+              "entropy_over_logk": 0.0,
+              "log_k": 0.0,
+              "logsumexp": 0.0,
+              "margin_12": 0.0,
+              "margin_23": 0.0,
+              "mean": 0.0,
+              "msp": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0,
+              "std": 0.0,
+              "top1": 0.0,
+              "top2": 0.0,
+              "top3": 0.0,
+              "z_margin": 0.0,
+              "z_top1": 0.0
+            },
+            "max_abs_overall": 0.0,
+            "n_features_nonzero_delta": 0
+          },
+          "stored_score_dtype": "float32",
+          "tolerance": 1e-09
+        },
+        {
+          "canonical_vs_saved_raw_score_check": "NOT_APPLICABLE_HARD_CANDIDATES",
+          "canonical_vs_saved_raw_score_max_abs": 0.0,
+          "canonical_vs_saved_raw_score_ranking_identical": true,
+          "conf_e1b_max_abs_vs_phase1f": 2.220446049250313e-16,
+          "conf_stats_max_abs_vs_phase1f": 2.220446049250313e-16,
+          "feature_rebuild_score_source": "saved Phase1F scores; canonical Phase0B comparison is separate diagnostic",
+          "materialised_candidate_dtype": "float32",
+          "materialised_query_dtype": "float32",
+          "n_rows": 9487,
+          "prediction_check": "PASS",
+          "promoted_score_dtype": "float64",
+          "row_identity": {
+            "correct": true,
+            "image_id": true,
+            "ref_id": true,
+            "sentence_id": true
+          },
+          "seed": "b3_seed2",
+          "sem16_vs_B_derived": {
+            "max_abs_by_feature": {
+              "cand_top12_sim": 0.0,
+              "cand_top13_sim": 0.0,
+              "cand_top15_mean": 0.0,
+              "cand_vmax": 0.0,
+              "cand_vmean": 0.0,
+              "cand_vstd": 0.0,
+              "clip_entropy": 0.0,
+              "clip_margin12": 0.0,
+              "clip_normH": 0.0,
+              "clip_rank_top1": 0.0,
+              "clip_top1": 0.0,
+              "clip_top2": 0.0,
+              "density_070": 0.0,
+              "density_080": 0.0,
+              "q_margin13": 0.0,
+              "q_top3": 0.0
+            },
+            "max_abs_overall": 0.0,
+            "n_features_nonzero_delta": 0
+          },
+          "stats17_vs_B_derived": {
+            "max_abs_by_feature": {
+              "entropy": 0.0,
+              "entropy_over_logk": 0.0,
+              "log_k": 0.0,
+              "logsumexp": 0.0,
+              "margin_12": 0.0,
+              "margin_23": 0.0,
+              "mean": 0.0,
+              "msp": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0,
+              "std": 0.0,
+              "top1": 0.0,
+              "top2": 0.0,
+              "top3": 0.0,
+              "z_margin": 0.0,
+              "z_top1": 0.0
+            },
+            "max_abs_overall": 0.0,
+            "n_features_nonzero_delta": 0
+          },
+          "stored_score_dtype": "float32",
+          "tolerance": 1e-09
+        },
+        {
+          "canonical_vs_saved_raw_score_check": "NOT_APPLICABLE_HARD_CANDIDATES",
+          "canonical_vs_saved_raw_score_max_abs": 0.0,
+          "canonical_vs_saved_raw_score_ranking_identical": true,
+          "conf_e1b_max_abs_vs_phase1f": 2.220446049250313e-16,
+          "conf_stats_max_abs_vs_phase1f": 2.220446049250313e-16,
+          "feature_rebuild_score_source": "saved Phase1F scores; canonical Phase0B comparison is separate diagnostic",
+          "materialised_candidate_dtype": "float32",
+          "materialised_query_dtype": "float32",
+          "n_rows": 9487,
+          "prediction_check": "PASS",
+          "promoted_score_dtype": "float64",
+          "row_identity": {
+            "correct": true,
+            "image_id": true,
+            "ref_id": true,
+            "sentence_id": true
+          },
+          "seed": "b3_seed3",
+          "sem16_vs_B_derived": {
+            "max_abs_by_feature": {
+              "cand_top12_sim": 0.0,
+              "cand_top13_sim": 0.0,
+              "cand_top15_mean": 0.0,
+              "cand_vmax": 0.0,
+              "cand_vmean": 0.0,
+              "cand_vstd": 0.0,
+              "clip_entropy": 0.0,
+              "clip_margin12": 0.0,
+              "clip_normH": 0.0,
+              "clip_rank_top1": 0.0,
+              "clip_top1": 0.0,
+              "clip_top2": 0.0,
+              "density_070": 0.0,
+              "density_080": 0.0,
+              "q_margin13": 0.0,
+              "q_top3": 0.0
+            },
+            "max_abs_overall": 0.0,
+            "n_features_nonzero_delta": 0
+          },
+          "stats17_vs_B_derived": {
+            "max_abs_by_feature": {
+              "entropy": 0.0,
+              "entropy_over_logk": 0.0,
+              "log_k": 0.0,
+              "logsumexp": 0.0,
+              "margin_12": 0.0,
+              "margin_23": 0.0,
+              "mean": 0.0,
+              "msp": 0.0,
+              "q25": 0.0,
+              "q50": 0.0,
+              "q75": 0.0,
+              "std": 0.0,
+              "top1": 0.0,
+              "top2": 0.0,
+              "top3": 0.0,
+              "z_margin": 0.0,
+              "z_top1": 0.0
+            },
+            "max_abs_overall": 0.0,
+            "n_features_nonzero_delta": 0
+          },
+          "stored_score_dtype": "float32",
+          "tolerance": 1e-09
+        }
+      ]
+    }
+  ],
+  "diagnostic_attempts": [
+    {
+      "attempt": 1,
+      "correction": "rebuild Phase1F features from the exact saved Phase1F score rows and report canonical-vs-saved raw-score difference separately against A8.4 stop atol and ranking identity",
+      "observed_failure": "AssertionError: rand5/b3_seed1 had sentence_id/ref_id/image_id/correct all identical, but exact raw_scores array_equal was false",
+      "root_cause": "the first audit incorrectly required canonical Phase0B raw scores to be bitwise identical to Phase1F's saved scorer-forward float32 inputs",
+      "trace_persistence": "failure traceback was observed in the execution result; no dedicated log file existed for that first debug invocation"
+    }
+  ],
+  "phase1f_raw_score_stop_atol": 0.0001,
+  "scope": "Phase 1F rand5 and hard5 \u00d7 three B3 seeds; exact original feature-construction path; direct loaded frozen bundle; no fit",
+  "seconds": 34.77,
+  "source_pipeline": {
+    "embedding_dtype": {
+      "cached_candidate_embedding": "float16",
+      "cached_query_embedding": "float16",
+      "materialise_examples_candidate_output": "float32",
+      "materialise_examples_query_output": "float32"
+    },
+    "feature_inputs": "frozen Phase 1F candidate manifests + saved Phase 1F float32 raw-score arrays + B3Corpus cached embeddings via hard_scores.materialise_examples",
+    "reliability": "FrozenExternalModels.predict loaded from phase1e_refcocog_external/frozen_models; no refitting",
+    "runner": "scripts/run_phase1f.py::_variant_rows/_variant_samples/_cell_local/_build_cell",
+    "score_dtype": "stored float32, promoted in _build_cell to float64 before Stats17 and semantic_stats",
+    "source_bundle_evidence": "results/research_repair_v1/information/reference_frozen_bundle_verification.json"
+  },
+  "status": "PASS",
+  "thread_limit": 2,
+  "timestamp_utc": "2026-10-03T03:18:46Z",
+  "tolerance": 1e-09
+}

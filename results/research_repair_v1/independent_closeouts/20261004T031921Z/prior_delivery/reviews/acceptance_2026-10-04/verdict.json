@@ -1,0 +1,70 @@
+{
+  "schema": "independent-research-repair-acceptance-v1",
+  "review_date": "2026-10-04",
+  "timezone": "Asia/Shanghai",
+  "decision": "CONDITIONAL_ACCEPTANCE",
+  "review_complete": true,
+  "core_experimental_evidence": "PASS_WITH_RECORDED_SCOPE_LIMITATIONS",
+  "unqualified_zero_unresolved_acceptance": false,
+  "unchanged_input_files_after_full_tests": 834,
+  "input_manifests": 5,
+  "stored_arithmetic_estimates_verified": 9955,
+  "fresh_prediction_checks": {
+    "semantic_primary_points": 30,
+    "semantic_shared_draw_means": 120,
+    "selected_replicates": [0, 17, 1024, 4999],
+    "normalization_and_linear_prediction_check_groups": 78,
+    "main_and_mechanism_numeric_check_groups": 70,
+    "target_annotation_rows_checked": 21026
+  },
+  "full_suite": {
+    "tests": 1226,
+    "passed": 1224,
+    "skipped": 2,
+    "failures": 0,
+    "errors": 0,
+    "source_files": 262,
+    "source_unchanged": true,
+    "evidence": "pytest_independent.xml",
+    "initial_c_disk_space_failure_preserved": true,
+    "second_windows_long_path_failure_preserved": true
+  },
+  "required_corrections": [
+    {
+      "id": "FINITE_EAURC_NONNEGATIVITY",
+      "priority": 2,
+      "file": "src/ccg/metrics/selective.py",
+      "line": 175,
+      "counterexample_value": -0.028426409720027357,
+      "impact": "Finite-sample interpretation is false; retain the existing numeric definition and correct the explanation. No wholesale retraining required."
+    },
+    {
+      "id": "ISOLATED_RISK_METRIC_BRANCH",
+      "priority": 2,
+      "file": "src/ccg/repairs/statistics.py",
+      "line": 155,
+      "observed": "UnboundLocalError for metrics=('risk_at_50',)",
+      "impact": "Missing public metric-combination coverage; saved formal runner combinations verified successfully. Fix and add meaningful boundary tests."
+    },
+    {
+      "id": "CANDIDATE_AUDIT_UNIT",
+      "priority": 2,
+      "file": "scripts/build_repair_report.py",
+      "line": 240,
+      "family_expression_rows": 21026,
+      "unique_sentence_ids": 10607,
+      "mismatch_rows": 138,
+      "impact": "Generator calls family-expression observations distinct expressions. Correct the unit and regenerate current descriptions; preserve source rows."
+    }
+  ],
+  "retained_limits": [
+    "M3 exact historical replay remains UNVERIFIABLE; no approximate CI substitutes.",
+    "An early statistics batch lacks launch-time source fingerprints.",
+    "No complete pre-derive raw-array SHA snapshot exists.",
+    "Fixed-seed, GT-assisted target-present, shared-COCO and result-driven test reuse scope remains.",
+    "Adaptive ECE percentile summaries alone do not establish nominal coverage near calibration boundaries."
+  ],
+  "report": "../repair_acceptance_2026-10-04.md",
+  "execution_status_json_modified_by_reviewer": false,
+  "formal_results_modified_by_reviewer": false
+}

@@ -1,0 +1,10 @@
+{
+  "root_cause": "old run_phase05.py used np.arange(n_train_total) on concatenated logK arrays, selecting the K5 prefix instead of actual K5/K10 reliability_train rows",
+  "fix": "construct the actual reliability_train logK rows across training Ks before normalize_fit",
+  "old_wrong_logK_mean": 1.6094379124341003,
+  "correct_logK_train_mean": 1.9560115027140728,
+  "correct_logK_train_std": 0.34657359027997275,
+  "source_test": "tests/test_repair_information.py::test_phase05_score_deepsets_logk_scaler_uses_only_training_rows",
+  "old_behavior_test": "failed with mean=1.6094379124341003, std=0; correct expected mean=1.956011502714073 and nonzero std",
+  "new_behavior_test": "passed; new model ScoreDeepSets normalizer fits concatenated reliability_train rows only"
+}

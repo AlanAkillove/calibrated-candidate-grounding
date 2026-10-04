@@ -1,0 +1,114 @@
+[2026-10-03T13:08:11.979654+00:00] START run_id=20261003T130700Z scope=m3-conf pid=58808 g4_device=cuda BLAS=2
+[2026-10-03T13:08:16.895957+00:00] [hard] pooled rows=10286 images=1490 refs=3647
+[2026-10-03T13:08:16.896555+00:00] [hard]   same4: rows=9487 images=1424 refs=3369
+[2026-10-03T13:08:16.897059+00:00] [hard]   same8: rows=7410 images=1189 refs=2643
+[2026-10-03T13:08:16.897601+00:00] [hard]   same9: rows=6765 images=1085 refs=2419
+[2026-10-03T13:08:50.198088+00:00] [M3-CONF b1 seed1] start (T_corrected=1.171145)
+[2026-10-03T13:08:55.547798+00:00] [M3-CONF b1 seed1] E_random reproduces V2-G Phase A K5 AUROC (0.841102, max|delta|=0.00e+00)
+[2026-10-03T13:09:55.874417+00:00] [M3-CONF b1 seed1] val cells materialised (60.3s)
+[2026-10-03T13:10:13.274020+00:00]   [M2 seed1] val random-C10 STOP ok (max|delta|=1.34e-05; 5231 rows)
+[2026-10-03T13:10:13.458043+00:00]     b1:seed1:E_curriculum: C=0.1 tune_balanced_auroc=0.8262
+[2026-10-03T13:10:13.723443+00:00]     b1:seed1:E_curriculum: C=1 tune_balanced_auroc=0.8258
+[2026-10-03T13:10:14.087093+00:00]     b1:seed1:E_curriculum: C=10 tune_balanced_auroc=0.8256
+[2026-10-03T13:10:14.087093+00:00]     b1:seed1:E_curriculum: chosen C=0.1 (tie rule)
+[2026-10-03T13:10:14.087093+00:00] [M3-CONF b1 seed1] E_curriculum trained (C=0.1, tune balanced AUROC=0.8262)
+[2026-10-03T13:10:14.089076+00:00] [M3-CONF b1 seed1] competition index fitted (train-only CDF)
+[2026-10-03T13:10:14.124625+00:00] [M3-CONF b1 seed1] mixers fitted on tune m={0,2,4}: c=0.8152 theta=2.4334 tau=0.0334 beta=2.5175
+[2026-10-03T13:11:48.433846+00:00] [M3-CONF b1 seed1] frozen test cells scored (94.3s)
+[2026-10-03T13:11:48.547110+00:00]   [M3-CONF b1 seed1] m0: dAUROC(A-S)=+0.0002
+[2026-10-03T13:11:48.634633+00:00]   [M3-CONF b1 seed1] m2: dAUROC(A-S)=+0.0006
+[2026-10-03T13:11:48.737964+00:00]   [M3-CONF b1 seed1] m4: dAUROC(A-S)=+0.0006
+[2026-10-03T13:11:48.839798+00:00]   [M3-CONF b1 seed1] m8: dAUROC(A-S)=-0.0005
+[2026-10-03T13:11:48.856031+00:00] [M3-CONF b1 seed1] done in 178.7s (anchor phaseA 0.00e+00; dose max 5.29e-07; val stop 1.34e-05)
+[2026-10-03T13:11:49.103770+00:00] v2m_m3_conf_b1_seed_1 FAILED: AssertionError: M3_1_committed_point_metrics ('m0', 'E_curriculum', 1)/auroc_correct: observed=0.82784455131171097 expected=0.82784445877347601 abs_error=9.254e-08 > 1e-09
+[2026-10-03T13:12:21.643852+00:00] [M3-CONF b1 seed2] start (T_corrected=1.070724)
+[2026-10-03T13:12:27.098545+00:00] [M3-CONF b1 seed2] E_random reproduces V2-G Phase A K5 AUROC (0.835842, max|delta|=0.00e+00)
+[2026-10-03T13:13:27.074706+00:00] [M3-CONF b1 seed2] val cells materialised (60.0s)
+[2026-10-03T13:13:43.326816+00:00]   [M2 seed2] val random-C10 STOP ok (max|delta|=1.34e-05; 5231 rows)
+[2026-10-03T13:13:43.427263+00:00]     b1:seed2:E_curriculum: C=0.1 tune_balanced_auroc=0.8192
+[2026-10-03T13:13:43.626719+00:00]     b1:seed2:E_curriculum: C=1 tune_balanced_auroc=0.8198
+[2026-10-03T13:13:43.926890+00:00]     b1:seed2:E_curriculum: C=10 tune_balanced_auroc=0.8196
+[2026-10-03T13:13:43.926890+00:00]     b1:seed2:E_curriculum: chosen C=0.1 (tie rule)
+[2026-10-03T13:13:43.926890+00:00] [M3-CONF b1 seed2] E_curriculum trained (C=0.1, tune balanced AUROC=0.8192)
+[2026-10-03T13:13:43.928876+00:00] [M3-CONF b1 seed2] competition index fitted (train-only CDF)
+[2026-10-03T13:13:43.961097+00:00] [M3-CONF b1 seed2] mixers fitted on tune m={0,2,4}: c=0.8317 theta=3.6989 tau=0.1970 beta=3.7234
+[2026-10-03T13:15:20.664627+00:00] [M3-CONF b1 seed2] frozen test cells scored (96.7s)
+[2026-10-03T13:15:20.795477+00:00]   [M3-CONF b1 seed2] m0: dAUROC(A-S)=+0.0004
+[2026-10-03T13:15:20.876088+00:00]   [M3-CONF b1 seed2] m2: dAUROC(A-S)=+0.0007
+[2026-10-03T13:15:20.952565+00:00]   [M3-CONF b1 seed2] m4: dAUROC(A-S)=+0.0007
+[2026-10-03T13:15:21.026980+00:00]   [M3-CONF b1 seed2] m8: dAUROC(A-S)=-0.0012
+[2026-10-03T13:15:21.044932+00:00] [M3-CONF b1 seed2] done in 179.4s (anchor phaseA 0.00e+00; dose max 3.76e-07; val stop 1.34e-05)
+[2026-10-03T13:15:21.295705+00:00] v2m_m3_conf_b1_seed_2 FAILED: AssertionError: M3_1_committed_point_metrics ('m0', 'E_curriculum', 2)/auroc_correct: observed=0.82284197408010107 expected=0.82284188226259269 abs_error=9.182e-08 > 1e-09
+[2026-10-03T13:15:57.666221+00:00] [M3-CONF b1 seed3] start (T_corrected=1.057322)
+[2026-10-03T13:16:02.973552+00:00] [M3-CONF b1 seed3] E_random reproduces V2-G Phase A K5 AUROC (0.834251, max|delta|=0.00e+00)
+[2026-10-03T13:17:24.363145+00:00] [M3-CONF b1 seed3] val cells materialised (81.4s)
+[2026-10-03T13:17:48.276420+00:00]   [M2 seed3] val random-C10 STOP ok (max|delta|=1.24e-05; 5231 rows)
+[2026-10-03T13:17:48.384709+00:00]     b1:seed3:E_curriculum: C=0.1 tune_balanced_auroc=0.8299
+[2026-10-03T13:17:48.580733+00:00]     b1:seed3:E_curriculum: C=1 tune_balanced_auroc=0.8302
+[2026-10-03T13:17:48.909449+00:00]     b1:seed3:E_curriculum: C=10 tune_balanced_auroc=0.8301
+[2026-10-03T13:17:48.910183+00:00]     b1:seed3:E_curriculum: chosen C=0.1 (tie rule)
+[2026-10-03T13:17:48.910183+00:00] [M3-CONF b1 seed3] E_curriculum trained (C=0.1, tune balanced AUROC=0.8299)
+[2026-10-03T13:17:48.911239+00:00] [M3-CONF b1 seed3] competition index fitted (train-only CDF)
+[2026-10-03T13:17:48.922328+00:00] [M3-CONF b1 seed3] mixers fitted on tune m={0,2,4}: c=0.9721 theta=2.1009 tau=-3.4190 beta=2.2164
+[2026-10-03T13:19:55.009853+00:00] [M3-CONF b1 seed3] frozen test cells scored (126.1s)
+[2026-10-03T13:19:55.106861+00:00]   [M3-CONF b1 seed3] m0: dAUROC(A-S)=-0.0002
+[2026-10-03T13:19:55.185601+00:00]   [M3-CONF b1 seed3] m2: dAUROC(A-S)=-0.0000
+[2026-10-03T13:19:55.262259+00:00]   [M3-CONF b1 seed3] m4: dAUROC(A-S)=+0.0001
+[2026-10-03T13:19:55.339933+00:00]   [M3-CONF b1 seed3] m8: dAUROC(A-S)=+0.0004
+[2026-10-03T13:19:55.356153+00:00] [M3-CONF b1 seed3] done in 237.7s (anchor phaseA 0.00e+00; dose max 4.59e-07; val stop 1.24e-05)
+[2026-10-03T13:19:55.622288+00:00] v2m_m3_conf_b1_seed_3 FAILED: AssertionError: M3_1_committed_point_metrics ('m0', 'E_curriculum', 3)/auroc_correct: observed=0.83023033518105915 expected=0.83023005989869059 abs_error=2.753e-07 > 1e-09
+[2026-10-03T13:20:54.043947+00:00] [M3-CONF b2 seed1] start (T_corrected=1.148514)
+[2026-10-03T13:21:07.762353+00:00] [M3-CONF b2 seed1] E_random reproduces V2-G Phase A K5 AUROC (0.793547, max|delta|=0.00e+00)
+[2026-10-03T13:22:18.321403+00:00] [M3-CONF b2 seed1] val cells materialised (70.6s)
+[2026-10-03T13:22:38.669667+00:00]   [M2 seed1] val random-C10 STOP ok (max|delta|=2.29e-05; 5231 rows)
+[2026-10-03T13:22:38.848953+00:00]     b2:seed1:E_curriculum: C=0.1 tune_balanced_auroc=0.7700
+[2026-10-03T13:22:39.119214+00:00]     b2:seed1:E_curriculum: C=1 tune_balanced_auroc=0.7702
+[2026-10-03T13:22:39.544454+00:00]     b2:seed1:E_curriculum: C=10 tune_balanced_auroc=0.7699
+[2026-10-03T13:22:39.545064+00:00]     b2:seed1:E_curriculum: chosen C=0.1 (tie rule)
+[2026-10-03T13:22:39.545064+00:00] [M3-CONF b2 seed1] E_curriculum trained (C=0.1, tune balanced AUROC=0.7700)
+[2026-10-03T13:22:39.547603+00:00] [M3-CONF b2 seed1] competition index fitted (train-only CDF)
+[2026-10-03T13:22:39.571619+00:00] [M3-CONF b2 seed1] mixers fitted on tune m={0,2,4}: c=0.9837 theta=1.9896 tau=-3.5026 beta=2.1178
+[2026-10-03T13:24:22.334983+00:00] [M3-CONF b2 seed1] frozen test cells scored (102.8s)
+[2026-10-03T13:24:22.473830+00:00]   [M3-CONF b2 seed1] m0: dAUROC(A-S)=-0.0005
+[2026-10-03T13:24:22.552952+00:00]   [M3-CONF b2 seed1] m2: dAUROC(A-S)=+0.0001
+[2026-10-03T13:24:22.639793+00:00]   [M3-CONF b2 seed1] m4: dAUROC(A-S)=+0.0004
+[2026-10-03T13:24:22.727985+00:00]   [M3-CONF b2 seed1] m8: dAUROC(A-S)=+0.0006
+[2026-10-03T13:24:22.743086+00:00] [M3-CONF b2 seed1] done in 208.7s (anchor phaseA 0.00e+00; dose max 2.24e-07; val stop 2.29e-05)
+[2026-10-03T13:24:23.077874+00:00] v2m_m3_conf_b2_seed_1 FAILED: AssertionError: M3_1_committed_point_metrics ('m0', 'StaticMix', 1)/auroc_correct: observed=0.83527067830597723 expected=0.83527049758630811 abs_error=1.807e-07 > 1e-09
+[2026-10-03T13:25:37.287463+00:00] [M3-CONF b2 seed2] start (T_corrected=1.141440)
+[2026-10-03T13:25:46.586821+00:00] [M3-CONF b2 seed2] E_random reproduces V2-G Phase A K5 AUROC (0.789536, max|delta|=0.00e+00)
+[2026-10-03T13:26:57.781869+00:00] [M3-CONF b2 seed2] val cells materialised (71.2s)
+[2026-10-03T13:27:15.923184+00:00]   [M2 seed2] val random-C10 STOP ok (max|delta|=1.87e-05; 5231 rows)
+[2026-10-03T13:27:16.147370+00:00]     b2:seed2:E_curriculum: C=0.1 tune_balanced_auroc=0.7763
+[2026-10-03T13:27:16.385738+00:00]     b2:seed2:E_curriculum: C=1 tune_balanced_auroc=0.7768
+[2026-10-03T13:27:16.679616+00:00]     b2:seed2:E_curriculum: C=10 tune_balanced_auroc=0.7770
+[2026-10-03T13:27:16.680173+00:00]     b2:seed2:E_curriculum: chosen C=0.1 (tie rule)
+[2026-10-03T13:27:16.680173+00:00] [M3-CONF b2 seed2] E_curriculum trained (C=0.1, tune balanced AUROC=0.7763)
+[2026-10-03T13:27:16.682285+00:00] [M3-CONF b2 seed2] competition index fitted (train-only CDF)
+[2026-10-03T13:27:16.751652+00:00] [M3-CONF b2 seed2] mixers fitted on tune m={0,2,4}: c=0.8214 theta=8.2550 tau=0.3575 beta=8.2553
+[2026-10-03T13:29:11.560723+00:00] [M3-CONF b2 seed2] frozen test cells scored (114.8s)
+[2026-10-03T13:29:11.700411+00:00]   [M3-CONF b2 seed2] m0: dAUROC(A-S)=+0.0001
+[2026-10-03T13:29:11.819924+00:00]   [M3-CONF b2 seed2] m2: dAUROC(A-S)=+0.0020
+[2026-10-03T13:29:11.926649+00:00]   [M3-CONF b2 seed2] m4: dAUROC(A-S)=+0.0031
+[2026-10-03T13:29:12.027489+00:00]   [M3-CONF b2 seed2] m8: dAUROC(A-S)=-0.0009
+[2026-10-03T13:29:12.045045+00:00] [M3-CONF b2 seed2] done in 214.8s (anchor phaseA 0.00e+00; dose max 6.27e-07; val stop 1.87e-05)
+[2026-10-03T13:29:12.376399+00:00] v2m_m3_conf_b2_seed_2 FAILED: AssertionError: M3_1_committed_point_metrics ('m0', 'E_curriculum', 2)/auroc_correct: observed=0.83442950212180977 expected=0.83442941357471268 abs_error=8.855e-08 > 1e-09
+[2026-10-03T13:31:13.619785+00:00] [M3-CONF b2 seed3] start (T_corrected=1.103373)
+[2026-10-03T13:31:21.714580+00:00] [M3-CONF b2 seed3] E_random reproduces V2-G Phase A K5 AUROC (0.790009, max|delta|=0.00e+00)
+[2026-10-03T13:32:57.157241+00:00] [M3-CONF b2 seed3] val cells materialised (95.4s)
+[2026-10-03T13:33:29.143946+00:00]   [M2 seed3] val random-C10 STOP ok (max|delta|=1.91e-05; 5231 rows)
+[2026-10-03T13:33:29.402572+00:00]     b2:seed3:E_curriculum: C=0.1 tune_balanced_auroc=0.7862
+[2026-10-03T13:33:29.673723+00:00]     b2:seed3:E_curriculum: C=1 tune_balanced_auroc=0.7864
+[2026-10-03T13:33:30.023672+00:00]     b2:seed3:E_curriculum: C=10 tune_balanced_auroc=0.7863
+[2026-10-03T13:33:30.024239+00:00]     b2:seed3:E_curriculum: chosen C=0.1 (tie rule)
+[2026-10-03T13:33:30.024813+00:00] [M3-CONF b2 seed3] E_curriculum trained (C=0.1, tune balanced AUROC=0.7862)
+[2026-10-03T13:33:30.028574+00:00] [M3-CONF b2 seed3] competition index fitted (train-only CDF)
+[2026-10-03T13:33:30.100272+00:00] [M3-CONF b2 seed3] mixers fitted on tune m={0,2,4}: c=0.9415 theta=5.7096 tau=0.1839 beta=5.7129
+[2026-10-03T13:36:15.392815+00:00] [M3-CONF b2 seed3] frozen test cells scored (165.3s)
+[2026-10-03T13:36:15.500764+00:00]   [M3-CONF b2 seed3] m0: dAUROC(A-S)=+0.0041
+[2026-10-03T13:36:15.585944+00:00]   [M3-CONF b2 seed3] m2: dAUROC(A-S)=+0.0006
+[2026-10-03T13:36:15.685243+00:00]   [M3-CONF b2 seed3] m4: dAUROC(A-S)=-0.0007
+[2026-10-03T13:36:15.773184+00:00]   [M3-CONF b2 seed3] m8: dAUROC(A-S)=-0.0037
+[2026-10-03T13:36:15.787760+00:00] [M3-CONF b2 seed3] done in 302.2s (anchor phaseA 0.00e+00; dose max 2.97e-07; val stop 1.91e-05)
+[2026-10-03T13:36:16.136702+00:00] v2m_m3_conf_b2_seed_3 FAILED: AssertionError: M3_1_committed_point_metrics ('m0', 'E_curriculum', 3)/e_aurc: observed=0.056762275645773394 expected=0.056762276928089314 abs_error=1.282e-09 > 1e-09
+[2026-10-03T13:36:16.742784+00:00] FINISH run_id=20261003T130700Z status=FAILED_UNVERIFIABLE jobs=0 failures=6

@@ -1,0 +1,55 @@
+{
+  "classification": "INTERMEDIATE_CHECKS_NOT_FINAL_ACCEPTANCE",
+  "checks": [
+    {
+      "command": "pytest tests/test_rq4_m1_material_bank.py tests/test_v2_governance_closeout.py",
+      "passed": 39,
+      "failed": 0
+    },
+    {
+      "command": "pytest tests/test_repair_integration.py",
+      "passed": 2,
+      "failed": 0
+    },
+    {
+      "command": "pytest tests/test_repair_integration.py -q",
+      "passed": 4,
+      "failed": 0,
+      "status": "INTERMEDIATE",
+      "detail": "includes pilot exclusion and preservation of formal effect intervals"
+    },
+    {
+      "command": "pytest tests -q offline threads2",
+      "passed": 1165,
+      "failed": 3,
+      "errors": 5,
+      "skipped": 2,
+      "total": 1175,
+      "duration_seconds": 224.97,
+      "log": "logs/pytest_full_attempt1.log",
+      "junit": "logs/pytest_full_attempt1.xml",
+      "status": "NOT_FINAL_ACCEPTANCE"
+    },
+    {
+      "command": "pytest tests/test_v2_p_program_summary.py tests/test_repair_integration.py -q",
+      "passed": 22,
+      "failed": 0,
+      "status": "INTERMEDIATE"
+    }
+  ],
+  "full_suite": "ATTEMPT1_1165_PASS_3_FAIL_5_ERROR_2_SKIP_NOT_ACCEPTED",
+  "final_hash": "NOT_YET_RUN",
+  "publication_qa": {
+    "figure": "publication/figure_temperature_gap.png",
+    "status": "VISUALLY_INSPECTED",
+    "detail": "testA/testB labels, signed AUROC gap, zero reference and stored 95% intervals legible; no inference from overlapping endpoint CIs",
+    "additional_figures": [
+      "publication/figure_controlled_interface.png",
+      "publication/figure_expansion_endpoints.png",
+      "publication/figure_mechanism_paths.png",
+      "publication/figure_information_sources.png",
+      "publication/figure_cross_k_training.png"
+    ],
+    "additional_detail": "All listed PNGs visually inspected: labels and stored intervals legible. B plots read completed nine-call artifacts; absolute cross-K intervals explicitly do not substitute for paired differences or DoD."
+  }
+}

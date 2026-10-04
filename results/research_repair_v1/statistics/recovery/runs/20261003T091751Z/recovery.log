@@ -1,0 +1,21 @@
+[2026-10-03T09:17:52.066288+00:00] START run_id=20261003T091751Z scope=m25-m3b0 pid=55508 g4_device=cuda BLAS=2
+[2026-10-03T09:17:57.176025+00:00] [hard] pooled rows=10286 images=1490 refs=3647
+[2026-10-03T09:17:57.176025+00:00] [hard]   same4: rows=9487 images=1424 refs=3369
+[2026-10-03T09:17:57.177031+00:00] [hard]   same8: rows=7410 images=1189 refs=2643
+[2026-10-03T09:17:57.177031+00:00] [hard]   same9: rows=6765 images=1085 refs=2419
+[2026-10-03T09:18:37.634850+00:00] [M3-B0 seed1] start (T_corrected=1.115344)
+[2026-10-03T09:18:44.550171+00:00] [M3-B0 seed1] E_random reproduces M1 confidences (max|delta|=2.22e-16)
+[2026-10-03T09:19:02.704127+00:00] [M3-B0 seed1] val cells + curriculum standardisation rebuilt (18.2s)
+[2026-10-03T09:19:02.707443+00:00] [M3-B0 seed1] competition index fitted on train-only CDF: {'winner_competitor_max_cos': {'n': 10630, 'min': 0.17833380388083242, 'median': 0.7908610345311899, 'max': 0.9910241475779458}, 'winner_top2_cos': {'n': 10630, 'min': 0.1568753148981159, 'median': 0.7187619200890367, 'max': 0.9910241475779458}, 'q_margin12': {'n': 10630, 'min': -0.18263816260423482, 'median': 0.015172185006122163, 'max': 0.27027448650179053}}
+[2026-10-03T09:19:02.754136+00:00] [M3-B0 seed1] mixers fitted on tune m={0,2,4}: c=0.6167 theta=0.6800 tau=0.0856 beta=1.0899
+[2026-10-03T09:19:05.461188+00:00]   [M2 seed1] expb_m0: STOP ok (max|delta|=1.17e-05); 7410 rows / 1189 images; b3_accuracy=0.7426
+[2026-10-03T09:19:07.898856+00:00]   [M2 seed1] expb_m2: STOP ok (max|delta|=1.25e-05); 7410 rows / 1189 images; b3_accuracy=0.5984
+[2026-10-03T09:19:10.349536+00:00]   [M2 seed1] expb_m4: STOP ok (max|delta|=1.25e-05); 7410 rows / 1189 images; b3_accuracy=0.5614
+[2026-10-03T09:19:12.859573+00:00]   [M2 seed1] expb_m8: STOP ok (max|delta|=1.34e-05); 7410 rows / 1189 images; b3_accuracy=0.5412
+[2026-10-03T09:19:12.866572+00:00] [M3-B0 seed1] frozen test cells loaded (10.1s)
+[2026-10-03T09:19:13.238546+00:00]   [M3-B0 seed1] m0: adaptive-static dAUROC=-0.0001
+[2026-10-03T09:19:13.330095+00:00]   [M3-B0 seed1] m2: adaptive-static dAUROC=+0.0003
+[2026-10-03T09:19:13.434310+00:00]   [M3-B0 seed1] m4: adaptive-static dAUROC=+0.0006
+[2026-10-03T09:19:13.534669+00:00]   [M3-B0 seed1] m8: adaptive-static dAUROC=+0.0004
+[2026-10-03T09:19:13.551025+00:00] [M3-B0 seed1] done in 35.9s (repro rand 2.22e-16, curr 8.14e-11)
+[2026-10-03T09:19:13.691940+00:00] v2m_m3_b0_seed_1 FAILED: AssertionError: original point-metric call order changed: 48 != 49

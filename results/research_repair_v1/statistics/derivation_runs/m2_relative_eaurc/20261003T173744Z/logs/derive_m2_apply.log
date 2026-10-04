@@ -1,0 +1,15 @@
+{
+  "status": "DERIVED_AND_WRITTEN",
+  "job_id": "m2_curriculum_m0_m2_m4_m8",
+  "estimate": "m8__LCR_E1b_relative_eaurc_reduction",
+  "source_raw_replicates": "results/research_repair_v1/statistics/raw_replicates/m2_curriculum_m0_m2_m4_m8.npz",
+  "source_raw_replicates_sha256": "15d6cbdc08adb6c97d8d3bc5daa134d2b9d0879b69221ae06ef4dce054562ce9",
+  "output_raw_replicates": "results/research_repair_v1/statistics/raw_replicates/m2_curriculum_m0_m2_m4_m8__m2_relative_auxiliary.npz",
+  "output_raw_replicates_sha256": "747a6097aeb9c0c6ee724df9ec213daba8e13864050161a3ef8d9a03d5eb5738",
+  "point": -0.03395720018099881,
+  "ci_low": -0.05759964912852949,
+  "ci_high": -0.011061452466178219,
+  "valid_replicates": 5000,
+  "invalid_replicates": 0,
+  "gate_eligible": true
+}

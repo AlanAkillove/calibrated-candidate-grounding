@@ -1,0 +1,44 @@
+{
+  "schema": "ccg.research_repair_v1.recovery_attempt_classification.v1",
+  "run_id": "20261003T125700Z",
+  "scope": "m3-conf",
+  "status": "ABORTED_RUNNER_DEFECT_RETRY_REQUIRED",
+  "classified_utc": "2026-10-03T13:05:18Z",
+  "attempted_route": [
+    "load frozen V2-G Phase-A B1 checkpoint and verify stored K5 AUROC",
+    "run original M3.1 M2 curriculum fit and tune-only CDF/mixer fit",
+    "score frozen m0/m2/m4/m8 predictions",
+    "capture original point_metric_row outputs for archive and strict point anchors"
+  ],
+  "failure_classification": "RUNNER_DEFECT_RETRY_REQUIRED",
+  "defect": {
+    "observed_capture_calls": 49,
+    "wrapper_expected_calls": 53,
+    "original_call_layout": "1 Phase-A anchor + 4 severity levels * 12 calls; each level has 1 random dose-anchor AUROC (reused as E_random), 5 model metric rows, 1 E_curriculum AUROC, and 5 regret AUROCs",
+    "fit_and_inference_completed_for": [
+      "b1 seed1"
+    ],
+    "strict_point_anchor_check": "not reached; no model mismatch conclusion",
+    "b1_seed2": "started and Phase-A K5 anchor passed; interrupted before curriculum fit because same deterministic wrapper defect would recur"
+  },
+  "anchor_evidence": {
+    "phase_a_k5_max_abs_delta": 0.0,
+    "phase_a_k5_tolerance": 1e-09,
+    "dose_rescore_max_abs_delta": 5.29e-07,
+    "dose_rescore_tolerance": 0.0001,
+    "validation_stop_max_abs_delta": 1.34e-05,
+    "validation_stop_source_tolerance": "original M2 STOP tolerance"
+  },
+  "original_point_metric_tolerance": 1e-09,
+  "source_sha256": {
+    "results/v2_backbone_generalization/g4_protocol_freeze.json": "6845a3f9143fbcdd275257ebf51cd882e25281aa63913250ed57cc247139bb8b",
+    "scripts/run_v2g_hard.py": "61fef9a224bd580d88108900447cfb3d4cf1b637c38431a648386723378f7697",
+    "scripts/run_v2m_m2.py": "f1b01a9f073710e14900fb825e88b4ffacba1ad822030515542720984495336a",
+    "scripts/run_v2m_m3_conf.py": "a2aae27c54ebb72d9df7d73816e5a3fa85f4cf3f730bcb8bba5f8315a138eee0"
+  },
+  "attempt_source_provenance_path": "results/research_repair_v1/statistics/recovery/runs/20261003T125700Z/attempt_source_provenance_manifest.json",
+  "log_path": "results/research_repair_v1/statistics/recovery/runs/20261003T125700Z/recovery.log",
+  "log_sha256": "80c0608337016b1a3eb48f76f5b76055e0f5f31cab619741ecd2ae99837d4ea6",
+  "formal_bootstrap_ran": false,
+  "archives_written": 0
+}

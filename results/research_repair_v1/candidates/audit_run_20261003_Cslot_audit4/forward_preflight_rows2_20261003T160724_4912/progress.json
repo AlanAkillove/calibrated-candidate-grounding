@@ -1,0 +1,11 @@
+{
+  "schema": "research-repair-v1-candidate-forward-progress-v1",
+  "status": "PARTIAL",
+  "audit_run_id": "20261003_Cslot_audit4",
+  "completed_sources": [
+    "RPN/phase1f_frozen_candidate_archive/hard5",
+    "RPN/phase1f_frozen_candidate_archive/hard10"
+  ],
+  "n_sources": 8,
+  "device": "cuda"
+}

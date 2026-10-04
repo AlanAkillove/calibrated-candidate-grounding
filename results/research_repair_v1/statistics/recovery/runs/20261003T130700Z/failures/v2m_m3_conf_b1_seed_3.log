@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_legacy_model_recovery.py", line 1113, in _recover_m3_conf
+    point_checks = _check_existing_point_table(
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_legacy_model_recovery.py", line 1031, in _check_existing_point_table
+    raise AssertionError(
+AssertionError: M3_1_committed_point_metrics ('m0', 'E_curriculum', 3)/auroc_correct: observed=0.83023033518105915 expected=0.83023005989869059 abs_error=2.753e-07 > 1e-09
+

@@ -1,0 +1,100 @@
+{
+  "status": "COMPLETE_WITH_RETAINED_LIMITS",
+  "completed": true,
+  "reason": "Three independent-review corrections are implemented and regression-verified; versioned execution acceptance PASS. Original independent conditional verdict and scientific/provenance limitations are retained.",
+  "agent_model": "gpt-6-luna",
+  "reasoning_effort": "max",
+  "stages": {
+    "statistics": "COMPLETE_59_JOBS_6646_ESTIMATES_23_TERMINAL_GATES_M3_UNVERIFIABLE",
+    "information": "COMPLETE_9_CALLS_1860_ESTIMATES_RAW_QA_PASS",
+    "candidates": "COMPLETE_15_GROUPS_24_MAPPINGS_1404_ESTIMATES_METADATA_RAW_QA_PASS",
+    "mechanism": "COMPLETE_45_ESTIMATES_RAW_QA_PASS",
+    "integration": "COMPLETE_THREE_REVIEW_CORRECTIONS_1238_PASS_TWO_ORIGINAL_SKIPS_STABLE_SOURCE",
+    "acceptance": "VERSIONED_EXECUTION_PASS_INDEPENDENT_CONDITIONAL_VERDICT_PRESERVED"
+  },
+  "updated_utc": "2026-10-04T03:56:24.272388+00:00",
+  "agents": {
+    "a_statistics": {
+      "task_name": "/root/a_statistics",
+      "model": "gpt-6-luna",
+      "reasoning_effort": "max",
+      "fork_turns": "none",
+      "state": "COMPLETE",
+      "pid": null,
+      "session_id": null,
+      "log": "results/research_repair_v1/statistics/logs/repair_stats_31jobs_20261003T133926Z.log"
+    },
+    "b_information": {
+      "task_name": "/root/b_information",
+      "model": "gpt-6-luna",
+      "reasoning_effort": "max",
+      "fork_turns": "none",
+      "state": "COMPLETE",
+      "attempt1_pid": 41032,
+      "attempt1_result": "Failed before training: incorrect cross-K correctness equality; identity fields must align but labels can change",
+      "attempt2_pid": 27164,
+      "attempt2_result": "Failed before training: strict frozen logistic recovery error 6.066e-8 under BLAS2 exceeds unchanged 1e-9 tolerance",
+      "pid": null,
+      "session_id": null,
+      "log": "results/research_repair_v1/logs/pytest_full_final.log",
+      "attempt3_detail": "seed1 four Logistic groups complete; original CPU float32 ScoreDeepSets small K training begun; BLAS/Torch2; old refit strict UNVERIFIABLE under allowed thread counts",
+      "attempt3_result": "All three-seed Logistic and small/large ScoreDeepSets training completed; reference-check postprocessing failed TypeError NoneType len; saved models retained"
+    },
+    "c_candidates": {
+      "task_name": "/root/c_candidates",
+      "model": "gpt-6-luna",
+      "reasoning_effort": "max",
+      "fork_turns": "none",
+      "state": "COMPLETE",
+      "pid": null,
+      "session_id": null,
+      "command": "E:/conda/envs/deepminer/python.exe -B scripts/repair_candidates.py --audit",
+      "log": "results/research_repair_v1/logs/final_input_verification_run_20261004.log",
+      "attempt1_result": "OUTPUT_IO_FAILURE; no summary; partial artifacts not complete",
+      "attempt2_result": "OUTPUT_IO_FAILURE at sensitivity geometry CSV; heavy process ended; no complete summary",
+      "attempt3_detail": "atomic writer; audit only; no forward or bootstrap",
+      "attempt3_result": "WinError32 target CSV lock on atomic replacement; audit incomplete; original partial preserved"
+    }
+  },
+  "completed_utc": "2026-10-04T03:56:24.272388+00:00",
+  "verification": {
+    "raw_estimate_counts": {
+      "statistics": 6646,
+      "information": 1860,
+      "candidates": 1404,
+      "mechanism": 45
+    },
+    "raw_estimate_total": 9955,
+    "immutable_input_files": 834,
+    "input_manifests": 5,
+    "test_total": 1240,
+    "test_passed": 1238,
+    "test_skipped": 2,
+    "python_source_files_tested": 262,
+    "source_unchanged_during_tests": true,
+    "acceptance_report": "independent_closeouts/20261004T031921Z/logs/acceptance_check.json",
+    "source_config_files_tested": 263,
+    "input_verification_report": "independent_closeouts/20261004T031921Z/logs/final_input_verification.json",
+    "full_test_source_report": "independent_closeouts/20261004T031921Z/logs/final_test_sources.json",
+    "raw_verification_report": "independent_closeouts/20261004T031921Z/logs/stored_estimate_verification.json"
+  },
+  "limitations": [
+    "M3 B0/B1/B2 recovery UNVERIFIABLE under repair wrapper committed-point replay criterion 1e-9. Original M3.1 frozen-store 1e-9 and dose-rescore 1e-4 anchors are separate; no original protocol committed-point cutoff is asserted; no new effect CI.",
+    "An early A batch lacks its launch-time source fingerprint; later source hash is not attributed to that execution.",
+    "No complete pre-derive SHA snapshot for all repair raw archives; current raw arithmetic/fingerprints PASS and M2 has derive-time source/read-after SHA.",
+    "Result-driven analyses reuse observed test distributions and are conditional on fixed trained seeds and GT-assisted target-present cohorts.",
+    "Adaptive ECE percentile intervals do not establish nominal coverage or population miscalibration from a positive lower endpoint alone.",
+    "Incremental V gains are conditional on cell/model/cohort; random K5 and dose m0 intervals include zero, and positive high-K/hard/dose estimates do not identify causal interactions."
+  ],
+  "independent_review": {
+    "report": "reviews/repair_acceptance_2026-10-04.md",
+    "verdict": "reviews/acceptance_2026-10-04/verdict.json",
+    "decision": "CONDITIONAL_ACCEPTANCE",
+    "closeout_directory": "independent_closeouts/20261004T031921Z",
+    "prior_delivery_preserved": true,
+    "required_corrections_status": "IMPLEMENTED_AND_REGRESSION_VERIFIED",
+    "execution_closeout": "independent_closeouts/20261004T031921Z/closeout.json",
+    "original_decision_not_overwritten": true,
+    "prior_delivery_completed_utc": "2026-10-03T18:03:24.200607+00:00"
+  }
+}

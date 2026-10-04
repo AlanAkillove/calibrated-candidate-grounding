@@ -1,0 +1,35 @@
+........................................................................ [  5%]
+........................................................................ [ 11%]
+........................................................................ [ 17%]
+........................................................................ [ 23%]
+........................................................................ [ 29%]
+........................................................................ [ 35%]
+........................................................................ [ 41%]
+........................................................................ [ 47%]
+........................................................................ [ 52%]
+....s.....................s............................................. [ 58%]
+........................................................................ [ 64%]
+........................................................................ [ 70%]
+........................................................................ [ 76%]
+........................................................................ [ 82%]
+........................................................................ [ 88%]
+........................................................................ [ 94%]
+........................................................................ [100%]
+============================== warnings summary ===============================
+tests\test_audit_subset.py:385
+  F:\DL Projects\calibrated-candidate-grounding\tests\test_audit_subset.py:385: PytestUnknownMarkWarning: Unknown pytest.mark.slow - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.slow
+
+tests\test_features_clip.py:43
+  F:\DL Projects\calibrated-candidate-grounding\tests\test_features_clip.py:43: PytestUnknownMarkWarning: Unknown pytest.mark.gpu - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    pytestmark = [pytest.mark.gpu, pytest.mark.slow]
+
+tests\test_features_clip.py:43
+  F:\DL Projects\calibrated-candidate-grounding\tests\test_features_clip.py:43: PytestUnknownMarkWarning: Unknown pytest.mark.slow - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    pytestmark = [pytest.mark.gpu, pytest.mark.slow]
+
+tests\test_features_siglip.py:38
+  F:\DL Projects\calibrated-candidate-grounding\tests\test_features_siglip.py:38: PytestUnknownMarkWarning: Unknown pytest.mark.slow - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    pytestmark = [pytest.mark.slow]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html

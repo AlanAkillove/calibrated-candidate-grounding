@@ -1,0 +1,35 @@
+{
+  "schema": "research-repair-v1-mechanism-progress-v1",
+  "status": "COMPLETE",
+  "analysis_kind": "FORMAL",
+  "completed_families": [
+    "RPN",
+    "DETR",
+    "GDINO"
+  ],
+  "currently_processing_family": null,
+  "family_artifacts": {
+    "RPN": {
+      "directory": "families/RPN",
+      "summary": "families/RPN/summary.json",
+      "bootstrap_ci": "families/RPN/bootstrap_ci.csv",
+      "bootstrap_raw_replicates": "families/RPN/bootstrap_raw_replicates.npz"
+    },
+    "DETR": {
+      "directory": "families/DETR",
+      "summary": "families/DETR/summary.json",
+      "bootstrap_ci": "families/DETR/bootstrap_ci.csv",
+      "bootstrap_raw_replicates": "families/DETR/bootstrap_raw_replicates.npz"
+    },
+    "GDINO": {
+      "directory": "families/GDINO",
+      "summary": "families/GDINO/summary.json",
+      "bootstrap_ci": "families/GDINO/bootstrap_ci.csv",
+      "bootstrap_raw_replicates": "families/GDINO/bootstrap_raw_replicates.npz"
+    }
+  },
+  "summary": "summary.json",
+  "n_replicates": 5000,
+  "seed": 0,
+  "ci_level": 0.95
+}

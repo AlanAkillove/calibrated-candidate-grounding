@@ -1,0 +1,60 @@
+{
+  "experiment": "Research Repair v1 B information source and ID/OOD",
+  "stages": {
+    "data_and_features": {
+      "started_utc": "2026-10-03T02:22:50Z",
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-03T03:26:00Z",
+      "detail": "canonical rows and cached embedding-derived features aligned",
+      "finished_utc": "2026-10-03T03:26:00Z"
+    },
+    "reference_recovery": {
+      "started_utc": "2026-10-03T02:26:13Z",
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-03T03:26:00Z",
+      "detail": "direct frozen bundle verified; exact historical refit remains separately UNVERIFIABLE",
+      "finished_utc": "2026-10-03T03:26:00Z"
+    },
+    "training": {
+      "started_utc": "2026-10-03T02:32:07Z",
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-03T03:26:01Z",
+      "detail": "loaded completed fixed checkpoints without refitting",
+      "progress": {
+        "seed": "b3_seed3",
+        "model": "Full",
+        "done": true
+      },
+      "finished_utc": "2026-10-03T03:26:01Z"
+    },
+    "reference_check": {
+      "started_utc": "2026-10-03T02:46:32Z",
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-03T03:26:06Z",
+      "detail": "legacy generic CSV model identities recorded; fixed S/Full source anchors and Phase 1F predictions checked",
+      "finished_utc": "2026-10-03T03:26:06Z"
+    },
+    "point_evaluation": {
+      "started_utc": "2026-10-03T03:15:10Z",
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-03T03:26:42Z",
+      "detail": "point metrics, predictions, reference checks, and 128-row diagnostics saved",
+      "finished_utc": "2026-10-03T03:26:42Z"
+    },
+    "formal_bootstrap": {
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-03T08:27:13Z",
+      "detail": "completed 9 shared-bootstrap calls, each with 5000 image-cluster replicates",
+      "started_utc": "2026-10-03T07:34:34Z",
+      "finished_utc": "2026-10-03T08:27:13Z"
+    },
+    "overall": {
+      "state": "COMPLETE",
+      "updated_utc": "2026-10-03T08:27:13Z",
+      "detail": "all B training, point evaluation, diagnostics, and formal shared image-cluster bootstrap calls are complete"
+    }
+  },
+  "current_stage": "formal_bootstrap",
+  "status": "COMPLETE",
+  "updated_utc": "2026-10-03T08:27:13Z"
+}

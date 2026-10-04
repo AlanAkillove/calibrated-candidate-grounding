@@ -1,0 +1,70 @@
+{
+  "schema": "research-repair-v1-m2-auxiliary-independent-raw-verification-v1",
+  "status": "PASS",
+  "failures": [],
+  "job_id": "m2_curriculum_m0_m2_m4_m8",
+  "estimate_name": "m8__LCR_E1b_relative_eaurc_reduction",
+  "n_estimates_job": 282,
+  "ledger_n_estimates": 282,
+  "ledger_name_set_exact": true,
+  "source_raw_replicates": "results/research_repair_v1/statistics/raw_replicates/m2_curriculum_m0_m2_m4_m8.npz",
+  "source_raw_sha256": "15d6cbdc08adb6c97d8d3bc5daa134d2b9d0879b69221ae06ef4dce054562ce9",
+  "output_raw_replicates": "results/research_repair_v1/statistics/raw_replicates/m2_curriculum_m0_m2_m4_m8__m2_relative_auxiliary.npz",
+  "output_raw_sha256": "747a6097aeb9c0c6ee724df9ec213daba8e13864050161a3ef8d9a03d5eb5738",
+  "endpoint_declared_raw_sha256": [],
+  "endpoint_declared_sha_status": "NOT_PRESENT_ON_ENDPOINT_ESTIMATE_ROWS",
+  "same_index_per_seed": {
+    "b3_seed1": {
+      "same_index_ratio_match": true,
+      "valid_replicates": 5000,
+      "shape": [
+        5000
+      ]
+    },
+    "b3_seed2": {
+      "same_index_ratio_match": true,
+      "valid_replicates": 5000,
+      "shape": [
+        5000
+      ]
+    },
+    "b3_seed3": {
+      "same_index_ratio_match": true,
+      "valid_replicates": 5000,
+      "shape": [
+        5000
+      ]
+    }
+  },
+  "aggregate_is_same_draw_seed_mean": true,
+  "derived_from": {
+    "raw_replicates": "results/research_repair_v1/statistics/raw_replicates/m2_curriculum_m0_m2_m4_m8.npz",
+    "raw_replicates_sha256": "15d6cbdc08adb6c97d8d3bc5daa134d2b9d0879b69221ae06ef4dce054562ce9",
+    "raw_seed_keys": {
+      "b3_seed1": {
+        "e1b": "seed_b3_seed1__m8__E1b::e_aurc",
+        "lcr": "seed_b3_seed1__m8__LCR::e_aurc"
+      },
+      "b3_seed2": {
+        "e1b": "seed_b3_seed2__m8__E1b::e_aurc",
+        "lcr": "seed_b3_seed2__m8__LCR::e_aurc"
+      },
+      "b3_seed3": {
+        "e1b": "seed_b3_seed3__m8__E1b::e_aurc",
+        "lcr": "seed_b3_seed3__m8__LCR::e_aurc"
+      }
+    },
+    "shared_draw_alignment": "same NPZ replicate index across all conditions and seeds; no random numbers drawn",
+    "historical_anchor": {
+      "path": "results/v2_local_competition/m2_curriculum/gate.json",
+      "sha256": "183b3314f5638a394c66eda4eea9b5af70a501372a3364a08284ce11c80a1944",
+      "seed_pointer_template": "/gates/selective_metrics/per_seed/{seed}/e_aurc_reduction",
+      "mean_pointer": "/gates/selective_metrics/e_aurc_reduction"
+    },
+    "derivation_module": "src/ccg/repairs/m2_auxiliary.py",
+    "derivation_module_sha256": "748d4c762baec8e84f88b377df2254a5b3875c106e1556bd980c5e6097b27942",
+    "derivation_script_sha256": "17a8866799999e478df9ac3ad5e27d0a36029c8cad023cb3ef7d2deac24b2d92"
+  },
+  "raw_arrays_loaded": true,
+  "resampling_performed": false
+}

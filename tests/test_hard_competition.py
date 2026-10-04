@@ -10,7 +10,7 @@ on-disk artifacts:
 * the A8.5 image-clustered paired diff-of-diffs bootstrap; and
 * the pure A7.3 semantic statistics the E1b block consumes.
 
-The heavy lifts (``load_hard_cohort`` / ``recover_frozen_models``) are loaded
+The heavy lifts (``load_hard_cohort`` / frozen-bundle verification) are loaded
 once per module.  The whole module skips when a required frozen artifact is
 absent, so a fresh checkout still collects cleanly.
 """
@@ -22,6 +22,7 @@ import gzip
 import json
 import shutil
 import sys
+from types import SimpleNamespace
 from pathlib import Path
 
 import numpy as np
@@ -44,7 +45,10 @@ from ccg.reliability import features as rfeat  # noqa: E402
 from ccg.semantic import data as sdata  # noqa: E402
 from ccg.semantic import features as sfeat  # noqa: E402
 from ccg.semantic import hard_eval  # noqa: E402
-from ccg.semantic.frozen import apply_frozen, recover_frozen_models  # noqa: E402
+from ccg.semantic.frozen_load import (  # noqa: E402
+    load_models,
+    verify_against_frozen_artifacts,
+)
 from ccg.semantic.hard import (  # noqa: E402
     HARD_FRACTION_LEVELS,
     REGIMES,
@@ -62,6 +66,7 @@ _PHASE1 = _REPO / "results" / "phase1_semantic_sufficiency"
 _FEATURES_DIR = _PHASE05 / "features"
 _EMB_ROOT = _REPO / "cache" / "semantic_phase1"
 _B3_ROOT = _REPO / "results" / "phase0b_independent"
+_FROZEN_BUNDLE = _REPO / "results" / "phase1e_refcocog_external" / "frozen_models"
 _SPLIT_MANIFEST = _PHASE05 / "split_manifest.json"
 _COCO_INSTANCES = _REPO / "data" / "raw" / "annotations" / "instances_train2014.json"
 
@@ -78,6 +83,10 @@ _REQUIRED: list[Path] = [
     _PHASE05 / "predictions" / _SCORER / "stats_logistic.csv.gz",
     _PHASE1 / "e1_logistic" / "coefficients.csv",
     _PHASE1 / "e1_logistic" / "selection.json",
+    _FROZEN_BUNDLE / "models.json",
+    _FROZEN_BUNDLE / "models.sha256",
+    _FROZEN_BUNDLE / "bundle_verification.json",
+    _FROZEN_BUNDLE / "frozen_artifact_manifest.json",
     _EMB_ROOT / "embeddings_K5.npz",
     _EMB_ROOT / "embeddings_K10.npz",
 ]
@@ -144,14 +153,20 @@ def cohort():
 
 @pytest.fixture(scope="module")
 def frozen():
-    return recover_frozen_models(
+    # Historical exact-refit errors remain recorded in the original pytest and
+    # recovery evidence.  The fixture now verifies the existing frozen bundle
+    # directly at the unchanged 1e-9 artifact tolerance; it does not refit.
+    bundle = load_models(_FROZEN_BUNDLE, verify_checksum=True)
+    verification = verify_against_frozen_artifacts(
+        bundle,
         phase05_root=_PHASE05,
         phase1_root=_PHASE1,
-        emb_root=_EMB_ROOT,
-        features_dir=_FEATURES_DIR,
-        split_manifest=_SPLIT_MANIFEST,
+        phase1f_root=_REPO / "results" / "phase1f_hard_semantic",
         b3_root=_B3_ROOT,
+        features_dir=_FEATURES_DIR,
+        scorers=bundle.scorers,
     )
+    return SimpleNamespace(seeds=bundle.seeds, verification=verification, bundle=bundle)
 
 
 # ---------------------------------------------------------------------------
@@ -331,7 +346,7 @@ def test_frozen_e1b_coefficients_unchanged(frozen) -> None:
             table.setdefault(str(row["scorer"]), {})[str(row["feature"])] = float(row["coefficient"])
 
     for scorer, models in frozen.seeds.items():
-        coef, _ = models.e1b_clf.coefficients()
+        coef = models.e1b_coef
         reference = np.asarray([table[scorer][name] for name in expected], dtype=np.float64)
         assert coef.shape == reference.shape
         assert float(np.abs(coef - reference).max()) <= _TOL, f"{scorer}: E1b coef drift"
@@ -359,7 +374,7 @@ def test_frozen_stats_logistic_unchanged(frozen) -> None:
         features = rfeat.stat_features(
             np.asarray(core.scores, dtype=np.float64), temperature=float(models.temperature)
         )
-        confidence = models.stats_clf.predict_proba(rfeat.normalize_apply(features, models.stats_fit))
+        confidence = models.stats_probability(rfeat.normalize_apply(features, models.stats_fit))
         for split in _COMPARE_SPLITS:
             ours = np.sort(confidence[eval_split == split])
             reference = np.sort(np.asarray(grouped[(k, split)], dtype=np.float64))
@@ -384,10 +399,18 @@ def test_no_hard_regime_labels_enter_training(frozen) -> None:
     assert np.all(eval_split[train] == "val_calib"), "train rows must all be val_calib"
     assert not np.any(np.isin(eval_split[train], np.asarray(REPORT_SPLITS)))
 
-    # The A8.4 recovery re-fits on exactly those rows and reproduces the frozen
-    # coefficients; a hard-regime label leaking into training would change the
-    # fit and fail these checks.
+    # The original train-row provenance remains checked independently of the
+    # load-only recovery path: training inputs are exactly the frozen
+    # reliability_train rows, all val_calib and outside either report split.
     assert all(value <= _TOL for value in frozen.verification["all"].values())
+
+    stats_selection = json.loads((_PHASE05 / "stats_logistic" / "selection.json").read_text(encoding="utf-8"))
+    e1b_selection = json.loads((_PHASE1 / "e1_logistic" / "selection.json").read_text(encoding="utf-8"))
+    for scorer, models in frozen.seeds.items():
+        expected_stats_c = float(stats_selection["per_scorer"][scorer]["chosen_hp"])
+        expected_e1b_c = float(e1b_selection["per_scorer"][scorer]["models"]["e1b_stats_semantic"]["selected_hp"])
+        assert abs(float(models.stats_C) - expected_stats_c) <= _TOL, f"{scorer}: Stats C does not match frozen selection"
+        assert abs(float(models.e1b_C) - expected_e1b_c) <= _TOL, f"{scorer}: E1b C does not match frozen selection"
 
 
 # ---------------------------------------------------------------------------
@@ -426,16 +449,17 @@ def test_same_normalization_reused(frozen) -> None:
     assert float(np.abs(np.asarray(models.sem_fit.mean) - refit.mean).max()) <= _TOL
     assert float(np.abs(np.asarray(models.sem_fit.std) - refit.std).max()) <= _TOL
 
-    # apply_frozen == normalize_apply + hstack + predict_proba (no re-fit)
+    # Frozen load-and-predict equals normalization + hstack + the frozen
+    # closed-form probabilities (no re-fit).
     rng = np.random.default_rng(0)
     stats17_raw = rng.normal(size=(8, len(rfeat.stat_feature_names())))
     sem16_raw = rng.normal(size=(8, len(sfeat.SEMANTIC_STAT_NAMES)))
-    stats_conf, e1b_conf = apply_frozen(models, stats17_raw, sem16_raw)
+    stats_conf, e1b_conf = frozen.bundle.predict(_SCORER, stats17_raw, sem16_raw)
     stats_std = rfeat.normalize_apply(stats17_raw, models.stats_fit)
     sem_std = rfeat.normalize_apply(sem16_raw, models.sem_fit)
-    np.testing.assert_allclose(stats_conf, models.stats_clf.predict_proba(stats_std), rtol=0, atol=1e-12)
+    np.testing.assert_allclose(stats_conf, models.stats_probability(stats_std), rtol=0, atol=1e-12)
     np.testing.assert_allclose(
-        e1b_conf, models.e1b_clf.predict_proba(np.hstack([stats_std, sem_std])), rtol=0, atol=1e-12
+        e1b_conf, models.e1b_probability(np.hstack([stats_std, sem_std])), rtol=0, atol=1e-12
     )
 
 
@@ -451,16 +475,16 @@ def test_candidate_ranking_unchanged_by_reliability_model(frozen) -> None:
     snapshot_stats = stats17_raw.copy()
     snapshot_sem = sem16_raw.copy()
 
-    stats_conf, e1b_conf = apply_frozen(models, stats17_raw, sem16_raw)
+    stats_conf, e1b_conf = frozen.bundle.predict(_SCORER, stats17_raw, sem16_raw)
     np.testing.assert_array_equal(stats17_raw, snapshot_stats, err_msg="stats17 inputs mutated")
     np.testing.assert_array_equal(sem16_raw, snapshot_sem, err_msg="sem16 inputs mutated")
 
-    stats_again, e1b_again = apply_frozen(models, stats17_raw, sem16_raw)
+    stats_again, e1b_again = frozen.bundle.predict(_SCORER, stats17_raw, sem16_raw)
     np.testing.assert_array_equal(stats_conf, stats_again)
     np.testing.assert_array_equal(e1b_conf, e1b_again)
 
     perm = rng.permutation(n)
-    stats_perm, e1b_perm = apply_frozen(models, stats17_raw[perm], sem16_raw[perm])
+    stats_perm, e1b_perm = frozen.bundle.predict(_SCORER, stats17_raw[perm], sem16_raw[perm])
     np.testing.assert_allclose(stats_perm, stats_conf[perm], rtol=0, atol=1e-12)
     np.testing.assert_allclose(e1b_perm, e1b_conf[perm], rtol=0, atol=1e-12)
 

@@ -289,10 +289,10 @@ def test_boundary_register_blocks_the_wordings_this_axis_never_licensed(doc):
 
 
 def test_material_bank_now_states_the_axis_boundary_in_artifact_words(doc):
-    """The pre-V2-P limitation in docs/final_result_summary.md has been replaced, and every V2
+    """The preserved pre-repair material bank records the V2-P boundary, and every V2
     label the material bank carries equals the artifact that produced it (both language
     sections are checked, because the bank is written twice on purpose)."""
-    paper = (_ROOT / "docs" / "final_result_summary.md").read_text(encoding="utf-8")
+    paper = (_ROOT / "docs" / "appendix" / "final_result_summary_pre_repair.md").read_text(encoding="utf-8")
 
     # the stale limitation is gone from the bank, and the index no longer claims innocence
     for stale in ("single proposal family", "单一 proposal 家族"):

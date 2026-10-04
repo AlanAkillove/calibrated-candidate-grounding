@@ -1,0 +1,21 @@
+{
+  "schema": "ccg.research_repair_v1.attempt_source_provenance.v1",
+  "run_id": "20261003T092746Z",
+  "classification": "ATTEMPT_CODE_HASH_PROVENANCE_ONLY",
+  "historical_code_bytes_captured": false,
+  "note": "This attempt started before code_snapshots were added. These script hashes are preserved as recorded at attempt start, but their bytes were not captured. They are not immutable research inputs.",
+  "code_hashes": [
+    {
+      "path": "scripts/repair_legacy_model_recovery.py",
+      "size_bytes": 66690,
+      "sha256": "acd62bb83e57bcebd7580cf95aa7c62dcfb4fcc986dfd196c111d10ee5f8cbc8",
+      "status": "SUPPLEMENTAL_SOURCE_SNAPSHOT"
+    },
+    {
+      "path": "src/ccg/repairs/legacy_recovery.py",
+      "size_bytes": 10469,
+      "sha256": "cb2286fff4dcaebcc5f1e941274c4f642c4a02d7be80396a4d173c9710c72bdb",
+      "status": "SUPPLEMENTAL_SOURCE_SNAPSHOT"
+    }
+  ]
+}

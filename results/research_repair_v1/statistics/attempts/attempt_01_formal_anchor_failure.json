@@ -1,0 +1,20 @@
+{
+  "schema": "ccg.research_repair_v1.statistics.attempt.v1",
+  "attempt_id": "formal_20261003_0232_anchor_mismatch",
+  "scope": "phase0a_phase0b",
+  "status": "FAILED_ANCHOR_CHECK",
+  "process_id": 55612,
+  "exec_session_id": 4172,
+  "n_replicates": 5000,
+  "seed": 0,
+  "ci_level": 0.95,
+  "log": "results/research_repair_v1/statistics/logs_phase0a_phase0b_formal.log",
+  "failed_job": "phase0a___pooled_test__",
+  "failed_estimate": "K5__native::accuracy",
+  "old_point": 0.534881484687,
+  "recomputed_point": 0.532179661676,
+  "absolute_error": 0.002701823011,
+  "tolerance": 1E-06,
+  "diagnosis": "Legacy __pooled__ is the all-common validation+test cohort (20,799 rows), while the newly constructed testA+testB pool has 10,286 rows/1,490 images. The historical pooled point was incorrectly supplied as an anchor for a different cohort. Completed Phase0A split jobs remain valid and retained.",
+  "created_utc": "2026-10-03T02:32:12.824051+00:00"
+}

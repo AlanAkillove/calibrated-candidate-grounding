@@ -1,0 +1,20 @@
+{
+  "schema": "research-repair-input-manifest-v1",
+  "purpose": "supplemental inputs omitted from the prepared 794-file baseline",
+  "baseline_manifest": "results/research_repair_v1/input_manifest.json",
+  "baseline_manifest_sha256": "511499c47659bde0bdf207befac4e6efb41975a8b4f1623b10e469c0b89a334f",
+  "baseline_n_files": 794,
+  "source_path_gap": {
+    "prepared_expected_path": "data/raw/mscoco/annotations/instances_train2014.json",
+    "prepared_expected_path_exists": false,
+    "actual_source_path": "data/raw/annotations/instances_train2014.json",
+    "reason": "the candidate audit loads the repository's actual COCO GT path; it was not covered by the prepared baseline"
+  },
+  "inputs": [
+    {
+      "path": "data/raw/annotations/instances_train2014.json",
+      "size_bytes": 332556225,
+      "sha256": "777ef504abfeba349930485bb32ecd5b6529129a3e010f7852e1437cb049b732"
+    }
+  ]
+}

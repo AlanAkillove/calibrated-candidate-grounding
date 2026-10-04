@@ -1,0 +1,957 @@
+........................................................................ [  6%]
+........................................................................ [ 12%]
+........................................................................ [ 18%]
+........................................................................ [ 24%]
+........................................................................ [ 30%]
+...................................EEEEE................................ [ 36%]
+........................................................................ [ 42%]
+........................................................................ [ 49%]
+........................................................................ [ 55%]
+....s.....................s............................................. [ 61%]
+........................................................................ [ 67%]
+........................................................................ [ 73%]
+.......................FF............................................... [ 79%]
+........................................................................ [ 85%]
+........................................................................ [ 91%]
+..........................F............................................. [ 98%]
+.......................                                                  [100%]
+=================================== ERRORS ====================================
+__________ ERROR at setup of test_frozen_e1b_coefficients_unchanged ___________
+
+    @pytest.fixture(scope="module")
+    def frozen():
+>       return recover_frozen_models(
+            phase05_root=_PHASE05,
+            phase1_root=_PHASE1,
+            emb_root=_EMB_ROOT,
+            features_dir=_FEATURES_DIR,
+            split_manifest=_SPLIT_MANIFEST,
+            b3_root=_B3_ROOT,
+        )
+
+tests\test_hard_competition.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+scorers = ('b3_seed1', 'b3_seed2', 'b3_seed3')
+phase05_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency')
+phase1_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase1_semantic_sufficiency')
+emb_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/cache/semantic_phase1')
+features_dir = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency/features')
+split_manifest = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency/split_manifest.json')
+b3_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase0b_independent')
+log = None
+
+    def recover_frozen_models(
+        *,
+        scorers: Sequence[str] = ("b3_seed1", "b3_seed2", "b3_seed3"),
+        phase05_root: Path = DEFAULT_PHASE05,
+        phase1_root: Path = DEFAULT_PHASE1,
+        emb_root: Path = DEFAULT_EMB_ROOT,
+        features_dir: Path = DEFAULT_PHASE05 / "features",
+        split_manifest: Path = DEFAULT_PHASE05 / "split_manifest.json",
+        b3_root: Path = DEFAULT_B3_ROOT,
+        log: Optional[Callable[[str], None]] = None,
+    ) -> FrozenReliability:
+        """Re-fit and verify the frozen Stats-Logistic / E1b models (A8.4).
+    
+        Loads the frozen cohort embeddings (K5 / K10), the frozen A6.2 split and the
+        frozen hyper-parameter tables, then for every ``scorer`` re-fits the two
+        logistic models on the frozen ``reliability_train`` rows and runs the four
+        consistency checks.  Raises :class:`AssertionError` (with the offending
+        scorer / check / value) as soon as any ``max|delta|`` exceeds ``1e-9``.
+        """
+        emit = log if log is not None else (lambda _message: None)
+        phase05_root = Path(phase05_root)
+        phase1_root = Path(phase1_root)
+        features_dir = Path(features_dir)
+        split_manifest = Path(split_manifest)
+        b3_root = Path(b3_root)
+    
+        split = sdata.load_split_from_manifest(split_manifest)
+        emit(f"[frozen] A6.2 split: {int(split.train_images.size)} train / {int(split.tune_images.size)} tune images")
+    
+        stores = {k: sdata.load_embedding_store(k, out_root=Path(emb_root)) for k in TRAIN_KS}
+        emit(f"[frozen] embedding stores loaded for K={list(TRAIN_KS)}")
+    
+        stats_selection = _load_stats_selection(phase05_root)
+        e1b_selection = _load_e1b_selection(phase1_root)
+        e1b_coefs, e1b_intercepts = _load_e1b_coefficients(phase1_root)
+        if not any(value is not None for value in e1b_intercepts.values()):
+            emit(
+                "[frozen] e1_logistic/coefficients.csv has no intercept row "
+                "(columns: scorer,feature,block,coefficient,coefficient_std); "
+                "only the 33-d coefficient vector is compared"
+            )
+    
+        seeds: Dict[str, FrozenSeedModels] = {}
+        for scorer in scorers:
+            scorer = str(scorer)
+            temperature = _load_temperature(b3_root, scorer)
+            cores = {k: sdata.load_scorer_canonical(scorer, k, b3_root=b3_root) for k in TRAIN_KS}
+            anchor = cores[TRAIN_KS[0]]
+            eval_split = np.asarray(anchor.eval_split)
+            image_id = np.asarray(anchor.image_id, dtype=np.int64)
+            train_flags = {k: split.row_mask(eval_split, image_id, kind="reliability_train") for k in TRAIN_KS}
+            tune_flags = {k: split.row_mask(eval_split, image_id, kind="reliability_tune") for k in TRAIN_KS}
+            correct = {k: np.asarray(cores[k].correct, dtype=bool) for k in TRAIN_KS}
+            emit(f"[frozen] {scorer}: T={temperature:.6f}, train={int(train_flags[TRAIN_KS[0]].sum())} "
+                 f"(K5) / {int(train_flags[TRAIN_KS[1]].sum())} (K10)")
+    
+            # -- feature blocks (score stats + semantic stats) ------------------
+            stats17_raw = {
+                k: rfeat.stat_features(np.asarray(cores[k].scores, dtype=np.float64), temperature=temperature)
+                for k in TRAIN_KS
+            }
+            sem16_raw = {k: _chunked_semantic_stats(stores[k], np.asarray(cores[k].scores)) for k in TRAIN_KS}
+    
+            stats_fit, stats17_std = _fit_standardise(stats17_raw, train_flags, rfeat.stat_feature_names())
+            sem_fit, sem16_std = _fit_standardise(sem16_raw, train_flags, sfeat.SEMANTIC_STAT_NAMES)
+            e1b_std = {k: np.hstack([stats17_std[k], sem16_std[k]]) for k in TRAIN_KS}
+    
+            y_train = np.concatenate([correct[k][train_flags[k]].astype(np.float64) for k in TRAIN_KS])
+    
+            # -- re-fit the two frozen logistic models --------------------------
+            stats_clf = rmodels.LogisticModel(C=float(stats_selection[scorer]["chosen_hp"]))
+            stats_clf.fit(np.vstack([stats17_std[k][train_flags[k]] for k in TRAIN_KS]), y_train)
+            e1b_clf = rmodels.LogisticModel(C=float(e1b_selection[scorer]["selected_hp"]))
+            e1b_clf.fit(np.vstack([e1b_std[k][train_flags[k]] for k in TRAIN_KS]), y_train)
+    
+            stats_conf = {k: stats_clf.predict_proba(stats17_std[k]) for k in TRAIN_KS}
+            e1b_conf = {k: e1b_clf.predict_proba(e1b_std[k]) for k in TRAIN_KS}
+    
+            # -- check 1: stats-logistic predictions vs Phase 0.5 files ---------
+            frozen_pred = _load_phase05_predictions(phase05_root, scorer)
+            pred_delta = 0.0
+            for k in TRAIN_KS:
+                for split_name in _COMPARE_SPLITS:
+                    ours = np.sort(np.asarray(stats_conf[k][eval_split == split_name], dtype=np.float64))
+                    key = (k, split_name)
+                    ref = frozen_pred.get(key)
+                    ref_size = 0 if ref is None else int(ref.size)
+                    if ours.size != ref_size:
+                        raise AssertionError(
+                            f"{scorer}: stats_logistic K={k} split={split_name}: row count {ours.size} "
+                            f"!= frozen {ref_size}"
+                        )
+                    if ours.size:
+                        pred_delta = max(pred_delta, float(np.abs(ours - np.sort(ref)).max()))
+    
+            # -- check 2: E1b coefficient vector vs Phase 1 coefficients.csv ----
+            coef, intercept = e1b_clf.coefficients()
+            ref_coef = e1b_coefs.get(scorer)
+            if ref_coef is None:
+                raise AssertionError(f"{scorer}: no E1b coefficients found in e1_logistic/coefficients.csv")
+            coef_delta = float(np.abs(np.asarray(coef, dtype=np.float64) - ref_coef).max())
+            ref_intercept = e1b_intercepts.get(scorer)
+            if ref_intercept is not None:
+                emit(f"[frozen] {scorer}: intercept present in CSV -> max|delta| = {abs(intercept - ref_intercept):.3e}")
+                coef_delta = max(coef_delta, float(abs(intercept - ref_intercept)))
+    
+            # -- check 3: tune mean AUROC (stats + e1b) vs frozen selections ----
+            stats_tune_delta = abs(_tune_mean_auroc(stats_conf, correct, tune_flags)
+                                   - float(stats_selection[scorer]["tune_mean_auroc"]))
+            e1b_tune_delta = abs(_tune_mean_auroc(e1b_conf, correct, tune_flags)
+                                 - float(e1b_selection[scorer]["tune_mean_auroc"]))
+    
+            # -- check 4: stats-17 train-only normalisation vs frozen features --
+            ref_mean, ref_std = _load_stats17_normalisation(features_dir, scorer)
+            norm_delta = max(
+                float(np.abs(np.asarray(stats_fit.mean) - ref_mean).max()),
+                float(np.abs(np.asarray(stats_fit.std) - ref_std).max()),
+            )
+    
+            checks = {
+                "stats_logistic_pred_max_abs": pred_delta,
+                "e1b_coefficients_max_abs": coef_delta,
+                "stats_tune_auroc_max_abs": float(stats_tune_delta),
+                "e1b_tune_auroc_max_abs": float(e1b_tune_delta),
+                "stats17_normalisation_max_abs": norm_delta,
+            }
+            for name, value in checks.items():
+                if not (value <= _TOL):
+>                   raise AssertionError(
+                        f"{scorer}: A8.4 check {name} = {value:.3e} exceeds tolerance {_TOL:.0e}"
+                    )
+E                   AssertionError: b3_seed1: A8.4 check stats_logistic_pred_max_abs = 6.066e-08 exceeds tolerance 1e-09
+
+src\ccg\semantic\frozen.py:412: AssertionError
+___________ ERROR at setup of test_frozen_stats_logistic_unchanged ____________
+
+    @pytest.fixture(scope="module")
+    def frozen():
+>       return recover_frozen_models(
+            phase05_root=_PHASE05,
+            phase1_root=_PHASE1,
+            emb_root=_EMB_ROOT,
+            features_dir=_FEATURES_DIR,
+            split_manifest=_SPLIT_MANIFEST,
+            b3_root=_B3_ROOT,
+        )
+
+tests\test_hard_competition.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+scorers = ('b3_seed1', 'b3_seed2', 'b3_seed3')
+phase05_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency')
+phase1_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase1_semantic_sufficiency')
+emb_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/cache/semantic_phase1')
+features_dir = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency/features')
+split_manifest = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency/split_manifest.json')
+b3_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase0b_independent')
+log = None
+
+    def recover_frozen_models(
+        *,
+        scorers: Sequence[str] = ("b3_seed1", "b3_seed2", "b3_seed3"),
+        phase05_root: Path = DEFAULT_PHASE05,
+        phase1_root: Path = DEFAULT_PHASE1,
+        emb_root: Path = DEFAULT_EMB_ROOT,
+        features_dir: Path = DEFAULT_PHASE05 / "features",
+        split_manifest: Path = DEFAULT_PHASE05 / "split_manifest.json",
+        b3_root: Path = DEFAULT_B3_ROOT,
+        log: Optional[Callable[[str], None]] = None,
+    ) -> FrozenReliability:
+        """Re-fit and verify the frozen Stats-Logistic / E1b models (A8.4).
+    
+        Loads the frozen cohort embeddings (K5 / K10), the frozen A6.2 split and the
+        frozen hyper-parameter tables, then for every ``scorer`` re-fits the two
+        logistic models on the frozen ``reliability_train`` rows and runs the four
+        consistency checks.  Raises :class:`AssertionError` (with the offending
+        scorer / check / value) as soon as any ``max|delta|`` exceeds ``1e-9``.
+        """
+        emit = log if log is not None else (lambda _message: None)
+        phase05_root = Path(phase05_root)
+        phase1_root = Path(phase1_root)
+        features_dir = Path(features_dir)
+        split_manifest = Path(split_manifest)
+        b3_root = Path(b3_root)
+    
+        split = sdata.load_split_from_manifest(split_manifest)
+        emit(f"[frozen] A6.2 split: {int(split.train_images.size)} train / {int(split.tune_images.size)} tune images")
+    
+        stores = {k: sdata.load_embedding_store(k, out_root=Path(emb_root)) for k in TRAIN_KS}
+        emit(f"[frozen] embedding stores loaded for K={list(TRAIN_KS)}")
+    
+        stats_selection = _load_stats_selection(phase05_root)
+        e1b_selection = _load_e1b_selection(phase1_root)
+        e1b_coefs, e1b_intercepts = _load_e1b_coefficients(phase1_root)
+        if not any(value is not None for value in e1b_intercepts.values()):
+            emit(
+                "[frozen] e1_logistic/coefficients.csv has no intercept row "
+                "(columns: scorer,feature,block,coefficient,coefficient_std); "
+                "only the 33-d coefficient vector is compared"
+            )
+    
+        seeds: Dict[str, FrozenSeedModels] = {}
+        for scorer in scorers:
+            scorer = str(scorer)
+            temperature = _load_temperature(b3_root, scorer)
+            cores = {k: sdata.load_scorer_canonical(scorer, k, b3_root=b3_root) for k in TRAIN_KS}
+            anchor = cores[TRAIN_KS[0]]
+            eval_split = np.asarray(anchor.eval_split)
+            image_id = np.asarray(anchor.image_id, dtype=np.int64)
+            train_flags = {k: split.row_mask(eval_split, image_id, kind="reliability_train") for k in TRAIN_KS}
+            tune_flags = {k: split.row_mask(eval_split, image_id, kind="reliability_tune") for k in TRAIN_KS}
+            correct = {k: np.asarray(cores[k].correct, dtype=bool) for k in TRAIN_KS}
+            emit(f"[frozen] {scorer}: T={temperature:.6f}, train={int(train_flags[TRAIN_KS[0]].sum())} "
+                 f"(K5) / {int(train_flags[TRAIN_KS[1]].sum())} (K10)")
+    
+            # -- feature blocks (score stats + semantic stats) ------------------
+            stats17_raw = {
+                k: rfeat.stat_features(np.asarray(cores[k].scores, dtype=np.float64), temperature=temperature)
+                for k in TRAIN_KS
+            }
+            sem16_raw = {k: _chunked_semantic_stats(stores[k], np.asarray(cores[k].scores)) for k in TRAIN_KS}
+    
+            stats_fit, stats17_std = _fit_standardise(stats17_raw, train_flags, rfeat.stat_feature_names())
+            sem_fit, sem16_std = _fit_standardise(sem16_raw, train_flags, sfeat.SEMANTIC_STAT_NAMES)
+            e1b_std = {k: np.hstack([stats17_std[k], sem16_std[k]]) for k in TRAIN_KS}
+    
+            y_train = np.concatenate([correct[k][train_flags[k]].astype(np.float64) for k in TRAIN_KS])
+    
+            # -- re-fit the two frozen logistic models --------------------------
+            stats_clf = rmodels.LogisticModel(C=float(stats_selection[scorer]["chosen_hp"]))
+            stats_clf.fit(np.vstack([stats17_std[k][train_flags[k]] for k in TRAIN_KS]), y_train)
+            e1b_clf = rmodels.LogisticModel(C=float(e1b_selection[scorer]["selected_hp"]))
+            e1b_clf.fit(np.vstack([e1b_std[k][train_flags[k]] for k in TRAIN_KS]), y_train)
+    
+            stats_conf = {k: stats_clf.predict_proba(stats17_std[k]) for k in TRAIN_KS}
+            e1b_conf = {k: e1b_clf.predict_proba(e1b_std[k]) for k in TRAIN_KS}
+    
+            # -- check 1: stats-logistic predictions vs Phase 0.5 files ---------
+            frozen_pred = _load_phase05_predictions(phase05_root, scorer)
+            pred_delta = 0.0
+            for k in TRAIN_KS:
+                for split_name in _COMPARE_SPLITS:
+                    ours = np.sort(np.asarray(stats_conf[k][eval_split == split_name], dtype=np.float64))
+                    key = (k, split_name)
+                    ref = frozen_pred.get(key)
+                    ref_size = 0 if ref is None else int(ref.size)
+                    if ours.size != ref_size:
+                        raise AssertionError(
+                            f"{scorer}: stats_logistic K={k} split={split_name}: row count {ours.size} "
+                            f"!= frozen {ref_size}"
+                        )
+                    if ours.size:
+                        pred_delta = max(pred_delta, float(np.abs(ours - np.sort(ref)).max()))
+    
+            # -- check 2: E1b coefficient vector vs Phase 1 coefficients.csv ----
+            coef, intercept = e1b_clf.coefficients()
+            ref_coef = e1b_coefs.get(scorer)
+            if ref_coef is None:
+                raise AssertionError(f"{scorer}: no E1b coefficients found in e1_logistic/coefficients.csv")
+            coef_delta = float(np.abs(np.asarray(coef, dtype=np.float64) - ref_coef).max())
+            ref_intercept = e1b_intercepts.get(scorer)
+            if ref_intercept is not None:
+                emit(f"[frozen] {scorer}: intercept present in CSV -> max|delta| = {abs(intercept - ref_intercept):.3e}")
+                coef_delta = max(coef_delta, float(abs(intercept - ref_intercept)))
+    
+            # -- check 3: tune mean AUROC (stats + e1b) vs frozen selections ----
+            stats_tune_delta = abs(_tune_mean_auroc(stats_conf, correct, tune_flags)
+                                   - float(stats_selection[scorer]["tune_mean_auroc"]))
+            e1b_tune_delta = abs(_tune_mean_auroc(e1b_conf, correct, tune_flags)
+                                 - float(e1b_selection[scorer]["tune_mean_auroc"]))
+    
+            # -- check 4: stats-17 train-only normalisation vs frozen features --
+            ref_mean, ref_std = _load_stats17_normalisation(features_dir, scorer)
+            norm_delta = max(
+                float(np.abs(np.asarray(stats_fit.mean) - ref_mean).max()),
+                float(np.abs(np.asarray(stats_fit.std) - ref_std).max()),
+            )
+    
+            checks = {
+                "stats_logistic_pred_max_abs": pred_delta,
+                "e1b_coefficients_max_abs": coef_delta,
+                "stats_tune_auroc_max_abs": float(stats_tune_delta),
+                "e1b_tune_auroc_max_abs": float(e1b_tune_delta),
+                "stats17_normalisation_max_abs": norm_delta,
+            }
+            for name, value in checks.items():
+                if not (value <= _TOL):
+>                   raise AssertionError(
+                        f"{scorer}: A8.4 check {name} = {value:.3e} exceeds tolerance {_TOL:.0e}"
+                    )
+E                   AssertionError: b3_seed1: A8.4 check stats_logistic_pred_max_abs = 6.066e-08 exceeds tolerance 1e-09
+
+src\ccg\semantic\frozen.py:412: AssertionError
+_________ ERROR at setup of test_no_hard_regime_labels_enter_training _________
+
+    @pytest.fixture(scope="module")
+    def frozen():
+>       return recover_frozen_models(
+            phase05_root=_PHASE05,
+            phase1_root=_PHASE1,
+            emb_root=_EMB_ROOT,
+            features_dir=_FEATURES_DIR,
+            split_manifest=_SPLIT_MANIFEST,
+            b3_root=_B3_ROOT,
+        )
+
+tests\test_hard_competition.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+scorers = ('b3_seed1', 'b3_seed2', 'b3_seed3')
+phase05_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency')
+phase1_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase1_semantic_sufficiency')
+emb_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/cache/semantic_phase1')
+features_dir = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency/features')
+split_manifest = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency/split_manifest.json')
+b3_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase0b_independent')
+log = None
+
+    def recover_frozen_models(
+        *,
+        scorers: Sequence[str] = ("b3_seed1", "b3_seed2", "b3_seed3"),
+        phase05_root: Path = DEFAULT_PHASE05,
+        phase1_root: Path = DEFAULT_PHASE1,
+        emb_root: Path = DEFAULT_EMB_ROOT,
+        features_dir: Path = DEFAULT_PHASE05 / "features",
+        split_manifest: Path = DEFAULT_PHASE05 / "split_manifest.json",
+        b3_root: Path = DEFAULT_B3_ROOT,
+        log: Optional[Callable[[str], None]] = None,
+    ) -> FrozenReliability:
+        """Re-fit and verify the frozen Stats-Logistic / E1b models (A8.4).
+    
+        Loads the frozen cohort embeddings (K5 / K10), the frozen A6.2 split and the
+        frozen hyper-parameter tables, then for every ``scorer`` re-fits the two
+        logistic models on the frozen ``reliability_train`` rows and runs the four
+        consistency checks.  Raises :class:`AssertionError` (with the offending
+        scorer / check / value) as soon as any ``max|delta|`` exceeds ``1e-9``.
+        """
+        emit = log if log is not None else (lambda _message: None)
+        phase05_root = Path(phase05_root)
+        phase1_root = Path(phase1_root)
+        features_dir = Path(features_dir)
+        split_manifest = Path(split_manifest)
+        b3_root = Path(b3_root)
+    
+        split = sdata.load_split_from_manifest(split_manifest)
+        emit(f"[frozen] A6.2 split: {int(split.train_images.size)} train / {int(split.tune_images.size)} tune images")
+    
+        stores = {k: sdata.load_embedding_store(k, out_root=Path(emb_root)) for k in TRAIN_KS}
+        emit(f"[frozen] embedding stores loaded for K={list(TRAIN_KS)}")
+    
+        stats_selection = _load_stats_selection(phase05_root)
+        e1b_selection = _load_e1b_selection(phase1_root)
+        e1b_coefs, e1b_intercepts = _load_e1b_coefficients(phase1_root)
+        if not any(value is not None for value in e1b_intercepts.values()):
+            emit(
+                "[frozen] e1_logistic/coefficients.csv has no intercept row "
+                "(columns: scorer,feature,block,coefficient,coefficient_std); "
+                "only the 33-d coefficient vector is compared"
+            )
+    
+        seeds: Dict[str, FrozenSeedModels] = {}
+        for scorer in scorers:
+            scorer = str(scorer)
+            temperature = _load_temperature(b3_root, scorer)
+            cores = {k: sdata.load_scorer_canonical(scorer, k, b3_root=b3_root) for k in TRAIN_KS}
+            anchor = cores[TRAIN_KS[0]]
+            eval_split = np.asarray(anchor.eval_split)
+            image_id = np.asarray(anchor.image_id, dtype=np.int64)
+            train_flags = {k: split.row_mask(eval_split, image_id, kind="reliability_train") for k in TRAIN_KS}
+            tune_flags = {k: split.row_mask(eval_split, image_id, kind="reliability_tune") for k in TRAIN_KS}
+            correct = {k: np.asarray(cores[k].correct, dtype=bool) for k in TRAIN_KS}
+            emit(f"[frozen] {scorer}: T={temperature:.6f}, train={int(train_flags[TRAIN_KS[0]].sum())} "
+                 f"(K5) / {int(train_flags[TRAIN_KS[1]].sum())} (K10)")
+    
+            # -- feature blocks (score stats + semantic stats) ------------------
+            stats17_raw = {
+                k: rfeat.stat_features(np.asarray(cores[k].scores, dtype=np.float64), temperature=temperature)
+                for k in TRAIN_KS
+            }
+            sem16_raw = {k: _chunked_semantic_stats(stores[k], np.asarray(cores[k].scores)) for k in TRAIN_KS}
+    
+            stats_fit, stats17_std = _fit_standardise(stats17_raw, train_flags, rfeat.stat_feature_names())
+            sem_fit, sem16_std = _fit_standardise(sem16_raw, train_flags, sfeat.SEMANTIC_STAT_NAMES)
+            e1b_std = {k: np.hstack([stats17_std[k], sem16_std[k]]) for k in TRAIN_KS}
+    
+            y_train = np.concatenate([correct[k][train_flags[k]].astype(np.float64) for k in TRAIN_KS])
+    
+            # -- re-fit the two frozen logistic models --------------------------
+            stats_clf = rmodels.LogisticModel(C=float(stats_selection[scorer]["chosen_hp"]))
+            stats_clf.fit(np.vstack([stats17_std[k][train_flags[k]] for k in TRAIN_KS]), y_train)
+            e1b_clf = rmodels.LogisticModel(C=float(e1b_selection[scorer]["selected_hp"]))
+            e1b_clf.fit(np.vstack([e1b_std[k][train_flags[k]] for k in TRAIN_KS]), y_train)
+    
+            stats_conf = {k: stats_clf.predict_proba(stats17_std[k]) for k in TRAIN_KS}
+            e1b_conf = {k: e1b_clf.predict_proba(e1b_std[k]) for k in TRAIN_KS}
+    
+            # -- check 1: stats-logistic predictions vs Phase 0.5 files ---------
+            frozen_pred = _load_phase05_predictions(phase05_root, scorer)
+            pred_delta = 0.0
+            for k in TRAIN_KS:
+                for split_name in _COMPARE_SPLITS:
+                    ours = np.sort(np.asarray(stats_conf[k][eval_split == split_name], dtype=np.float64))
+                    key = (k, split_name)
+                    ref = frozen_pred.get(key)
+                    ref_size = 0 if ref is None else int(ref.size)
+                    if ours.size != ref_size:
+                        raise AssertionError(
+                            f"{scorer}: stats_logistic K={k} split={split_name}: row count {ours.size} "
+                            f"!= frozen {ref_size}"
+                        )
+                    if ours.size:
+                        pred_delta = max(pred_delta, float(np.abs(ours - np.sort(ref)).max()))
+    
+            # -- check 2: E1b coefficient vector vs Phase 1 coefficients.csv ----
+            coef, intercept = e1b_clf.coefficients()
+            ref_coef = e1b_coefs.get(scorer)
+            if ref_coef is None:
+                raise AssertionError(f"{scorer}: no E1b coefficients found in e1_logistic/coefficients.csv")
+            coef_delta = float(np.abs(np.asarray(coef, dtype=np.float64) - ref_coef).max())
+            ref_intercept = e1b_intercepts.get(scorer)
+            if ref_intercept is not None:
+                emit(f"[frozen] {scorer}: intercept present in CSV -> max|delta| = {abs(intercept - ref_intercept):.3e}")
+                coef_delta = max(coef_delta, float(abs(intercept - ref_intercept)))
+    
+            # -- check 3: tune mean AUROC (stats + e1b) vs frozen selections ----
+            stats_tune_delta = abs(_tune_mean_auroc(stats_conf, correct, tune_flags)
+                                   - float(stats_selection[scorer]["tune_mean_auroc"]))
+            e1b_tune_delta = abs(_tune_mean_auroc(e1b_conf, correct, tune_flags)
+                                 - float(e1b_selection[scorer]["tune_mean_auroc"]))
+    
+            # -- check 4: stats-17 train-only normalisation vs frozen features --
+            ref_mean, ref_std = _load_stats17_normalisation(features_dir, scorer)
+            norm_delta = max(
+                float(np.abs(np.asarray(stats_fit.mean) - ref_mean).max()),
+                float(np.abs(np.asarray(stats_fit.std) - ref_std).max()),
+            )
+    
+            checks = {
+                "stats_logistic_pred_max_abs": pred_delta,
+                "e1b_coefficients_max_abs": coef_delta,
+                "stats_tune_auroc_max_abs": float(stats_tune_delta),
+                "e1b_tune_auroc_max_abs": float(e1b_tune_delta),
+                "stats17_normalisation_max_abs": norm_delta,
+            }
+            for name, value in checks.items():
+                if not (value <= _TOL):
+>                   raise AssertionError(
+                        f"{scorer}: A8.4 check {name} = {value:.3e} exceeds tolerance {_TOL:.0e}"
+                    )
+E                   AssertionError: b3_seed1: A8.4 check stats_logistic_pred_max_abs = 6.066e-08 exceeds tolerance 1e-09
+
+src\ccg\semantic\frozen.py:412: AssertionError
+______________ ERROR at setup of test_same_normalization_reused _______________
+
+    @pytest.fixture(scope="module")
+    def frozen():
+>       return recover_frozen_models(
+            phase05_root=_PHASE05,
+            phase1_root=_PHASE1,
+            emb_root=_EMB_ROOT,
+            features_dir=_FEATURES_DIR,
+            split_manifest=_SPLIT_MANIFEST,
+            b3_root=_B3_ROOT,
+        )
+
+tests\test_hard_competition.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+scorers = ('b3_seed1', 'b3_seed2', 'b3_seed3')
+phase05_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency')
+phase1_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase1_semantic_sufficiency')
+emb_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/cache/semantic_phase1')
+features_dir = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency/features')
+split_manifest = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency/split_manifest.json')
+b3_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase0b_independent')
+log = None
+
+    def recover_frozen_models(
+        *,
+        scorers: Sequence[str] = ("b3_seed1", "b3_seed2", "b3_seed3"),
+        phase05_root: Path = DEFAULT_PHASE05,
+        phase1_root: Path = DEFAULT_PHASE1,
+        emb_root: Path = DEFAULT_EMB_ROOT,
+        features_dir: Path = DEFAULT_PHASE05 / "features",
+        split_manifest: Path = DEFAULT_PHASE05 / "split_manifest.json",
+        b3_root: Path = DEFAULT_B3_ROOT,
+        log: Optional[Callable[[str], None]] = None,
+    ) -> FrozenReliability:
+        """Re-fit and verify the frozen Stats-Logistic / E1b models (A8.4).
+    
+        Loads the frozen cohort embeddings (K5 / K10), the frozen A6.2 split and the
+        frozen hyper-parameter tables, then for every ``scorer`` re-fits the two
+        logistic models on the frozen ``reliability_train`` rows and runs the four
+        consistency checks.  Raises :class:`AssertionError` (with the offending
+        scorer / check / value) as soon as any ``max|delta|`` exceeds ``1e-9``.
+        """
+        emit = log if log is not None else (lambda _message: None)
+        phase05_root = Path(phase05_root)
+        phase1_root = Path(phase1_root)
+        features_dir = Path(features_dir)
+        split_manifest = Path(split_manifest)
+        b3_root = Path(b3_root)
+    
+        split = sdata.load_split_from_manifest(split_manifest)
+        emit(f"[frozen] A6.2 split: {int(split.train_images.size)} train / {int(split.tune_images.size)} tune images")
+    
+        stores = {k: sdata.load_embedding_store(k, out_root=Path(emb_root)) for k in TRAIN_KS}
+        emit(f"[frozen] embedding stores loaded for K={list(TRAIN_KS)}")
+    
+        stats_selection = _load_stats_selection(phase05_root)
+        e1b_selection = _load_e1b_selection(phase1_root)
+        e1b_coefs, e1b_intercepts = _load_e1b_coefficients(phase1_root)
+        if not any(value is not None for value in e1b_intercepts.values()):
+            emit(
+                "[frozen] e1_logistic/coefficients.csv has no intercept row "
+                "(columns: scorer,feature,block,coefficient,coefficient_std); "
+                "only the 33-d coefficient vector is compared"
+            )
+    
+        seeds: Dict[str, FrozenSeedModels] = {}
+        for scorer in scorers:
+            scorer = str(scorer)
+            temperature = _load_temperature(b3_root, scorer)
+            cores = {k: sdata.load_scorer_canonical(scorer, k, b3_root=b3_root) for k in TRAIN_KS}
+            anchor = cores[TRAIN_KS[0]]
+            eval_split = np.asarray(anchor.eval_split)
+            image_id = np.asarray(anchor.image_id, dtype=np.int64)
+            train_flags = {k: split.row_mask(eval_split, image_id, kind="reliability_train") for k in TRAIN_KS}
+            tune_flags = {k: split.row_mask(eval_split, image_id, kind="reliability_tune") for k in TRAIN_KS}
+            correct = {k: np.asarray(cores[k].correct, dtype=bool) for k in TRAIN_KS}
+            emit(f"[frozen] {scorer}: T={temperature:.6f}, train={int(train_flags[TRAIN_KS[0]].sum())} "
+                 f"(K5) / {int(train_flags[TRAIN_KS[1]].sum())} (K10)")
+    
+            # -- feature blocks (score stats + semantic stats) ------------------
+            stats17_raw = {
+                k: rfeat.stat_features(np.asarray(cores[k].scores, dtype=np.float64), temperature=temperature)
+                for k in TRAIN_KS
+            }
+            sem16_raw = {k: _chunked_semantic_stats(stores[k], np.asarray(cores[k].scores)) for k in TRAIN_KS}
+    
+            stats_fit, stats17_std = _fit_standardise(stats17_raw, train_flags, rfeat.stat_feature_names())
+            sem_fit, sem16_std = _fit_standardise(sem16_raw, train_flags, sfeat.SEMANTIC_STAT_NAMES)
+            e1b_std = {k: np.hstack([stats17_std[k], sem16_std[k]]) for k in TRAIN_KS}
+    
+            y_train = np.concatenate([correct[k][train_flags[k]].astype(np.float64) for k in TRAIN_KS])
+    
+            # -- re-fit the two frozen logistic models --------------------------
+            stats_clf = rmodels.LogisticModel(C=float(stats_selection[scorer]["chosen_hp"]))
+            stats_clf.fit(np.vstack([stats17_std[k][train_flags[k]] for k in TRAIN_KS]), y_train)
+            e1b_clf = rmodels.LogisticModel(C=float(e1b_selection[scorer]["selected_hp"]))
+            e1b_clf.fit(np.vstack([e1b_std[k][train_flags[k]] for k in TRAIN_KS]), y_train)
+    
+            stats_conf = {k: stats_clf.predict_proba(stats17_std[k]) for k in TRAIN_KS}
+            e1b_conf = {k: e1b_clf.predict_proba(e1b_std[k]) for k in TRAIN_KS}
+    
+            # -- check 1: stats-logistic predictions vs Phase 0.5 files ---------
+            frozen_pred = _load_phase05_predictions(phase05_root, scorer)
+            pred_delta = 0.0
+            for k in TRAIN_KS:
+                for split_name in _COMPARE_SPLITS:
+                    ours = np.sort(np.asarray(stats_conf[k][eval_split == split_name], dtype=np.float64))
+                    key = (k, split_name)
+                    ref = frozen_pred.get(key)
+                    ref_size = 0 if ref is None else int(ref.size)
+                    if ours.size != ref_size:
+                        raise AssertionError(
+                            f"{scorer}: stats_logistic K={k} split={split_name}: row count {ours.size} "
+                            f"!= frozen {ref_size}"
+                        )
+                    if ours.size:
+                        pred_delta = max(pred_delta, float(np.abs(ours - np.sort(ref)).max()))
+    
+            # -- check 2: E1b coefficient vector vs Phase 1 coefficients.csv ----
+            coef, intercept = e1b_clf.coefficients()
+            ref_coef = e1b_coefs.get(scorer)
+            if ref_coef is None:
+                raise AssertionError(f"{scorer}: no E1b coefficients found in e1_logistic/coefficients.csv")
+            coef_delta = float(np.abs(np.asarray(coef, dtype=np.float64) - ref_coef).max())
+            ref_intercept = e1b_intercepts.get(scorer)
+            if ref_intercept is not None:
+                emit(f"[frozen] {scorer}: intercept present in CSV -> max|delta| = {abs(intercept - ref_intercept):.3e}")
+                coef_delta = max(coef_delta, float(abs(intercept - ref_intercept)))
+    
+            # -- check 3: tune mean AUROC (stats + e1b) vs frozen selections ----
+            stats_tune_delta = abs(_tune_mean_auroc(stats_conf, correct, tune_flags)
+                                   - float(stats_selection[scorer]["tune_mean_auroc"]))
+            e1b_tune_delta = abs(_tune_mean_auroc(e1b_conf, correct, tune_flags)
+                                 - float(e1b_selection[scorer]["tune_mean_auroc"]))
+    
+            # -- check 4: stats-17 train-only normalisation vs frozen features --
+            ref_mean, ref_std = _load_stats17_normalisation(features_dir, scorer)
+            norm_delta = max(
+                float(np.abs(np.asarray(stats_fit.mean) - ref_mean).max()),
+                float(np.abs(np.asarray(stats_fit.std) - ref_std).max()),
+            )
+    
+            checks = {
+                "stats_logistic_pred_max_abs": pred_delta,
+                "e1b_coefficients_max_abs": coef_delta,
+                "stats_tune_auroc_max_abs": float(stats_tune_delta),
+                "e1b_tune_auroc_max_abs": float(e1b_tune_delta),
+                "stats17_normalisation_max_abs": norm_delta,
+            }
+            for name, value in checks.items():
+                if not (value <= _TOL):
+>                   raise AssertionError(
+                        f"{scorer}: A8.4 check {name} = {value:.3e} exceeds tolerance {_TOL:.0e}"
+                    )
+E                   AssertionError: b3_seed1: A8.4 check stats_logistic_pred_max_abs = 6.066e-08 exceeds tolerance 1e-09
+
+src\ccg\semantic\frozen.py:412: AssertionError
+___ ERROR at setup of test_candidate_ranking_unchanged_by_reliability_model ___
+
+    @pytest.fixture(scope="module")
+    def frozen():
+>       return recover_frozen_models(
+            phase05_root=_PHASE05,
+            phase1_root=_PHASE1,
+            emb_root=_EMB_ROOT,
+            features_dir=_FEATURES_DIR,
+            split_manifest=_SPLIT_MANIFEST,
+            b3_root=_B3_ROOT,
+        )
+
+tests\test_hard_competition.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+scorers = ('b3_seed1', 'b3_seed2', 'b3_seed3')
+phase05_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency')
+phase1_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase1_semantic_sufficiency')
+emb_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/cache/semantic_phase1')
+features_dir = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency/features')
+split_manifest = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase05_score_sufficiency/split_manifest.json')
+b3_root = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/results/phase0b_independent')
+log = None
+
+    def recover_frozen_models(
+        *,
+        scorers: Sequence[str] = ("b3_seed1", "b3_seed2", "b3_seed3"),
+        phase05_root: Path = DEFAULT_PHASE05,
+        phase1_root: Path = DEFAULT_PHASE1,
+        emb_root: Path = DEFAULT_EMB_ROOT,
+        features_dir: Path = DEFAULT_PHASE05 / "features",
+        split_manifest: Path = DEFAULT_PHASE05 / "split_manifest.json",
+        b3_root: Path = DEFAULT_B3_ROOT,
+        log: Optional[Callable[[str], None]] = None,
+    ) -> FrozenReliability:
+        """Re-fit and verify the frozen Stats-Logistic / E1b models (A8.4).
+    
+        Loads the frozen cohort embeddings (K5 / K10), the frozen A6.2 split and the
+        frozen hyper-parameter tables, then for every ``scorer`` re-fits the two
+        logistic models on the frozen ``reliability_train`` rows and runs the four
+        consistency checks.  Raises :class:`AssertionError` (with the offending
+        scorer / check / value) as soon as any ``max|delta|`` exceeds ``1e-9``.
+        """
+        emit = log if log is not None else (lambda _message: None)
+        phase05_root = Path(phase05_root)
+        phase1_root = Path(phase1_root)
+        features_dir = Path(features_dir)
+        split_manifest = Path(split_manifest)
+        b3_root = Path(b3_root)
+    
+        split = sdata.load_split_from_manifest(split_manifest)
+        emit(f"[frozen] A6.2 split: {int(split.train_images.size)} train / {int(split.tune_images.size)} tune images")
+    
+        stores = {k: sdata.load_embedding_store(k, out_root=Path(emb_root)) for k in TRAIN_KS}
+        emit(f"[frozen] embedding stores loaded for K={list(TRAIN_KS)}")
+    
+        stats_selection = _load_stats_selection(phase05_root)
+        e1b_selection = _load_e1b_selection(phase1_root)
+        e1b_coefs, e1b_intercepts = _load_e1b_coefficients(phase1_root)
+        if not any(value is not None for value in e1b_intercepts.values()):
+            emit(
+                "[frozen] e1_logistic/coefficients.csv has no intercept row "
+                "(columns: scorer,feature,block,coefficient,coefficient_std); "
+                "only the 33-d coefficient vector is compared"
+            )
+    
+        seeds: Dict[str, FrozenSeedModels] = {}
+        for scorer in scorers:
+            scorer = str(scorer)
+            temperature = _load_temperature(b3_root, scorer)
+            cores = {k: sdata.load_scorer_canonical(scorer, k, b3_root=b3_root) for k in TRAIN_KS}
+            anchor = cores[TRAIN_KS[0]]
+            eval_split = np.asarray(anchor.eval_split)
+            image_id = np.asarray(anchor.image_id, dtype=np.int64)
+            train_flags = {k: split.row_mask(eval_split, image_id, kind="reliability_train") for k in TRAIN_KS}
+            tune_flags = {k: split.row_mask(eval_split, image_id, kind="reliability_tune") for k in TRAIN_KS}
+            correct = {k: np.asarray(cores[k].correct, dtype=bool) for k in TRAIN_KS}
+            emit(f"[frozen] {scorer}: T={temperature:.6f}, train={int(train_flags[TRAIN_KS[0]].sum())} "
+                 f"(K5) / {int(train_flags[TRAIN_KS[1]].sum())} (K10)")
+    
+            # -- feature blocks (score stats + semantic stats) ------------------
+            stats17_raw = {
+                k: rfeat.stat_features(np.asarray(cores[k].scores, dtype=np.float64), temperature=temperature)
+                for k in TRAIN_KS
+            }
+            sem16_raw = {k: _chunked_semantic_stats(stores[k], np.asarray(cores[k].scores)) for k in TRAIN_KS}
+    
+            stats_fit, stats17_std = _fit_standardise(stats17_raw, train_flags, rfeat.stat_feature_names())
+            sem_fit, sem16_std = _fit_standardise(sem16_raw, train_flags, sfeat.SEMANTIC_STAT_NAMES)
+            e1b_std = {k: np.hstack([stats17_std[k], sem16_std[k]]) for k in TRAIN_KS}
+    
+            y_train = np.concatenate([correct[k][train_flags[k]].astype(np.float64) for k in TRAIN_KS])
+    
+            # -- re-fit the two frozen logistic models --------------------------
+            stats_clf = rmodels.LogisticModel(C=float(stats_selection[scorer]["chosen_hp"]))
+            stats_clf.fit(np.vstack([stats17_std[k][train_flags[k]] for k in TRAIN_KS]), y_train)
+            e1b_clf = rmodels.LogisticModel(C=float(e1b_selection[scorer]["selected_hp"]))
+            e1b_clf.fit(np.vstack([e1b_std[k][train_flags[k]] for k in TRAIN_KS]), y_train)
+    
+            stats_conf = {k: stats_clf.predict_proba(stats17_std[k]) for k in TRAIN_KS}
+            e1b_conf = {k: e1b_clf.predict_proba(e1b_std[k]) for k in TRAIN_KS}
+    
+            # -- check 1: stats-logistic predictions vs Phase 0.5 files ---------
+            frozen_pred = _load_phase05_predictions(phase05_root, scorer)
+            pred_delta = 0.0
+            for k in TRAIN_KS:
+                for split_name in _COMPARE_SPLITS:
+                    ours = np.sort(np.asarray(stats_conf[k][eval_split == split_name], dtype=np.float64))
+                    key = (k, split_name)
+                    ref = frozen_pred.get(key)
+                    ref_size = 0 if ref is None else int(ref.size)
+                    if ours.size != ref_size:
+                        raise AssertionError(
+                            f"{scorer}: stats_logistic K={k} split={split_name}: row count {ours.size} "
+                            f"!= frozen {ref_size}"
+                        )
+                    if ours.size:
+                        pred_delta = max(pred_delta, float(np.abs(ours - np.sort(ref)).max()))
+    
+            # -- check 2: E1b coefficient vector vs Phase 1 coefficients.csv ----
+            coef, intercept = e1b_clf.coefficients()
+            ref_coef = e1b_coefs.get(scorer)
+            if ref_coef is None:
+                raise AssertionError(f"{scorer}: no E1b coefficients found in e1_logistic/coefficients.csv")
+            coef_delta = float(np.abs(np.asarray(coef, dtype=np.float64) - ref_coef).max())
+            ref_intercept = e1b_intercepts.get(scorer)
+            if ref_intercept is not None:
+                emit(f"[frozen] {scorer}: intercept present in CSV -> max|delta| = {abs(intercept - ref_intercept):.3e}")
+                coef_delta = max(coef_delta, float(abs(intercept - ref_intercept)))
+    
+            # -- check 3: tune mean AUROC (stats + e1b) vs frozen selections ----
+            stats_tune_delta = abs(_tune_mean_auroc(stats_conf, correct, tune_flags)
+                                   - float(stats_selection[scorer]["tune_mean_auroc"]))
+            e1b_tune_delta = abs(_tune_mean_auroc(e1b_conf, correct, tune_flags)
+                                 - float(e1b_selection[scorer]["tune_mean_auroc"]))
+    
+            # -- check 4: stats-17 train-only normalisation vs frozen features --
+            ref_mean, ref_std = _load_stats17_normalisation(features_dir, scorer)
+            norm_delta = max(
+                float(np.abs(np.asarray(stats_fit.mean) - ref_mean).max()),
+                float(np.abs(np.asarray(stats_fit.std) - ref_std).max()),
+            )
+    
+            checks = {
+                "stats_logistic_pred_max_abs": pred_delta,
+                "e1b_coefficients_max_abs": coef_delta,
+                "stats_tune_auroc_max_abs": float(stats_tune_delta),
+                "e1b_tune_auroc_max_abs": float(e1b_tune_delta),
+                "stats17_normalisation_max_abs": norm_delta,
+            }
+            for name, value in checks.items():
+                if not (value <= _TOL):
+>                   raise AssertionError(
+                        f"{scorer}: A8.4 check {name} = {value:.3e} exceeds tolerance {_TOL:.0e}"
+                    )
+E                   AssertionError: b3_seed1: A8.4 check stats_logistic_pred_max_abs = 6.066e-08 exceeds tolerance 1e-09
+
+src\ccg\semantic\frozen.py:412: AssertionError
+================================== FAILURES ===================================
+___ test_dose_estimates_share_joint_draws_and_compute_macro_from_each_seed ____
+
+    def test_dose_estimates_share_joint_draws_and_compute_macro_from_each_seed() -> None:
+        ids = np.repeat(np.arange(4, dtype=np.int64), 3)
+        result = sensitivity._run_one_group(
+            _dose_seed_cells(), ids, cell_tag="dose", dose_levels=sensitivity.DOSE_LEVELS,
+            n_replicates=32, seed=7, ci=0.95,
+        )
+        estimates = result["estimates"]
+        interaction = estimates["hard_random_interaction__expb_m2__stats__auroc_correct"]
+        effect = estimates["old_minus_new__expb_m2__stats__auroc_correct"]
+        for seed, value in effect["seed_estimates"].items():
+            assert interaction["seed_estimates"][seed] == value
+>           assert np.array_equal(
+                interaction["per_seed_replicates"][seed], effect["per_seed_replicates"][seed], equal_nan=True
+            )
+E           assert False
+E            +  where False = <function array_equal at 0x000001FD42235770>(array([ 0.        ,  0.        , -0.11428571, -0.05714286,  0.        ,\n       -0.375     , -0.11428571,  0.05714286, ...  0.        ,\n        0.05714286,  0.05714286,  0.05714286, -0.375     ,  0.        ,\n        0.        ,  0.        ]), array([ 0.        ,  0.        , -0.11428571, -0.05714286,  0.        ,\n       -0.375     , -0.11428571,  0.05714286, ...  0.        ,\n        0.05714286,  0.05714286,  0.05714286, -0.375     ,  0.        ,\n        0.        ,  0.        ]), equal_nan=True)
+E            +    where <function array_equal at 0x000001FD42235770> = np.array_equal
+
+tests\test_repair_candidate_sensitivity.py:33: AssertionError
+___ test_candidate_sensitivity_pilot_is_explicit_and_never_claims_complete ____
+
+tmp_path = WindowsPath('C:/Users/Aki/AppData/Local/Temp/pytest-of-Aki/pytest-219/test_candidate_sensitivity_pil0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001FD4C6A78B0>
+
+    def test_candidate_sensitivity_pilot_is_explicit_and_never_claims_complete(tmp_path, monkeypatch) -> None:
+        from ccg.repairs import candidate_forward
+    
+        n = 12
+        ids = np.arange(n, dtype=np.int64)
+        correct = np.tile(np.asarray([1, 0, 1, 0, 0, 1], dtype=bool), 2)
+        archive = {
+            "sentence_id": ids, "ref_id": ids + 100, "image_id": np.repeat(np.arange(4), 3),
+            "ann_id": ids + 200, "eval_split": np.asarray(["testA"] * n),
+        }
+        for seed_i, seed in enumerate(("b3_seed1", "b3_seed2", "b3_seed3")):
+            for condition_i, condition in enumerate(("old", "random", sensitivity.VARIANT)):
+                archive[f"{condition}__{seed}__correct"] = np.roll(correct, seed_i + condition_i)
+                for head_i, head in enumerate(sensitivity.HEADS):
+                    archive[f"{condition}__{seed}__conf_{head}"] = np.roll(
+                        np.linspace(0.1, 0.9, n), condition_i + seed_i + head_i
+                    )
+    
+        forward_dir = tmp_path / "audit_run_x" / "forward"
+        forward_dir.mkdir(parents=True)
+        (forward_dir / "summary.json").write_text("{}\n", encoding="utf-8")
+        fake = {
+            "audit": {"forward_dir": forward_dir, "pointer": {"audit_run_id": "x"},
+                      "summary_path": forward_dir.parent / "summary.json", "summary_sha256": "audit-sha"},
+            "forward_summary": {"predictions_manifest": {"path": "results/fake/predictions_manifest.json"}},
+            "manifest_path": forward_dir / "predictions_manifest.json",
+        }
+        entry = {
+            "family": "RPN", "candidate_source": "phase1f_frozen_candidate_archive", "cell": "hard5",
+            "_key": ("RPN", "phase1f_frozen_candidate_archive", "hard5"),
+            "_status": "FORWARDED_WITH_OLD_ANCHOR_PASS", "_arrays": archive,
+        }
+        monkeypatch.setattr(sensitivity, "_forward_archives", lambda pointer: (fake, [entry]))
+>       report = sensitivity.run_candidate_sensitivity_bootstrap(n_replicates=12, seed=3, ci=0.90)
+
+tests\test_repair_candidate_sensitivity.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\ccg\repairs\candidate_sensitivity.py:536: in run_candidate_sensitivity_bootstrap
+    "sha256": _sha256(resolved["manifest_path"]),
+src\ccg\repairs\candidates.py:136: in _sha256
+    with path.open("rb") as handle:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/Users/Aki/AppData/Local/Temp/pytest-of-Aki/pytest-219/test_candidate_sensitivity_pil0/audit_run_x/forward/predictions_manifest.json')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return self._accessor.open(self, mode, buffering, encoding, errors,
+                                   newline)
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\Aki\\AppData\\Local\\Temp\\pytest-of-Aki\\pytest-219\\test_candidate_sensitivity_pil0\\audit_run_x\\forward\\predictions_manifest.json'
+
+E:\conda\envs\deepminer\lib\pathlib.py:1119: FileNotFoundError
+______ test_material_bank_now_states_the_axis_boundary_in_artifact_words ______
+
+doc = '# V2-P program summary - the proposal-family robustness axis\n\n**Status: axis closed.** This file is an *index*, not...ull per-stage commands: `p2_c1_gdino/analysis_report.md` section 8,\n`p2_m_mechanism/mechanism_report.md` section 7.\n'
+
+    def test_material_bank_now_states_the_axis_boundary_in_artifact_words(doc):
+        """The pre-V2-P limitation in docs/final_result_summary.md has been replaced, and every V2
+        label the material bank carries equals the artifact that produced it (both language
+        sections are checked, because the bank is written twice on purpose)."""
+        paper = (_ROOT / "docs" / "final_result_summary.md").read_text(encoding="utf-8")
+    
+        # the stale limitation is gone from the bank, and the index no longer claims innocence
+        for stale in ("single proposal family", "��һ proposal ����"):
+            assert stale not in paper, f"material bank still carries {stale!r}"
+        assert "This file does not edit that document." not in doc
+        _require(doc, "does not duplicate its numbers")
+    
+        labels = {
+            "P1 overall": _load("p1_f5_c4", "f5_verdict.json")["overall_p1_verdict"]["label"],
+            "D1": _artifact("results/v2_data_robustness/d1_reviewed_annotations/verdict.json")[
+                "combined_verdict"],
+            "D2": _artifact("results/v2_d2_refcoco_lang/c1_c4_verdict.json")["verdict"]["overall"],
+            "M2.5": _artifact("results/v2_local_competition/m25_specialist_audit/verdict.json")["pattern"],
+            "M3": _artifact(
+                "results/v2_local_competition/m3_mixture/conf/cross_backbone_verdict.json")["verdict"],
+        }
+        for name, label in labels.items():
+>           assert label in paper, f"material bank does not carry the {name} label {label!r}"
+E           AssertionError: material bank does not carry the P1 overall label 'CORE_FINDINGS_PROPOSAL_FAMILY_ROBUST'
+E           assert 'CORE_FINDINGS_PROPOSAL_FAMILY_ROBUST' in '# Current result summary �� Research Repair v1\n\nRepair is in progress. Formal current tables will be generated from ...evidence.json)\n- [All experimental artifacts and acceptance state](../results/research_repair_v1/registry/index.md)\n'
+
+tests\test_v2_p_program_summary.py:313: AssertionError
+============================== warnings summary ===============================
+tests\test_audit_subset.py:385
+  F:\DL Projects\calibrated-candidate-grounding\tests\test_audit_subset.py:385: PytestUnknownMarkWarning: Unknown pytest.mark.slow - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    @pytest.mark.slow
+
+tests\test_features_clip.py:43
+  F:\DL Projects\calibrated-candidate-grounding\tests\test_features_clip.py:43: PytestUnknownMarkWarning: Unknown pytest.mark.gpu - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    pytestmark = [pytest.mark.gpu, pytest.mark.slow]
+
+tests\test_features_clip.py:43
+  F:\DL Projects\calibrated-candidate-grounding\tests\test_features_clip.py:43: PytestUnknownMarkWarning: Unknown pytest.mark.slow - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    pytestmark = [pytest.mark.gpu, pytest.mark.slow]
+
+tests\test_features_siglip.py:38
+  F:\DL Projects\calibrated-candidate-grounding\tests\test_features_siglip.py:38: PytestUnknownMarkWarning: Unknown pytest.mark.slow - is this a typo?  You can register custom marks to avoid this warning - for details, see https://docs.pytest.org/en/stable/how-to/mark.html
+    pytestmark = [pytest.mark.slow]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_repair_candidate_sensitivity.py::test_dose_estimates_share_joint_draws_and_compute_macro_from_each_seed
+FAILED tests/test_repair_candidate_sensitivity.py::test_candidate_sensitivity_pilot_is_explicit_and_never_claims_complete
+FAILED tests/test_v2_p_program_summary.py::test_material_bank_now_states_the_axis_boundary_in_artifact_words
+ERROR tests/test_hard_competition.py::test_frozen_e1b_coefficients_unchanged
+ERROR tests/test_hard_competition.py::test_frozen_stats_logistic_unchanged - ...
+ERROR tests/test_hard_competition.py::test_no_hard_regime_labels_enter_training
+ERROR tests/test_hard_competition.py::test_same_normalization_reused - Assert...
+ERROR tests/test_hard_competition.py::test_candidate_ranking_unchanged_by_reliability_model

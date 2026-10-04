@@ -1,0 +1,61 @@
+{
+  "schema": "research-repair-v1-closeout-final-identity-v1",
+  "checked_utc": "2026-10-04T04:02:20.497205+00:00",
+  "status": "PASS",
+  "source_config_files": 263,
+  "source_snapshot_still_current_after_rendering": true,
+  "preserved_copy_count": 53,
+  "preserved_copies_verified": true,
+  "unchanged_canonical_records": [
+    {
+      "path": "results/research_repair_v1/logs/acceptance_check.json",
+      "sha256": "fcdb22503aa8923dc0dc834aad766841a2c3ff740dda7ce03a9da2b203a83918"
+    },
+    {
+      "path": "results/research_repair_v1/logs/pytest_full_final.log",
+      "sha256": "4e8d42370c3cf80994a7613657f31c39aaad8ba60740b5c8ce1b875427339813"
+    },
+    {
+      "path": "results/research_repair_v1/logs/pytest_full_final.xml",
+      "sha256": "c7d89efbdce37f0a9b08c829bc116f14b0f7d9d556972d4f8facc732d4565f7d"
+    },
+    {
+      "path": "results/research_repair_v1/logs/final_test_sources.json",
+      "sha256": "b4cf56cea419fa848665de37b6d332cd811c9ce741ec1918810e9c8d36cb3cc5"
+    },
+    {
+      "path": "results/research_repair_v1/logs/stored_estimate_verification.json",
+      "sha256": "106f63a35d82e2940cd83e99c91b536eb696c6127418e06bd54d5e4f0106e1f1"
+    },
+    {
+      "path": "reviews/acceptance_2026-10-04/verdict.json",
+      "sha256": "c8cfa2a70c30cc4813d8f9b697b5df1545ce8a1a5fab94713681b2601fee495e"
+    },
+    {
+      "path": "reviews/repair_acceptance_2026-10-04.md",
+      "sha256": "82d1cfe8a154ffd9bcfd2ab1369d85492d3560e7f956d28f32f8656be80c0f7f"
+    }
+  ],
+  "final_document_prefix_checks": [
+    {
+      "path": "docs/research_protocol.md",
+      "final_sha256": "d88582d829ccc8fc85043d31f9e147df57d6fb1d93ef658bfb924edfeea7c393",
+      "original_git_prefix_preserved": true,
+      "prior_delivery_prefix_preserved": true
+    },
+    {
+      "path": "docs/experiment_log.md",
+      "final_sha256": "32b0338ba231ea2da7d283f7bba0bee448b5d50bb09bf816a891ff6947b39215",
+      "original_git_prefix_preserved": true,
+      "prior_delivery_prefix_preserved": true
+    }
+  ],
+  "scientific_registry": {
+    "sha_bound_artifacts": 304,
+    "sha_bound_artifacts_unchanged": true,
+    "size_only_artifacts": 223,
+    "size_only_records_unchanged": true,
+    "size_only_is_not_sha_identity_proof": true,
+    "raw_archive_SHA_identity_is_checked_separately_for_77_archives": true
+  }
+}

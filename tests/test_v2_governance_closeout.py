@@ -1,3 +1,5 @@
+# Research Repair v1: legacy transcription is checked in its preserved appendix;
+# current scientific conclusions are checked by test_repair_integration.py.
 """V2 governance close-out: the two living governance docs must agree with the artifacts.
 
 Covered documents:
@@ -34,7 +36,7 @@ import pytest
 _ROOT = Path(__file__).resolve().parents[1]
 _LOG = _ROOT / "docs" / "experiment_log.md"
 _PROTOCOL = _ROOT / "docs" / "research_protocol.md"
-_PAPER = _ROOT / "docs" / "final_result_summary.md"
+_PAPER = _ROOT / "docs" / "appendix" / "final_result_summary_pre_repair.md"
 
 LOG_SECTION = "# V2 post-A11 result records"
 PROTOCOL_SECTION = "# V2 Post-A11 Program Result Record"

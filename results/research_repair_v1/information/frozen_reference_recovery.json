@@ -1,0 +1,119 @@
+{
+  "status": "REFIT_FAILED_DIRECT_FROZEN_LOAD_VERIFIED",
+  "verification_checks": {},
+  "strict_tolerance": 1e-09,
+  "failed_attempt_under_blas_threads_2": 6.066e-08,
+  "recovery_blas_threads": 1,
+  "formal_training_blas_threads": 2,
+  "failure_detail": "AssertionError: b3_seed1: A8.4 check stats_logistic_pred_max_abs = 3.642e-08 exceeds tolerance 1e-09",
+  "tolerance_widened": false,
+  "refit_status": "UNVERIFIABLE",
+  "refit_failure_detail": "AssertionError: b3_seed1: A8.4 check stats_logistic_pred_max_abs = 3.642e-08 exceeds tolerance 1e-09",
+  "refit_failures": {
+    "BLAS2": {
+      "failed_seed": "b3_seed1",
+      "metric": "stats_logistic_pred_max_abs",
+      "actual_error_as_recorded": 6.066e-08,
+      "tolerance": 1e-09,
+      "trace_path": "logs.txt / execution_attempts.jsonl"
+    },
+    "BLAS1": {
+      "failed_seed": "b3_seed1",
+      "metric": "stats_logistic_pred_max_abs",
+      "actual_error": 3.642e-08,
+      "tolerance": 1e-09,
+      "trace_path": "logs.txt"
+    }
+  },
+  "direct_frozen_bundle": {
+    "status": "VERIFIED",
+    "artifact_root": "results\\phase1e_refcocog_external\\frozen_models",
+    "manifest_path": "results\\phase1e_refcocog_external\\frozen_models\\frozen_artifact_manifest.json",
+    "manifest_schema": "a11-frozen-reliability-v1",
+    "manifest_artifact_count": 42,
+    "manifest_bundle_sha256": "689173894f6c280ed354bc64688c9819cacebce3fba3835cdbff59313c07c241",
+    "checksum_file_sha256": "5e6c1d62523b8864801b7c46ab90f1d7535062f16b83c67b959e9b184543bf71",
+    "seeds": [
+      "b3_seed1",
+      "b3_seed2",
+      "b3_seed3"
+    ],
+    "strict_tolerance": 1e-09,
+    "checks": {
+      "schema_version": "a11-frozen-reliability-v1",
+      "tolerance": 1e-09,
+      "scorers": [
+        "b3_seed1",
+        "b3_seed2",
+        "b3_seed3"
+      ],
+      "checks": {
+        "b3_seed1": {
+          "e1b_coefficients_max_abs": 0.0,
+          "stats17_normalisation_max_abs": 0.0,
+          "temperature_max_abs": 0.0,
+          "stats_logistic_pred_max_abs": 2.220446049250313e-16
+        },
+        "b3_seed2": {
+          "e1b_coefficients_max_abs": 0.0,
+          "stats17_normalisation_max_abs": 0.0,
+          "temperature_max_abs": 0.0,
+          "stats_logistic_pred_max_abs": 2.220446049250313e-16
+        },
+        "b3_seed3": {
+          "e1b_coefficients_max_abs": 0.0,
+          "stats17_normalisation_max_abs": 0.0,
+          "temperature_max_abs": 0.0,
+          "stats_logistic_pred_max_abs": 2.220446049250313e-16
+        }
+      },
+      "all": {
+        "e1b_coefficients_max_abs": 0.0,
+        "stats17_normalisation_max_abs": 0.0,
+        "stats_logistic_pred_max_abs": 2.220446049250313e-16,
+        "temperature_max_abs": 0.0
+      }
+    }
+  },
+  "external_old_prediction_anchor_check": {
+    "status": "MODEL_IDENTITY_INCOMPATIBLE",
+    "score_only_reliability_model_per_seed": {
+      "b3_seed1": "msp",
+      "b3_seed2": "msp",
+      "b3_seed3": "msp"
+    },
+    "semantic_reliability_model_per_seed": {
+      "b3_seed1": "e2_score",
+      "b3_seed2": "e2_score",
+      "b3_seed3": "e2_score"
+    },
+    "target_model_ids": {
+      "S": "stats_logistic",
+      "Full": "e1b_stats_semantic"
+    },
+    "generic_column_difference_max_abs_diagnostic_only": 0.38166672231009524,
+    "tolerance": 1e-09,
+    "rows_checked": 72,
+    "result_path": "results/research_repair_v1/information/reference_check.csv",
+    "scope": "legacy Phase 1 generic CSV columns; these contain per-seed selected msp/e2_score, not S/Full",
+    "interpretation": "MODEL_IDENTITY_INCOMPATIBLE; generic CSV differences are not a recovery mismatch",
+    "semantic_reliability_interpretation": "e2_score consumes score statistics only; it is not semantic embedding information"
+  },
+  "phase1f_anchor_check": {
+    "status": "PASS",
+    "max_abs_prediction_error": 3.885780586188048e-16,
+    "tolerance": 1e-09,
+    "rows_checked": 36,
+    "result_path": "results/research_repair_v1/information/reference_check.csv",
+    "scope": "Phase 1F saved rand5/hard5 predictions; independently detailed in reference_phase1f_feature_audit.json"
+  },
+  "correct_model_random_anchor_check": {
+    "status": "PASS",
+    "max_abs_source_anchor_error": 2.7755575615628914e-16,
+    "tolerance": 1e-09,
+    "rows_checked": 72,
+    "S_source": "Phase 0.5 stats_logistic per-row prediction CSV by seed/K/split",
+    "Full_source": "Phase 1 e1_logistic/metrics.csv for fixed e1b_stats_semantic by seed/K/split",
+    "result_path": "results/research_repair_v1/information/reference_check.csv"
+  }
+}

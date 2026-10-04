@@ -1,0 +1,20 @@
+[10:16:58] [repair-candidates] loading frozen prediction identities and RefCOCO+ annotation joins
+[10:17:06] [repair-candidates] RPN: random K5=10425, random K10=10425, V2 hard K5=9623
+[10:17:07] [repair-candidates] DETR: random K5=10601, random K10=10601, V2 hard K5=8376
+[10:17:07] [repair-candidates] loading COCO objects for 1500 audited images
+[10:17:24] [repair-candidates] RPN: assigned COCO categories for 1494 proposal banks
+[10:17:38] [repair-candidates] DETR: assigned COCO categories for 1500 proposal banks
+[10:17:38] [repair-candidates] summarizing expression/category/image/object mismatch tables
+[10:17:38] [repair-candidates] mismatch detected; building versioned true-target-category candidates
+Traceback (most recent call last):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_candidates.py", line 55, in <module>
+    raise SystemExit(main())
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_candidates.py", line 44, in main
+    summary = run_candidate_audit(out_dir=OUT_DIR)
+  File "F:\DL Projects\calibrated-candidate-grounding\src\ccg\repairs\candidates.py", line 1366, in run_candidate_audit
+    sensitivity_geometry_expression_rows,
+  File "F:\DL Projects\calibrated-candidate-grounding\src\ccg\repairs\candidates.py", line 171, in _write_csv
+    with path.open("w", encoding="utf-8", newline="") as handle:
+  File "E:\conda\envs\deepminer\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+OSError: [Errno 22] Invalid argument: 'F:\\DL Projects\\calibrated-candidate-grounding\\results\\research_repair_v1\\candidates\\candidate_geometry_per_expression.csv'

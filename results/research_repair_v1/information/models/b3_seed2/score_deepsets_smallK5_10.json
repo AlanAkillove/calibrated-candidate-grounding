@@ -1,0 +1,92 @@
+{
+  "family": "score_deepsets",
+  "chosen_learning_rate": 0.001,
+  "grid": [
+    0.0001,
+    0.0003,
+    0.001
+  ],
+  "architecture": {
+    "phi": [
+      1,
+      16,
+      16
+    ],
+    "pooling": [
+      "mean",
+      "max",
+      "top1"
+    ],
+    "head": [
+      50,
+      32,
+      1
+    ],
+    "include_z_top1": true,
+    "include_log_k": true,
+    "weight_decay": 0.0001,
+    "batch_size": 256,
+    "max_epochs": 300,
+    "patience": 30
+  },
+  "tune_mean_auroc": 0.7987794012808197,
+  "tune_auroc_by_K": {
+    "5": 0.8253012048192772,
+    "10": 0.7722575977423622
+  },
+  "train_loss": 0.43200030548065144,
+  "train_auroc": 0.8330923009697316,
+  "tune_loss": 0.44578830553040266,
+  "tune_auroc": 0.804235891261015,
+  "best_epoch": 293,
+  "epochs_run": 300,
+  "stopped_early": false,
+  "n_train_rows": 7372,
+  "n_tune_rows": 3090,
+  "n_parameters": 1969,
+  "per_lr_selection_auroc": {
+    "0.0001": 0.7452394147587219,
+    "0.0003": 0.771965563637192,
+    "0.001": 0.7987794012808197
+  },
+  "seed": "b3_seed2",
+  "training_regime": "smallK5_10",
+  "training_ks": [
+    5,
+    10
+  ],
+  "tuning_ks": [
+    5,
+    10
+  ],
+  "device": "cpu",
+  "dtype": "float32",
+  "score_normalization": {
+    "mean": 11.993332548463556,
+    "std": 8.691485522900857
+  },
+  "log_k_normalization": {
+    "mean": [
+      1.9560115027140728
+    ],
+    "std": [
+      0.34657359027997275
+    ],
+    "keys": [
+      "log_k_std"
+    ],
+    "dim": 1
+  },
+  "z_top1_normalization": {
+    "mean": [
+      19.38634912752937
+    ],
+    "std": [
+      4.534891799633089
+    ],
+    "keys": [
+      "z_top1_std"
+    ],
+    "dim": 1
+  }
+}

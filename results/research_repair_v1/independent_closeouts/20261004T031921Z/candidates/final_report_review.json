@@ -1,0 +1,126 @@
+{
+  "reviewed_at_utc": "2026-10-04T03:46:11+00:00",
+  "scope": "Read-only final report QA; no source, formal outputs, or publication content edited.",
+  "status": "PASS_WITH_ONE_EDITORIAL_RECOMMENDATION",
+  "documents_sha256": {
+    "README.md": "db2d9d6fa6ced70a293f9a8e226d1d36fae52272c7ebd1a024aee1d0f6cc3a00",
+    "reviews/repair_completion.md": "df2169eb9df7cff1046c97f93143b5fc57ec681ced8340dbda3b08a06b84f53a",
+    "docs/final_result_summary.md": "a464fe9eb2340f682d6d813a4e57d5c77de6ea6b7e3bd806bde9725e2eb63748",
+    "results/research_repair_v1/publication/candidate_sensitivity.md": "bfa7b9631910a5964632bb14c459563b1c5763f55e54e7e9227362f6b560ae4f",
+    "results/research_repair_v1/publication/candidates.md": "ce24458409d3372491d206a4934f1ee04669e69994913b90f95bad2004ef6ecb",
+    "results/research_repair_v1/publication/coverage.md": "9e639224661750ec1fa006601fda7632a207d4915e45cc30ee3048477725daca",
+    "results/research_repair_v1/publication/gates.md": "5e636573a06a9a319d99e9b7068346334abc33609fe3104d31202a6ff13aaf5e",
+    "results/research_repair_v1/publication/information.md": "fc82aca2dc4cef4a5037f6d5eb126854ffa5ebb44e568b661a00fe71b8dca322",
+    "results/research_repair_v1/publication/main_tables.md": "59c293a54ca3f2c2e4158b2aa2e97d7a643a4d5731f9488b6a13a6258c02a01b",
+    "results/research_repair_v1/publication/mechanism.md": "a1db85756737aadce7b31ec71de4ec9f8a9668e373627d3080ced16d8366d7a3",
+    "results/research_repair_v1/publication/statistics.md": "9a45572c56cf8e00ed39a46d3d94c8c5b795cdfa2edbf37ad384ee97f73825f9"
+  },
+  "checks": {
+    "count_units": {
+      "status": "PASS_WITH_EDITORIAL_RECOMMENDATION",
+      "verified_claim": "138 mismatch rows among 21,026 family-expression audit records; 10,607 distinct sentence_id values; 47 family-target-object pairs; RPN 86/10,425 and DETR 52/10,601.",
+      "false_21026_distinct_expressions_claim_found": false,
+      "recommendation": "In reviews/repair_completion.md, replace “138 mismatching family-expression records / 21026 audited records” with “138 mismatches among 21,026 family-expression audit records” for clarity and consistency. The existing row does not call 21,026 distinct expressions."
+    },
+    "finite_e_aurc": {
+      "status": "PASS",
+      "finding": "README, completion review, final summary, and relevant publication pages define the retained statistic as trapezoidal finite-sample AURC minus the continuous oracle reference, state it can be negative, and state values are not clipped."
+    },
+    "m3_tolerance_provenance": {
+      "status": "PASS",
+      "finding": "Current reports distinguish the repair-wrapper committed-point replay criterion (1e-9) from the M3.1 frozen-store anchor (1e-9) and dose-rescore anchor (1e-4); M3 remains UNVERIFIABLE and no effect CI is claimed."
+    },
+    "adaptive_ece": {
+      "status": "PASS",
+      "finding": "Current reports state adaptive percentile intervals lack guaranteed nominal coverage, note nonsmoothness near zero, and state a positive lower endpoint alone does not establish population miscalibration."
+    },
+    "conditional_v": {
+      "status": "PASS",
+      "finding": "V results are explicitly condition-specific and fixed-model/reused-test-set; the reports give resolved gains and intervals crossing zero for random K=5 and dose m=0, and disclaim a universal gain or causal mechanism."
+    },
+    "figure_layout": {
+      "status": "PASS_NO_LAYOUT_CHANGE",
+      "finding": "All six PNGs are byte-identical to the preserved prior delivery. All six SVGs match after normalizing only renderer timestamp and generated clip-path IDs, so no graph layout change is indicated; no PNG visual reinspection was needed.",
+      "figures": [
+        {
+          "name": "figure_controlled_interface.png",
+          "current_sha256": "4e2659fced4d78aa06893b1a405624bcbb68833c0f462dcbe49115e73087be46",
+          "prior_sha256": "4e2659fced4d78aa06893b1a405624bcbb68833c0f462dcbe49115e73087be46",
+          "byte_identical": true
+        },
+        {
+          "name": "figure_cross_k_training.png",
+          "current_sha256": "b32c7afa9504ea5d06710283fff4b50b9903542ee9df2acdef74fa473c8b88c7",
+          "prior_sha256": "b32c7afa9504ea5d06710283fff4b50b9903542ee9df2acdef74fa473c8b88c7",
+          "byte_identical": true
+        },
+        {
+          "name": "figure_expansion_endpoints.png",
+          "current_sha256": "f90cb11a01f7335d5e939f57be65b29ea295c8fd249dbd3c48701c4af3cd745d",
+          "prior_sha256": "f90cb11a01f7335d5e939f57be65b29ea295c8fd249dbd3c48701c4af3cd745d",
+          "byte_identical": true
+        },
+        {
+          "name": "figure_information_sources.png",
+          "current_sha256": "c45b94aad4803b64a052c8302610efde4c5a5d33efc1798c66946dfb084c7360",
+          "prior_sha256": "c45b94aad4803b64a052c8302610efde4c5a5d33efc1798c66946dfb084c7360",
+          "byte_identical": true
+        },
+        {
+          "name": "figure_mechanism_paths.png",
+          "current_sha256": "ca67a8abc82650a431483627b23e94f162f1471f282e8f21019795fb21f18ff5",
+          "prior_sha256": "ca67a8abc82650a431483627b23e94f162f1471f282e8f21019795fb21f18ff5",
+          "byte_identical": true
+        },
+        {
+          "name": "figure_temperature_gap.png",
+          "current_sha256": "1f1a0780afd71c1d40152f12584b6aaf1ff6108752b567ac53966a573f51acad",
+          "prior_sha256": "1f1a0780afd71c1d40152f12584b6aaf1ff6108752b567ac53966a573f51acad",
+          "byte_identical": true
+        },
+        {
+          "name": "figure_controlled_interface.svg",
+          "current_sha256": "a4a35b89c8a4e6d1eaed7b15c560d736ec911e03fb0f458c3d016797b0180808",
+          "prior_sha256": "ba8b6caf38c79f87749a89227e7eca7a30d84e8bfecf2d970bc846f626ce79d3",
+          "byte_identical": false,
+          "equivalent_after_renderer_date_and_generated_clip_id_normalization": true
+        },
+        {
+          "name": "figure_cross_k_training.svg",
+          "current_sha256": "f93e31f77c582b80549ec85c081b0a947420b8b995c8a3807998dd305c723901",
+          "prior_sha256": "b9f7531bd6c5817d3843ea2fe248e96c8918663be2e8aec2bc5aec5d2b7012da",
+          "byte_identical": false,
+          "equivalent_after_renderer_date_and_generated_clip_id_normalization": false
+        },
+        {
+          "name": "figure_expansion_endpoints.svg",
+          "current_sha256": "06c82e3fe80cd8bbc1f7a092a4f294fdc908cc3cfa534bdfa70ebbf89be10556",
+          "prior_sha256": "33d880b9c74c32ce625b11107cda2114ff42f406ed3f20af401ddabf4b8e1c88",
+          "byte_identical": false,
+          "equivalent_after_renderer_date_and_generated_clip_id_normalization": false
+        },
+        {
+          "name": "figure_information_sources.svg",
+          "current_sha256": "bdc36fa1c9a50cb52cfb91109733efd504df03f03123a54ddf9c8ed0e70a987d",
+          "prior_sha256": "e64c911ac8c55d2ce3c7b348555a54afff8ebe0c3f12692c6012012aa566f2d7",
+          "byte_identical": false,
+          "equivalent_after_renderer_date_and_generated_clip_id_normalization": false
+        },
+        {
+          "name": "figure_mechanism_paths.svg",
+          "current_sha256": "b9e7bebd2a6827a9ca1321e8db76faf83897979b08d6499a66218a35b9bbb177",
+          "prior_sha256": "51909dcacb2a31678bd2c15d6ae4efebc6c954fa340fdc0083464a7a60e8a4b3",
+          "byte_identical": false,
+          "equivalent_after_renderer_date_and_generated_clip_id_normalization": false
+        },
+        {
+          "name": "figure_temperature_gap.svg",
+          "current_sha256": "9df85c23d0f03f3c1dc9da45e52ec48e120af39ab0f94818c62c28c58440e991",
+          "prior_sha256": "e9b95b6023006c32ee2eae1469011f0d7f3be2802aae451fa65db2029187bf2c",
+          "byte_identical": false,
+          "equivalent_after_renderer_date_and_generated_clip_id_normalization": false
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,54 @@
+[2026-10-03T09:27:46.646560+00:00] START run_id=20261003T092746Z scope=m25-m3b0 pid=47724 g4_device=cuda BLAS=2
+[2026-10-03T09:27:50.930776+00:00] [hard] pooled rows=10286 images=1490 refs=3647
+[2026-10-03T09:27:50.931282+00:00] [hard]   same4: rows=9487 images=1424 refs=3369
+[2026-10-03T09:27:50.931282+00:00] [hard]   same8: rows=7410 images=1189 refs=2643
+[2026-10-03T09:27:50.932290+00:00] [hard]   same9: rows=6765 images=1085 refs=2419
+[2026-10-03T09:28:05.873159+00:00] [M3-B0 seed1] start (T_corrected=1.115344)
+[2026-10-03T09:28:13.342706+00:00] [M3-B0 seed1] E_random reproduces M1 confidences (max|delta|=2.22e-16)
+[2026-10-03T09:28:30.056018+00:00] [M3-B0 seed1] val cells + curriculum standardisation rebuilt (16.7s)
+[2026-10-03T09:28:30.059282+00:00] [M3-B0 seed1] competition index fitted on train-only CDF: {'winner_competitor_max_cos': {'n': 10630, 'min': 0.17833380388083242, 'median': 0.7908610345311899, 'max': 0.9910241475779458}, 'winner_top2_cos': {'n': 10630, 'min': 0.1568753148981159, 'median': 0.7187619200890367, 'max': 0.9910241475779458}, 'q_margin12': {'n': 10630, 'min': -0.18263816260423482, 'median': 0.015172185006122163, 'max': 0.27027448650179053}}
+[2026-10-03T09:28:30.091385+00:00] [M3-B0 seed1] mixers fitted on tune m={0,2,4}: c=0.6167 theta=0.6800 tau=0.0856 beta=1.0899
+[2026-10-03T09:28:31.572247+00:00]   [M2 seed1] expb_m0: STOP ok (max|delta|=1.17e-05); 7410 rows / 1189 images; b3_accuracy=0.7426
+[2026-10-03T09:28:33.186228+00:00]   [M2 seed1] expb_m2: STOP ok (max|delta|=1.25e-05); 7410 rows / 1189 images; b3_accuracy=0.5984
+[2026-10-03T09:28:34.584125+00:00]   [M2 seed1] expb_m4: STOP ok (max|delta|=1.25e-05); 7410 rows / 1189 images; b3_accuracy=0.5614
+[2026-10-03T09:28:36.062525+00:00]   [M2 seed1] expb_m8: STOP ok (max|delta|=1.34e-05); 7410 rows / 1189 images; b3_accuracy=0.5412
+[2026-10-03T09:28:36.068524+00:00] [M3-B0 seed1] frozen test cells loaded (6.0s)
+[2026-10-03T09:28:36.382879+00:00]   [M3-B0 seed1] m0: adaptive-static dAUROC=-0.0001
+[2026-10-03T09:28:36.458704+00:00]   [M3-B0 seed1] m2: adaptive-static dAUROC=+0.0003
+[2026-10-03T09:28:36.532072+00:00]   [M3-B0 seed1] m4: adaptive-static dAUROC=+0.0006
+[2026-10-03T09:28:36.606018+00:00]   [M3-B0 seed1] m8: adaptive-static dAUROC=+0.0004
+[2026-10-03T09:28:36.621458+00:00] [M3-B0 seed1] done in 30.8s (repro rand 2.22e-16, curr 8.14e-11)
+[2026-10-03T09:28:37.784918+00:00] v2m_m3_b0_seed_1 FAILED: RuntimeError: supplemental source snapshot conflict for scripts/repair_legacy_model_recovery.py
+[2026-10-03T09:29:05.176699+00:00] [M3-B0 seed2] start (T_corrected=1.116630)
+[2026-10-03T09:29:11.362749+00:00] [M3-B0 seed2] E_random reproduces M1 confidences (max|delta|=2.22e-16)
+[2026-10-03T09:29:47.611057+00:00] [M3-B0 seed2] val cells + curriculum standardisation rebuilt (36.2s)
+[2026-10-03T09:29:47.613735+00:00] [M3-B0 seed2] competition index fitted on train-only CDF: {'winner_competitor_max_cos': {'n': 10630, 'min': 0.17833380388083242, 'median': 0.790146582915213, 'max': 0.9912989415214497}, 'winner_top2_cos': {'n': 10630, 'min': 0.1568753148981159, 'median': 0.7185853494096932, 'max': 0.9912989415214497}, 'q_margin12': {'n': 10630, 'min': -0.19362363744812683, 'median': 0.0153195671167623, 'max': 0.27027448650179053}}
+[2026-10-03T09:29:47.638599+00:00] [M3-B0 seed2] mixers fitted on tune m={0,2,4}: c=0.6081 theta=-2.3582 tau=-3.6340 beta=0.0904
+[2026-10-03T09:30:00.515433+00:00]   [M2 seed2] expb_m0: STOP ok (max|delta|=1.34e-05); 7410 rows / 1189 images; b3_accuracy=0.7410
+[2026-10-03T09:30:13.284011+00:00]   [M2 seed2] expb_m2: STOP ok (max|delta|=1.24e-05); 7410 rows / 1189 images; b3_accuracy=0.5997
+[2026-10-03T09:30:25.560721+00:00]   [M2 seed2] expb_m4: STOP ok (max|delta|=1.34e-05); 7410 rows / 1189 images; b3_accuracy=0.5663
+[2026-10-03T09:30:38.256198+00:00]   [M2 seed2] expb_m8: STOP ok (max|delta|=1.34e-05); 7410 rows / 1189 images; b3_accuracy=0.5439
+[2026-10-03T09:30:38.264356+00:00] [M3-B0 seed2] frozen test cells loaded (50.6s)
+[2026-10-03T09:30:38.498930+00:00]   [M3-B0 seed2] m0: adaptive-static dAUROC=+0.0001
+[2026-10-03T09:30:38.600168+00:00]   [M3-B0 seed2] m2: adaptive-static dAUROC=-0.0000
+[2026-10-03T09:30:38.702653+00:00]   [M3-B0 seed2] m4: adaptive-static dAUROC=-0.0002
+[2026-10-03T09:30:38.798822+00:00]   [M3-B0 seed2] m8: adaptive-static dAUROC=-0.0004
+[2026-10-03T09:30:38.818390+00:00] [M3-B0 seed2] done in 93.7s (repro rand 2.22e-16, curr 1.02e-10)
+[2026-10-03T09:30:39.721971+00:00] v2m_m3_b0_seed_2 FAILED: RuntimeError: supplemental source snapshot conflict for scripts/repair_legacy_model_recovery.py
+[2026-10-03T09:31:06.606457+00:00] [M3-B0 seed3] start (T_corrected=1.100525)
+[2026-10-03T09:31:13.081657+00:00] [M3-B0 seed3] E_random reproduces M1 confidences (max|delta|=2.22e-16)
+[2026-10-03T09:31:52.378242+00:00] [M3-B0 seed3] val cells + curriculum standardisation rebuilt (39.3s)
+[2026-10-03T09:31:52.380243+00:00] [M3-B0 seed3] competition index fitted on train-only CDF: {'winner_competitor_max_cos': {'n': 10630, 'min': 0.17833380388083242, 'median': 0.7910907254223503, 'max': 0.9912989415214497}, 'winner_top2_cos': {'n': 10630, 'min': 0.1568753148981159, 'median': 0.7173382479667225, 'max': 0.9912989415214497}, 'q_margin12': {'n': 10630, 'min': -0.16696166059728057, 'median': 0.015557090141555818, 'max': 0.27027448650179053}}
+[2026-10-03T09:31:52.389257+00:00] [M3-B0 seed3] mixers fitted on tune m={0,2,4}: c=0.5000 theta=-2.2632 tau=0.1443 beta=0.0990
+[2026-10-03T09:32:05.898881+00:00]   [M2 seed3] expb_m0: STOP ok (max|delta|=1.34e-05); 7410 rows / 1189 images; b3_accuracy=0.7428
+[2026-10-03T09:32:19.997287+00:00]   [M2 seed3] expb_m2: STOP ok (max|delta|=1.34e-05); 7410 rows / 1189 images; b3_accuracy=0.6038
+[2026-10-03T09:32:34.300173+00:00]   [M2 seed3] expb_m4: STOP ok (max|delta|=1.34e-05); 7410 rows / 1189 images; b3_accuracy=0.5663
+[2026-10-03T09:32:48.449586+00:00]   [M2 seed3] expb_m8: STOP ok (max|delta|=1.34e-05); 7410 rows / 1189 images; b3_accuracy=0.5456
+[2026-10-03T09:32:48.455586+00:00] [M3-B0 seed3] frozen test cells loaded (56.1s)
+[2026-10-03T09:32:48.786079+00:00]   [M3-B0 seed3] m0: adaptive-static dAUROC=-0.0001
+[2026-10-03T09:32:48.881663+00:00]   [M3-B0 seed3] m2: adaptive-static dAUROC=+0.0001
+[2026-10-03T09:32:48.968969+00:00]   [M3-B0 seed3] m4: adaptive-static dAUROC=+0.0002
+[2026-10-03T09:32:49.063553+00:00]   [M3-B0 seed3] m8: adaptive-static dAUROC=+0.0003
+[2026-10-03T09:32:49.081607+00:00] [M3-B0 seed3] done in 102.5s (repro rand 2.22e-16, curr 9.00e-11)
+[2026-10-03T09:32:50.194917+00:00] v2m_m3_b0_seed_3 FAILED: RuntimeError: supplemental source snapshot conflict for scripts/repair_legacy_model_recovery.py
+[2026-10-03T09:32:50.369165+00:00] FINISH run_id=20261003T092746Z status=PARTIAL_UNVERIFIABLE jobs=3 failures=3

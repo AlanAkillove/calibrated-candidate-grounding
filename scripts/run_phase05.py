@@ -327,9 +327,12 @@ def _build_features(corpus_id: str, corpus: Dict[int, Dict[str, Any]], temperatu
     eps = 1e-8
     sds_z = {k: ((corpus[k]["scores"] - mu_s) / (sigma_s + eps)).astype(np.float32) for k in KS}
     lnk_vals = {k: np.full(n_ref, np.log(k), dtype=np.float64) for k in KS}
+    lnk_train = np.concatenate(
+        [lnk_vals[k][train_mask[k]] for k in TRAIN_KS], axis=0
+    )[:, None]
     lnk_fit = rfeat.normalize_fit(
-        np.concatenate([lnk_vals[5][:, None], lnk_vals[10][:, None]], axis=0),
-        fit_rows=np.arange(int(train_mask[5].sum()) + int(train_mask[10].sum())),
+        lnk_train,
+        fit_rows=np.arange(lnk_train.shape[0]),
         keys=("log_k_std",))
     lnk_std = {k: rfeat.normalize_apply(lnk_vals[k][:, None], lnk_fit)[:, 0].astype(np.float32)
                for k in KS}

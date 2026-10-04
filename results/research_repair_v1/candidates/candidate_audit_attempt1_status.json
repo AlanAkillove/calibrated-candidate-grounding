@@ -1,0 +1,88 @@
+{
+  "outputs": [
+    {
+      "path": "availability_intersection.csv",
+      "size_bytes": 1373,
+      "last_write_time": "2026-10-03T10:23:38.1387208+08:00"
+    },
+    {
+      "path": "candidate_geometry_historical_source_summary.csv",
+      "size_bytes": 9225,
+      "last_write_time": "2026-10-03T10:23:42.9228076+08:00"
+    },
+    {
+      "path": "candidate_geometry_per_expression.csv",
+      "size_bytes": 60437150,
+      "last_write_time": "2026-10-03T10:19:33.5756507+08:00"
+    },
+    {
+      "path": "candidate_geometry_sensitivity_per_expression.csv",
+      "size_bytes": 41443997,
+      "last_write_time": "2026-10-03T10:19:37.4214533+08:00"
+    },
+    {
+      "path": "candidate_geometry_sensitivity_summary.csv",
+      "size_bytes": 9256,
+      "last_write_time": "2026-10-03T10:23:42.9308067+08:00"
+    },
+    {
+      "path": "candidate_geometry_summary.csv",
+      "size_bytes": 9225,
+      "last_write_time": "2026-10-03T10:19:35.5708960+08:00"
+    },
+    {
+      "path": "candidate_geometry_supply_intersection_per_expression.csv",
+      "size_bytes": 60437150,
+      "last_write_time": "2026-10-03T10:23:40.8893312+08:00"
+    },
+    {
+      "path": "candidate_geometry_supply_intersection_summary.csv",
+      "size_bytes": 11396,
+      "last_write_time": "2026-10-03T10:23:38.1403257+08:00"
+    },
+    {
+      "path": "candidate_sets_true_target_category_v1.npz",
+      "size_bytes": 1491524,
+      "last_write_time": "2026-10-03T10:23:42.8498727+08:00"
+    },
+    {
+      "path": "mismatch_by_category.csv",
+      "size_bytes": 4037,
+      "last_write_time": "2026-10-03T10:23:38.0873559+08:00"
+    },
+    {
+      "path": "mismatch_by_expression.csv",
+      "size_bytes": 2353074,
+      "last_write_time": "2026-10-03T10:23:38.0770634+08:00"
+    },
+    {
+      "path": "mismatch_by_image.csv",
+      "size_bytes": 55278,
+      "last_write_time": "2026-10-03T10:23:38.1129771+08:00"
+    },
+    {
+      "path": "mismatch_by_object.csv",
+      "size_bytes": 384492,
+      "last_write_time": "2026-10-03T10:23:38.1359011+08:00"
+    },
+    {
+      "path": "mismatch_category_confusion.csv",
+      "size_bytes": 251119,
+      "last_write_time": "2026-10-03T10:23:38.1036451+08:00"
+    },
+    {
+      "path": "supplemental_input_manifest.json",
+      "size_bytes": 895,
+      "last_write_time": "2026-10-03T10:16:24.4779544+08:00"
+    }
+  ],
+  "failure_path": "candidate_geometry_per_expression.csv",
+  "notes": "COCO assignment and mismatch/candidate construction completed; partial outputs listed; no summary.json or source availability/coverage files.",
+  "exception": "OSError: [Errno 22] Invalid argument during Path.open(w)",
+  "attempt": 1,
+  "command": "python -B scripts/repair_candidates.py --audit (BLAS=2; Tee-Object candidate_audit.log)",
+  "outcome": "FAILED_AT_FINAL_CSV_WRITE",
+  "session_id": 74335,
+  "preserved_combined_log": "candidate_audit.log",
+  "date": "2026-10-03"
+}

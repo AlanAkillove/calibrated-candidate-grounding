@@ -1,0 +1,68 @@
+{
+  "schema": "research-repair-v1-independent-final-test-verification-v1",
+  "verified_utc": "2026-10-04T03:49:25.743268+00:00",
+  "command": [
+    "E:\\conda\\envs\\deepminer\\python.exe",
+    "-B",
+    "-u",
+    "scripts/run_repair_full_tests.py",
+    "--evidence-dir",
+    "results/research_repair_v1/independent_closeouts/20261004T031921Z/logs",
+    "--basetemp",
+    ".rqc1/pt"
+  ],
+  "pid": 5276,
+  "codex_exec_session_id": 70041,
+  "started_utc": "2026-10-04T03:42:02.073496+00:00",
+  "finished_utc": "2026-10-04T03:47:50.312844+00:00",
+  "duration_seconds": 348.2036045000423,
+  "pytest_exit_code": 0,
+  "junit_counts": {
+    "tests": 1240,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 2,
+    "passed": 1238
+  },
+  "source_file_count": 263,
+  "source_unchanged_during_test_run": true,
+  "source_snapshot_matches_current_tree_after_run": true,
+  "blas_threads": 2,
+  "torch_threads": 2,
+  "offline": true,
+  "opt_in_extraction_tests": "not enabled; two ordinary suite skips expected",
+  "tmp_env": {
+    "TMP": "F:\\DL Projects\\calibrated-candidate-grounding\\.rqc1",
+    "TEMP": "F:\\DL Projects\\calibrated-candidate-grounding\\.rqc1",
+    "TMPDIR": "F:\\DL Projects\\calibrated-candidate-grounding\\.rqc1"
+  },
+  "pytest_basetemp": "F:\\DL Projects\\calibrated-candidate-grounding\\.rqc1\\pt",
+  "python_temp_root": "F:\\DL Projects\\calibrated-candidate-grounding\\.rqc1",
+  "files": {
+    "pytest_full_final.log": {
+      "path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/logs/pytest_full_final.log",
+      "sha256": "2ffbb5848016362c72773b1bbec5f1bf7f2f83952b56331afcec3368ac7f220e",
+      "bytes": 3011
+    },
+    "pytest_full_final.xml": {
+      "path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/logs/pytest_full_final.xml",
+      "sha256": "c8b6f39cf17099033568dd805e9a096e05d25d2182059d068cfb60eaeb6bdb64",
+      "bytes": 150363
+    },
+    "final_test_sources.json": {
+      "path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/logs/final_test_sources.json",
+      "sha256": "236bec1ed556831575c7a09da207dc60831b24cd885126c7320ba2412a37574e",
+      "bytes": 28856
+    },
+    "pytest_full_final_launch.json": {
+      "path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/logs/pytest_full_final_launch.json",
+      "sha256": "4fa43094f365a4dad1d3de3a7946f56af649854e1beb6b1986b30040c707d47d",
+      "bytes": 997
+    },
+    "pytest_full_final_completion.json": {
+      "path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/logs/pytest_full_final_completion.json",
+      "sha256": "155c087a7bafe9267a5737c27d711da29cf888b4c31318491b214225d71e0105",
+      "bytes": 171
+    }
+  }
+}

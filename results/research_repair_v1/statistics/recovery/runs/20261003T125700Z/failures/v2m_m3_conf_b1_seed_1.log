@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_legacy_model_recovery.py", line 1095, in _recover_m3_conf
+    capture.assert_complete(expected_calls=1 + len(levels) * 13)
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_legacy_model_recovery.py", line 519, in assert_complete
+    raise AssertionError(f"original point-metric call order changed: {self.calls} != {expected_calls}")
+AssertionError: original point-metric call order changed: 49 != 53
+

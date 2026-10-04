@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "n_files": 794,
+  "total_bytes": 9400891451,
+  "command": "E:/conda/envs/deepminer/python.exe -B scripts/prepare_research_repair.py --verify",
+  "exit_code": 0,
+  "stdout": "PASS: 794 baseline inputs unchanged",
+  "verified_utc": "2026-10-03T01:52:30.938994+00:00",
+  "baseline_manifest_sha256": "511499c47659bde0bdf207befac4e6efb41975a8b4f1623b10e469c0b89a334f",
+  "manifest_identity_recorded_utc": "2026-10-03T02:14:29.887822+00:00"
+}

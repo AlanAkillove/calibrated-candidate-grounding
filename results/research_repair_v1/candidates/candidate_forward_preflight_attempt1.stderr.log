@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_candidate_forward.py", line 83, in <module>
+    raise SystemExit(main())
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_candidate_forward.py", line 40, in main
+    report = run_category_sensitivity_forward(
+  File "F:\DL Projects\calibrated-candidate-grounding\src\ccg\repairs\candidate_forward.py", line 824, in run_category_sensitivity_forward
+    anchor_checks = _anchor_old_predictions(
+  File "F:\DL Projects\calibrated-candidate-grounding\src\ccg\repairs\candidate_forward.py", line 505, in _anchor_old_predictions
+    raise CandidateForwardError(
+ccg.repairs.candidate_forward.CandidateForwardError: RPN/phase1f_frozen_candidate_archive/hard5/b3_seed1: frozen reliability anchor failed tolerance 1e-09: {'raw_scores_max_abs': 3.814697265625e-06, 'conf_msp_max_abs': 3.2559134338638884e-07, 'conf_stats_max_abs': 2.36220110416685e-07, 'conf_e1b_max_abs': 2.323735939224747e-07}

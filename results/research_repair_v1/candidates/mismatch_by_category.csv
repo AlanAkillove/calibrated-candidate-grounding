@@ -1,0 +1,133 @@
+family,true_target_category_id,true_target_category_name,n_expressions,n_mismatches,mismatch_rate,n_unknown_target_proposal_category
+DETR,1,person,5334,0,0.0,0
+DETR,2,bicycle,14,0,0.0,0
+DETR,3,car,128,0,0.0,0
+DETR,4,motorcycle,161,0,0.0,0
+DETR,5,airplane,49,0,0.0,0
+DETR,6,bus,123,0,0.0,0
+DETR,7,train,78,0,0.0,0
+DETR,8,truck,94,6,0.06382978723404255,0
+DETR,9,boat,56,0,0.0,0
+DETR,10,traffic light,18,0,0.0,0
+DETR,11,fire hydrant,6,0,0.0,0
+DETR,14,parking meter,55,0,0.0,0
+DETR,15,bench,22,0,0.0,0
+DETR,16,bird,82,0,0.0,0
+DETR,17,cat,119,0,0.0,0
+DETR,18,dog,76,0,0.0,0
+DETR,19,horse,131,0,0.0,0
+DETR,20,sheep,156,0,0.0,0
+DETR,21,cow,132,6,0.045454545454545456,0
+DETR,22,elephant,174,0,0.0,0
+DETR,23,bear,64,0,0.0,0
+DETR,24,zebra,141,0,0.0,0
+DETR,25,giraffe,225,0,0.0,0
+DETR,27,backpack,10,2,0.2,0
+DETR,28,umbrella,70,0,0.0,0
+DETR,31,handbag,9,0,0.0,0
+DETR,32,tie,20,0,0.0,0
+DETR,33,suitcase,152,0,0.0,0
+DETR,36,snowboard,16,0,0.0,0
+DETR,38,kite,11,0,0.0,0
+DETR,40,baseball glove,3,0,0.0,0
+DETR,42,surfboard,12,0,0.0,0
+DETR,43,tennis racket,11,0,0.0,0
+DETR,44,bottle,101,0,0.0,0
+DETR,46,wine glass,34,0,0.0,0
+DETR,47,cup,96,3,0.03125,0
+DETR,51,bowl,246,6,0.024390243902439025,0
+DETR,52,banana,137,0,0.0,0
+DETR,53,apple,49,0,0.0,0
+DETR,54,sandwich,192,3,0.015625,0
+DETR,55,orange,92,0,0.0,0
+DETR,56,broccoli,82,0,0.0,0
+DETR,57,carrot,49,0,0.0,0
+DETR,58,hot dog,56,0,0.0,0
+DETR,59,pizza,169,0,0.0,0
+DETR,60,donut,170,0,0.0,0
+DETR,61,cake,99,0,0.0,0
+DETR,62,chair,197,8,0.04060913705583756,0
+DETR,63,couch,131,15,0.11450381679389313,0
+DETR,64,potted plant,69,0,0.0,0
+DETR,65,bed,111,0,0.0,0
+DETR,67,dining table,63,0,0.0,0
+DETR,70,toilet,70,0,0.0,0
+DETR,72,tv,105,0,0.0,0
+DETR,73,laptop,51,0,0.0,0
+DETR,75,remote,14,0,0.0,0
+DETR,76,keyboard,14,0,0.0,0
+DETR,77,cell phone,25,0,0.0,0
+DETR,78,microwave,15,0,0.0,0
+DETR,79,oven,32,0,0.0,0
+DETR,82,refrigerator,38,0,0.0,0
+DETR,84,book,55,0,0.0,0
+DETR,85,clock,40,0,0.0,0
+DETR,86,vase,69,0,0.0,0
+DETR,88,teddy bear,166,3,0.018072289156626505,0
+DETR,90,toothbrush,12,0,0.0,0
+RPN,1,person,5308,6,0.0011303692539562924,0
+RPN,2,bicycle,14,0,0.0,0
+RPN,3,car,128,6,0.046875,0
+RPN,4,motorcycle,161,0,0.0,0
+RPN,5,airplane,46,0,0.0,0
+RPN,6,bus,115,0,0.0,0
+RPN,7,train,78,0,0.0,0
+RPN,8,truck,92,6,0.06521739130434782,0
+RPN,9,boat,56,0,0.0,0
+RPN,10,traffic light,14,0,0.0,0
+RPN,11,fire hydrant,6,0,0.0,0
+RPN,14,parking meter,55,0,0.0,0
+RPN,15,bench,22,0,0.0,0
+RPN,16,bird,82,0,0.0,0
+RPN,17,cat,119,0,0.0,0
+RPN,18,dog,76,0,0.0,0
+RPN,19,horse,131,0,0.0,0
+RPN,20,sheep,156,0,0.0,0
+RPN,21,cow,132,6,0.045454545454545456,0
+RPN,22,elephant,174,0,0.0,0
+RPN,23,bear,64,3,0.046875,0
+RPN,24,zebra,141,0,0.0,0
+RPN,25,giraffe,222,0,0.0,0
+RPN,27,backpack,10,0,0.0,0
+RPN,28,umbrella,57,0,0.0,0
+RPN,31,handbag,9,0,0.0,0
+RPN,32,tie,20,0,0.0,0
+RPN,33,suitcase,152,0,0.0,0
+RPN,36,snowboard,16,0,0.0,0
+RPN,38,kite,11,0,0.0,0
+RPN,40,baseball glove,3,0,0.0,0
+RPN,42,surfboard,12,0,0.0,0
+RPN,43,tennis racket,11,3,0.2727272727272727,0
+RPN,44,bottle,101,0,0.0,0
+RPN,46,wine glass,34,0,0.0,0
+RPN,47,cup,96,3,0.03125,0
+RPN,51,bowl,234,9,0.038461538461538464,0
+RPN,52,banana,132,0,0.0,0
+RPN,53,apple,46,0,0.0,0
+RPN,54,sandwich,186,6,0.03225806451612903,0
+RPN,55,orange,91,0,0.0,0
+RPN,56,broccoli,85,0,0.0,0
+RPN,57,carrot,48,0,0.0,0
+RPN,58,hot dog,56,0,0.0,0
+RPN,59,pizza,159,0,0.0,0
+RPN,60,donut,166,0,0.0,0
+RPN,61,cake,99,0,0.0,0
+RPN,62,chair,184,11,0.059782608695652176,0
+RPN,63,couch,124,15,0.12096774193548387,0
+RPN,64,potted plant,63,0,0.0,0
+RPN,65,bed,111,6,0.05405405405405406,0
+RPN,67,dining table,38,0,0.0,0
+RPN,70,toilet,70,0,0.0,0
+RPN,72,tv,97,3,0.030927835051546393,0
+RPN,73,laptop,51,0,0.0,0
+RPN,75,remote,14,0,0.0,0
+RPN,76,keyboard,14,0,0.0,0
+RPN,77,cell phone,25,0,0.0,0
+RPN,78,microwave,15,0,0.0,0
+RPN,79,oven,28,0,0.0,0
+RPN,82,refrigerator,38,0,0.0,0
+RPN,84,book,46,0,0.0,0
+RPN,85,clock,40,0,0.0,0
+RPN,86,vase,69,0,0.0,0
+RPN,88,teddy bear,160,3,0.01875,0
+RPN,90,toothbrush,12,0,0.0,0

@@ -1,13 +1,11 @@
 """Discrimination metrics of the correctness event (Phase 0A.1).
 
-These are the *base-rate-aware* companions of the calibration / selective
-metrics: they measure how well a confidence score separates correct from
-incorrect predictions, independent of the overall accuracy level.  In the
-Phase 0A audit the raw AURC moved with the base error rate, which makes
-cross-``K`` comparisons ambiguous; AUROC / AUPRC of the correctness event do
-not carry that coupling (AUROC is invariant to the positive rate, AUPRC's
-chance level *is* the positive prevalence and is therefore reported next to
-it).
+These are companions of the calibration / selective metrics: they measure how
+well a confidence score separates correct from incorrect predictions. For
+fixed class-conditional score distributions, AUROC is invariant to the positive
+rate; changes in the score distributions of correct and incorrect samples can
+still change AUROC across settings. AUPRC's chance level is the positive
+prevalence and is therefore reported next to it.
 
 Contract functions
 ------------------

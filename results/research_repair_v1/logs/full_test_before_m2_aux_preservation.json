@@ -1,0 +1,17 @@
+{
+  "status": "PASS_PRESERVED_BEFORE_REQUIRED_SOURCE_ADDITION",
+  "records": [
+    {
+      "path": "results/research_repair_v1/logs/pytest_full_before_m2_aux.log",
+      "sha256": "2ab95a421c01a5fdc90f46ee2a242637b6d70bb046e6eb8cb910349fae6ce4cd"
+    },
+    {
+      "path": "results/research_repair_v1/logs/pytest_full_before_m2_aux.xml",
+      "sha256": "38f43cb986ff67934c81db00fea8c08a15844bffdbd52e8107da6ed26c7ff793"
+    },
+    {
+      "path": "results/research_repair_v1/logs/full_test_sources_before_m2_aux.json",
+      "sha256": "cf2619e94ed3c11b801a2d829a7859273b57c2cf65687dd9455ef5775ed4214c"
+    }
+  ]
+}

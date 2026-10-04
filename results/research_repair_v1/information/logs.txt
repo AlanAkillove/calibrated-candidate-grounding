@@ -1,0 +1,100 @@
+[2026-10-03T02:22:50Z] B runner starting pid=41032 device=cpu torch_threads=2 BLAS_threads=2
+[2026-10-03T02:25:23Z] B runner starting pid=27164 device=cpu torch_threads=2 BLAS_threads=2
+[2026-10-03T02:25:24Z] b3_seed1: computed train-independent frozen feature blocks K=5, rows=20799
+[2026-10-03T02:25:27Z] b3_seed1: computed train-independent frozen feature blocks K=10, rows=20799
+[2026-10-03T02:25:34Z] b3_seed1: computed train-independent frozen feature blocks K=20, rows=20799
+[2026-10-03T02:25:49Z] b3_seed1: computed train-independent frozen feature blocks K=50, rows=20799
+[2026-10-03T02:25:51Z] b3_seed2: computed train-independent frozen feature blocks K=5, rows=20799
+[2026-10-03T02:25:55Z] b3_seed2: computed train-independent frozen feature blocks K=10, rows=20799
+[2026-10-03T02:26:00Z] b3_seed2: computed train-independent frozen feature blocks K=20, rows=20799
+[2026-10-03T02:26:03Z] b3_seed2: computed train-independent frozen feature blocks K=50, rows=20799
+[2026-10-03T02:26:06Z] b3_seed3: computed train-independent frozen feature blocks K=5, rows=20799
+[2026-10-03T02:26:07Z] b3_seed3: computed train-independent frozen feature blocks K=10, rows=20799
+[2026-10-03T02:26:09Z] b3_seed3: computed train-independent frozen feature blocks K=20, rows=20799
+[2026-10-03T02:26:13Z] b3_seed3: computed train-independent frozen feature blocks K=50, rows=20799
+[2026-10-03T02:26:13Z] [frozen] A6.2 split: 523 train / 224 tune images
+[2026-10-03T02:26:25Z] [frozen] embedding stores loaded for K=[5, 10]
+[2026-10-03T02:26:25Z] [frozen] e1_logistic/coefficients.csv has no intercept row (columns: scorer,feature,block,coefficient,coefficient_std); only the 33-d coefficient vector is compared
+[2026-10-03T02:26:26Z] [frozen] b3_seed1: T=1.115344, train=3686 (K5) / 3686 (K10)
+[2026-10-03T02:26:27Z] FAILED: AssertionError: b3_seed1: A8.4 check stats_logistic_pred_max_abs = 6.066e-08 exceeds tolerance 1e-09
+[2026-10-03T02:32:03Z] B runner starting pid=52596 device=cpu torch_threads=2 BLAS_threads=2
+[2026-10-03T02:32:05Z] [frozen] A6.2 split: 523 train / 224 tune images
+[2026-10-03T02:32:05Z] [frozen] embedding stores loaded for K=[5, 10]
+[2026-10-03T02:32:05Z] [frozen] e1_logistic/coefficients.csv has no intercept row (columns: scorer,feature,block,coefficient,coefficient_std); only the 33-d coefficient vector is compared
+[2026-10-03T02:32:05Z] [frozen] b3_seed1: T=1.115344, train=3686 (K5) / 3686 (K10)
+[2026-10-03T02:32:07Z] strict old-model recovery remains UNVERIFIABLE at BLAS=1: AssertionError: b3_seed1: A8.4 check stats_logistic_pred_max_abs = 3.642e-08 exceeds tolerance 1e-09
+[2026-10-03T02:32:07Z] ===== TRAIN SEED b3_seed1 =====
+[2026-10-03T02:32:07Z] b3_seed1 S: selected C=0.1 tune_mean_AUROC=0.812037
+[2026-10-03T02:32:07Z] b3_seed1 S+Q: selected C=0.1 tune_mean_AUROC=0.813712
+[2026-10-03T02:32:08Z] b3_seed1 S+V: selected C=0.1 tune_mean_AUROC=0.811259
+[2026-10-03T02:32:09Z] b3_seed1 Full: selected C=0.1 tune_mean_AUROC=0.812829
+[2026-10-03T02:32:09Z] b3_seed1 S: selected C=0.1 tune_mean_AUROC=0.789001
+[2026-10-03T02:32:09Z] b3_seed1 ScoreDeepSets smallK5_10: CPU float32 train starting, n=7372, K=(5, 10)
+[2026-10-03T02:34:04Z] b3_seed1 ScoreDeepSets smallK5_10: selected lr=0.001 epoch=297 tune AUROC=0.788887
+[2026-10-03T02:34:04Z] b3_seed1 ScoreDeepSets largeK20_50: CPU float32 train starting, n=7372, K=(20, 50)
+[2026-10-03T02:37:03Z] b3_seed1 ScoreDeepSets largeK20_50: selected lr=0.001 epoch=287 tune AUROC=0.754697
+[2026-10-03T02:37:03Z] ===== TRAIN SEED b3_seed2 =====
+[2026-10-03T02:37:03Z] b3_seed2 S: selected C=0.1 tune_mean_AUROC=0.825421
+[2026-10-03T02:37:04Z] b3_seed2 S+Q: selected C=0.1 tune_mean_AUROC=0.825561
+[2026-10-03T02:37:04Z] b3_seed2 S+V: selected C=0.1 tune_mean_AUROC=0.825442
+[2026-10-03T02:37:05Z] b3_seed2 Full: selected C=0.1 tune_mean_AUROC=0.825789
+[2026-10-03T02:37:05Z] b3_seed2 S: selected C=0.1 tune_mean_AUROC=0.795748
+[2026-10-03T02:37:06Z] b3_seed2 ScoreDeepSets smallK5_10: CPU float32 train starting, n=7372, K=(5, 10)
+[2026-10-03T02:39:06Z] b3_seed2 ScoreDeepSets smallK5_10: selected lr=0.001 epoch=293 tune AUROC=0.798779
+[2026-10-03T02:39:06Z] b3_seed2 ScoreDeepSets largeK20_50: CPU float32 train starting, n=7372, K=(20, 50)
+[2026-10-03T02:42:04Z] b3_seed2 ScoreDeepSets largeK20_50: selected lr=0.001 epoch=278 tune AUROC=0.761302
+[2026-10-03T02:42:04Z] ===== TRAIN SEED b3_seed3 =====
+[2026-10-03T02:42:04Z] b3_seed3 S: selected C=0.1 tune_mean_AUROC=0.821145
+[2026-10-03T02:42:05Z] b3_seed3 S+Q: selected C=0.1 tune_mean_AUROC=0.820904
+[2026-10-03T02:42:05Z] b3_seed3 S+V: selected C=0.1 tune_mean_AUROC=0.822266
+[2026-10-03T02:42:06Z] b3_seed3 Full: selected C=0.1 tune_mean_AUROC=0.822030
+[2026-10-03T02:42:06Z] b3_seed3 S: selected C=0.1 tune_mean_AUROC=0.791779
+[2026-10-03T02:42:06Z] b3_seed3 ScoreDeepSets smallK5_10: CPU float32 train starting, n=7372, K=(5, 10)
+[2026-10-03T02:43:40Z] b3_seed3 ScoreDeepSets smallK5_10: selected lr=0.001 epoch=140 tune AUROC=0.791492
+[2026-10-03T02:43:40Z] b3_seed3 ScoreDeepSets largeK20_50: CPU float32 train starting, n=7372, K=(20, 50)
+[2026-10-03T02:46:32Z] b3_seed3 ScoreDeepSets largeK20_50: selected lr=0.001 epoch=245 tune AUROC=0.764062
+[2026-10-03T02:47:09Z] Phase1F B3Corpus loaded from frozen feature cache; no scorer forward or encoder extraction
+[2026-10-03T02:47:19Z] Phase1F cell rand5: loaded/rebuilt cached embeddings for 9487 rows; B3 logits reused
+[2026-10-03T02:47:21Z] Phase1F cell hard5: loaded/rebuilt cached embeddings for 9487 rows; B3 logits reused
+[2026-10-03T02:47:23Z] Phase1F cell expb_m0: loaded/rebuilt cached embeddings for 7410 rows; B3 logits reused
+[2026-10-03T02:47:25Z] Phase1F cell expb_m2: loaded/rebuilt cached embeddings for 7410 rows; B3 logits reused
+[2026-10-03T02:47:26Z] Phase1F cell expb_m4: loaded/rebuilt cached embeddings for 7410 rows; B3 logits reused
+[2026-10-03T02:47:28Z] Phase1F cell expb_m8: loaded/rebuilt cached embeddings for 7410 rows; B3 logits reused
+[2026-10-03T02:47:28Z] FAILED: TypeError: object of type 'NoneType' has no len()
+[2026-10-03T02:58:20Z] B runner starting pid=51156 device=cpu torch_threads=2 BLAS_threads=2
+[2026-10-03T02:58:20Z] [a11-bundle] b3_seed1: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[2026-10-03T02:58:20Z] [a11-bundle] b3_seed2: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[2026-10-03T02:58:20Z] [a11-bundle] b3_seed3: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[2026-10-03T02:58:20Z] direct frozen coefficient bundle loaded and verified at the unchanged 1e-9 tolerance; no refit occurred
+[2026-10-03T02:58:21Z] resume loaded completed checkpoints for 21 training rows and 5290 curve rows; no model fitting
+[2026-10-03T02:58:21Z] FAILED: AttributeError: 'FrozenSeedArtifacts' object has no attribute 'stats_clf'
+Traceback (most recent call last):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_information.py", line 1439, in <module>
+    raise SystemExit(main())
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_information.py", line 1232, in main
+    reference_rows.extend(_reference_check_random(
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_information.py", line 510, in _reference_check_random
+    frozen_stats, frozen_full = apply_frozen(fitted_frozen.seeds[seed], raw_stats, raw_sem)
+  File "F:\DL Projects\calibrated-candidate-grounding\src\ccg\semantic\frozen.py", line 456, in apply_frozen
+    stats_conf = seed_models.stats_clf.predict_proba(stats_std)
+AttributeError: 'FrozenSeedArtifacts' object has no attribute 'stats_clf'
+[2026-10-03T03:15:02Z] B runner starting pid=48628 device=cpu torch_threads=2 BLAS_threads=2
+[2026-10-03T03:15:04Z] [a11-bundle] b3_seed1: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[2026-10-03T03:15:04Z] [a11-bundle] b3_seed2: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[2026-10-03T03:15:04Z] [a11-bundle] b3_seed3: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[2026-10-03T03:15:04Z] direct frozen coefficient bundle loaded and verified at the unchanged 1e-9 tolerance; no refit occurred
+[2026-10-03T03:15:05Z] resume loaded completed checkpoints for 21 training rows and 5290 curve rows; no model fitting
+[2026-10-03T03:15:45Z] b3_seed1: 128-row fit diagnostic complete; SDS epochs=300, best_epoch=-1
+[2026-10-03T03:15:46Z] b3_seed2: 128-row fit diagnostic complete; SDS epochs=300, best_epoch=-1
+[2026-10-03T03:15:46Z] b3_seed3: 128-row fit diagnostic complete; SDS epochs=300, best_epoch=-1
+[2026-10-03T03:15:47Z] B runner point-estimate stages complete; formal bootstrap awaits parent resource slot
+[2026-10-03T03:25:57Z] B runner starting pid=53624 device=cpu torch_threads=2 BLAS_threads=2
+[2026-10-03T03:26:00Z] [a11-bundle] b3_seed1: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[2026-10-03T03:26:00Z] [a11-bundle] b3_seed2: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[2026-10-03T03:26:00Z] [a11-bundle] b3_seed3: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[2026-10-03T03:26:00Z] direct frozen coefficient bundle loaded and verified at the unchanged 1e-9 tolerance; no refit occurred
+[2026-10-03T03:26:01Z] resume loaded completed checkpoints for 21 training rows and 5290 curve rows; no model fitting
+[2026-10-03T03:26:41Z] b3_seed1: 128-row fit diagnostic complete; SDS epochs=300, best_epoch=-1
+[2026-10-03T03:26:41Z] b3_seed2: 128-row fit diagnostic complete; SDS epochs=300, best_epoch=-1
+[2026-10-03T03:26:42Z] b3_seed3: 128-row fit diagnostic complete; SDS epochs=300, best_epoch=-1
+[2026-10-03T03:26:42Z] B runner point-estimate stages complete; formal bootstrap awaits parent resource slot

@@ -1,0 +1,11 @@
+{
+  "slot": "B-SLOT-2026-10-03",
+  "pid": 52156,
+  "start_utc": "2026-10-03T07:34:26.4797886Z",
+  "command": "E:/conda/envs/deepminer/python.exe -B -u scripts/repair_information_bootstrap.py --out results/research_repair_v1/information --replicates 5000",
+  "working_directory": "F:\\DL Projects\\calibrated-candidate-grounding",
+  "blas_threads": 2,
+  "stdout_log": "results\\research_repair_v1\\information\\information_bootstrap_run.log",
+  "stderr_log": "results\\research_repair_v1\\information\\information_bootstrap_run.err.log",
+  "call_log": "results/research_repair_v1/information/information_bootstrap_call_checkpoints/call_log.jsonl"
+}

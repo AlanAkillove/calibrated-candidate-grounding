@@ -1,0 +1,25 @@
+[2026-10-03T12:55:40.265077+00:00] START run_id=20261003T125700Z scope=m3-conf pid=58984 g4_device=cuda BLAS=2
+[2026-10-03T12:55:43.947752+00:00] [hard] pooled rows=10286 images=1490 refs=3647
+[2026-10-03T12:55:43.947752+00:00] [hard]   same4: rows=9487 images=1424 refs=3369
+[2026-10-03T12:55:43.947752+00:00] [hard]   same8: rows=7410 images=1189 refs=2643
+[2026-10-03T12:55:43.948734+00:00] [hard]   same9: rows=6765 images=1085 refs=2419
+[2026-10-03T12:56:20.235191+00:00] [M3-CONF b1 seed1] start (T_corrected=1.171145)
+[2026-10-03T12:56:35.609948+00:00] [M3-CONF b1 seed1] E_random reproduces V2-G Phase A K5 AUROC (0.841102, max|delta|=0.00e+00)
+[2026-10-03T12:57:34.891372+00:00] [M3-CONF b1 seed1] val cells materialised (59.3s)
+[2026-10-03T12:57:51.045970+00:00]   [M2 seed1] val random-C10 STOP ok (max|delta|=1.34e-05; 5231 rows)
+[2026-10-03T12:57:51.241487+00:00]     b1:seed1:E_curriculum: C=0.1 tune_balanced_auroc=0.8262
+[2026-10-03T12:57:51.476610+00:00]     b1:seed1:E_curriculum: C=1 tune_balanced_auroc=0.8258
+[2026-10-03T12:57:51.909381+00:00]     b1:seed1:E_curriculum: C=10 tune_balanced_auroc=0.8256
+[2026-10-03T12:57:51.909381+00:00]     b1:seed1:E_curriculum: chosen C=0.1 (tie rule)
+[2026-10-03T12:57:51.909381+00:00] [M3-CONF b1 seed1] E_curriculum trained (C=0.1, tune balanced AUROC=0.8262)
+[2026-10-03T12:57:51.911449+00:00] [M3-CONF b1 seed1] competition index fitted (train-only CDF)
+[2026-10-03T12:57:51.946232+00:00] [M3-CONF b1 seed1] mixers fitted on tune m={0,2,4}: c=0.8152 theta=2.4334 tau=0.0334 beta=2.5175
+[2026-10-03T12:59:27.327777+00:00] [M3-CONF b1 seed1] frozen test cells scored (95.4s)
+[2026-10-03T12:59:27.441239+00:00]   [M3-CONF b1 seed1] m0: dAUROC(A-S)=+0.0002
+[2026-10-03T12:59:27.540686+00:00]   [M3-CONF b1 seed1] m2: dAUROC(A-S)=+0.0006
+[2026-10-03T12:59:27.623887+00:00]   [M3-CONF b1 seed1] m4: dAUROC(A-S)=+0.0006
+[2026-10-03T12:59:27.721331+00:00]   [M3-CONF b1 seed1] m8: dAUROC(A-S)=-0.0005
+[2026-10-03T12:59:27.742980+00:00] [M3-CONF b1 seed1] done in 187.5s (anchor phaseA 0.00e+00; dose max 5.29e-07; val stop 1.34e-05)
+[2026-10-03T12:59:27.861664+00:00] v2m_m3_conf_b1_seed_1 FAILED: AssertionError: original point-metric call order changed: 49 != 53
+[2026-10-03T13:00:00.907265+00:00] [M3-CONF b1 seed2] start (T_corrected=1.070724)
+[2026-10-03T13:00:06.222391+00:00] [M3-CONF b1 seed2] E_random reproduces V2-G Phase A K5 AUROC (0.835842, max|delta|=0.00e+00)

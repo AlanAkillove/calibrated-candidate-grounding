@@ -1,0 +1,49 @@
+{
+  "schema": "ccg.research_repair_v1.independent_closeout.metric_endpoint_parity_docstring_addendum.v1",
+  "created_utc": "2026-10-04T03:41:43.902522+00:00",
+  "status": "PASS_DOCSTRING_ONLY_SOURCE_UPDATE_INHERITS_EXACT_ENDPOINT_PARITY",
+  "base_parity_record": {
+    "path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/statistics/metric_endpoint_parity.json",
+    "sha256": "b37374c198bb11af905ee41d4c763589020bb0aaf56fd7c496bfb2b2cd92eb39",
+    "status": "PASS_ALL_DIRECT_ENDPOINTS_UNCHANGED"
+  },
+  "source_identity": {
+    "selective_before_docstring_update_sha256": "b713a0618f94b777fa6baa611ae2c28af1dda65e0ddb781230ddeadee5b3000b",
+    "selective_current_sha256": "1108c3512861da87e558c7fbf454d6dddebca840996358359858f15060439e9c",
+    "reverse_docstring_patch_sha256": "b713a0618f94b777fa6baa611ae2c28af1dda65e0ddb781230ddeadee5b3000b",
+    "exact_reconstruction_matches_prior_source": true,
+    "repair_statistics_sha256": "b58b7d5d56fb0a0d497c50a5d01473580c6f9b152321da8fa2fc591e1810f955"
+  },
+  "docstring_changes": [
+    "oracle_aurc now identifies its reference as continuous and says it is not a guaranteed lower bound for finite-sample trapezoidal AURC.",
+    "e_aurc now calls the comparison a continuous oracle reference rather than an oracle bound."
+  ],
+  "numeric_endpoint_evidence": {
+    "recomputed": false,
+    "reason": "The exact pre-update source bytes are recovered by reversing only the two documented text replacements and match the source SHA used by the existing parity record; the endpoint implementation bytes are therefore unchanged.",
+    "inherited_parity_status": "PASS_ALL_DIRECT_ENDPOINTS_UNCHANGED",
+    "inherited_cases": 396,
+    "inherited_all_public_metric_value_count": 6732,
+    "inherited_mismatch_counts": {
+      "accuracy": 0,
+      "auroc_correct": 0,
+      "auprc_correct": 0,
+      "aurc": 0,
+      "e_aurc": 0,
+      "rer_at_50": 0,
+      "rer_at_80": 0,
+      "rer_at_90": 0,
+      "rer_at_95": 0,
+      "risk_at_50": 0,
+      "risk_at_80": 0,
+      "risk_at_90": 0,
+      "ece_adaptive": 0,
+      "ece_equal_width": 0,
+      "brier_binary": 0,
+      "nll_binary": 0,
+      "confidence_accuracy_gap": 0
+    },
+    "bootstrap_replicates_drawn": 0,
+    "models_retrained": false
+  }
+}

@@ -1,0 +1,13 @@
+COMMAND: E:\conda\envs\deepminer\python.exe -B -m pytest tests/test_metrics_calibration.py tests/test_repair_statistics_math.py -v
+EXIT_CODE: 0
+============================= test session starts =============================
+platform win32 -- Python 3.10.19, pytest-9.1.1, pluggy-1.6.0
+rootdir: F:\DL Projects\calibrated-candidate-grounding
+configfile: pyproject.toml
+plugins: anyio-4.12.1
+collected 35 items
+
+tests\test_metrics_calibration.py .................                      [ 48%]
+tests\test_repair_statistics_math.py ..................                  [100%]
+
+============================= 35 passed in 2.52s ==============================

@@ -1,0 +1,16 @@
+Completed phase0a_testA: 152 estimates
+Completed phase0a_testB: 152 estimates
+Completed phase0a_val_calib: 152 estimates
+Completed phase0a_val_select: 152 estimates
+Traceback (most recent call last):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_statistics.py", line 589, in <module>
+    source_paths = list(dict.fromkeys(source_paths))
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_statistics.py", line 578, in main
+    "image_id": frame_by_seed[seed][model_files[0]][0]["image_id"].to_numpy(),
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_statistics.py", line 450, in run_job
+    specs.append({
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_statistics.py", line 179, in _job_summary
+    if not isinstance(old_seed_points, dict):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_statistics.py", line 152, in _check_anchor
+    def _check_anchor(row: dict[str, Any], expected: float, *, atol: float = ANCHOR_TOLERANCE) -> None:
+ValueError: point anchor mismatch: old=0.534881484687, new=0.532179661676, abs_error=0.0027, atol=1e-06

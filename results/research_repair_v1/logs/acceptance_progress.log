@@ -1,0 +1,90 @@
+INCOMPLETE: 89 unresolved acceptance checks
+- v2g_g3: unfinished scope READY_POINT_ANCHORS_PASS_FORMAL_PENDING
+- v2g_g3: formal jobs missing ['v2g_g3_b1___pooled_test__', 'v2g_g3_b1___all_common__', 'v2g_g3_b2_testA', 'v2g_g3_b2_testB', 'v2g_g3_b2_val_calib', 'v2g_g3_b2_val_select', 'v2g_g3_b2___pooled_test__', 'v2g_g3_b2___all_common__']
+- v2g_g4: unfinished scope FROZEN_FORWARD_REQUIRED_PENDING
+- v2g_g4: formal jobs missing ['v2g_g4_b1', 'v2g_g4_b2']
+- d1: unfinished scope READY_POINT_ANCHORS_PASS_FORMAL_PENDING
+- d1: formal jobs missing ['d1_c1_cosine_b0_clean', 'd1_c1_b3_clean', 'd1_c4_clean']
+- d2_c1: unfinished scope READY_POINT_ANCHORS_PASS_FORMAL_PENDING
+- d2_c1: formal jobs missing ['d2_c1_common_k50']
+- d2_c4: unfinished scope READY_POINT_ANCHORS_PASS_FORMAL_PENDING
+- d2_c4: formal jobs missing ['d2_c4_random_hard5']
+- p: unfinished scope READY_POINT_ANCHORS_PASS_FORMAL_PENDING
+- p: formal jobs missing ['p1_c1_RPN', 'p1_c1_DETR', 'p1_c1_GDINO', 'p1_c4_RPN', 'p1_c4_DETR']
+- m1: unfinished scope READY_POINT_ANCHORS_PASS_FORMAL_PENDING
+- m1: formal jobs missing ['m1_random_k5', 'm1_random_k5_matched', 'm1_samecategory_k5', 'm1_k20_random', 'm1_k50_random']
+- m2: unfinished scope READY_POINT_ANCHORS_PASS_FORMAL_PENDING
+- m2: formal jobs missing ['m2_curriculum_m0_m2_m4_m8']
+- m25: unfinished scope FROZEN_FORWARD_REQUIRED_PENDING_B_RECOVERY
+- m25: formal jobs missing ['m25_specialist_m0_m2_m4_m8']
+- Unresolved gate B0_temperature_gate
+- Gate B0_temperature_gate lacks original predicate/threshold provenance
+- Gate B0_temperature_gate retains unresolved historical decision/threshold placeholders
+- Unresolved gate B0_temperature_gate
+- Gate B0_temperature_gate lacks original predicate/threshold provenance
+- Gate B0_temperature_gate retains unresolved historical decision/threshold placeholders
+- Unresolved gate PHASE05_SUFFICIENCY_GATE
+- Gate PHASE05_SUFFICIENCY_GATE lacks original predicate/threshold provenance
+- Gate PHASE05_SUFFICIENCY_GATE retains unresolved historical decision/threshold placeholders
+- Unresolved gate PHASE1_GLOBAL_SUFFICIENCY_GATE
+- Gate PHASE1_GLOBAL_SUFFICIENCY_GATE lacks original predicate/threshold provenance
+- Gate PHASE1_GLOBAL_SUFFICIENCY_GATE retains unresolved historical decision/threshold placeholders
+- Unresolved gate PHASE1F_SEMANTIC_GATE
+- Gate PHASE1F_SEMANTIC_GATE lacks original predicate/threshold provenance
+- Gate PHASE1F_SEMANTIC_GATE retains unresolved historical decision/threshold placeholders
+- Unresolved gate REFCOCOG_EXTERNAL_GATE
+- Gate REFCOCOG_EXTERNAL_GATE lacks original predicate/threshold provenance
+- Gate REFCOCOG_EXTERNAL_GATE retains unresolved historical decision/threshold placeholders
+- Unresolved gate V2G_G3_CARDINALITY_GATE
+- Gate V2G_G3_CARDINALITY_GATE lacks original predicate/threshold provenance
+- Gate V2G_G3_CARDINALITY_GATE retains unresolved historical decision/threshold placeholders
+- Unresolved gate V2G_G4_HARD_SEMANTIC_GATE
+- Gate V2G_G4_HARD_SEMANTIC_GATE lacks original predicate/threshold provenance
+- Gate V2G_G4_HARD_SEMANTIC_GATE retains unresolved historical decision/threshold placeholders
+- Unresolved gate D1_C1_C4_GATE
+- Gate D1_C1_C4_GATE lacks original predicate/threshold provenance
+- Gate D1_C1_C4_GATE retains unresolved historical decision/threshold placeholders
+- Unresolved gate D2_C1_GATE
+- Gate D2_C1_GATE lacks original predicate/threshold provenance
+- Gate D2_C1_GATE retains unresolved historical decision/threshold placeholders
+- Unresolved gate D2_C4_GATE
+- Gate D2_C4_GATE lacks original predicate/threshold provenance
+- Gate D2_C4_GATE retains unresolved historical decision/threshold placeholders
+- Unresolved gate P1_F4_ROUTE_GATE
+- Gate P1_F4_ROUTE_GATE lacks original predicate/threshold provenance
+- Gate P1_F4_ROUTE_GATE retains unresolved historical decision/threshold placeholders
+- Unresolved gate P1_F5_ROUTE_GATE
+- Gate P1_F5_ROUTE_GATE lacks original predicate/threshold provenance
+- Gate P1_F5_ROUTE_GATE retains unresolved historical decision/threshold placeholders
+- Unresolved gate P2_C1_GATE
+- Gate P2_C1_GATE lacks original predicate/threshold provenance
+- Gate P2_C1_GATE retains unresolved historical decision/threshold placeholders
+- Unresolved gate M1_GO
+- Gate M1_GO lacks original predicate/threshold provenance
+- Gate M1_GO retains unresolved historical decision/threshold placeholders
+- Unresolved gate M2_GO
+- Gate M2_GO lacks original predicate/threshold provenance
+- Gate M2_GO retains unresolved historical decision/threshold placeholders
+- Unresolved gate M2_SELECTIVE_SIGNAL
+- Gate M2_SELECTIVE_SIGNAL lacks original predicate/threshold provenance
+- Gate M2_SELECTIVE_SIGNAL retains unresolved historical decision/threshold placeholders
+- Unresolved gate M2_GATE_CONTRIBUTION
+- Gate M2_GATE_CONTRIBUTION lacks original predicate/threshold provenance
+- Gate M2_GATE_CONTRIBUTION retains unresolved historical decision/threshold placeholders
+- Unresolved gate M25_DIAGNOSTIC_VERDICT
+- Gate M25_DIAGNOSTIC_VERDICT lacks original predicate/threshold provenance
+- Gate M25_DIAGNOSTIC_VERDICT retains unresolved historical decision/threshold placeholders
+- Unresolved gate M3_B1_B2_FROZEN_GATE
+- Gate M3_B1_B2_FROZEN_GATE lacks original predicate/threshold provenance
+- Gate M3_B1_B2_FROZEN_GATE retains unresolved historical decision/threshold placeholders
+- Missing logs/stored_estimate_verification.json
+- Complete raw-array/percentile/seed-mean verification missing or failed
+- Raw-array verification does not cover all declared formal estimates
+- Raw verification source/archive identities missing
+- Missing logs/final_input_verification.json
+- Final immutable input verification missing or failed
+- Append-only document checks missing or failed
+- Final input verification does not cover current manifest identities
+- Missing logs/final_test_sources.json
+- Final tests lack a stable passing source snapshot
+- Final full-suite JUnit record missing

@@ -1,0 +1,29 @@
+{
+  "schema": "research-repair-v1-candidate-io-probe-v1",
+  "source_partial_artifact": "results/research_repair_v1/candidates/candidate_geometry_sensitivity_per_expression.csv",
+  "source_before": {
+    "size_bytes": 41443997,
+    "sha256": "abeabf73b41ba6adb784715830f85847c1882ecba465d4ac7ba7943aa38b62a4",
+    "attributes": 32
+  },
+  "open_w_existing_large_clone_before": {
+    "size_bytes": 41443997,
+    "sha256": "abeabf73b41ba6adb784715830f85847c1882ecba465d4ac7ba7943aa38b62a4",
+    "attributes": 32
+  },
+  "open_w_existing_large_clone": {
+    "result": "ok",
+    "content": "probe,value\n1,open_w_ok\n"
+  },
+  "atomic_writer_existing_large_clone": {
+    "result": "ok",
+    "content": "probe,value\n2,atomic_replace_ok\n",
+    "size_bytes": 34
+  },
+  "source_after": {
+    "size_bytes": 41443997,
+    "sha256": "abeabf73b41ba6adb784715830f85847c1882ecba465d4ac7ba7943aa38b62a4",
+    "attributes": 32
+  },
+  "source_unchanged": true
+}

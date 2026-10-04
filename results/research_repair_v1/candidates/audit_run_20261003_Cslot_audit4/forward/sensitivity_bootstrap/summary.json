@@ -1,0 +1,819 @@
+{
+  "schema": "research-repair-v1-candidate-sensitivity-summary-v1",
+  "status": "COMPLETE",
+  "formal": true,
+  "audit_run_id": "20261003_Cslot_audit4",
+  "candidate_audit_summary_sha256": "d1a7eecac75467a7a46bae3133448451c57aa7a0c8550a4aca1da3cf3fe6cce8",
+  "candidate_forward_summary_sha256": "ab93b666d64be0925fae8acc09fab2c7b308fc44eb06cc1b52b271c6f01a7250",
+  "predictions_manifest": {
+    "path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/predictions_manifest.json",
+    "sha256": "315fd7aa9263fb901b706e352efc18cb9e5cece60de0ff4d06ac1be7f5e223ba"
+  },
+  "bootstrap_contract": {
+    "resample_unit": "image_cluster",
+    "n_replicates": 5000,
+    "seed": 0,
+    "ci_level": 0.95,
+    "method": "percentile",
+    "estimand_orientation": "old minus corrected candidate; fractions and RER ratio remain unscaled",
+    "no_percentage_share_claims": true
+  },
+  "bootstrap": {
+    "resample_unit": "image_cluster",
+    "n_replicates": 5000,
+    "seed": 0,
+    "ci_level": 0.95,
+    "method": "percentile"
+  },
+  "dose_estimand_contract": {
+    "old_arm": "metric(old_m) - metric(old_m0)",
+    "corrected_arm": "metric(corrected_m) - metric(corrected_m0)",
+    "version_change": "[metric(old_m) - metric(corrected_m)] - [metric(old_m0) - metric(corrected_m0)]",
+    "fixed_original_m0_contrast": "metric(corrected_m) - metric(original old_m0); descriptive only, not corrected baseline"
+  },
+  "forwarded_source_cohorts": [
+    [
+      "RPN",
+      "phase1f_frozen_candidate_archive",
+      "hard5"
+    ],
+    [
+      "RPN",
+      "phase1f_frozen_candidate_archive",
+      "hard10"
+    ],
+    [
+      "RPN",
+      "phase1f_frozen_candidate_archive",
+      "expb_m0"
+    ],
+    [
+      "RPN",
+      "phase1f_frozen_candidate_archive",
+      "expb_m2"
+    ],
+    [
+      "RPN",
+      "phase1f_frozen_candidate_archive",
+      "expb_m4"
+    ],
+    [
+      "RPN",
+      "phase1f_frozen_candidate_archive",
+      "expb_m8"
+    ],
+    [
+      "RPN",
+      "v2_p1_frozen_hard_k5_predictions",
+      "hard5"
+    ],
+    [
+      "DETR",
+      "v2_p1_frozen_hard_k5_predictions",
+      "hard5"
+    ]
+  ],
+  "nonforwardable_empty_source_cohorts": [],
+  "expected_source_cohort_split_groups": [
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "hard5",
+      "eval_split": "pooled_testA_testB",
+      "group": "RPN__phase1f_frozen_candidate_archive__hard5__pooled_testA_testB",
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "hard5",
+      "eval_split": "testA",
+      "group": "RPN__phase1f_frozen_candidate_archive__hard5__testA",
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "hard5",
+      "eval_split": "testB",
+      "group": "RPN__phase1f_frozen_candidate_archive__hard5__testB",
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "hard10",
+      "eval_split": "pooled_testA_testB",
+      "group": "RPN__phase1f_frozen_candidate_archive__hard10__pooled_testA_testB",
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "hard10",
+      "eval_split": "testA",
+      "group": "RPN__phase1f_frozen_candidate_archive__hard10__testA",
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "hard10",
+      "eval_split": "testB",
+      "group": "RPN__phase1f_frozen_candidate_archive__hard10__testB",
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "expb_m0",
+      "eval_split": "pooled_testA_testB",
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__pooled_testA_testB",
+      "status": "COMPONENT_INCLUDED_IN_DOSE_JOINT_GROUP_COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "expb_m0",
+      "eval_split": "testA",
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__testA",
+      "status": "COMPONENT_INCLUDED_IN_DOSE_JOINT_GROUP_COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "expb_m0",
+      "eval_split": "testB",
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__testB",
+      "status": "COMPONENT_INCLUDED_IN_DOSE_JOINT_GROUP_COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "expb_m2",
+      "eval_split": "pooled_testA_testB",
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__pooled_testA_testB",
+      "status": "COMPONENT_INCLUDED_IN_DOSE_JOINT_GROUP_COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "expb_m2",
+      "eval_split": "testA",
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__testA",
+      "status": "COMPONENT_INCLUDED_IN_DOSE_JOINT_GROUP_COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "expb_m2",
+      "eval_split": "testB",
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__testB",
+      "status": "COMPONENT_INCLUDED_IN_DOSE_JOINT_GROUP_COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "expb_m4",
+      "eval_split": "pooled_testA_testB",
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__pooled_testA_testB",
+      "status": "COMPONENT_INCLUDED_IN_DOSE_JOINT_GROUP_COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "expb_m4",
+      "eval_split": "testA",
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__testA",
+      "status": "COMPONENT_INCLUDED_IN_DOSE_JOINT_GROUP_COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "expb_m4",
+      "eval_split": "testB",
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__testB",
+      "status": "COMPONENT_INCLUDED_IN_DOSE_JOINT_GROUP_COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "expb_m8",
+      "eval_split": "pooled_testA_testB",
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__pooled_testA_testB",
+      "status": "COMPONENT_INCLUDED_IN_DOSE_JOINT_GROUP_COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "expb_m8",
+      "eval_split": "testA",
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__testA",
+      "status": "COMPONENT_INCLUDED_IN_DOSE_JOINT_GROUP_COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "expb_m8",
+      "eval_split": "testB",
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__testB",
+      "status": "COMPONENT_INCLUDED_IN_DOSE_JOINT_GROUP_COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "v2_p1_frozen_hard_k5_predictions",
+      "cell": "hard5",
+      "eval_split": "pooled_testA_testB",
+      "group": "RPN__v2_p1_frozen_hard_k5_predictions__hard5__pooled_testA_testB",
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "v2_p1_frozen_hard_k5_predictions",
+      "cell": "hard5",
+      "eval_split": "testA",
+      "group": "RPN__v2_p1_frozen_hard_k5_predictions__hard5__testA",
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "v2_p1_frozen_hard_k5_predictions",
+      "cell": "hard5",
+      "eval_split": "testB",
+      "group": "RPN__v2_p1_frozen_hard_k5_predictions__hard5__testB",
+      "status": "COMPLETE"
+    },
+    {
+      "family": "DETR",
+      "candidate_source": "v2_p1_frozen_hard_k5_predictions",
+      "cell": "hard5",
+      "eval_split": "pooled_testA_testB",
+      "group": "DETR__v2_p1_frozen_hard_k5_predictions__hard5__pooled_testA_testB",
+      "status": "COMPLETE"
+    },
+    {
+      "family": "DETR",
+      "candidate_source": "v2_p1_frozen_hard_k5_predictions",
+      "cell": "hard5",
+      "eval_split": "testA",
+      "group": "DETR__v2_p1_frozen_hard_k5_predictions__hard5__testA",
+      "status": "COMPLETE"
+    },
+    {
+      "family": "DETR",
+      "candidate_source": "v2_p1_frozen_hard_k5_predictions",
+      "cell": "hard5",
+      "eval_split": "testB",
+      "group": "DETR__v2_p1_frozen_hard_k5_predictions__hard5__testB",
+      "status": "COMPLETE"
+    }
+  ],
+  "groups": [
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "hard5",
+      "eval_split": "pooled_testA_testB",
+      "source_rows": 9466,
+      "n_rows": 9466,
+      "n_images": 1422,
+      "n_testA_rows": 5376,
+      "n_testB_rows": 4090,
+      "excluded_non_testA_testB_rows": 0,
+      "canonical_sentence_id_sha256": "687feb1f37d19adb6587d35086acf7e3cffef09dd34a04ff937684867e7f6532",
+      "source_cohort_keys": [
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "hard5"
+        ]
+      ],
+      "group": "RPN__phase1f_frozen_candidate_archive__hard5__pooled_testA_testB",
+      "summary_path": "group_c6dfcd9345eac283_summary.json",
+      "summary_sha256": "aa1281883dd335cd40e9447b5cd9cbd048c53961552a6aa3a6cafad2aa3fedf0",
+      "raw_replicates_path": "group_c6dfcd9345eac283_raw.npz",
+      "raw_replicates_sha256": "940be29e523d9d10933f6892891aa9a4e2a9540c91ee0f6210cfa5feb13aed8a",
+      "n_estimates": 52,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "hard5",
+      "eval_split": "testA",
+      "source_rows": 9466,
+      "n_rows": 5376,
+      "n_images": 738,
+      "n_testA_rows": 5376,
+      "n_testB_rows": 4090,
+      "excluded_non_testA_testB_rows": 0,
+      "canonical_sentence_id_sha256": "d2123d0689a79107c3e73da61122a06c7af972f9a25dadf9c39eb16f9a833492",
+      "source_cohort_keys": [
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "hard5"
+        ]
+      ],
+      "group": "RPN__phase1f_frozen_candidate_archive__hard5__testA",
+      "summary_path": "group_3717e0741f749dad_summary.json",
+      "summary_sha256": "992615aad78c37a927bbf2cda3929effd98c1c33006db01b26c449580c55e0b9",
+      "raw_replicates_path": "group_3717e0741f749dad_raw.npz",
+      "raw_replicates_sha256": "0b13faaa964dd1dbf7399dc4cc87884f53c5a69c16cb1160bed97abdacc6d509",
+      "n_estimates": 52,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "hard5",
+      "eval_split": "testB",
+      "source_rows": 9466,
+      "n_rows": 4090,
+      "n_images": 684,
+      "n_testA_rows": 5376,
+      "n_testB_rows": 4090,
+      "excluded_non_testA_testB_rows": 0,
+      "canonical_sentence_id_sha256": "b6aab23689a7cdcef1ed27322fcbf0beab15237e4e6f8315e1626866839ba2eb",
+      "source_cohort_keys": [
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "hard5"
+        ]
+      ],
+      "group": "RPN__phase1f_frozen_candidate_archive__hard5__testB",
+      "summary_path": "group_d0bcb20c933b1a9e_summary.json",
+      "summary_sha256": "6a093f5c7d3bb265a96769123e878f3b6aaffdf47ad9a93e99b65ee204a475ac",
+      "raw_replicates_path": "group_d0bcb20c933b1a9e_raw.npz",
+      "raw_replicates_sha256": "f57a757173ff91379c7c3cd2bd38eb85bbf3f3671925adc0263b20bebe7c4100",
+      "n_estimates": 52,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "hard10",
+      "eval_split": "pooled_testA_testB",
+      "source_rows": 6747,
+      "n_rows": 6747,
+      "n_images": 1083,
+      "n_testA_rows": 3993,
+      "n_testB_rows": 2754,
+      "excluded_non_testA_testB_rows": 0,
+      "canonical_sentence_id_sha256": "1d924ea744afcfb3f06d8e45bd838f95ca108deae6dd808dfe70ef268ef96438",
+      "source_cohort_keys": [
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "hard10"
+        ]
+      ],
+      "group": "RPN__phase1f_frozen_candidate_archive__hard10__pooled_testA_testB",
+      "summary_path": "group_7112ec94d8fce205_summary.json",
+      "summary_sha256": "cc2182b35fe2607fa9d052aa97b92ee3fd74afb69e2f34146dbd340ef45e4c2f",
+      "raw_replicates_path": "group_7112ec94d8fce205_raw.npz",
+      "raw_replicates_sha256": "fadd834e5a3bad3e2c34e1408420ed6ca969a7f5bd2fb74545e3bf1863cc1f20",
+      "n_estimates": 52,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "hard10",
+      "eval_split": "testA",
+      "source_rows": 6747,
+      "n_rows": 3993,
+      "n_images": 591,
+      "n_testA_rows": 3993,
+      "n_testB_rows": 2754,
+      "excluded_non_testA_testB_rows": 0,
+      "canonical_sentence_id_sha256": "f7641fae5639b619dfdbe83868c07ef7d4f232248cc54856072e3131ef39b00a",
+      "source_cohort_keys": [
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "hard10"
+        ]
+      ],
+      "group": "RPN__phase1f_frozen_candidate_archive__hard10__testA",
+      "summary_path": "group_3cc81ce32939d40c_summary.json",
+      "summary_sha256": "ed860e8380cb2855981aff5bd9bdb544217d07ea2c55df66a24b4df9393d041d",
+      "raw_replicates_path": "group_3cc81ce32939d40c_raw.npz",
+      "raw_replicates_sha256": "fa944f867af5efe173d81c7a36bb1f88f4c5898453b378ab34efca9f2919b560",
+      "n_estimates": 52,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "cell": "hard10",
+      "eval_split": "testB",
+      "source_rows": 6747,
+      "n_rows": 2754,
+      "n_images": 492,
+      "n_testA_rows": 3993,
+      "n_testB_rows": 2754,
+      "excluded_non_testA_testB_rows": 0,
+      "canonical_sentence_id_sha256": "c21037dac13ff0300f7a30481450a44197aff6db7e1927f0cbccb43d43a085ac",
+      "source_cohort_keys": [
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "hard10"
+        ]
+      ],
+      "group": "RPN__phase1f_frozen_candidate_archive__hard10__testB",
+      "summary_path": "group_74dc1679344c3bf5_summary.json",
+      "summary_sha256": "f1726488af8c17c73997b822c50fa505e00ceb697842ba1a578a8620d848de0c",
+      "raw_replicates_path": "group_74dc1679344c3bf5_raw.npz",
+      "raw_replicates_sha256": "f7f385f3936382199165d55fcce14df10c59d267a83691f4a91145a66e02b49a",
+      "n_estimates": 52,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "v2_p1_frozen_hard_k5_predictions",
+      "cell": "hard5",
+      "eval_split": "pooled_testA_testB",
+      "source_rows": 9602,
+      "n_rows": 9602,
+      "n_images": 1426,
+      "n_testA_rows": 5397,
+      "n_testB_rows": 4205,
+      "excluded_non_testA_testB_rows": 0,
+      "canonical_sentence_id_sha256": "bd8bfcbaa7cd11352bfba9f5e9d1f923320dd1eb454d970f78684d0bd4798f0b",
+      "source_cohort_keys": [
+        [
+          "RPN",
+          "v2_p1_frozen_hard_k5_predictions",
+          "hard5"
+        ]
+      ],
+      "group": "RPN__v2_p1_frozen_hard_k5_predictions__hard5__pooled_testA_testB",
+      "summary_path": "group_c5eba42da9153fc0_summary.json",
+      "summary_sha256": "975a58f02df4a8269936e9516333ebe6216d5ca57784a1a0af864e1d07441519",
+      "raw_replicates_path": "group_c5eba42da9153fc0_raw.npz",
+      "raw_replicates_sha256": "93b19032611764fb6f258cfbc691fc4be1922bc28099b24a0c696ddb26a94179",
+      "n_estimates": 52,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "v2_p1_frozen_hard_k5_predictions",
+      "cell": "hard5",
+      "eval_split": "testA",
+      "source_rows": 9602,
+      "n_rows": 5397,
+      "n_images": 738,
+      "n_testA_rows": 5397,
+      "n_testB_rows": 4205,
+      "excluded_non_testA_testB_rows": 0,
+      "canonical_sentence_id_sha256": "613456aa6992ea25a88037fc24a2218d27cf8e1109dcf90e73f71eb62c59b414",
+      "source_cohort_keys": [
+        [
+          "RPN",
+          "v2_p1_frozen_hard_k5_predictions",
+          "hard5"
+        ]
+      ],
+      "group": "RPN__v2_p1_frozen_hard_k5_predictions__hard5__testA",
+      "summary_path": "group_36d52573a47896ae_summary.json",
+      "summary_sha256": "ec3cd5d8c95b16741f2792610af77e6bbd781e14ef8f154bff74054add79b6dd",
+      "raw_replicates_path": "group_36d52573a47896ae_raw.npz",
+      "raw_replicates_sha256": "f599a30d5e01500234c78e581aaa15ff29e444982b43c4930608be831903d7c5",
+      "n_estimates": 52,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "v2_p1_frozen_hard_k5_predictions",
+      "cell": "hard5",
+      "eval_split": "testB",
+      "source_rows": 9602,
+      "n_rows": 4205,
+      "n_images": 688,
+      "n_testA_rows": 5397,
+      "n_testB_rows": 4205,
+      "excluded_non_testA_testB_rows": 0,
+      "canonical_sentence_id_sha256": "dc0d9efb68fefcd8e135c639523d6c2b12bdab57e63f1528f989a495eb3c906b",
+      "source_cohort_keys": [
+        [
+          "RPN",
+          "v2_p1_frozen_hard_k5_predictions",
+          "hard5"
+        ]
+      ],
+      "group": "RPN__v2_p1_frozen_hard_k5_predictions__hard5__testB",
+      "summary_path": "group_18db15f350c91c5b_summary.json",
+      "summary_sha256": "877651f5873b7c9f25032a5682f1a3437db128ad95a98c51d4505a64e480e294",
+      "raw_replicates_path": "group_18db15f350c91c5b_raw.npz",
+      "raw_replicates_sha256": "bfc02bd2d0d2d8e89b83d4bb977b2cd133ce423b02530d3ab88b0d32226258aa",
+      "n_estimates": 52,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "DETR",
+      "candidate_source": "v2_p1_frozen_hard_k5_predictions",
+      "cell": "hard5",
+      "eval_split": "pooled_testA_testB",
+      "source_rows": 8373,
+      "n_rows": 8373,
+      "n_images": 1264,
+      "n_testA_rows": 4454,
+      "n_testB_rows": 3919,
+      "excluded_non_testA_testB_rows": 0,
+      "canonical_sentence_id_sha256": "75410dafe2100dfb9c336f9d0f7d0664ed6f835848541bd5a3a693eb46689a80",
+      "source_cohort_keys": [
+        [
+          "DETR",
+          "v2_p1_frozen_hard_k5_predictions",
+          "hard5"
+        ]
+      ],
+      "group": "DETR__v2_p1_frozen_hard_k5_predictions__hard5__pooled_testA_testB",
+      "summary_path": "group_a558e9ed872885bf_summary.json",
+      "summary_sha256": "a9ee52d9164f2b2779834fa72f4b439772e444d8bda34c9e335381fd8f0aa0d9",
+      "raw_replicates_path": "group_a558e9ed872885bf_raw.npz",
+      "raw_replicates_sha256": "75876e7e5da11bfebb6af9c8ede30e56abff63f026993dd1b09ce3e9e3226354",
+      "n_estimates": 52,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "DETR",
+      "candidate_source": "v2_p1_frozen_hard_k5_predictions",
+      "cell": "hard5",
+      "eval_split": "testA",
+      "source_rows": 8373,
+      "n_rows": 4454,
+      "n_images": 619,
+      "n_testA_rows": 4454,
+      "n_testB_rows": 3919,
+      "excluded_non_testA_testB_rows": 0,
+      "canonical_sentence_id_sha256": "6cf12b10ad6385a3c85290a92d122a23f4dcf06e2b659f77bfddf5dc654ec920",
+      "source_cohort_keys": [
+        [
+          "DETR",
+          "v2_p1_frozen_hard_k5_predictions",
+          "hard5"
+        ]
+      ],
+      "group": "DETR__v2_p1_frozen_hard_k5_predictions__hard5__testA",
+      "summary_path": "group_6a002ba5e98e3ef6_summary.json",
+      "summary_sha256": "e5aa22335c9f72aa39144d8f490d5c05617b15e116dd755faf55e60ef83a1f3b",
+      "raw_replicates_path": "group_6a002ba5e98e3ef6_raw.npz",
+      "raw_replicates_sha256": "68398331e49ba4798a2c2d67fd181e7b9853ea63576559bd84b4edef5af029ae",
+      "n_estimates": 52,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "DETR",
+      "candidate_source": "v2_p1_frozen_hard_k5_predictions",
+      "cell": "hard5",
+      "eval_split": "testB",
+      "source_rows": 8373,
+      "n_rows": 3919,
+      "n_images": 645,
+      "n_testA_rows": 4454,
+      "n_testB_rows": 3919,
+      "excluded_non_testA_testB_rows": 0,
+      "canonical_sentence_id_sha256": "ae83f06f9413f3f512298b4252466cfa6d65933a0cfa6bd85e6c28b70ab762ba",
+      "source_cohort_keys": [
+        [
+          "DETR",
+          "v2_p1_frozen_hard_k5_predictions",
+          "hard5"
+        ]
+      ],
+      "group": "DETR__v2_p1_frozen_hard_k5_predictions__hard5__testB",
+      "summary_path": "group_8ea6089c5830b179_summary.json",
+      "summary_sha256": "536529c6813e6551710e9fd4f76473a01c6cb6995a169db8637c87b90d808a31",
+      "raw_replicates_path": "group_8ea6089c5830b179_raw.npz",
+      "raw_replicates_sha256": "519109e651b78004ea524f1976572a2e34a33cc243a39b01c26e540583c86b74",
+      "n_estimates": 52,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "eval_split": "pooled_testA_testB",
+      "common_sentence_ids_sha256": "9e512e3ba69244a48b28137f926eeaceefb6904ef8bbd04cf3da626dee89e1cb",
+      "n_rows": 7389,
+      "n_images": 1188,
+      "all_level_common_rows_before_split": 7389,
+      "excluded_non_testA_testB_rows": 0,
+      "source_cohort_keys": [
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "expb_m0"
+        ],
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "expb_m2"
+        ],
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "expb_m4"
+        ],
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "expb_m8"
+        ]
+      ],
+      "dose_intersection_attrition": {
+        "expb_m0": {
+          "source_common_rows": 7410,
+          "dose_all_level_common_rows_in_selected_split": 7389,
+          "rows_lost_to_intersection_and_split_filter": 21,
+          "all_level_common_rows_pooled": 7389,
+          "rows_lost_to_pooled_all_level_intersection": 21,
+          "rows_lost_to_eval_split_filter": 0
+        },
+        "expb_m2": {
+          "source_common_rows": 7410,
+          "dose_all_level_common_rows_in_selected_split": 7389,
+          "rows_lost_to_intersection_and_split_filter": 21,
+          "all_level_common_rows_pooled": 7389,
+          "rows_lost_to_pooled_all_level_intersection": 21,
+          "rows_lost_to_eval_split_filter": 0
+        },
+        "expb_m4": {
+          "source_common_rows": 7398,
+          "dose_all_level_common_rows_in_selected_split": 7389,
+          "rows_lost_to_intersection_and_split_filter": 9,
+          "all_level_common_rows_pooled": 7389,
+          "rows_lost_to_pooled_all_level_intersection": 9,
+          "rows_lost_to_eval_split_filter": 0
+        },
+        "expb_m8": {
+          "source_common_rows": 7389,
+          "dose_all_level_common_rows_in_selected_split": 7389,
+          "rows_lost_to_intersection_and_split_filter": 0,
+          "all_level_common_rows_pooled": 7389,
+          "rows_lost_to_pooled_all_level_intersection": 0,
+          "rows_lost_to_eval_split_filter": 0
+        }
+      },
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__pooled_testA_testB",
+      "summary_path": "group_780e07ee900c5f2c_summary.json",
+      "summary_sha256": "c7127538cb691e18843bcf46b153d0c5cc0e12fa909bd941ae7be9d1643af003",
+      "raw_replicates_path": "group_780e07ee900c5f2c_raw.npz",
+      "raw_replicates_sha256": "569d9720b86a6902391b710df607cb35e60c8d93f6a74f19da6da98b23f810a3",
+      "n_estimates": 260,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "eval_split": "testA",
+      "common_sentence_ids_sha256": "b12a9026e25e94f422b691fc4d526487f3e8d82743ce00dd5d6733ab58f05bd7",
+      "n_rows": 4316,
+      "n_images": 644,
+      "all_level_common_rows_before_split": 7389,
+      "excluded_non_testA_testB_rows": 0,
+      "source_cohort_keys": [
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "expb_m0"
+        ],
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "expb_m2"
+        ],
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "expb_m4"
+        ],
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "expb_m8"
+        ]
+      ],
+      "dose_intersection_attrition": {
+        "expb_m0": {
+          "source_common_rows": 7410,
+          "dose_all_level_common_rows_in_selected_split": 4316,
+          "rows_lost_to_intersection_and_split_filter": 3094,
+          "all_level_common_rows_pooled": 7389,
+          "rows_lost_to_pooled_all_level_intersection": 21,
+          "rows_lost_to_eval_split_filter": 3073
+        },
+        "expb_m2": {
+          "source_common_rows": 7410,
+          "dose_all_level_common_rows_in_selected_split": 4316,
+          "rows_lost_to_intersection_and_split_filter": 3094,
+          "all_level_common_rows_pooled": 7389,
+          "rows_lost_to_pooled_all_level_intersection": 21,
+          "rows_lost_to_eval_split_filter": 3073
+        },
+        "expb_m4": {
+          "source_common_rows": 7398,
+          "dose_all_level_common_rows_in_selected_split": 4316,
+          "rows_lost_to_intersection_and_split_filter": 3082,
+          "all_level_common_rows_pooled": 7389,
+          "rows_lost_to_pooled_all_level_intersection": 9,
+          "rows_lost_to_eval_split_filter": 3073
+        },
+        "expb_m8": {
+          "source_common_rows": 7389,
+          "dose_all_level_common_rows_in_selected_split": 4316,
+          "rows_lost_to_intersection_and_split_filter": 3073,
+          "all_level_common_rows_pooled": 7389,
+          "rows_lost_to_pooled_all_level_intersection": 0,
+          "rows_lost_to_eval_split_filter": 3073
+        }
+      },
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__testA",
+      "summary_path": "group_9fdabaa1eb0b61ca_summary.json",
+      "summary_sha256": "5ba3f33cb569f88baf51f58b754cb1cb74eb2b9313e6ef1b9903ee691dc999b8",
+      "raw_replicates_path": "group_9fdabaa1eb0b61ca_raw.npz",
+      "raw_replicates_sha256": "4d46f4cf95c0dd4e29b2d2195068fbeb8e480ab7273c0bbe91c240fc30948c87",
+      "n_estimates": 260,
+      "status": "COMPLETE"
+    },
+    {
+      "family": "RPN",
+      "candidate_source": "phase1f_frozen_candidate_archive",
+      "eval_split": "testB",
+      "common_sentence_ids_sha256": "98a3fd2c58acf3854516cb76f9f599440b64ea737d84576416620bccc3fd9b6c",
+      "n_rows": 3073,
+      "n_images": 544,
+      "all_level_common_rows_before_split": 7389,
+      "excluded_non_testA_testB_rows": 0,
+      "source_cohort_keys": [
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "expb_m0"
+        ],
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "expb_m2"
+        ],
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "expb_m4"
+        ],
+        [
+          "RPN",
+          "phase1f_frozen_candidate_archive",
+          "expb_m8"
+        ]
+      ],
+      "dose_intersection_attrition": {
+        "expb_m0": {
+          "source_common_rows": 7410,
+          "dose_all_level_common_rows_in_selected_split": 3073,
+          "rows_lost_to_intersection_and_split_filter": 4337,
+          "all_level_common_rows_pooled": 7389,
+          "rows_lost_to_pooled_all_level_intersection": 21,
+          "rows_lost_to_eval_split_filter": 4316
+        },
+        "expb_m2": {
+          "source_common_rows": 7410,
+          "dose_all_level_common_rows_in_selected_split": 3073,
+          "rows_lost_to_intersection_and_split_filter": 4337,
+          "all_level_common_rows_pooled": 7389,
+          "rows_lost_to_pooled_all_level_intersection": 21,
+          "rows_lost_to_eval_split_filter": 4316
+        },
+        "expb_m4": {
+          "source_common_rows": 7398,
+          "dose_all_level_common_rows_in_selected_split": 3073,
+          "rows_lost_to_intersection_and_split_filter": 4325,
+          "all_level_common_rows_pooled": 7389,
+          "rows_lost_to_pooled_all_level_intersection": 9,
+          "rows_lost_to_eval_split_filter": 4316
+        },
+        "expb_m8": {
+          "source_common_rows": 7389,
+          "dose_all_level_common_rows_in_selected_split": 3073,
+          "rows_lost_to_intersection_and_split_filter": 4316,
+          "all_level_common_rows_pooled": 7389,
+          "rows_lost_to_pooled_all_level_intersection": 0,
+          "rows_lost_to_eval_split_filter": 4316
+        }
+      },
+      "group": "RPN__phase1f_frozen_candidate_archive__dose_joint__testB",
+      "summary_path": "group_10881c9667323aeb_summary.json",
+      "summary_sha256": "b2c47619b4b0b8d2afe177d9f3daac70fe8b8f7a4c3f77658674ca6b18fbda16",
+      "raw_replicates_path": "group_10881c9667323aeb_raw.npz",
+      "raw_replicates_sha256": "526644d60ce06c446b42ce70d3b71e80b8891933de08ab69329337fa593a6d0a",
+      "n_estimates": 260,
+      "status": "COMPLETE"
+    }
+  ],
+  "estimates_csv": "estimates.csv",
+  "n_estimates": 1404,
+  "generated_utc": "2026-10-03T13:12:48Z"
+}

@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_information_bootstrap.py", line 740, in <module>
+    raise SystemExit(main())
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_information_bootstrap.py", line 735, in main
+    run(args.out, args.replicates)
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_information_bootstrap.py", line 663, in run
+    flat_rows, calls, raw_npz = _compute_bootstrap(
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_information_bootstrap.py", line 614, in _compute_bootstrap
+    _write_npz_atomic(cache_npz, arrays)
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_information_bootstrap.py", line 85, in _write_npz_atomic
+    os.replace(temp, path)
+PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'results\\research_repair_v1\\information\\information_bootstrap_call_checkpoints\\random__random_allK__testA.94775da4323a8215.npz.tmp' -> 'results\\research_repair_v1\\information\\information_bootstrap_call_checkpoints\\random__random_allK__testA.94775da4323a8215.npz'

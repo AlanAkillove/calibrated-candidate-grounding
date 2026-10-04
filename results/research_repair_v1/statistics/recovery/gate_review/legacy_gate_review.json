@@ -1,0 +1,828 @@
+{
+  "schema": "research-repair-v1-legacy-gate-review-v1",
+  "audit_time_utc": "2026-10-03T13:48:31.699771+00:00",
+  "mode": "read-only source/artifact review; no fitting, bootstrap, or changes to legacy/A scripts",
+  "artifact_hashes": {
+    "results/v2_local_competition/gate.json": {
+      "sha256": "d1138bc1b801f0a0b1d52c2c6c5d43166029e3bf99d73a6ac44d8ddbf4337091",
+      "size_bytes": 50298
+    },
+    "results/v2_local_competition/m1_audit.json": {
+      "sha256": "d4fa5480aab387108b8a66c8d9e7f5cfb282ca1dfb5110a5fdb0b1d44707812e",
+      "size_bytes": 4515
+    },
+    "results/v2_local_competition/protocol.json": {
+      "sha256": "90085940f75ed8cbf6ac3c2f72219b9ff34bde80c97aad89362580bf5fedd88b",
+      "size_bytes": 15564
+    },
+    "scripts/run_v2m_m1.py": {
+      "sha256": "438928d78ebb63c06874efcd0a1dedf04d410f79ff13458de20ad1a06f992a0f",
+      "size_bytes": 52941
+    },
+    "scripts/audit_v2m_m1.py": {
+      "sha256": "73bb4bcd69970e7322dd947eddc73007c9f71a8d879ec176a7ca43d326c72d44",
+      "size_bytes": 14009
+    },
+    "results/v2_local_competition/m2_curriculum/gate.json": {
+      "sha256": "183b3314f5638a394c66eda4eea9b5af70a501372a3364a08284ce11c80a1944",
+      "size_bytes": 56137
+    },
+    "results/v2_local_competition/m2_curriculum/m2_audit.json": {
+      "sha256": "d37357cdae3b0f586037efbb1de31105d37ec1c89f17183ca52a626066656e3d",
+      "size_bytes": 21436
+    },
+    "results/v2_local_competition/m2_curriculum/metadata.json": {
+      "sha256": "761cb59404435387ad3362fadbd317d6118abdb58adac4e9befb7881ad4a8599",
+      "size_bytes": 16323
+    },
+    "scripts/run_v2m_m2.py": {
+      "sha256": "f1b01a9f073710e14900fb825e88b4ffacba1ad822030515542720984495336a",
+      "size_bytes": 76265
+    },
+    "scripts/audit_v2m_m2.py": {
+      "sha256": "5df6ba607e54edf19d608bba3e78a296808579972bee7958c8e043d08a6f1078",
+      "size_bytes": 18720
+    },
+    "results/v2_local_competition/m25_specialist_audit/verdict.json": {
+      "sha256": "0ae386ce479f67deeea628243a96335122574eafc16c30974614668841d0e766",
+      "size_bytes": 18220
+    },
+    "results/v2_local_competition/m25_specialist_audit/m25_audit.json": {
+      "sha256": "0d32e6e8325982836a28fda09777a918e9e7efc20c68d42d72dc40ca7f0da9fb",
+      "size_bytes": 4522
+    },
+    "results/v2_local_competition/m25_specialist_audit/metadata.json": {
+      "sha256": "c46d682ec5637d537719e396b0a0c13cd5913b91d46beb5d7cd174053826ad66",
+      "size_bytes": 1618
+    },
+    "scripts/run_v2m_m25.py": {
+      "sha256": "d54528ba808b0e5beae57704409f51233ca9c2383210aff5d20f0ad8d8d3899a",
+      "size_bytes": 32208
+    },
+    "scripts/audit_v2m_m25.py": {
+      "sha256": "379c15e08d1b742e62971192fb9845350b51eca737f4cebf18ca3144c8816103",
+      "size_bytes": 11154
+    },
+    "results/v2_local_competition/m3_mixture/b0/summary.json": {
+      "sha256": "1286a4448cc2313a0c79eb272b76a90a100a7ab6e367b0c5bf7f0181e14e727a",
+      "size_bytes": 67580
+    },
+    "results/v2_local_competition/m3_mixture/b0/m3_b0_audit.json": {
+      "sha256": "ce09fc2519ec245f066462993ed0f224d5b86f0b3f9ca97e5226ba9bc9ffcc7a",
+      "size_bytes": 3006
+    },
+    "results/v2_local_competition/m3_mixture/amendment_v2m31.json": {
+      "sha256": "d4e75eebbb9db3cd4e104d182d386533f0df62e0e6d5ec0933270744d81b7c85",
+      "size_bytes": 12493
+    },
+    "results/v2_local_competition/m3_mixture/protocol_m3.json": {
+      "sha256": "d5e17d6bba56471bf9382c2c3ebf534a98550ed9dbd5fe1f826f2831e9a371da",
+      "size_bytes": 7761
+    },
+    "results/v2_local_competition/m3_mixture/conf/b1/gate.json": {
+      "sha256": "f826a089f9e37bb85957fbae8b704e39a0f2cca4f11f450b845e5877efb0a2b9",
+      "size_bytes": 18745
+    },
+    "results/v2_local_competition/m3_mixture/conf/b2/gate.json": {
+      "sha256": "c953c9d9dca7af90bbb4a217195e35a3f2ef4c9b0eed4257bf5cba963b77352f",
+      "size_bytes": 18759
+    },
+    "results/v2_local_competition/m3_mixture/conf/cross_backbone_verdict.json": {
+      "sha256": "a6954a7f7ff9bef6afb0f1a67f9f3391169f697d6d3ca1025b69cb9f3f81384a",
+      "size_bytes": 979
+    },
+    "scripts/run_v2m_m3_b0.py": {
+      "sha256": "580c19e53b119a106c44fbd4b9806223a13fefa2548902269de3ad968a11348e",
+      "size_bytes": 51498
+    },
+    "scripts/run_v2m_m3_conf.py": {
+      "sha256": "a2aae27c54ebb72d9df7d73816e5a3fa85f4cf3f730bcb8bba5f8315a138eee0",
+      "size_bytes": 59631
+    },
+    "scripts/refresh_repair_gate_decisions.py": {
+      "sha256": "2bb4783c9fc6d9638ddae48dfe29c1579a34c10d2f4d91690a73a078f75d1d61",
+      "size_bytes": 24808
+    },
+    "results/research_repair_v1/statistics/gate_decisions.json": {
+      "sha256": "1f0037c0193b788a5a2527987641331b790ae61c488039a312db1a7279ab0a09",
+      "size_bytes": 9881
+    }
+  },
+  "scopes": [
+    {
+      "scope_id": "m1",
+      "legacy_source_json_pointers": [
+        "results/v2_local_competition/gate.json#/gates/M1_GO",
+        "results/v2_local_competition/protocol.json#/M1_gates/GO_gate",
+        "results/v2_local_competition/protocol.json#/M1_gates/primary_cell"
+      ],
+      "predicate_source": {
+        "path": "scripts/run_v2m_m1.py",
+        "symbol": "_build_gate",
+        "lines": "871-1001",
+        "sha256": "438928d78ebb63c06874efcd0a1dedf04d410f79ff13458de20ad1a06f992a0f"
+      },
+      "old_rule": "SameCategory-K5: LCR-E1b AUROC delta >= 0.010 and paired CI low > 0; plus E-AURC reduction >= 0.05 OR RER@50 gain >= 3 percentage points; Random-K5 AUROC guard delta >= -0.005. M1_GO is the conjunction.",
+      "old_decision": false,
+      "observed": {
+        "delta_auroc": -0.029442127960553455,
+        "ci_low": -0.03244191783936201,
+        "e_aurc_reduction": -0.16874628673678246,
+        "rer50_gain_pp": -4.4353239560503965,
+        "secondary_pass": false,
+        "random_k5_guard": {
+          "delta": -0.0012670416700796643,
+          "ci_low": -0.0038421646016445084,
+          "threshold": -0.005,
+          "pass": true
+        },
+        "structure_contribution": {
+          "delta_auroc_LCR_vs_AggregateMLP": -0.010310622746629009,
+          "ci_low": -0.012664701515303503,
+          "ci_high": -0.008072723621567959,
+          "per_seed_delta": {
+            "1": -0.012635305188825052,
+            "2": -0.009921426700994718,
+            "3": -0.008375136350067258
+          },
+          "verdict": false,
+          "claim_if_pass": "local competition architecture helps",
+          "claim_if_fail": "nonlinear capacity helps"
+        },
+        "gate_contribution": {
+          "delta_auroc_LCR_vs_noGate": -0.010080524567127788,
+          "ci_low": -0.011128411063808819,
+          "ci_high": -0.009048504236371475,
+          "per_seed_delta": {
+            "1": -0.02961583452484684,
+            "2": -0.0003157358329239912,
+            "3": -0.00031000334361253046
+          },
+          "significantly_better": false,
+          "effectively_equal": false,
+          "note": "if effectively equal: keep results, the gate must not be written as the main contribution"
+        },
+        "k20_systematic_degradation": true,
+        "k50_systematic_degradation": true,
+        "no_systematic_degradation": false
+      },
+      "reproduction_audit": {
+        "artifact": "results/v2_local_competition/m1_audit.json",
+        "passed": true,
+        "max_point_delta": 0.0,
+        "max_bootstrap_delta": 0.0,
+        "protocol_sha256": "90085940f75ed8cbf6ac3c2f72219b9ff34bde80c97aad89362580bf5fedd88b"
+      }
+    },
+    {
+      "scope_id": "m2",
+      "legacy_source_json_pointers": [
+        "results/v2_local_competition/m2_curriculum/gate.json#/gates/M2_GO",
+        "results/v2_local_competition/m2_curriculum/gate.json#/gates/selective_metrics",
+        "results/v2_local_competition/m2_curriculum/gate.json#/gates/gate_contribution",
+        "results/v2_local_competition/m2_curriculum/gate.json#/gates/capacity_case",
+        "results/v2_local_competition/protocol.json#/M2_preregistration/gate"
+      ],
+      "predicate_source": {
+        "path": "scripts/run_v2m_m2.py",
+        "symbols": [
+          " _derived",
+          "_build_gate"
+        ],
+        "lines": "1226-1385",
+        "sha256": "f1b01a9f073710e14900fb825e88b4ffacba1ad822030515542720984495336a"
+      },
+      "old_rule": "At unseen m=8, conjunct: LCR-E1b AUROC delta >= 0.010 and CI low > 0; LCR-Aggregate-MLP AUROC delta > 0 and CI low > 0. M2 selective metrics are diagnostics, not a condition in M2_GO.",
+      "old_decision": false,
+      "observed": {
+        "primary_cell": "m8",
+        "primary_question": "LCR > E1b at the unseen competition severity m=8?",
+        "delta_lcr_minus_e1b": {
+          "n_seeds": 3,
+          "seeds": [
+            1,
+            2,
+            3
+          ],
+          "delta": -0.0018577526922382386,
+          "ci_low": -0.005304324202364004,
+          "ci_high": 0.0016434858311824019,
+          "per_seed": {
+            "1": -0.0006981076719965174,
+            "2": -0.0040196308749468335,
+            "3": -0.0008555195297713647
+          },
+          "per_seed_ci": {
+            "1": [
+              -0.004779103402618434,
+              0.0034422851399759195
+            ],
+            "2": [
+              -0.0071345710420105775,
+              -0.0007325213081024351
+            ],
+            "3": [
+              -0.003999298162463002,
+              0.0022206936616737216
+            ]
+          },
+          "n_positive": 0,
+          "n_negative": 3
+        },
+        "delta_lcr_minus_aggregate_mlp": {
+          "n_seeds": 3,
+          "seeds": [
+            1,
+            2,
+            3
+          ],
+          "delta": 0.035743481375239305,
+          "ci_low": 0.03028153283231651,
+          "ci_high": 0.04136133438692193,
+          "per_seed": {
+            "1": 0.03377849493912277,
+            "2": 0.035004258005784994,
+            "3": 0.03844769118081015
+          },
+          "per_seed_ci": {
+            "1": [
+              0.027462036979085107,
+              0.040126330926592374
+            ],
+            "2": [
+              0.030043841417733193,
+              0.04027643978840086
+            ],
+            "3": [
+              0.033338720100131246,
+              0.04368123244577255
+            ]
+          },
+          "n_positive": 3,
+          "n_negative": 0
+        },
+        "selective_metrics": {
+          "e_aurc_reduction": -0.03395720018099881,
+          "rer50_gain_pp": -0.5508289354443178,
+          "rer80_gain_pp": 0.738852073693704,
+          "per_seed": {
+            "1": {
+              "e_aurc_reduction": -0.020896658976169834,
+              "rer50_gain_pp": -0.9999999999999898,
+              "rer80_gain_pp": 1.0294117647058787
+            },
+            "2": {
+              "e_aurc_reduction": -0.05025125176358546,
+              "rer50_gain_pp": -0.2366863905325367,
+              "rer80_gain_pp": 0.22189349112426704
+            },
+            "3": {
+              "e_aurc_reduction": -0.03072368980324114,
+              "rer50_gain_pp": -0.4158004158004269,
+              "rer80_gain_pp": 0.9652509652509661
+            }
+          },
+          "method_signal_mixed": false,
+          "note": "AUROC gate passing while every selective metric degrades -> METHOD SIGNAL MIXED (never claim a uniform reliability improvement)"
+        },
+        "gate_contribution": {
+          "delta_auroc_LCR_vs_noGate": -0.002241155453803619,
+          "ci_low": -0.004286440918750593,
+          "ci_high": -0.00018111312318155556,
+          "per_seed_delta": {
+            "1": -0.0015641044447703978,
+            "2": -0.0026379079977094655,
+            "3": -0.0025214539189309937
+          },
+          "supported": false,
+          "unsupported": true,
+          "effectively_equal": false,
+          "note": "if LCR-noGate > LCR the ambiguity gate stays unsupported and must not be written as a contribution"
+        },
+        "capacity_case": {
+          "case": "C",
+          "statement": "simple semantic statistics remain the stronger reliability estimator even after explicit competition curriculum.",
+          "delta2": {
+            "n_seeds": 3,
+            "seeds": [
+              1,
+              2,
+              3
+            ],
+            "delta": 0.035743481375239305,
+            "ci_low": 0.03028153283231651,
+            "ci_high": 0.04136133438692193,
+            "per_seed": {
+              "1": 0.03377849493912277,
+              "2": 0.035004258005784994,
+              "3": 0.03844769118081015
+            },
+            "per_seed_ci": {
+              "1": [
+                0.027462036979085107,
+                0.040126330926592374
+              ],
+              "2": [
+                0.030043841417733193,
+                0.04027643978840086
+              ],
+              "3": [
+                0.033338720100131246,
+                0.04368123244577255
+              ]
+            },
+            "n_positive": 3,
+            "n_negative": 0
+          }
+        }
+      },
+      "selective_predicate": "_build_gate sets method_signal_mixed only if the LCR-vs-E1b AUROC condition passes AND E-AURC reduction, RER50 gain, and RER80 gain are all < 0. At m8 AUROC condition is false and RER80 gain is positive, so false. The generic note describes a conditional pattern, not the observed result. No separate numeric M2 selective threshold appears in protocol.json#/M2_preregistration/gate.",
+      "reproduction_audit": {
+        "artifact": "results/v2_local_competition/m2_curriculum/m2_audit.json",
+        "passed": true,
+        "max_point_delta": 0.0,
+        "max_bootstrap_delta": 0.0
+      }
+    },
+    {
+      "scope_id": "m25",
+      "legacy_source_json_pointers": [
+        "results/v2_local_competition/m25_specialist_audit/verdict.json#/delta_definition",
+        "results/v2_local_competition/m25_specialist_audit/verdict.json#/severity/m0/auroc_correct",
+        "results/v2_local_competition/m25_specialist_audit/verdict.json#/severity/m2/auroc_correct",
+        "results/v2_local_competition/m25_specialist_audit/verdict.json#/severity/m8/auroc_correct",
+        "results/v2_local_competition/m25_specialist_audit/verdict.json#/pattern",
+        "results/v2_local_competition/m25_specialist_audit/verdict.json#/conditions",
+        "results/v2_local_competition/m25_specialist_audit/verdict.json#/interpretation"
+      ],
+      "predicate_source": {
+        "path": "scripts/run_v2m_m25.py",
+        "symbol": "_pattern",
+        "lines": "184-204",
+        "sha256": "d54528ba808b0e5beae57704409f51233ca9c2383210aff5d20f0ad8d8d3899a"
+      },
+      "old_rule": "Diagnostic classification, no success gate: low_sig = any CI_high < 0 at m0 or m2; high_sig = m8 CI_low > 0. If both, SPECIALIST TRADEOFF PRESENT; else all-curriculum or all-random patterns, else INCONCLUSIVE.",
+      "old_decision": "SPECIALIST TRADEOFF PRESENT",
+      "observed": {
+        "delta_definition": "delta(m) = AUROC(E1b_curriculum) - AUROC(E1b_random); image-cluster paired bootstrap (5000 reps, seed 0, shared draws); seed-mean delta, seed-mean CI bounds; per-seed directions recorded",
+        "m0": {
+          "n_seeds": 3,
+          "seeds": [
+            1,
+            2,
+            3
+          ],
+          "delta": -0.00890237374204302,
+          "ci_low": -0.012809283735864756,
+          "ci_high": -0.005096189956308943,
+          "per_seed": {
+            "1": -0.009238417982621039,
+            "2": -0.006231144829442314,
+            "3": -0.011237558414065707
+          },
+          "per_seed_ci": {
+            "1": [
+              -0.012776440290042384,
+              -0.005805661508514796
+            ],
+            "2": [
+              -0.009958491086004459,
+              -0.0025720073439168606
+            ],
+            "3": [
+              -0.015692919831547424,
+              -0.00691090101649517
+            ]
+          },
+          "n_positive": 0,
+          "n_negative": 3
+        },
+        "m2": {
+          "n_seeds": 3,
+          "seeds": [
+            1,
+            2,
+            3
+          ],
+          "delta": 0.003209520450060399,
+          "ci_low": -0.0007952477881917069,
+          "ci_high": 0.007266290530879265,
+          "per_seed": {
+            "1": 0.0005682961815104415,
+            "2": 0.0035676612165599364,
+            "3": 0.005492603952110819
+          },
+          "per_seed_ci": {
+            "1": [
+              -0.0030645085163940604,
+              0.004238064892353338
+            ],
+            "2": [
+              -0.0002443055723199719,
+              0.0074699439503307236
+            ],
+            "3": [
+              0.0009230707241389117,
+              0.010090862749953734
+            ]
+          },
+          "n_positive": 3,
+          "n_negative": 0
+        },
+        "m8": {
+          "n_seeds": 3,
+          "seeds": [
+            1,
+            2,
+            3
+          ],
+          "delta": 0.025829747649910344,
+          "ci_low": 0.02243494750698921,
+          "ci_high": 0.029320166401355752,
+          "per_seed": {
+            "1": 0.02287017749743292,
+            "2": 0.028033829121823062,
+            "3": 0.02658523633047505
+          },
+          "per_seed_ci": {
+            "1": [
+              0.01984093667538493,
+              0.026043665727629912
+            ],
+            "2": [
+              0.02461311373848781,
+              0.03150966882457797
+            ],
+            "3": [
+              0.022850792107094894,
+              0.03040716465185937
+            ]
+          },
+          "n_positive": 3,
+          "n_negative": 0
+        },
+        "conditions": {
+          "low_m_random_better_significant (m0 or m2 CI entirely < 0)": true,
+          "m8_curriculum_better_significant (CI entirely > 0)": true,
+          "all_levels_curriculum_better (CI > 0 everywhere)": false,
+          "all_levels_random_better (CI < 0 everywhere)": false
+        },
+        "interpretation": {
+          "if_tradeoff": "SPECIALIST TRADEOFF PRESENT -> the next round may discuss a competition-adaptive mixture of simple reliability experts as a NEW method amendment (never an LCR v1 patch).",
+          "otherwise": "no clear trade-off -> do not enter a mixture design; keep the single-expert semantic calibrator.",
+          "boundary": "diagnostic only; no success gate, no mixture training here, no B1/B2."
+        }
+      },
+      "reproduction_audit": {
+        "artifact": "results/v2_local_competition/m25_specialist_audit/m25_audit.json",
+        "passed": true,
+        "runtime_sec": 399.3
+      }
+    },
+    {
+      "scope_id": "m3",
+      "legacy_source_json_pointers": [
+        "results/v2_local_competition/m3_mixture/b0/summary.json#/no_gate",
+        "results/v2_local_competition/m3_mixture/b0/summary.json#/label",
+        "results/v2_local_competition/m3_mixture/b0/summary.json#/b0_questions/adaptive_vs_static",
+        "results/v2_local_competition/m3_mixture/amendment_v2m31.json#/frozen_gates",
+        "results/v2_local_competition/m3_mixture/amendment_v2m31.json#/frozen_verdict_rule",
+        "results/v2_local_competition/m3_mixture/conf/b1/gate.json#/primary_gate",
+        "results/v2_local_competition/m3_mixture/conf/b1/gate.json#/extreme_safety",
+        "results/v2_local_competition/m3_mixture/conf/b1/gate.json#/selective_support",
+        "results/v2_local_competition/m3_mixture/conf/b2/gate.json#/primary_gate",
+        "results/v2_local_competition/m3_mixture/conf/b2/gate.json#/extreme_safety",
+        "results/v2_local_competition/m3_mixture/conf/b2/gate.json#/selective_support",
+        "results/v2_local_competition/m3_mixture/conf/cross_backbone_verdict.json#/verdict"
+      ],
+      "predicate_source": {
+        "path": "scripts/run_v2m_m3_conf.py",
+        "symbols": [
+          "_backbone_gate",
+          "_cross_backbone_verdict"
+        ],
+        "lines": "839-1002",
+        "sha256": "a2aae27c54ebb72d9df7d73816e5a3fa85f4cf3f730bcb8bba5f8315a138eee0",
+        "b0_symbol": {
+          "path": "scripts/run_v2m_m3_b0.py",
+          "symbol": "_summary",
+          "sha256": "580c19e53b119a106c44fbd4b9806223a13fefa2548902269de3ad968a11348e"
+        }
+      },
+      "old_rule": "B0 is post-hoc developmental and no_gate=true. Confirmatory V2-M3.1 per backbone: Adaptive-Static macro-AUROC >= 0.003 and CI_low > 0; both extreme deltas (Adaptive-Random at m0, Adaptive-Curriculum at m8) >= -0.003. Pass = primary AND both safety checks. Selective support is a claim label only (E-AURC relative improvement >= 3% OR RER50 gain >= 1pp), not part of pass. Cross-backbone: 2/2 pass strong; 1 pass with other not significantly negative partial; otherwise unsupported/stop.",
+      "old_decision": "ADAPTIVE MIXTURE NOT SUPPORTED",
+      "observed": {
+        "b0_no_gate": true,
+        "b0_label": "POST-HOC DEVELOPMENTAL",
+        "b0_adaptive_vs_static": {
+          "delta_macro": 8.928977292864866e-05,
+          "ci_low": 1.5132922578426744e-05,
+          "ci_high": 0.00016469998304939355
+        },
+        "b1": {
+          "primary_gate": {
+            "rule": "delta_macro >= 0.003 AND CI_low > 0",
+            "threshold": 0.003,
+            "pass": false
+          },
+          "extreme_safety": {
+            "m0_adaptive_minus_random": {
+              "n_seeds": 3,
+              "seeds": [
+                1,
+                2,
+                3
+              ],
+              "delta": -0.0037975813843085606,
+              "ci_low": -0.006924922153886043,
+              "ci_high": -0.0007662638942667167,
+              "per_seed": {
+                "1": -0.0012426034188806057,
+                "2": -0.006867031445384808,
+                "3": -0.0032831092886602686
+              },
+              "per_seed_ci": {
+                "1": [
+                  -0.004387989567846251,
+                  0.001785593370804224
+                ],
+                "2": [
+                  -0.010056382364812285,
+                  -0.0037650548752758846
+                ],
+                "3": [
+                  -0.006330394528999592,
+                  -0.0003193301783284893
+                ]
+              },
+              "n_positive": 0,
+              "n_negative": 3
+            },
+            "m8_adaptive_minus_curriculum": {
+              "n_seeds": 3,
+              "seeds": [
+                1,
+                2,
+                3
+              ],
+              "delta": -0.0027739023361365023,
+              "ci_low": -0.0032818890020159404,
+              "ci_high": -0.002268510141018649,
+              "per_seed": {
+                "1": -0.004670583600799749,
+                "2": -0.003648704365082911,
+                "3": -2.4190425268466598e-06
+              },
+              "per_seed_ci": {
+                "1": [
+                  -0.005424157832951021,
+                  -0.003933217269444747
+                ],
+                "2": [
+                  -0.0044163544127518994,
+                  -0.0028723131536112
+                ],
+                "3": [
+                  -5.154760344899811e-06,
+                  0.0
+                ]
+              },
+              "n_positive": 0,
+              "n_negative": 3
+            },
+            "m0_pass": false,
+            "m8_pass": true,
+            "threshold": -0.003,
+            "pass": false
+          },
+          "selective_support": {
+            "macro_e_aurc": {
+              "adaptive": 0.07627481940657552,
+              "static": 0.07634800312231892,
+              "relative_improvement": 0.0009585544185897071,
+              "threshold": 0.03
+            },
+            "macro_rer50": {
+              "adaptive": 0.6012343245165566,
+              "static": 0.6009508318029119,
+              "gain_pp": 0.02834927136446952,
+              "threshold_pp": 1.0
+            },
+            "draft_rule_satisfied": false,
+            "label_if_pass_without_support": "AUROC-ONLY METHOD SIGNAL"
+          },
+          "pass": false
+        },
+        "b2": {
+          "primary_gate": {
+            "rule": "delta_macro >= 0.003 AND CI_low > 0",
+            "threshold": 0.003,
+            "pass": false
+          },
+          "extreme_safety": {
+            "m0_adaptive_minus_random": {
+              "n_seeds": 3,
+              "seeds": [
+                1,
+                2,
+                3
+              ],
+              "delta": -0.012141537433215888,
+              "ci_low": -0.01738513490876863,
+              "ci_high": -0.007168113026875113,
+              "per_seed": {
+                "1": -0.0157974291542754,
+                "2": -0.006848675224743528,
+                "3": -0.013778507920628735
+              },
+              "per_seed_ci": {
+                "1": [
+                  -0.02176192793656746,
+                  -0.010310733107924139
+                ],
+                "2": [
+                  -0.01183504373827552,
+                  -0.001991217726026359
+                ],
+                "3": [
+                  -0.01855843305146292,
+                  -0.00920238824667484
+                ]
+              },
+              "n_positive": 0,
+              "n_negative": 3
+            },
+            "m8_adaptive_minus_curriculum": {
+              "n_seeds": 3,
+              "seeds": [
+                1,
+                2,
+                3
+              ],
+              "delta": -0.004567176047700887,
+              "ci_low": -0.005961344581408645,
+              "ci_high": -0.0032369275016518504,
+              "per_seed": {
+                "1": -5.400005400058028e-06,
+                "2": -0.007981487945706967,
+                "3": -0.005714640191995635
+              },
+              "per_seed_ci": {
+                "1": [
+                  -1.0039818893420316e-05,
+                  -8.874545004866684e-07
+                ],
+                "2": [
+                  -0.010771040302362788,
+                  -0.005278826413867913
+                ],
+                "3": [
+                  -0.0071029536229697265,
+                  -0.00443106863658715
+                ]
+              },
+              "n_positive": 0,
+              "n_negative": 3
+            },
+            "m0_pass": false,
+            "m8_pass": false,
+            "threshold": -0.003,
+            "pass": false
+          },
+          "selective_support": {
+            "macro_e_aurc": {
+              "adaptive": 0.13722683661482152,
+              "static": 0.13746187307463392,
+              "relative_improvement": 0.0017098301845835686,
+              "threshold": 0.03
+            },
+            "macro_rer50": {
+              "adaptive": 0.3897389066507963,
+              "static": 0.3885760601246779,
+              "gain_pp": 0.11628465261184218,
+              "threshold_pp": 1.0
+            },
+            "draft_rule_satisfied": false,
+            "label_if_pass_without_support": "AUROC-ONLY METHOD SIGNAL"
+          },
+          "pass": false
+        },
+        "cross_backbone": {
+          "artifact": "v2m_m3_conf_verdict",
+          "amendment": "V2-M3.1",
+          "backbones": {
+            "b1": {
+              "pass": false,
+              "primary_pass": false,
+              "safety_pass": false,
+              "selective_support": false,
+              "delta_macro": 0.0001480237641543388,
+              "delta_macro_ci": [
+                -5.551499740256422e-05,
+                0.0003563481906519518
+              ]
+            },
+            "b2": {
+              "pass": false,
+              "primary_pass": false,
+              "safety_pass": false,
+              "selective_support": false,
+              "delta_macro": 0.0004296088161074296,
+              "delta_macro_ci": [
+                -0.0003879347918457646,
+                0.001243200998489723
+              ]
+            }
+          },
+          "n_pass": 0,
+          "n_backbones": 2,
+          "verdict": "ADAPTIVE MIXTURE NOT SUPPORTED",
+          "rule": "2/2 pass -> STRONG ADAPTIVE-MIXTURE GENERALITY; 1 pass with the other non-significant and not significantly negative -> PARTIAL METHOD SUPPORT; otherwise -> ADAPTIVE MIXTURE NOT SUPPORTED (stop the M3 line)",
+          "stop": true
+        }
+      },
+      "reproduction_audit": {
+        "artifact": "results/v2_local_competition/m3_mixture/b0/m3_b0_audit.json",
+        "passed": true,
+        "b1_b2_source": "per-backbone gate artifacts and frozen V2-M3.1 amendment"
+      }
+    }
+  ],
+  "refresh_repair_gate_decisions_review": {
+    "script": "scripts/refresh_repair_gate_decisions.py",
+    "sha256": "2bb4783c9fc6d9638ddae48dfe29c1579a34c10d2f4d91690a73a078f75d1d61",
+    "lines": "305-425",
+    "reads_for_refresh": [
+      "results/research_repair_v1/statistics/summary.json",
+      "results/research_repair_v1/statistics/gate_decisions.json",
+      "results/phase05_score_sufficiency/sufficiency_gate.json",
+      "results/phase1_semantic_sufficiency/sufficiency_gate.json",
+      "results/phase1f_hard_semantic/gate.json",
+      "results/phase1e_refcocog_external/a11_results.json"
+    ],
+    "loads_m1_m2_m25_m3_legacy_json_for_recalculation": false,
+    "behavior": "M1/M2/M25/M3 are only entries in a hardcoded provenance map; the loop finds existing old_doc rows, copies their fields, adds source/function/note strings, and sets status/new_decision=PENDING_FORMAL_BOOTSTRAP. It does not open the named old JSON files, execute the legacy predicate, or recompute old_thresholds/old_decision.",
+    "current_old_gate_decision_rows": {
+      "m1/M1_GO": {
+        "old_thresholds": null,
+        "old_decision": null,
+        "source": "listed in required scope inventory; exact source mapping pending read-only evaluator integration",
+        "predicate_source": null
+      },
+      "m2/M2_GO": {
+        "old_thresholds": null,
+        "old_decision": null,
+        "source": "listed in required scope inventory; exact source mapping pending read-only evaluator integration",
+        "predicate_source": null
+      },
+      "m2/M2_SELECTIVE_SIGNAL": {
+        "old_thresholds": null,
+        "old_decision": null,
+        "source": "listed in required scope inventory; exact source mapping pending read-only evaluator integration",
+        "predicate_source": null
+      },
+      "m2/M2_GATE_CONTRIBUTION": {
+        "old_thresholds": null,
+        "old_decision": null,
+        "source": "listed in required scope inventory; exact source mapping pending read-only evaluator integration",
+        "predicate_source": null
+      },
+      "m25/M25_DIAGNOSTIC_VERDICT": {
+        "old_thresholds": null,
+        "old_decision": null,
+        "source": "listed in required scope inventory; exact source mapping pending read-only evaluator integration",
+        "predicate_source": null
+      },
+      "m3/M3_B1_B2_FROZEN_GATE": {
+        "old_thresholds": null,
+        "old_decision": null,
+        "source": "listed in required scope inventory; exact source mapping pending read-only evaluator integration",
+        "predicate_source": null
+      }
+    },
+    "pointer_or_metadata_issues": [
+      {
+        "entry": "m2/M2_SELECTIVE_SIGNAL",
+        "script_pointer": "results/v2_local_competition/m2_curriculum/gate.json#/gates/M2_SELECTIVE_SIGNAL",
+        "actual_pointer": "results/v2_local_competition/m2_curriculum/gate.json#/gates/selective_metrics",
+        "finding": "script pointer is absent in actual JSON; protocol does not define a numeric selective gate threshold."
+      },
+      {
+        "entry": "m2/M2_GATE_CONTRIBUTION",
+        "script_pointer": "results/v2_local_competition/m2_curriculum/gate.json#/gates/M2_GATE_CONTRIBUTION",
+        "actual_pointer": "results/v2_local_competition/m2_curriculum/gate.json#/gates/gate_contribution",
+        "finding": "script pointer is absent in actual JSON."
+      },
+      {
+        "entry": "m3/M3_B1_B2_FROZEN_GATE",
+        "script_predicate_source": "scripts/run_v2m_m3_conf.py::gate",
+        "actual_functions": [
+          "scripts/run_v2m_m3_conf.py::_backbone_gate",
+          "scripts/run_v2m_m3_conf.py::_cross_backbone_verdict"
+        ],
+        "finding": "generic function name is not the actual implemented predicate entry point."
+      }
+    ],
+    "repair_gate_decision_source_hash": "1f0037c0193b788a5a2527987641331b790ae61c488039a312db1a7279ab0a09"
+  }
+}

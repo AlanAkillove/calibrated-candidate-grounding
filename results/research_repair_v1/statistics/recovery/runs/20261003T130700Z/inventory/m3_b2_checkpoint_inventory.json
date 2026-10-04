@@ -1,0 +1,116 @@
+{
+  "schema": "ccg.research_repair_v1.no_checkpoint_inventory.v1",
+  "scope_id": "m3_b2_severity_macro",
+  "backbone": "b2",
+  "created_utc": "2026-10-03T13:38:10Z",
+  "search_scope": [
+    "results/v2_local_competition/m3_mixture/conf/b2/**",
+    "results/v2_backbone_generalization/g4_phaseA/{bb_dir}/seed_{{1,2,3}}/(models.pkl,model_manifest.json)"
+  ],
+  "m3_conf_output_files": [
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/alpha_diagnostics.csv",
+      "size_bytes": 1567,
+      "sha256": "8f792942e267fd196890c5ddf5c528b18ec49dad913814397ed315be445f8536"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/bootstrap_pairs.csv",
+      "size_bytes": 25133,
+      "sha256": "d105e592d1b199b8544cb298484380a212ed11344754c3295fd6852f99bfe2d5"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/calibration.csv",
+      "size_bytes": 6926,
+      "sha256": "5d3652445faa201e262ec734e0fc9205de017edaa0ef2953548fac613485865c"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/dose_anchor.csv",
+      "size_bytes": 1628,
+      "sha256": "642a49dfa404339ac33a488ad8e38599d01ba6893378c12224990b406f2c74b2"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/figures/m3_conf_b2_curves.png",
+      "size_bytes": 163737,
+      "sha256": "b5c339df9d7558415451fdb17a3d3f62f33b6c1cb604ceeee42c833d9ccf3040"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/figures/m3_conf_b2_macro_delta.png",
+      "size_bytes": 107664,
+      "sha256": "48d4afbbee8d74d27eb617d13c9174d43ac4ab7f3bb1eb17b3111fa795c0a490"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/gate.json",
+      "size_bytes": 18759,
+      "sha256": "c953c9d9dca7af90bbb4a217195e35a3f2ef4c9b0eed4257bf5cba963b77352f"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/macro_metrics.csv",
+      "size_bytes": 1436,
+      "sha256": "4c0b5c612917b8437c7ed955f84b5a8c1d4067383cd63153afeaef512f199b70"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/point_metrics.csv",
+      "size_bytes": 11263,
+      "sha256": "2ab40f536c62e6ffb42e8b5cd17bb3901cc99af5c15085c2bb87ec50162facbc"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/regret.csv",
+      "size_bytes": 3240,
+      "sha256": "2c3f54cdbbdb3cc8a6c92d9c0615e77255faff0a8fd827a40bda61d4915eebfb"
+    }
+  ],
+  "m3_1_saved_model_or_confidence_candidates": [],
+  "frozen_phase_a_artifacts": [
+    {
+      "path": "results/v2_backbone_generalization/g4_phaseA/b2/seed_1/models.pkl",
+      "size_bytes": 2663,
+      "sha256": "55a40c25915af073804e5debfbdb33017b469f9499ef87fdc2ac07d1da3b94a2",
+      "artifact_role": "frozen_V2G_PhaseA_R1_R2_expert"
+    },
+    {
+      "path": "results/v2_backbone_generalization/g4_phaseA/b2/seed_1/model_manifest.json",
+      "size_bytes": 1446,
+      "sha256": "02c50c65ec7d76e950447b538994ff8ca6aa560c095fc156d0318aeab06fab83",
+      "artifact_role": "PhaseA_model_manifest"
+    },
+    {
+      "path": "results/v2_backbone_generalization/g4_phaseA/b2/seed_2/models.pkl",
+      "size_bytes": 2663,
+      "sha256": "8d30c24bd9da8089097157088068716ecb8d3a3adac1511ae2c209c160ac01e2",
+      "artifact_role": "frozen_V2G_PhaseA_R1_R2_expert"
+    },
+    {
+      "path": "results/v2_backbone_generalization/g4_phaseA/b2/seed_2/model_manifest.json",
+      "size_bytes": 1447,
+      "sha256": "f43fcb307b258149b27a682a21e444db94ffe366878ec003a0581de3caf5fdd3",
+      "artifact_role": "PhaseA_model_manifest"
+    },
+    {
+      "path": "results/v2_backbone_generalization/g4_phaseA/b2/seed_3/models.pkl",
+      "size_bytes": 2663,
+      "sha256": "47531e821194e9795d5d689b190a7772a39395db75b77390c002d7e9f25038d6",
+      "artifact_role": "frozen_V2G_PhaseA_R1_R2_expert"
+    },
+    {
+      "path": "results/v2_backbone_generalization/g4_phaseA/b2/seed_3/model_manifest.json",
+      "size_bytes": 1443,
+      "sha256": "3d551e18c5db278f56bb5ed62a5fdb34baea434373606d746d00b46ad2f1b40b",
+      "artifact_role": "PhaseA_model_manifest"
+    }
+  ],
+  "m3_conf_audit_recompute_dir": "results\\v2_local_competition\\m3_mixture\\conf\\_audit_recompute",
+  "m3_conf_audit_recompute_dir_exists": false,
+  "finding": "The per-backbone M3.1 output directory contains only aggregate CSV/JSON tables and figures; no per-seed E_curriculum coefficients/model, mixer parameter checkpoint, or per-sample confidence archive exists. The six Phase-A models.pkl files are frozen R1/R2 experts only (the E_random route), loaded and verified exactly in this attempt; they do not contain the fresh M3.1 curriculum model or fitted mixers.",
+  "direct_load_route": {
+    "phase_a_random_expert": "available_and_verified",
+    "m3_1_curriculum_logistic": "no_saved_artifact",
+    "m3_1_static_or_adaptive_mixer": "no_saved_artifact",
+    "m3_1_per_sample_confidence": "no_saved_archive"
+  },
+  "supporting_shared_file_hashes": {
+    "results/v2_local_competition/m3_mixture/conf/metadata.json": "4230c3245e0716d7f638b71c0e2ce9e9147eb38b19dd79c024d498f70ab53b7e",
+    "results/v2_local_competition/m3_mixture/conf/m3_conf_audit.json": "94e001dd6208e888132bd87685107aded0afe91cd96af9be74b42215ad3aa41c",
+    "results/v2_local_competition/m3_mixture/conf/b2/point_metrics.csv": "2ab40f536c62e6ffb42e8b5cd17bb3901cc99af5c15085c2bb87ec50162facbc",
+    "results/v2_local_competition/m3_mixture/conf/b2/gate.json": "c953c9d9dca7af90bbb4a217195e35a3f2ef4c9b0eed4257bf5cba963b77352f"
+  }
+}

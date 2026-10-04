@@ -2140,3 +2140,394 @@ accounting decomposition**，不是对置信排序为何变化的因果识别。
 
 
 
+
+
+# Research Repair v1 — execution and interpretation correction (2026-10-03)
+
+This section is a retrospective repair record. It does not retroactively preregister
+completed experiments. The user authorized this result-driven supplementary analysis,
+three gpt-6-luna/max execution agents, necessary corrections/retraining, and overnight
+execution. Full protocol: reviews/repair_protocol.md; handoff:
+reviews/repair_execution_handoff.md. Historical sections above retain their original
+wording and dates. Current scientific interpretation follows repaired artifacts.
+
+## Identity and execution
+
+Baseline commit: 07e15a66056436fcecb880c5aa2d75354beefe26. Baseline manifest:
+results/research_repair_v1/input_manifest.json. Initial verification passed for all
+794 inputs (9400891451 bytes). Actual task identities: /root/a_statistics,
+/root/b_information, /root/c_candidates; each was successfully spawned with
+model=gpt-6-luna, reasoning_effort=max, fork_turns=none and acknowledged startup.
+Preparation and dispatch do not imply experimental completion. Only STATUS.json
+with formal outputs and acceptance evidence can establish repair completion.
+
+## Scientific interpretation corrections
+
+E-AURC remains accuracy-dependent: in the population random-ranking limit,
+E-AURC_random=-a ln(a). RER's oracle ceiling at coverage c is 1 when a>=c,
+otherwise a(1-c)/(c(1-a)). They are selective utility measures, not pure
+accuracy-independent discrimination evidence. AUROC is separate evidence.
+Logits temperature preserves argmax but need not preserve maximum-softmax
+confidence ordering across expressions; the former scale-exclusion inference is
+withdrawn. Direct native/global-T/per-K diagnostics supersede that inference.
+Mean CI endpoints across seeds are not a CI for the mean effect. Shared image
+resampling must compute each fixed seed's effect, then average effects inside each
+replicate. Relative/DoD/severity-macro statistics follow the same rule.
+Four-corner identities are statistical accounting, not causal identification.
+Small net Shapley label components can cancel large opposing path contributions.
+H1c is accuracy harm and cannot explain AUROC gaps by identity. The measured
+redundancy explanation did not receive support; broader semantic explanations
+were not falsified. Unmatched proposals are unmatched to the annotations used,
+not necessarily empty background. Proposal count is not distinct-object count.
+
+## Final question and evidence organization
+
+RQ1: expansion effects on accuracy/discrimination/calibration/selective utility.
+RQ2: score extrapolation and query–crop versus candidate–candidate sources.
+RQ3: four-corner accounting, paths, interaction and interpretation limits.
+Historical RQ/gate numbers remain source identifiers in the appendix. Target
+absence is outside this paper and repair. V2-G freezes encoders but trains heads;
+V2-P and historical accounting reuse scorers; V2-M/M3 train or fit models.
+Backbone and proposal axes are separate, not a full factorial design. Strict
+RefCOCOg is image-disjoint within COCO, not a new visual domain.
+Full pre-result configuration freezing differs from input identity freezing;
+D1/D2 have limited evidence for a complete pre-result configuration, and D2
+includes a target redefinition. Staged later protocols do not erase adaptivity
+from seeing earlier test results. This repair is not independent confirmation.
+Historical gates remain operational rules with their original thresholds.
+
+## Citation and current-document correction
+
+TransVG is Deng et al., ICCV 2021; MMCE is Kumar/Sarawagi/Jain, ICML 2018;
+Ovadia's uncertainty-under-dataset-shift paper is NeurIPS 2019; ReCLIP uses
+cropping/blurring region scoring and a spatial relation component. Primary
+sources and the selective-metric reference are linked in docs/literature_notes.md.
+Pre-repair summary and blueprint are preserved under docs/appendix/. Current
+README/summary/blueprint are reorganized by questions and evidence dependencies;
+history, labels, gates, and hashes remain in the appendix and registry.
+
+## Newly reproduced implementation issue (pending formal results)
+
+B reproduced a log-K standardization bug in the original Phase05 ScoreDeepSets
+feature builder: the fit-row prefix over concatenated K arrays was not the actual
+training mask. The minimal regression fails before the correction (mean logK
+1.6094, SD zero in the test) and should pass with actual training rows (mean
+1.9560, SD 0.3466). This is a train/tune isolation error. The minimal source fix
+and corrected-model experiments are distinct from frozen-baseline restoration.
+Old predictions/models/results remain byte-identical; new outputs are versioned
+in information/. Failure/pass logs and formal result status will be recorded
+when available. No original recovery anchor tolerance is relaxed.
+
+
+## Repair input-coverage correction
+
+The initial preparation manifest enumerated
+`data/raw/mscoco/annotations/instances_train2014.json`, which is absent in this
+checkout. The actual annotation file is
+`data/raw/annotations/instances_train2014.json`. The 794-file initial check remains
+valid for its recorded inputs; it must not be represented as covering every later
+recovery/audit input. Before formal use, missing source inputs receive immutable
+`supplemental_input_manifest.json` snapshots under the owning repair axis. Existing
+snapshots are verified, not replaced. Final acceptance verifies the original baseline
+and all supplements via scripts/verify_repair_inputs.py. No old input is rewritten.
+
+
+## Repair execution: constrained recovery and retained failures
+
+B's old Logistic refit failed its unchanged 1e-9 prediction anchor under both
+BLAS2 (reported max difference 6.066e-8) and an explicitly scoped BLAS1 check
+(reported 3.642e-8 for seed1). The recovery is UNVERIFIABLE under the allowed
+resource environment. The new CPU float32 experiments continue with BLAS/Torch2,
+while existing historical prediction artifacts remain available for direct canonical
+row/point checks. No tolerance, architecture, hyperparameter grid or precision was
+changed to make an anchor pass. This refit failure is distinct from the corrected
+log-K feature builder and from validity of existing stored historical predictions.
+
+C retained two audit failures while opening existing output CSVs for writing.
+Independent same-directory, same-size/attribute copy probes did not reproduce the
+EINVAL failure; the underlying cause is unconfirmed. Atomic CSV writes now preserve
+the prior output on replacement failure. The two partial runs do not constitute a
+completed audit; a third audit is authorized after writer tests, in the heavy audit
+slot while A investigates a separate point-anchor mismatch.
+
+A completed and stored 5000-draw Phase0A temperature jobs before its next anchor
+comparison failed (reported old 0.534881484687, new 0.532179661676, tolerance1e-6).
+Those completed jobs remain usable; no remaining scope is marked complete based
+on their presence. Point/row/definition alignment is investigated without widening
+anchors. All failed-attempt evidence remains under the corresponding repair axis.
+
+
+## Repair cohort-definition correction
+
+A traced the failed pooled anchor to different row universes: legacy Phase0A
+`__pooled__` includes the entire common cohort (20,799 rows), whereas the new
+`__pooled_test__` uses only testA+testB (10,286 rows, 1,490 images). Their K5
+accuracies, 0.534881484687 and 0.532179661676 respectively, must not be compared
+as a recovery anchor. The test-only pool remains an explicitly new supplementary
+cohort without that historical anchor. Any historical headline/gate using the
+all-common pool must retain its original mask for audit, be labelled as including
+train/validation, and remain separate from test evidence. Other scope adapters
+must check their actual pooled definitions rather than infer them from the name.
+
+
+## Repair pooled-cohort clarification (actual row counts)
+
+The prior execution note incorrectly described Phase0A's all-common pool as
+including training rows. The actual stored split counts are val_select=5,282,
+val_calib=5,231, testA=5,646 and testB=4,640; these sum to 20,799, with no
+training evaluation rows. Its correct provenance label is
+ALL_COMMON_INCLUDES_VALIDATION_NO_TRAIN. The original pool still mixes validation
+and test evaluation; testA+testB remains a distinct supplementary 10,286-row pool.
+This clarification supersedes the earlier guessed training-membership description
+without modifying the historical log prefix or any numerical anchor.
+
+A previously exported frozen Stats/E1b bundle was located at
+results/phase1e_refcocog_external/frozen_models/models.json. Direct coefficient
+loading and strict verification now take precedence over unnecessary Logistic
+refitting. The recorded refit failures remain failures of that restoration route;
+they do not establish that direct frozen-model loading is impossible. Its actual
+verification outcome is pending and will be recorded separately.
+
+
+## Direct frozen-bundle verification and scope
+
+Direct loading of the original A11 coefficient bundle succeeded at BLAS2, retaining
+the original 1e-9 tolerance. Evidence: information/reference_frozen_bundle_verification.json
+(three seeds; Stats prediction errors 2.220446049250313e-16; E1b coefficient, Stats
+normalization and temperature differences zero; 42 source-artifact identities).
+This is distinct from the preserved BLAS1/2 refit failures. E1b end-to-end prediction
+with newly reconstructed cell features is a separate check: B's compatibility check
+found a large discrepancy (reported 0.3817), so that path is not yet verified. The
+feature/order/precision construction is being compared against the original Phase1F
+and A11 anchor paths before any sensitivity or reference comparison is accepted.
+The source-bundle PASS must not be substituted for end-to-end feature-path PASS.
+
+
+## Phase1F end-to-end feature verification
+
+The original Phase1F feature path was independently reused on rand5/hard5 for all
+three fixed seeds. Evidence: information/reference_phase1f_feature_audit.json.
+The row identities and correctness match; each Stats17/sem16 feature has zero
+maximum difference against B's derived cell features. Direct bundle predictions
+match the stored Phase1F Stats probabilities within 2.220446049250313e-16 and
+E1b probabilities within 2.7755575615628914e-16, retaining the 1e-9 tolerance.
+This PASS applies to those Phase1F cells, not to all Phase1 random CSV predictions.
+
+Canonical Phase0B K5 scores and Phase1F saved rand5 logits differ by up to
+1.2874603271484375e-5 across these seeds despite identical rankings/correctness.
+The audit therefore uses the exact saved Phase1F scores for its reliability
+anchor; scorer-forward STOP checks and source-specific probability anchors remain
+separate. No original prediction or cache is modified.
+
+
+## Phase1 prediction-column model identity correction
+
+The original run_phase1._dump_predictions writes the per-seed `best_score_only`
+and `best_semantic` predictions into generic reliability columns. Its source
+metadata.json identifies these as MSP and e2_score for all three seeds; the latter
+is a score-only control despite belonging to the semantic-family search. Those
+CSV columns are not fixed Stats Logistic and E1b predictions. The separate global
+sufficiency_gate.json selects MSP and e1b_stats_semantic, so it must not be silently
+anchored to the per-seed e2_score column either.
+
+Comparing the loaded S/Full bundle against these different-model columns caused
+the reported 0.10–0.38 differences. These are MODEL_IDENTITY_INCOMPATIBLE
+comparisons, not failures to restore the same model. Existing CSVs and their numbers
+remain untouched. Fixed Stats/E1b comparisons use their actual per-model source
+metrics, coefficients and reconstructed original features with unchanged anchors.
+Generic `semantic_reliability` column names cannot establish added semantic input.
+
+## 2026-10-03 — explicit contrast directions and published audit identity
+
+For Research Repair v1, a named Full-minus-baseline AUROC or RER gain is Full minus baseline; E-AURC reduction is baseline minus Full. RER remains (base risk minus accepted risk) / base risk, so higher RER denotes more relative risk removed. The sign correction was identified before B formal resampling and does not change metric definitions or historical artifacts. Matched and dose comparisons share image draws across their cells; any macro or difference-in-differences is formed inside a draw.
+
+Candidate audit consumers use only current_audit.json and its matching summary SHA256/run ID. Successful category/geometry audit is a distinct stage from frozen forward predictions and paired sensitivity intervals. Observed mismatch makes sensitivity mandatory under the unchanged repair protocol.
+
+### Research Repair v1 — formal information and candidate-forward milestones (2026-10-03)
+
+B completed all nine formal shared image-cluster bootstrap calls (5000 draws, seed 0,
+95% percentile), with the preserved first-call raw arrays recovered under the logged
+strict fingerprint checks. The final method record is `information/information_bootstrap.json`;
+1860 flat estimates retain per-seed uncertainty, valid/invalid counts and raw evidence.
+The source-derived publication figures show cellwise Full−(S+Q) effects and small/large-K
+training results. Incremental V effects are not uniformly resolved across cells; the
+repair does not promote them to a general candidate-interaction or information-limit claim.
+
+C completed frozen forward for all eight historical hard/dose sources using the
+versioned old/corrected availability intersection. Original STOP and reliability tolerances
+remain unchanged. Phase1F uses exact saved old logits for reliability anchors, with
+fresh scorer replay separately checked; V2-P preserves original lossless confidences
+because full logits are unavailable, and reports fresh numerical residuals separately.
+The strict fresh-confidence preflight failure and the two candidate-control preflight
+failures are retained. Dose controls now use original expb_m0 candidate construction,
+not the distinct rand10 source. Paired 5000-draw candidate sensitivity remains pending.
+
+B released the heavy statistics slot to A. C released the model lane for any required
+original-parameter recovery. A's first next-batch launch failed before bootstrap because
+of duplicate estimate names; no formal results from that attempt are accepted. The
+remaining-scope intervals, actual old/new gate decisions, final full suite and immutable
+input verification remain required before COMPLETE.
+
+### Research Repair v1 — independent acceptance and stored-array checks (2026-10-03)
+
+The primary agent added `scripts/check_repair_acceptance.py`, which reads saved
+artifacts without resampling or declaring completion. The required-scope ledger
+covers 16 scopes, including those not yet registered or awaiting original-model
+recovery. Scope omissions and UNVERIFIABLE declarations without concrete structured
+failure evidence remain incomplete. Operational decisions must retain historical
+thresholds and link to actual eligible formal estimators; invalid draws cannot be
+used for an operational gate. Candidate chain checks are being strengthened from
+current audit through forward and prediction manifest to paired sensitivity groups.
+
+`scripts/verify_repair_estimates.py` independently recomputes percentiles, valid/invalid
+counts, per-draw fixed-seed means, observed mean effects and seed SD from the stored
+raw arrays. It creates no bootstrap samples. Its 1e-12 comparison tolerance concerns
+serialized arithmetic consistency and does not alter any original recovery anchor
+or STOP tolerance. This final numerical verification is pending complete stable
+outputs. Targeted integration tests also verify that reversing draw pairing can be
+detected even when aggregate percentile endpoints remain identical.
+
+The running A batch was launched before additional adapters were written. A did not
+capture the launch-time runner fingerprint, and this omission is explicitly retained;
+the later live file hash will not be described as the executed runner version. Future
+formal launches must preserve the runner snapshot and estimator specification identity.
+
+
+### 2026-10-03 — recovery provenance classification and mixed-scope acceptance
+
+The G4 recovery attempt initially placed two newly written repair implementation
+files in its supplemental immutable-input manifest. Later authorized edits exposed
+the classification error. The original manifest bytes are preserved as attempt
+source provenance; the replacement supplemental manifest retains the other 46
+original data entries with their original sizes and hashes. No original prediction,
+model, candidate or cache hash was re-pinned. Future recovery attempts copy their
+implementation sources before execution and separate those snapshots from immutable
+scientific inputs. The M25 three-seed archives that had already passed remain usable;
+that attempt's source-snapshot conflict is a runner defect, not scientific failure.
+
+The original M3-B0 path passed its M1/M2 confidence anchors but failed committed
+point-table anchors at all three seeds: AUROC discrepancies were approximately
+4.765e-7, 9.490e-8 and 4.766e-7 against the unchanged original 1e-9 tolerance.
+The recovery attempt and separate seed failure records remain preserved. These
+failures cannot stand in for the required B1/B2 work. Mixed M3 coverage must
+independently account for the B0, B1 and B2 jobs, linking an unrecoverable job to
+structured failure records and continuing all recoverable jobs through the formal
+5000-draw procedure. New acceptance tests reject omitted backbones and whole-scope
+UNVERIFIABLE status used to skip pending formal jobs.
+
+
+### 2026-10-03 — complete candidate sensitivity and remaining acceptance
+
+The true-target-category sensitivity completed all 15 shared image-cluster calls:
+12 regular source/split groups and three joint-dose groups, with 24 source/split
+mappings and 1,404 stored estimates. Each call used 5,000 draws, seed 0 and 95%
+percentile intervals; fixed-seed effects were averaged within each shared draw.
+The independent candidate metadata validator found all group files, canonical
+cohort identities, archive hashes, aggregate keys and three seed keys consistent.
+A validator omission for the declared `dose_macro` cell was corrected without
+altering bootstrap outputs. Raw array lengths, percentiles and per-draw seed means
+remain assigned to the final independent numerical verifier.
+
+Publication tables now name each confidence head and report seed SD so repeated
+AUROC/selective rows cannot be confused. Old-minus-corrected effects condition on
+the source-specific paired availability intersection. Corrected and original dose
+arms each use their own m0 baseline; the fixed original-m0 contrast remains
+separate and descriptive. An interval containing zero does not establish candidate
+version equivalence. The heavy CPU slot has returned to the remaining A scopes;
+overall repair completion and final acceptance remain pending.
+
+
+### 2026-10-03 — original M3 recovery exhausted; remaining formal launch
+
+M3-B0 and M3.1-B1/B2 completed the original deterministic recovery routes for all
+nine fixed seeds. Frozen scorer/Phase-A checks and applicable M1/M2 confidence or
+STOP checks passed, but every backbone had committed point-table discrepancies
+above its unchanged 1e-9 metric tolerance. Independent per-backbone parent failure
+records bind the three seed records, final run logs, source hashes and checkpoint
+inventories. The original M3 outputs contain tables/figures rather than the missing
+per-seed curriculum/mixer checkpoints or confidence arrays needed for exact replay.
+No M3 repair bootstrap was substituted and no original tolerance was relaxed.
+These are historical-recovery limitations, not evidence that the tested models
+lack reliability information or that the scientific hypotheses are false.
+
+A launched 31 remaining formal jobs, comprising 2,807 estimates, after all source
+and anchor preflights passed. Launch provenance is stored in
+`statistics/formal_batches/20261003T133926Z/launch_manifest.json`, including exact
+code snapshots, specifications, command/environment and 199 distinct source/input
+hashes. The batch uses 5,000 shared image-cluster draws, seed 0, 95% percentile
+intervals, and BLAS at most two threads. Existing 28 jobs are not resampled.
+
+Independent gate review identified original source/document discrepancies that
+must remain explicit in the repair: Phase05's actual headline uses the seed-mean
+predicate although its document requires seed consistency; G3's E-AURC CI test is
+nonzero without a directional assertion; D1 C1 uses seed-mean rather than per-seed
+rows; several P provenance labels referenced nonexistent wrappers. A5.4's separate
+post-hoc Reliability GO criterion also needs its own accounting and cannot be
+hidden by the nonexistent standalone B0 temperature gate's NOT_APPLICABLE status.
+Gate repair retains actual historical thresholds and decisions, discloses these
+source differences, and rejects unresolved null placeholders as completed evidence.
+
+
+### 2026-10-03 — passing full suite before required M2 auxiliary registration
+
+The source-bound existing-weight suite passed: 1,218 tests, zero failures/errors,
+and the two original opt-in live-extraction skips, in 283.8 seconds. All 259
+tracked source snapshots remained unchanged during this offline, two-thread run.
+Its exact log, JUnit and source record are preserved under `logs/*before_m2_aux*`.
+
+A missing M2 gate auxiliary estimator was identified after the formal batch launch:
+relative E-AURC reduction at m8. The registered baseline and LCR endpoint estimates
+already use the same image draws for every fixed seed. The missing quantity must
+be derived as (E-AURC(E1b)-E-AURC(LCR))/E-AURC(E1b) inside each seed/draw and then
+averaged across fixed seeds. Ratios of aggregate means and subtracted endpoint CIs
+are not substitutes. A reproducible utility and meaningful mathematical tests are
+required before using this diagnostic. Zero/nonfinite denominators remain invalid;
+no additional bootstrap draws are authorized or needed for this derivation.
+The new source addition requires a final full-suite rerun; the preserved passing
+run does not by itself establish final repair acceptance.
+
+
+### Repair v1: M2 paired derived estimator (2026-10-03)
+
+The formal launch snapshot registers 2807 estimates in 31 remaining jobs. Its M2 endpoint draws are reused to derive the missing relative E-AURC gate diagnostic without new sampling: compute (E1b E-AURC - LCR E-AURC) / E1b E-AURC at the same replicate index for each fixed seed, then average seed ratios. Denominators at or below the original 1e-12 cutoff, or nonfinite endpoints, produce invalid draws. The exact historical per-seed and mean points retain the original absolute 1e-9 anchors. This is an explicitly registered post-launch deterministic derivation, separate from the launch-time estimator count.
+
+Independent review verified the formula and anchors and prompted explicit common-archive path/hash checks plus a preflight with no writes. Focused tests pass. The previous stable 1218-test suite (1216 pass, two original opt-in skips) and source snapshot are preserved under logs/*_before_m2_aux.*; the final suite was relaunched after these source changes. No completion claim is made before formal outputs, raw numerical QA, input hashes and acceptance pass.
+
+
+M2 reproducibility routes: the active process uses the original launch snapshot with 281 M2 estimates; its missing-estimate utility adds one estimate from saved draws before metadata/coverage and gate refresh. A fresh run using the updated builder computes the ratio directly and does not repeat that utility. The utility requires both endpoints to name the same physical raw archive, compares predeclared hashes when present, and always records a derive-time SHA with a read-after hash check. Current endpoint summaries have no predeclared raw SHA; this is not an independent comparison to an upstream stored hash. Final raw QA fingerprints every archive.
+
+
+### Repair v1: launch count reconciliation (2026-10-03)
+
+The frozen 31-job launch manifest reports 2807 through n_estimates fields that count ordinary prediction specs only. Actual outputs include six already-defined auxiliary estimates in each of D2 C4, P1 C4 RPN and P1 C4 DETR (18 total). These must be reconciled against the frozen preflight/source snapshots in a separate record, without editing the launch manifest. They are distinct from the one post-launch M2 ratio. Final coverage and verification use exact saved names and actual counts rather than the incomplete launch count field.
+
+
+### Research Repair v1 acceptance completed (2026-10-04, Asia/Shanghai)
+
+The three gpt-6-luna/max execution agents completed the authorized repair. Exact coverage accounts for all16 required scopes:15 formal scopes and M3 with independent B0/B1/B2 strict recovery-failure evidence under unchanged tolerances. Statistics has59 formal jobs and6646 estimates; the frozen31-job batch has2825 actual estimates (2807 ordinary-spec count plus18 pre-existing auxiliaries), followed by one deterministic M2 ratio derived from its saved shared draws. All23 operational gate rows are terminal (20 evaluated,2 not applicable,1 M3 unverifiable), without threshold changes.
+
+Four-axis stored-array verification passed all9955 estimates: statistics6646, information1860, candidates1404, mechanism45. Independent M2 same-index ratio, aggregate seed mean, historical point anchors, fingerprints and exact282-name ledger also passed. Final fullsuite has1226 tests:1224 passed,2 original opt-in live-extraction skips,zero failures/errors;262 Python source files remained unchanged during the run. Final baseline plus supplemental verification covers5 manifests and834 unique files with zero changes; both original Git document prefixes remain preserved. Overall acceptance_check.json is PASS with zero unresolved checks.
+
+M3 recovery limits do not provide new effect CIs or establish model ineffectiveness. The early A launch-fingerprint omission and incomplete pre-derive raw-SHA collection remain explicitly documented; current raw arithmetic/fingerprints and the recorded M2 source/read-after hashes pass. Current README, result summary, completion audit, tables and registry are regenerated from the accepted artifacts. Conclusions retain GT-assisted target-present conditions, fixed-seed uncertainty, shared COCO visual domain, cellwise feature gains and post-result test-set reuse. No new backbone, dataset, architecture or expanded interface was introduced.
+
+
+### Independent acceptance corrections — 2026-10-04 (Asia/Shanghai)
+
+Independent review confirmed core evidence with limits and returned CONDITIONAL_ACCEPTANCE. The previous delivery PASS and 1224-pass/two-skip source-bound suite are preserved; that checker did not cover the following three omissions. The authorized closeout uses the same three gpt-6-luna/max agents and writes all new evidence under results/research_repair_v1/independent_closeouts/20261004T031921Z/ without overwriting earlier evidence.
+
+1. Keep the numeric E-AURC definition (trapezoidal finite-sample AURC minus a continuous oracle reference). Ideal finite rankings may yield negative values: confidence [0.8,0.3], correctness [1,0] gives AURC 0.125, reference 0.15342640972002736, E-AURC -0.028426409720027357. Correct the explanation and add the counterexample; do not clip or rewrite old results.
+2. Restrict RER base-risk calculations to requested RER metrics so risk-only requests return risk normally. Compare old/new metric endpoints on the actual frozen B3 and M2 inputs, retaining conditions, seeds and cohorts; no new resampling or retraining.
+3. Derive audit reporting units from the saved source table: 21026 family-expression records (RPN10425, DETR10601), 10607 distinct sentence_id, 138 mismatched records (RPN86, DETR52), and 47 mismatched family-target-object pairs. Preserve audit rows and image-cluster sensitivity draws.
+
+Original M3.1 frozen Phase-A K5 checks use 1e-9 and dose rescore checks use 1e-4; M2 confidence STOP is separate at 1e-4, and B0 expert confidence reproduction uses 1e-9. The committed M3 point replay check at 1e-9 was added by the repair wrapper. The original protocol does not specify that point cutoff. Existing parent/seed JSON fields and failed exact replay are retained; M3 remains UNVERIFIABLE without approximate CI or tolerance relaxation. The early A launch-fingerprint and full pre-derive raw-SHA omissions remain explicit.
+
+Adaptive ECE percentile intervals have unestablished nominal coverage with non-smooth adaptive bins and absolute errors near zero. Positive lower endpoints alone do not establish population miscalibration. Full-minus-S+Q gains are conditional: positive at high random K, matched hard K5 and dose m8, while random K5 and dose m0 remain unresolved; these fixed-model, reused-test-set contrasts do not identify causal interactions or universal gain.
+
+New tests use a fresh short F-drive temp child under .rqc1 because C-drive free space is limited. No existing .rqa4 or user temporary files are removed. Completion requires a new unchanged-source full suite, fresh 834-input/five-manifest verification, stored-array identity/arithmetic checks, and versioned acceptance evidence. The independent review verdict itself is not rewritten by this execution closeout.
+
+
+### Independent-review closeout completed — 2026-10-04 (Asia/Shanghai)
+
+All three required corrections are implemented and regression-verified. New versioned execution acceptance is PASS with zero failed checks. Full suite: 1240 total, 1238 passed, two original opt-in skips, zero failures/errors; 263 source/config files remained unchanged during and after testing. Fresh verification confirms 834 files/five manifests unchanged, all9955 stored estimates arithmetically valid, and all77 raw archive identities equal to the prior delivery. Direct endpoint parity covers396 B3/M2 settings and6732 values, with no changes. The final two docstring passages are separately source-bound without altering numeric implementations.
+
+The independent CONDITIONAL_ACCEPTANCE verdict and original PASS/test evidence remain unmodified; all53 preserved copies passed SHA checks. M3 remains UNVERIFIABLE under the repair-specific committed-point replay criterion, separated from original store/rescore anchors. No retraining, new bootstrap draws, tolerance relaxation, source-audit-row rewrite, or approximate M3 CI was performed. The early A fingerprint, incomplete earlier pre-derive raw hashes, adaptive ECE nominal-coverage limits, conditional V gains, and reused-test-set scope remain explicit. New final evidence and replay commands are indexed at results/research_repair_v1/independent_closeouts/20261004T031921Z/closeout.md and closeout.json.

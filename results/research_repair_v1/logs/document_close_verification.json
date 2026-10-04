@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "checked_utc": "2026-10-03T18:07:44.073852+00:00",
+  "append_only_checks_after_final_close": [
+    {
+      "path": "docs/research_protocol.md",
+      "git_prefix_preserved": true
+    },
+    {
+      "path": "docs/experiment_log.md",
+      "git_prefix_preserved": true
+    }
+  ],
+  "changed_python_or_test_config_sources_since_full_suite": [],
+  "final_input_report_preserved_sha256": "2edae66cf8d0e2b06bac67d630a5d89edc729829dd9ee0d84f2acaf542fad41d",
+  "note": "Final close edits only documents and repair-owned metadata; original scientific inputs were not written after the full input verification."
+}

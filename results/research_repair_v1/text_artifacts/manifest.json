@@ -1,0 +1,78 @@
+{
+  "schema": "repair-text-publication-v1",
+  "purpose": "Byte-identical compressed text evidence; original local files preserved. Not a replacement for raw models/bootstrap caches.",
+  "artifacts": [
+    {
+      "original": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/candidate_geometry_historical_source_per_expression.csv",
+      "original_bytes": 41889711,
+      "original_sha256": "c228f796de268359b9d74416bda1a91f6d8392871e24cf95d27de6d0cc338118",
+      "archive": "results/research_repair_v1/text_artifacts/candidates/audit_run_20261003_Cslot_audit4/candidate_geometry_historical_source_per_expression.csv.gz",
+      "archive_bytes": 4947112,
+      "archive_sha256": "4bc9e4ef014c60c46d043ee260efc5516fba3e84b3f3bed58978bb850a806a10"
+    },
+    {
+      "original": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/candidate_geometry_sensitivity_per_expression.csv",
+      "original_bytes": 41443997,
+      "original_sha256": "abeabf73b41ba6adb784715830f85847c1882ecba465d4ac7ba7943aa38b62a4",
+      "archive": "results/research_repair_v1/text_artifacts/candidates/audit_run_20261003_Cslot_audit4/candidate_geometry_sensitivity_per_expression.csv.gz",
+      "archive_bytes": 4939990,
+      "archive_sha256": "d156999f7d4fb7e527d1572ed26b29d091a9c4b939dbefab9e397e41e148af8d"
+    },
+    {
+      "original": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/candidate_geometry_supply_intersection_per_expression.csv",
+      "original_bytes": 60437150,
+      "original_sha256": "e96b0349ded20a60cd1359f39fd3a792d9019a0ddbe212537b9630274ec5dd0d",
+      "archive": "results/research_repair_v1/text_artifacts/candidates/audit_run_20261003_Cslot_audit4/candidate_geometry_supply_intersection_per_expression.csv.gz",
+      "archive_bytes": 8505853,
+      "archive_sha256": "2e209bcce418036bc7c2e42ceaf19d27b7c988c3a65d39da3097a7906e2f2133"
+    },
+    {
+      "original": "results/research_repair_v1/candidates/candidate_geometry_per_expression.csv",
+      "original_bytes": 60437150,
+      "original_sha256": "e96b0349ded20a60cd1359f39fd3a792d9019a0ddbe212537b9630274ec5dd0d",
+      "archive": "results/research_repair_v1/text_artifacts/candidates/candidate_geometry_per_expression.csv.gz",
+      "archive_bytes": 8505853,
+      "archive_sha256": "2e209bcce418036bc7c2e42ceaf19d27b7c988c3a65d39da3097a7906e2f2133"
+    },
+    {
+      "original": "results/research_repair_v1/candidates/candidate_geometry_sensitivity_per_expression.csv",
+      "original_bytes": 41443997,
+      "original_sha256": "abeabf73b41ba6adb784715830f85847c1882ecba465d4ac7ba7943aa38b62a4",
+      "archive": "results/research_repair_v1/text_artifacts/candidates/candidate_geometry_sensitivity_per_expression.csv.gz",
+      "archive_bytes": 4939990,
+      "archive_sha256": "d156999f7d4fb7e527d1572ed26b29d091a9c4b939dbefab9e397e41e148af8d"
+    },
+    {
+      "original": "results/research_repair_v1/candidates/candidate_geometry_supply_intersection_per_expression.csv",
+      "original_bytes": 60437150,
+      "original_sha256": "e96b0349ded20a60cd1359f39fd3a792d9019a0ddbe212537b9630274ec5dd0d",
+      "archive": "results/research_repair_v1/text_artifacts/candidates/candidate_geometry_supply_intersection_per_expression.csv.gz",
+      "archive_bytes": 8505853,
+      "archive_sha256": "2e209bcce418036bc7c2e42ceaf19d27b7c988c3a65d39da3097a7906e2f2133"
+    },
+    {
+      "original": "results/research_repair_v1/statistics/coverage.csv",
+      "original_bytes": 44135239,
+      "original_sha256": "e082dbd9bff09b11f98e693d4ef6b7f7eb7dea984b53c781d66ca520c654901b",
+      "archive": "results/research_repair_v1/text_artifacts/statistics/coverage.csv.gz",
+      "archive_bytes": 758728,
+      "archive_sha256": "f085c3d88879f78c9c1187182c6fbc4183faa83cf08489da985f5d172701f008"
+    },
+    {
+      "original": "results/research_repair_v1/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/before_summary.json",
+      "original_bytes": 127404147,
+      "original_sha256": "e255ed2839c2ad2679d5729a811100b81e42e277d7787199a60d2d5c1a19b2bc",
+      "archive": "results/research_repair_v1/text_artifacts/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/before_summary.json.gz",
+      "archive_bytes": 4735716,
+      "archive_sha256": "604eb0b05ac1efe947a551ff0ada477fe894060d33bb38a11cb3cb07446d3586"
+    },
+    {
+      "original": "results/research_repair_v1/statistics/summary.json",
+      "original_bytes": 131301716,
+      "original_sha256": "99985fb91509d25c837d1d6b0aef9a3a5d6fbaf153fac83ddcfeb3de75e46114",
+      "archive": "results/research_repair_v1/text_artifacts/statistics/summary.json.gz",
+      "archive_bytes": 4909787,
+      "archive_sha256": "2c85a63a6af72ce4003d4ac66500dca3be258220ebbddbfd5ca72af761b77305"
+    }
+  ]
+}

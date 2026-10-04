@@ -1,0 +1,44 @@
+{
+  "schema": "ccg.research_repair_v1.statistics.adaptive_ece_note.v1",
+  "job_id": "phase0b___pooled_test__",
+  "estimate": "K5__global_T::ece_adaptive",
+  "cohort": {
+    "classification": "NEW_TESTA_TESTB_POOL_NO_MATCHED_LEGACY_TEST_POOL",
+    "n_rows": 10286,
+    "n_images": 1490,
+    "n_fixed_seeds": 3
+  },
+  "observed_point": {
+    "seed_estimates": {
+      "b3_seed1": 0.012431996121738932,
+      "b3_seed2": 0.00643544115782386,
+      "b3_seed3": 0.012336319591687038
+    },
+    "seed_mean": 0.010401252290416609,
+    "independent_recomputation_status": "EXACT_MATCH",
+    "historical_anchor_status": "NO_LEGACY_POINT_ANCHOR",
+    "historical_anchor_reason": "The original __pooled__ is the all-common 20,799-row cohort; this 10,286-row testA+testB cohort is new and is not anchored to the historical all-common point."
+  },
+  "bootstrap": {
+    "resample_unit": "image_cluster",
+    "replicates": 5000,
+    "seed": 0,
+    "ci_level": 0.95,
+    "interval_method": "percentile",
+    "valid_replicates": 5000,
+    "invalid_replicates": 0,
+    "ci_low": 0.010830564208536262,
+    "ci_high": 0.018070057600389974,
+    "replicate_mean": 0.014206586733835557,
+    "replicate_median": 0.014114279404795397,
+    "replicate_fraction_at_or_above_observed_point": 0.9872
+  },
+  "method_verification": {
+    "adaptive_bins_recomputed_for_every_resample": true,
+    "implementation_path": "joint_prediction_bootstrap -> metric_bundle(ece_adaptive) -> top_label_ece_adaptive -> _equal_mass_bins",
+    "binning": "15 equal-mass bins per statistic evaluation, with cuts snapped to confidence tie boundaries; bins are not fixed from the observed sample",
+    "interpretation": "The percentile bootstrap interval need not contain the observed statistic. Here the replicate distribution is right-shifted relative to the observed mean, which is consistent with a finite-sample bootstrap shift for a nonlinear absolute calibration-error estimator. This pattern alone does not establish the magnitude of estimator bias or invalidate the frozen percentile procedure.",
+    "data_or_protocol_changed": false
+  },
+  "raw_replicates": "results/research_repair_v1/statistics/raw_replicates/phase0b___pooled_test__.npz"
+}

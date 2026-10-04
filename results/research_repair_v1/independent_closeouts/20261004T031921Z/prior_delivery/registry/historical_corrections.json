@@ -1,0 +1,124 @@
+{
+  "source": "results/v2_proposal_robustness/p2_c1_gdino/c1_point.csv",
+  "source_sha256": "ef02bf2e6ee10fb513a1fc502cd56bb2b8f99321a3496de0e5c6d83b5ed9f70a",
+  "historical_report": "results/v2_proposal_robustness/p2_c1_gdino/analysis_report.md",
+  "k5_seed_mean": {
+    "RPN": {
+      "accuracy": 0.789519735562901,
+      "auroc_correct": 0.8407200372791596,
+      "e_aurc": 0.03809161430924312,
+      "rer_at_50": 0.8247753998266312
+    },
+    "DETR": {
+      "accuracy": 0.8806001034661147,
+      "auroc_correct": 0.7993564000651058,
+      "e_aurc": 0.03210473614262622,
+      "rer_at_50": 0.6805029974490632
+    },
+    "GDINO": {
+      "accuracy": 0.8463436518618215,
+      "auroc_correct": 0.8307571362976516,
+      "e_aurc": 0.03126600403435691,
+      "rer_at_50": 0.8064664525053763
+    }
+  },
+  "highest_k5_rer50": "RPN",
+  "gdino_minus_detr_accuracy": -0.03425645160429325,
+  "gdino_minus_rpn_accuracy": 0.056823916298920474,
+  "interpretation": "E-AURC is selective utility, not a calibration metric; lowest E-AURC does not imply best calibration.",
+  "original_report_unchanged": true,
+  "p1_c4_rer_sign": {
+    "source": "results/v2_proposal_robustness/p1_f5_c4/c4_selective.csv",
+    "source_sha256": "689afc935fecfbdbd505158399ed4d3e65e76f24e9c7dd2f753eb2922af06282",
+    "historical_field": "e1b_minus_r1_rer50_gain",
+    "actual_historical_formula": "RER50(R1) - RER50(E1b)",
+    "correct_gain_formula": "RER50(E1b) - RER50(R1)",
+    "rows": [
+      {
+        "family": "RPN",
+        "scorer": "b3_seed1",
+        "regime": "hard",
+        "legacy_field_value": -0.04799501246882798,
+        "true_e1b_minus_r1_rer50_gain": 0.04799501246882798
+      },
+      {
+        "family": "RPN",
+        "scorer": "b3_seed1",
+        "regime": "random",
+        "legacy_field_value": 0.010485087725554454,
+        "true_e1b_minus_r1_rer50_gain": -0.010485087725554454
+      },
+      {
+        "family": "RPN",
+        "scorer": "b3_seed2",
+        "regime": "hard",
+        "legacy_field_value": -0.05434217897285776,
+        "true_e1b_minus_r1_rer50_gain": 0.05434217897285776
+      },
+      {
+        "family": "RPN",
+        "scorer": "b3_seed2",
+        "regime": "random",
+        "legacy_field_value": 0.009660831817396964,
+        "true_e1b_minus_r1_rer50_gain": -0.009660831817396964
+      },
+      {
+        "family": "RPN",
+        "scorer": "b3_seed3",
+        "regime": "hard",
+        "legacy_field_value": -0.040388815987687066,
+        "true_e1b_minus_r1_rer50_gain": 0.040388815987687066
+      },
+      {
+        "family": "RPN",
+        "scorer": "b3_seed3",
+        "regime": "random",
+        "legacy_field_value": 0.013710622236442926,
+        "true_e1b_minus_r1_rer50_gain": -0.013710622236442926
+      },
+      {
+        "family": "DETR",
+        "scorer": "b3_seed1",
+        "regime": "hard",
+        "legacy_field_value": -0.03425207385603429,
+        "true_e1b_minus_r1_rer50_gain": 0.03425207385603429
+      },
+      {
+        "family": "DETR",
+        "scorer": "b3_seed1",
+        "regime": "random",
+        "legacy_field_value": -0.019486271036315395,
+        "true_e1b_minus_r1_rer50_gain": 0.019486271036315395
+      },
+      {
+        "family": "DETR",
+        "scorer": "b3_seed2",
+        "regime": "hard",
+        "legacy_field_value": -0.03140803832845354,
+        "true_e1b_minus_r1_rer50_gain": 0.03140803832845354
+      },
+      {
+        "family": "DETR",
+        "scorer": "b3_seed2",
+        "regime": "random",
+        "legacy_field_value": -0.010535557506584747,
+        "true_e1b_minus_r1_rer50_gain": 0.010535557506584747
+      },
+      {
+        "family": "DETR",
+        "scorer": "b3_seed3",
+        "regime": "hard",
+        "legacy_field_value": -0.030744336569579117,
+        "true_e1b_minus_r1_rer50_gain": 0.030744336569579117
+      },
+      {
+        "family": "DETR",
+        "scorer": "b3_seed3",
+        "regime": "random",
+        "legacy_field_value": -0.008665511265164016,
+        "true_e1b_minus_r1_rer50_gain": 0.008665511265164016
+      }
+    ],
+    "interpretation": "RER is higher-is-better. This corrects a historical point-column label; formal intervals come from repaired statistics."
+  }
+}

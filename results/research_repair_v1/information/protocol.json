@@ -1,0 +1,292 @@
+{
+  "protocol": "Research Repair v1 B information-source and ID/OOD",
+  "created_utc": "2026-10-03T03:26:42Z",
+  "input_roots_read_only": [
+    "results/phase0b_independent",
+    "results/phase05_score_sufficiency",
+    "results/phase1_semantic_sufficiency",
+    "results/phase1f_hard_semantic",
+    "cache/semantic_phase1",
+    "cache/features",
+    "cache/manifests",
+    "cache/proposals.h5"
+  ],
+  "output_root": "results\\research_repair_v1\\information",
+  "scorers": [
+    "b3_seed1",
+    "b3_seed2",
+    "b3_seed3"
+  ],
+  "K": [
+    5,
+    10,
+    20,
+    50
+  ],
+  "split_manifest": "results\\phase05_score_sufficiency\\split_manifest.json",
+  "train_tune_images": {
+    "seed": 20260928,
+    "train_count": 523,
+    "tune_count": 224
+  },
+  "feature_groups": {
+    "S": [
+      "log_k",
+      "top1",
+      "top2",
+      "top3",
+      "margin_12",
+      "margin_23",
+      "mean",
+      "std",
+      "msp",
+      "entropy",
+      "entropy_over_logk",
+      "logsumexp",
+      "z_top1",
+      "z_margin",
+      "q25",
+      "q50",
+      "q75"
+    ],
+    "S+Q": [
+      "log_k",
+      "top1",
+      "top2",
+      "top3",
+      "margin_12",
+      "margin_23",
+      "mean",
+      "std",
+      "msp",
+      "entropy",
+      "entropy_over_logk",
+      "logsumexp",
+      "z_top1",
+      "z_margin",
+      "q25",
+      "q50",
+      "q75",
+      "clip_top1",
+      "clip_top2",
+      "clip_margin12",
+      "clip_entropy",
+      "clip_normH",
+      "clip_rank_top1",
+      "q_top3",
+      "q_margin13"
+    ],
+    "S+V": [
+      "log_k",
+      "top1",
+      "top2",
+      "top3",
+      "margin_12",
+      "margin_23",
+      "mean",
+      "std",
+      "msp",
+      "entropy",
+      "entropy_over_logk",
+      "logsumexp",
+      "z_top1",
+      "z_margin",
+      "q25",
+      "q50",
+      "q75",
+      "cand_vmax",
+      "cand_vmean",
+      "cand_vstd",
+      "cand_top12_sim",
+      "cand_top15_mean",
+      "density_070",
+      "density_080",
+      "cand_top13_sim"
+    ],
+    "Full": [
+      "log_k",
+      "top1",
+      "top2",
+      "top3",
+      "margin_12",
+      "margin_23",
+      "mean",
+      "std",
+      "msp",
+      "entropy",
+      "entropy_over_logk",
+      "logsumexp",
+      "z_top1",
+      "z_margin",
+      "q25",
+      "q50",
+      "q75",
+      "clip_top1",
+      "clip_top2",
+      "clip_margin12",
+      "clip_entropy",
+      "clip_normH",
+      "clip_rank_top1",
+      "cand_vmax",
+      "cand_vmean",
+      "cand_vstd",
+      "cand_top12_sim",
+      "cand_top15_mean",
+      "density_070",
+      "density_080",
+      "q_top3",
+      "q_margin13",
+      "cand_top13_sim"
+    ]
+  },
+  "Q_names": [
+    "clip_top1",
+    "clip_top2",
+    "clip_margin12",
+    "clip_entropy",
+    "clip_normH",
+    "clip_rank_top1",
+    "q_top3",
+    "q_margin13"
+  ],
+  "V_names": [
+    "cand_vmax",
+    "cand_vmean",
+    "cand_vstd",
+    "cand_top12_sim",
+    "cand_top15_mean",
+    "density_070",
+    "density_080",
+    "cand_top13_sim"
+  ],
+  "logistic_C_grid": [
+    0.1,
+    1.0,
+    10.0
+  ],
+  "logistic_tie_tolerance": 0.002,
+  "score_deepsets": {
+    "learning_rates": [
+      0.0001,
+      0.0003,
+      0.001
+    ],
+    "max_epochs": 300,
+    "patience": 30,
+    "batch_size": 256,
+    "weight_decay": 0.0001,
+    "device": "cpu",
+    "dtype": "float32",
+    "torch_threads": 2
+  },
+  "training_regimes": {
+    "smallK5_10": [
+      5,
+      10
+    ],
+    "largeK20_50": [
+      20,
+      50
+    ]
+  },
+  "semantic_test_cells": [
+    "randomK5",
+    "randomK10",
+    "randomK20",
+    "randomK50",
+    "rand5",
+    "hard5",
+    "expb_m0",
+    "expb_m2",
+    "expb_m4",
+    "expb_m8"
+  ],
+  "reference_status": "legacy Phase 1 generic columns identify best_score_only=msp and best_semantic=e2_score for all three seeds; e2_score is a score-only control, so these generic values are MODEL_IDENTITY_INCOMPATIBLE with S=stats_logistic and Full=e1b_stats_semantic. Correct-model random source anchors and Phase 1F direct anchors PASS; strict historical refit status=REFIT_FAILED_DIRECT_FROZEN_LOAD_VERIFIED.",
+  "logK_scaler_repair": {
+    "root_cause": "old run_phase05.py used np.arange(n_train_total) on concatenated logK arrays, selecting the K5 prefix instead of actual K5/K10 reliability_train rows",
+    "fix": "construct the actual reliability_train logK rows across training Ks before normalize_fit",
+    "old_wrong_logK_mean": 1.6094379124341003,
+    "correct_logK_train_mean": 1.9560115027140728,
+    "correct_logK_train_std": 0.34657359027997275,
+    "source_test": "tests/test_repair_information.py::test_phase05_score_deepsets_logk_scaler_uses_only_training_rows",
+    "old_behavior_test": "failed with mean=1.6094379124341003, std=0; correct expected mean=1.956011502714073 and nonzero std",
+    "new_behavior_test": "passed; new model ScoreDeepSets normalizer fits concatenated reliability_train rows only"
+  },
+  "training_complete": true,
+  "point_evaluation_complete": true,
+  "formal_bootstrap_complete": false,
+  "resource_device": "CPU; original ScoreDeepSets.fit implementation uses CPU tensors; no GPU training was done.",
+  "formal_bootstrap": "pending separately scheduled statistics slot; 5000 shared image-cluster replicates through ccg.repairs.bootstrap.shared_image_cluster_bootstrap.",
+  "source_sha256": {
+    "scripts/repair_information.py": "b8029ab2bcf40739223bc7b3c90b7f86f068353da969d43b80975adb5cc28cb9",
+    "scripts/repair_information_bootstrap.py": "6361e9e931a7b63cb74909845396de8f232c8288097748cedac27e8f297f1154",
+    "scripts/repair_information_reference_audit.py": "e393aa7bd983817147acb7b7caec01e39a0fd5c0aaa1ea82475a6dbb13906317",
+    "src/ccg/repairs/information.py": "ec000c68e27b8ff8027bc07daa62c4390438c5ebd119605baed0fb038f476c62",
+    "scripts/run_phase05.py": "8adaaafda4c6eb3d684c520a2717863b782a187f33b5b5766d4fd0a428c68314",
+    "src/ccg/semantic/features.py": "2d976a1ba61b95c7df4caa343984c9e80d96ed1e834b2b35cc8306390ef86d91",
+    "src/ccg/semantic/data.py": "a18bb6e2296356bcf9148cd779aacb3d6402f4586f1b0b99342bad5eb832e522",
+    "src/ccg/repairs/atomic.py": "f798a06d10e3c43dcd0dd1e89112611cc728d199f9332c90c4c19a1ec755bcc2"
+  },
+  "formal_bootstrap_design": {
+    "planned_calls": 9,
+    "scopes": {
+      "random_allK": [
+        "randomK5",
+        "randomK10",
+        "randomK20",
+        "randomK50"
+      ],
+      "matched_same4": [
+        "rand5",
+        "hard5"
+      ],
+      "dose_same8": [
+        "expb_m0",
+        "expb_m2",
+        "expb_m4",
+        "expb_m8"
+      ]
+    },
+    "splits": [
+      "testA",
+      "testB",
+      "__pooled_test__"
+    ],
+    "all_within_scope_cells_share_one_image_cluster_draw_per_split": true,
+    "bootstrap_seed": 0,
+    "replicates": 5000,
+    "ci_level": 0.95,
+    "rer_gain_direction": "RER(A)-RER(B), since RER=(baseline risk-selective risk)/baseline risk and higher is better",
+    "e_aurc_reduction_direction": "E-AURC(B)-E-AURC(A), since lower is better",
+    "per_call_checkpoint": "atomic compact JSON plus checksummed raw NPZ; skip only on exact source/config/cohort fingerprint match"
+  },
+  "bootstrap_preflight": {
+    "verified_utc": "2026-10-03T07:56:51Z",
+    "test_command": "E:/conda/envs/deepminer/python.exe -B -m pytest tests/test_repair_information.py tests/test_repair_information_bootstrap.py -q",
+    "result": "9 passed",
+    "py_compile": "passed",
+    "test_sha256": "2dc72b4c359e65400f65777d3d11566f3b9636dc9660ebfbad520195bd68f2df",
+    "runner_sha256": "6361e9e931a7b63cb74909845396de8f232c8288097748cedac27e8f297f1154",
+    "atomic_replace_sha256": "f798a06d10e3c43dcd0dd1e89112611cc728d199f9332c90c4c19a1ec755bcc2",
+    "attempt1_failure": {
+      "pid": 52156,
+      "exec_session": 88346,
+      "exit_code": 1,
+      "error": "WinError32 at os.replace while committing first 5000-draw raw NPZ; no formal checkpoint/summary emitted",
+      "raw_temp": "information_bootstrap_call_checkpoints/random__random_allK__testA.94775da4323a8215.npz.tmp",
+      "raw_temp_sha256": "887dbf6bc116547b1ee77f4b2c2a27b13b5767c7ca6920ab68751f36f2a41efc",
+      "raw_temp_bytes": 44573300,
+      "failure_log": "information_bootstrap_run.err.log"
+    },
+    "atomic_fix": "use ccg.repairs.atomic.replace_with_retry for NPZ/JSON/CSV; unique same-directory temp files; transient Winerror32 two-failure retry test passes",
+    "orphan_validation": {
+      "archive": "valid-readable complete NPZ; 1320 float64 arrays, each length5000, no infinities",
+      "producer_runner_snapshot_sha256": "10bddde50a2f52ed382fcee71ca17cc664ea4e6135d3a28a0331e819d314f848",
+      "producer_protocol_snapshot_sha256": "251174771deb671866fc205abd627fca61477fb0743eab44572bfa2939ca9a93",
+      "input_metric_source_and_processing_signatures_match": true,
+      "recovery_state": "eligible; recovery generates one separate nonformal schema/key diagnostic draw and discards it, recomputes points from canonical predictions, adopts CI arrays only from the original saved 5000 draws, then atomically checkpoints; diagnostic draw is explicitly excluded from formal replicates"
+    },
+    "formal_replicates": 0,
+    "formal_bootstrap_complete": false
+  }
+}

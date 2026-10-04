@@ -1,0 +1,7 @@
+[2026-10-03T12:54:22.130700+00:00] START run_id=20261003T125500Z scope=m3-conf pid=58532 g4_device=cuda BLAS=2
+[2026-10-03T12:54:27.128084+00:00] [hard] pooled rows=10286 images=1490 refs=3647
+[2026-10-03T12:54:27.129081+00:00] [hard]   same4: rows=9487 images=1424 refs=3369
+[2026-10-03T12:54:27.129081+00:00] [hard]   same8: rows=7410 images=1189 refs=2643
+[2026-10-03T12:54:27.130066+00:00] [hard]   same9: rows=6765 images=1085 refs=2419
+[2026-10-03T12:54:27.660696+00:00] scope_m3-conf_fatal FAILED: KeyError: "backbone tag 'b1' absent from the freeze file"
+[2026-10-03T12:54:27.811028+00:00] FINISH run_id=20261003T125500Z status=FAILED_UNVERIFIABLE jobs=0 failures=1

@@ -1,0 +1,95 @@
+...........FF.                                                           [100%]
+================================== FAILURES ===================================
+_ test_acceptance_cannot_close_by_omitting_scopes_or_declaring_unverifiable_without_evidence _
+
+tmp_path = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/.rqc1/pytest-of-Aki/pytest-2/test_acceptance_cannot_close_b0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000164EA013F70>
+
+    def test_acceptance_cannot_close_by_omitting_scopes_or_declaring_unverifiable_without_evidence(tmp_path, monkeypatch):
+        path = Path(__file__).resolve().parents[1] / "scripts/check_repair_acceptance.py"
+        spec = importlib.util.spec_from_file_location("repair_acceptance", path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        out = tmp_path / "results/research_repair_v1"
+        (out / "statistics").mkdir(parents=True)
+        (out / "input_manifest.json").write_text('{"inputs": []}')
+        (out / "statistics/summary.json").write_text('{"status": "COMPLETE", "jobs": []}')
+        coverage = out / "statistics/required_scope_coverage.json"
+        coverage.write_text('{"scopes": []}')
+        monkeypatch.setattr(module, "ROOT", tmp_path)
+        monkeypatch.setattr(module, "OUT", out)
+        omitted = module.check()
+        assert omitted["status"] == "INCOMPLETE"
+        assert any("Required scope coverage missing" in message for message in omitted["failures"])
+        coverage.write_text(json.dumps({"scopes": [
+            {"scope_id": scope, "required": True, "status": "UNVERIFIABLE", "unverifiable_evidence": []}
+            for scope in module.REQUIRED_SCOPES
+        ]}))
+>       unproven = module.check()
+
+tests\test_repair_integration.py:382: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\check_repair_acceptance.py:252: in check
+    raw_verification = read_evidence("stored_estimate_verification.json")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+filename = 'stored_estimate_verification.json'
+
+    def read_evidence(filename: str) -> dict:
+>       return read((evidence / filename).relative_to(OUT.resolve()).as_posix())
+E       TypeError: unsupported operand type(s) for /: 'list' and 'str'
+
+scripts\check_repair_acceptance.py:53: TypeError
+__ test_mixed_recovery_completion_cannot_omit_backbones_or_skip_formal_jobs ___
+
+tmp_path = WindowsPath('F:/DL Projects/calibrated-candidate-grounding/.rqc1/pytest-of-Aki/pytest-2/test_mixed_recovery_completion0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x00000164E7EB2B30>
+
+    def test_mixed_recovery_completion_cannot_omit_backbones_or_skip_formal_jobs(tmp_path, monkeypatch):
+        path = Path(__file__).resolve().parents[1] / "scripts/check_repair_acceptance.py"
+        spec = importlib.util.spec_from_file_location("repair_acceptance_mixed", path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        out = tmp_path / "results/research_repair_v1"
+        (out / "statistics").mkdir(parents=True)
+        (out / "input_manifest.json").write_text('{"inputs": []}')
+        (out / "statistics/summary.json").write_text('{"jobs": []}')
+        coverage = out / "statistics/required_scope_coverage.json"
+        failure_log = out / "recovery.log"
+        failure_log.write_text("Original anchor discrepancy exceeds 1e-9")
+        failure_record = out / "failure.json"
+        failure_record.write_text(json.dumps({
+            "schema": "research-repair-v1-recovery-failure-v1", "scope_id": "m3",
+            "job_id": "m3_b0_severity_macro", "status": "UNVERIFIABLE",
+            "attempted_route": ["original deterministic recovery"],
+            "source_sha256": {"historical.json": "frozen"},
+            "failure_reason": "Old point differs", "original_tolerance": 1e-9,
+            "log_path": failure_log.relative_to(tmp_path).as_posix(),
+            "log_sha256": hashlib.sha256(failure_log.read_bytes()).hexdigest(),
+        }))
+        scope = {"scope_id": "m3", "required": True,
+                 "status": "COMPLETE_WITH_UNVERIFIABLE_RECOVERY",
+                 "job_ids": ["m3_b1_severity_macro", "m3_b2_severity_macro"],
+                 "unverifiable_jobs": [{"job_id": "m3_b0_severity_macro", "required": True,
+                     "status": "UNVERIFIABLE", "evidence_path": failure_record.relative_to(tmp_path).as_posix()}]}
+        monkeypatch.setattr(module, "ROOT", tmp_path)
+        monkeypatch.setattr(module, "OUT", out)
+        coverage.write_text(json.dumps({"scopes": [scope]}))
+>       result = module.check()
+
+tests\test_repair_integration.py:419: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\check_repair_acceptance.py:252: in check
+    raw_verification = read_evidence("stored_estimate_verification.json")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+filename = 'stored_estimate_verification.json'
+
+    def read_evidence(filename: str) -> dict:
+>       return read((evidence / filename).relative_to(OUT.resolve()).as_posix())
+E       TypeError: unsupported operand type(s) for /: 'list' and 'str'
+
+scripts\check_repair_acceptance.py:53: TypeError
+=========================== short test summary info ===========================
+FAILED tests/test_repair_integration.py::test_acceptance_cannot_close_by_omitting_scopes_or_declaring_unverifiable_without_evidence
+FAILED tests/test_repair_integration.py::test_mixed_recovery_completion_cannot_omit_backbones_or_skip_formal_jobs

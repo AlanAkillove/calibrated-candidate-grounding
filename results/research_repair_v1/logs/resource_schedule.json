@@ -1,0 +1,33 @@
+{
+  "policy": {
+    "max_training_processes": 1,
+    "max_heavy_statistics_or_audit_processes": 1,
+    "blas_threads_per_process": 2,
+    "gpu_serial": true
+  },
+  "current_grants": {
+    "training": {
+      "owner": "/root/b_information",
+      "device": "CPU_OR_CUDA_ORIGINAL_ROUTE",
+      "state": "COMPLETE_NO_ACTIVE_PROCESS",
+      "pid": null,
+      "session_id": null,
+      "log": "logs/pytest_full_final.log"
+    },
+    "heavy_audit": {
+      "owner": "/root/c_candidates",
+      "device": "CPU",
+      "state": "COMPLETE_NO_ACTIVE_PROCESS",
+      "log": "logs/final_input_verification_run_20261004.log",
+      "pid": null,
+      "session_id": null
+    },
+    "statistics": {
+      "owner": "/root/a_statistics",
+      "state": "COMPLETE_NO_ACTIVE_PROCESS",
+      "pid": null,
+      "session_id": null
+    }
+  },
+  "updated_utc": "2026-10-03T18:03:24.200607+00:00"
+}

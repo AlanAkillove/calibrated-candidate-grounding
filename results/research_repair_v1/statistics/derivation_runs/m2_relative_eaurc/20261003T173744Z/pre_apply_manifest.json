@@ -1,0 +1,137 @@
+{
+  "schema": "ccg.research_repair_v1.statistics.m2_derived_estimate.pre_apply_manifest.v1",
+  "created_utc": "2026-10-03T17:39:11.414Z",
+  "run_id": "20261003T173744Z",
+  "status": "SOURCE_AND_BEFORE_SUMMARY_SNAPSHOTTED_FORMAL_DERIVATION_PENDING",
+  "source_snapshot": [
+    {
+      "path": "scripts/derive_m2_gate_estimate.py",
+      "snapshot_path": "on_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/scripts/derive_m2_gate_estimate.py",
+      "size_bytes": 15152,
+      "sha256": "17a8866799999e478df9ac3ad5e27d0a36029c8cad023cb3ef7d2deac24b2d92"
+    },
+    {
+      "path": "src/ccg/repairs/m2_auxiliary.py",
+      "snapshot_path": "on_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/src/ccg/repairs/m2_auxiliary.py",
+      "size_bytes": 7201,
+      "sha256": "748d4c762baec8e84f88b377df2254a5b3875c106e1556bd980c5e6097b27942"
+    },
+    {
+      "path": "src/ccg/repairs/bootstrap.py",
+      "snapshot_path": "on_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/src/ccg/repairs/bootstrap.py",
+      "size_bytes": 14632,
+      "sha256": "67a26f3768f921a5429124b9d0d490bb8e62fb5a2ec1977f6108313cb93126da"
+    },
+    {
+      "path": "src/ccg/repairs/statistics.py",
+      "snapshot_path": "on_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/src/ccg/repairs/statistics.py",
+      "size_bytes": 20343,
+      "sha256": "2f33379aa8c3b9770dd7794949f80b6223b3622ed2592bb398d3dc7b9e2ff06a"
+    },
+    {
+      "path": "src/ccg/repairs/atomic.py",
+      "snapshot_path": "on_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/src/ccg/repairs/atomic.py",
+      "size_bytes": 2241,
+      "sha256": "f798a06d10e3c43dcd0dd1e89112611cc728d199f9332c90c4c19a1ec755bcc2"
+    },
+    {
+      "path": "scripts/repair_statistics.py",
+      "snapshot_path": "on_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/scripts/repair_statistics.py",
+      "size_bytes": 293787,
+      "sha256": "c80cd5075478c3a4002f8bd7ba1dd3d44b5716226b623f993ec751a384252f98"
+    },
+    {
+      "path": "scripts/refresh_repair_gate_decisions.py",
+      "snapshot_path": "on_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/scripts/refresh_repair_gate_decisions.py",
+      "size_bytes": 45779,
+      "sha256": "0419e0ddfbd0aa117553eb526af5d14a9834de42e70d6ec048fad939b0e7af5b"
+    },
+    {
+      "path": "src/ccg/repairs/legacy_gate_predicates.py",
+      "snapshot_path": "on_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/src/ccg/repairs/legacy_gate_predicates.py",
+      "size_bytes": 35612,
+      "sha256": "762ff7330cb63bc0e1244243fe1da21f848036e66e3f63c5aaecd3b65d6bf089"
+    },
+    {
+      "path": "src/ccg/repairs/reliability_go_gate.py",
+      "snapshot_path": "on_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/src/ccg/repairs/reliability_go_gate.py",
+      "size_bytes": 32659,
+      "sha256": "86be86f4cedc2b5ea219891953e8d846c7b7def8c9759c1b32d50697ae19fb91"
+    }
+  ],
+  "before_summary": {
+    "source_path": "results/research_repair_v1/statistics/summary.json",
+    "snapshot_path": "on_runs/m2_relative_eaurc/20261003T173744Z/before_summary.json",
+    "size_bytes": 127404147,
+    "sha256": "e255ed2839c2ad2679d5729a811100b81e42e277d7787199a60d2d5c1a19b2bc"
+  },
+  "derivation": {
+    "script": "scripts/derive_m2_gate_estimate.py",
+    "job_id": "m2_curriculum_m0_m2_m4_m8",
+    "estimate": "m8__LCR_E1b_relative_eaurc_reduction",
+    "method": "derive per-seed (E1b e-AURC - LCR e-AURC)/E1b e-AURC from same raw replicate index; seed-mean inside each draw; denominator > 1e-12; no new draws",
+    "expected_source_estimate_count": 6645,
+    "expected_derived_total": 6646,
+    "formal_status": "PARTIAL_SCOPE_COMPLETE"
+  },
+  "prior_plan": {
+    "launch_manifest": "results/research_repair_v1/statistics/formal_batches/20261003T133926Z/launch_manifest.json",
+    "launch_manifest_sha256": "0d5095416e1a35524f80dc6dbbf2016462f79cc70c8c5660d6265f59a7cb6511",
+    "preflight_sha256": "66aca3d94296f55f5407548f0019108afde46820f05eb8b6d857168378d1ce10",
+    "launch_primary_estimate_count": 2807.0,
+    "frozen_launch_manifest_unchanged": true
+  },
+  "preflight_result": {
+    "status": "PREFLIGHT_ONLY",
+    "job_id": "m2_curriculum_m0_m2_m4_m8",
+    "estimate": "m8__LCR_E1b_relative_eaurc_reduction",
+    "source_raw_replicates": "results/research_repair_v1/statistics/raw_replicates/m2_curriculum_m0_m2_m4_m8.npz",
+    "source_raw_replicates_sha256": "15d6cbdc08adb6c97d8d3bc5daa134d2b9d0879b69221ae06ef4dce054562ce9",
+    "derived_point": -0.03395720018099881,
+    "old_point": -0.03395720018099881,
+    "valid_replicates": 5000,
+    "invalid_replicates": 0,
+    "gate_eligible": true,
+    "would_write": "results/research_repair_v1/statistics/raw_replicates/m2_curriculum_m0_m2_m4_m8__m2_relative_auxiliary.npz"
+  },
+  "preflight_log_sha256": "b8df8b751e9a6e7266a6127bf0a927992bb0676839f5b9ca8639840c67ab7ad1",
+  "apply_result": {
+    "status": "DERIVED_AND_WRITTEN",
+    "job_id": "m2_curriculum_m0_m2_m4_m8",
+    "estimate": "m8__LCR_E1b_relative_eaurc_reduction",
+    "source_raw_replicates": "results/research_repair_v1/statistics/raw_replicates/m2_curriculum_m0_m2_m4_m8.npz",
+    "source_raw_replicates_sha256": "15d6cbdc08adb6c97d8d3bc5daa134d2b9d0879b69221ae06ef4dce054562ce9",
+    "output_raw_replicates": "results/research_repair_v1/statistics/raw_replicates/m2_curriculum_m0_m2_m4_m8__m2_relative_auxiliary.npz",
+    "output_raw_replicates_sha256": "747a6097aeb9c0c6ee724df9ec213daba8e13864050161a3ef8d9a03d5eb5738",
+    "point": -0.03395720018099881,
+    "ci_low": -0.05759964912852949,
+    "ci_high": -0.011061452466178219,
+    "valid_replicates": 5000,
+    "invalid_replicates": 0,
+    "gate_eligible": true
+  },
+  "apply_log_sha256": "32b210312c765fc046e4df7b503e8884720676236fe6a8e351478dcb740115a6",
+  "post_apply_summary": {
+    "path": "results/research_repair_v1/statistics/summary.json",
+    "size_bytes": 124665730,
+    "sha256": "706910850487599a0e59899190d1efec464f0ffa8494536ef45fa88adf87a58f"
+  },
+  "derivation_applied_utc": "2026-10-03T17:41:15.955Z",
+  "metadata_coverage_refresh": {
+    "log": "results/research_repair_v1/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/logs/refresh_metadata_coverage.log",
+    "log_sha256": "a0cda0809b9fbafc35d3945807a2d9086ca90cef66e8cff0dd0f3704284dca6d",
+    "result": "Refreshed metadata for 59 existing jobs and exact ledger for 16 scopes; no bootstrap replicates drawn.",
+    "scopes": 16,
+    "no_bootstrap_draws": true
+  },
+  "final_outputs": {
+    "summary_sha256": "99985fb91509d25c837d1d6b0aef9a3a5d6fbaf153fac83ddcfeb3de75e46114",
+    "coverage_sha256": "1fa106ecaa4698bebb4d458877ff704350c80fec6b566021c14eb895cfa29764",
+    "gate_decisions_sha256": "6b75ec238d6ac199f278c2d895e482b98202821644766a7a8efe00f2fd991c38",
+    "status_sha256": "3ff0e1e56f1fb4bbe1fb9529a19e82cddd4977b7d7b640e42aaf6e5813ca892e",
+    "count_reconciliation_sha256": "bd7ecb7a5c324700cc2aae2764fd7aba4a946aea8d0dbb14619a740bb24c9316",
+    "gate_source_sha256": "38aeeae226018211a63918ee8a3568e1c53c874ed3f6969b1b9f45fc2c3f2eb9",
+    "gate_test_source_sha256": "cc64c18527cb74488d126c7866ffe4d4d6eedf53fdc1d752d5daad04ea306112"
+  },
+  "chain_status": "DERIVATION_AND_REFRESH_CHAIN_COMPLETE"
+}

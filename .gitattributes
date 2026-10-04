@@ -1,0 +1,6 @@
+# Preserve exact bytes in newly published hash-bound repair evidence.
+results/research_repair_v1/** -text
+reviews/** -text
+src/ccg/repairs/** -text
+scripts/*repair*.py -text
+tests/test_repair*.py -text

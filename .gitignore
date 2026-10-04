@@ -56,6 +56,19 @@ results/v2_rq4_mechanism/**/*.h5
 results/v2_rq4_mechanism/**/*.npz
 # per-row frozen predictions are reproducible from scripts/d2_frozen_inference.py - not committed
 results/v2_d2_refcoco_lang/predictions/
+# Research Repair v1: keep protocols, summaries, formal statistics and evidence,
+# while retaining large row predictions/models/replicate arrays as local artifacts.
+!results/research_repair_v1/
+!results/research_repair_v1/**
+results/research_repair_v1/**/*.npz
+results/research_repair_v1/**/*.npy
+results/research_repair_v1/**/*.pt
+results/research_repair_v1/**/*.pth
+results/research_repair_v1/**/*.pkl
+results/research_repair_v1/**/*.joblib
+results/research_repair_v1/**/*.h5
+results/research_repair_v1/**/predictions/
+results/research_repair_v1/**/*.csv.gz
 experiments/**/outputs/
 
 # Local logs / scratch
@@ -90,3 +103,20 @@ environment.local.yml
 *.swp
 .DS_Store
 Thumbs.db
+
+# Preserve test evidence, but keep generated pytest fixture trees local.
+/.rqa4/
+/.rqc1/
+/reviews/acceptance_2026-10-04/temp_recheck/
+results/research_repair_v1/**/*.tmp
+
+# Large text evidence is committed as SHA-verified gzip; restore with scripts/restore_repair_text_artifacts.py.
+/results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/candidate_geometry_historical_source_per_expression.csv
+/results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/candidate_geometry_sensitivity_per_expression.csv
+/results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/candidate_geometry_supply_intersection_per_expression.csv
+/results/research_repair_v1/candidates/candidate_geometry_per_expression.csv
+/results/research_repair_v1/candidates/candidate_geometry_sensitivity_per_expression.csv
+/results/research_repair_v1/candidates/candidate_geometry_supply_intersection_per_expression.csv
+/results/research_repair_v1/statistics/coverage.csv
+/results/research_repair_v1/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/before_summary.json
+/results/research_repair_v1/statistics/summary.json

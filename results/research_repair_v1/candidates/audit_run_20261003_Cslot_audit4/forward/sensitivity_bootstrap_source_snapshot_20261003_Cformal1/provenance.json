@@ -1,0 +1,225 @@
+{
+  "schema": "research-repair-v1-candidate-sensitivity-source-snapshot-v1",
+  "status": "READY_PRELAUNCH_SNAPSHOT",
+  "audit_run_id": "20261003_Cslot_audit4",
+  "formal_output_dir": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/sensitivity_bootstrap",
+  "exact_command": "E:/conda/envs/deepminer/python.exe -u scripts/repair_candidate_sensitivity.py --audit-pointer results/research_repair_v1/candidates/current_audit.json",
+  "runtime": {
+    "python": "3.10.19 | packaged by conda-forge | (main, Jan 26 2026, 23:39:36) [MSC v.1944 64 bit (AMD64)]",
+    "numpy": "1.26.4",
+    "blas_threads": 2
+  },
+  "bootstrap": {
+    "n_replicates": 5000,
+    "seed": 0,
+    "ci_level": 0.95,
+    "resample_unit": "image_cluster",
+    "method": "percentile"
+  },
+  "scope": {
+    "mismatch_count": 138,
+    "forward_sources": 8,
+    "hard_regular_groups": 12,
+    "dose_joint_groups": 3,
+    "expected_groups": 15,
+    "source_split_mappings": 24,
+    "expected_estimate_rows": 1404,
+    "eval_splits": [
+      "pooled_testA_testB",
+      "testA",
+      "testB"
+    ],
+    "metrics": [
+      "accuracy",
+      "auroc_correct",
+      "e_aurc",
+      "rer_at_50",
+      "rer_at_80"
+    ],
+    "heads": {
+      "accuracy": [
+        "msp"
+      ],
+      "other_metrics": [
+        "msp",
+        "stats",
+        "e1b"
+      ]
+    },
+    "dose_levels": [
+      "expb_m0",
+      "expb_m2",
+      "expb_m4",
+      "expb_m8"
+    ],
+    "dose_estimands": {
+      "old_arm": "metric(old_m)-metric(old_m0)",
+      "corrected_arm": "metric(corrected_m)-metric(corrected_m0)",
+      "version_change": "[metric(old_m)-metric(corrected_m)]-[metric(old_m0)-metric(corrected_m0)]",
+      "fixed_original_m0": "metric(corrected_m)-metric(original old_m0), descriptive only",
+      "macro": "unweighted mean old_minus_new across m0/m2/m4/m8 within each seed and shared draw"
+    },
+    "hard_control": "matched frozen random construction",
+    "accuracy_interpretation": "candidate-induced accuracy harm, not an explanation for AUROC gaps"
+  },
+  "anchors": {
+    "current_pointer": "results/research_repair_v1/candidates/current_audit.json",
+    "audit_summary": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/summary.json",
+    "audit_summary_sha256": "d1a7eecac75467a7a46bae3133448451c57aa7a0c8550a4aca1da3cf3fe6cce8",
+    "forward_summary": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/summary.json",
+    "forward_summary_sha256": "ab93b666d64be0925fae8acc09fab2c7b308fc44eb06cc1b52b271c6f01a7250",
+    "predictions_manifest": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/predictions_manifest.json",
+    "predictions_manifest_sha256": "315fd7aa9263fb901b706e352efc18cb9e5cece60de0ff4d06ac1be7f5e223ba",
+    "candidate_indices": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/candidate_sets_true_target_category_v1.npz",
+    "candidate_indices_sha256": "4f93780ddff4fb26fc1c8e3894ffba3dd172d96068394e8fb37672ede9f26b2d",
+    "supplemental_input_manifest": {
+      "path": "results/research_repair_v1/candidates/supplemental_input_manifest.json",
+      "size_bytes": 895,
+      "sha256": "8929d4f5078b9eb4ea9aa6ad3086d1074608f03a3dcee1037de7435f2c5191e5"
+    }
+  },
+  "forward_archive_inputs": [
+    {
+      "source": [
+        "RPN",
+        "phase1f_frozen_candidate_archive",
+        "hard5"
+      ],
+      "path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/RPN__phase1f_frozen_candidate_archive__hard5__all_seeds.npz",
+      "size_bytes": 3363195,
+      "sha256": "c8c238a80617bff0760de59f3cdc4e869707e2baf02dd1b0a10b6f999dadc34f"
+    },
+    {
+      "source": [
+        "RPN",
+        "phase1f_frozen_candidate_archive",
+        "hard10"
+      ],
+      "path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/RPN__phase1f_frozen_candidate_archive__hard10__all_seeds.npz",
+      "size_bytes": 3462977,
+      "sha256": "da698e4354166c58a73f92ec02700317204825382f9331fd17d206467d393eed"
+    },
+    {
+      "source": [
+        "RPN",
+        "phase1f_frozen_candidate_archive",
+        "expb_m0"
+      ],
+      "path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/RPN__phase1f_frozen_candidate_archive__expb_m0__all_seeds.npz",
+      "size_bytes": 3872688,
+      "sha256": "dff36be06ff0e48652b3235b74e285037ece78d6cdb9ec876fa983236400c4d3"
+    },
+    {
+      "source": [
+        "RPN",
+        "phase1f_frozen_candidate_archive",
+        "expb_m2"
+      ],
+      "path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/RPN__phase1f_frozen_candidate_archive__expb_m2__all_seeds.npz",
+      "size_bytes": 3864366,
+      "sha256": "7489767cfab69ef22539d438028f9bd5cd2ba7eb43e3e461fc73e42dee371b6e"
+    },
+    {
+      "source": [
+        "RPN",
+        "phase1f_frozen_candidate_archive",
+        "expb_m4"
+      ],
+      "path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/RPN__phase1f_frozen_candidate_archive__expb_m4__all_seeds.npz",
+      "size_bytes": 3843996,
+      "sha256": "f2aaa23fa2604e42d98ff9df5d958c3190f152bbd6a8645eb1f3adc836baf85e"
+    },
+    {
+      "source": [
+        "RPN",
+        "phase1f_frozen_candidate_archive",
+        "expb_m8"
+      ],
+      "path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/RPN__phase1f_frozen_candidate_archive__expb_m8__all_seeds.npz",
+      "size_bytes": 3807158,
+      "sha256": "24d367e8067912500d157eb00be8963ca150bd3f65f6ab1f87c010b94392c11e"
+    },
+    {
+      "source": [
+        "RPN",
+        "v2_p1_frozen_hard_k5_predictions",
+        "hard5"
+      ],
+      "path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/RPN__v2_p1_frozen_hard_k5_predictions__hard5__all_seeds.npz",
+      "size_bytes": 3410083,
+      "sha256": "f0c33a85b4731e0ae08d18f5fb20a5c5b0657ae37357b997e5efab1af1ec6f3c"
+    },
+    {
+      "source": [
+        "DETR",
+        "v2_p1_frozen_hard_k5_predictions",
+        "hard5"
+      ],
+      "path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/DETR__v2_p1_frozen_hard_k5_predictions__hard5__all_seeds.npz",
+      "size_bytes": 2895244,
+      "sha256": "5760484f02caf057942c8a370a397abe5f18e8fa1581729e76df62b0ad0e68cf"
+    }
+  ],
+  "sources": [
+    {
+      "repo_path": "scripts/repair_candidate_sensitivity.py",
+      "snapshot_path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/sensitivity_bootstrap_source_snapshot_20261003_Cformal1/repair_candidate_sensitivity.py",
+      "size_bytes": 1989,
+      "sha256": "98a944b1717707df867d24b5a3e662e4188cbd09ae35043fe845fa07bfe20558"
+    },
+    {
+      "repo_path": "src/ccg/repairs/candidate_sensitivity.py",
+      "snapshot_path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/sensitivity_bootstrap_source_snapshot_20261003_Cformal1/candidate_sensitivity.py",
+      "size_bytes": 45149,
+      "sha256": "39fe69011c36884ca1f1abed74657a1b299f414516bb831b7b34b295e84ec609"
+    },
+    {
+      "repo_path": "src/ccg/repairs/statistics.py",
+      "snapshot_path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/sensitivity_bootstrap_source_snapshot_20261003_Cformal1/statistics.py",
+      "size_bytes": 19011,
+      "sha256": "995efb5c41de1d1aade8ebf206f3743a17b3047ea8f6c7c1b9e57b36f7253022"
+    },
+    {
+      "repo_path": "src/ccg/repairs/bootstrap.py",
+      "snapshot_path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/sensitivity_bootstrap_source_snapshot_20261003_Cformal1/bootstrap.py",
+      "size_bytes": 14632,
+      "sha256": "67a26f3768f921a5429124b9d0d490bb8e62fb5a2ec1977f6108313cb93126da"
+    },
+    {
+      "repo_path": "src/ccg/repairs/candidate_forward.py",
+      "snapshot_path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/sensitivity_bootstrap_source_snapshot_20261003_Cformal1/candidate_forward.py",
+      "size_bytes": 60943,
+      "sha256": "aa8035bd951f1b49da8a52a09864978af6f1d8dc6175d43a68e4bf948aa29f94"
+    },
+    {
+      "repo_path": "src/ccg/repairs/atomic.py",
+      "snapshot_path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/sensitivity_bootstrap_source_snapshot_20261003_Cformal1/atomic.py",
+      "size_bytes": 2241,
+      "sha256": "f798a06d10e3c43dcd0dd1e89112611cc728d199f9332c90c4c19a1ec755bcc2"
+    },
+    {
+      "repo_path": "src/ccg/metrics/calibration.py",
+      "snapshot_path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/sensitivity_bootstrap_source_snapshot_20261003_Cformal1/calibration.py",
+      "size_bytes": 13196,
+      "sha256": "1c935256562e22d870469c05316e61fdf44704e5874d8240a75dbc72f0020082"
+    },
+    {
+      "repo_path": "src/ccg/metrics/discrimination.py",
+      "snapshot_path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/sensitivity_bootstrap_source_snapshot_20261003_Cformal1/discrimination.py",
+      "size_bytes": 6192,
+      "sha256": "e76351dd313794352523acdcfbbb61d22946dae67ec796aa6ac7eb2509aab3de"
+    },
+    {
+      "repo_path": "src/ccg/metrics/selective.py",
+      "snapshot_path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/sensitivity_bootstrap_source_snapshot_20261003_Cformal1/selective.py",
+      "size_bytes": 8534,
+      "sha256": "fc39ded5d6b81af5ea88f6ced2b208e56dc1fcca6a84fcff5bffc79a3b97daf5"
+    }
+  ],
+  "pilot_reference": {
+    "path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/pilot_sensitivity_one_rep_20261003_01/summary.json",
+    "sha256": "79eb64f86a71ce221eb6c6614ce1e40b258e487568a6e26b8f4459ae5e20230b",
+    "formal": false,
+    "used_as_formal_input": false
+  }
+}

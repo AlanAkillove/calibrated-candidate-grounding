@@ -1,0 +1,353 @@
+{
+  "schema": "ccg.research_repair_v1.candidates.a54_gate_review.v1",
+  "review_type": "read_only_source_and_existing_estimate_review",
+  "new_resampling_performed": false,
+  "criterion": {
+    "id": "Amendment A5.4 Reliability GO (replication) Criterion",
+    "status": "post_hoc_operational_criterion; explicitly does not replace Gate Q1/Q2/Q3",
+    "source": "docs/research_protocol.md §A5.4 (around line 838); historical evaluations are the Phase0A.1 and Phase0B experiment_log entries (around lines 557-711).",
+    "models": [
+      {
+        "id": "Phase0A B1 frozen cosine",
+        "condition": "global_T_corrected; T=0.0335596; use fixed scorer, not B0 random, native, or oracle per-K as primary."
+      },
+      {
+        "id": "Phase0B B3 Independent MLP",
+        "condition": "global_T_corrected; fixed seeds 1/2/3, T=[1.115344,1.116630,1.100525]; do not refit."
+      }
+    ],
+    "cohort": {
+      "historical": "__pooled__ all-common, 20,799 rows/2,981 images; val_select+val_calib+testA+testB, no train rows.",
+      "repair_job_cohort": "__all_common__",
+      "warning": "Do not substitute __pooled_test__ (testA+testB only); that is not the historical A5.4 pool."
+    },
+    "uncertainty": {
+      "legacy": "image-cluster paired bootstrap, 5000 reps, seed 0, 95% CI; Phase0A one fixed scorer, Phase0B per-seed intervals.",
+      "repair": "same fixed-cohort shared image-cluster draws; phase0B aggregate intervals are per-replicate means across seeds; retain per-seed intervals separately."
+    },
+    "route_A": {
+      "thresholds": {
+        "E_AURC_relative_worsening_point_gte": 0.2,
+        "E_AURC_95pct_CI_excludes_zero": true,
+        "RER_at_50_or_80_drop_pp_gte": 10,
+        "RER_95pct_CI_excludes_zero": true
+      },
+      "comparison": "K5→K20 or K5→K50; positive repair sign convention is E-AURC(Kx)-E-AURC(K5) relative to K5 and RER(K5)-RER(Kx).",
+      "old_application": "Experiment log reports RER@50 witness for Phase0A and RER@50/80 for Phase0B; both historical rows mark Route A true."
+    },
+    "route_B": {
+      "thresholds": {
+        "AUROC_correct_drop_point_gte": 0.03,
+        "AUROC_95pct_CI_excludes_zero": true,
+        "additional_condition": "stable corrected-global-T reliability-map shift"
+      },
+      "comparison": "K5−K20 or K5−K50 (positive means AUROC declined)."
+    },
+    "reliability_map_component": {
+      "criterion": "qualitative/manual; protocol supplies no numerical bin-gap, support, or stability threshold.",
+      "historical_evidence": "Phase0A corrected map uses fixed_width_10; Phase0B uses equal_width 15 and logs consistent conservative/under-confident K50 shift across three seeds with mid/high supported bins. Binning differs across scorers.",
+      "preservation": "Keep the historical human adjudication and link its exact tables. If a repaired map is manually re-read, record reviewer rationale and the historical binning/support; do not synthesize a numeric cutoff or claim a bootstrap CI for this component. Route B remains a conjunctive numeric-AUROC AND manual-map condition. The overall A5.4 GO can be evaluated from Route A for both scorers, so it does not depend on inventing a map threshold."
+    }
+  },
+  "historical_application": {
+    "Phase0A B1 cosine": {
+      "route_A": "PASS",
+      "route_B": "FAIL",
+      "evidence": "docs/experiment_log.md Phase0A.1 amendment_gate and docs/phase0a_interpretation.md §§3-4."
+    },
+    "Phase0B B3 Independent": {
+      "route_A": "PASS",
+      "route_B": "PASS",
+      "evidence": "docs/experiment_log.md Phase0B amendment_gate; Route A and B replicated same direction as cosine."
+    },
+    "composite": "A5.4 GO / Case A is explicitly recorded in Phase0B experiment_log; this is post-hoc and not a Q1/Q2/Q3 verdict."
+  },
+  "repair_mapping": {
+    "existing_K50_refs": {
+      "auroc_drop": {
+        "job_id": "phase0b___all_common__",
+        "estimate_name": "crossK_K5_minus_K50__global_T::auroc_correct"
+      },
+      "eaurc_relative_worsening": {
+        "job_id": "phase0b___all_common__",
+        "estimate_name": "crossK_relative_eaurc_worsening__global_T"
+      },
+      "rer50_drop_fraction": {
+        "job_id": "phase0b___all_common__",
+        "estimate_name": "crossK_K5_minus_K50__global_T::rer_at_50"
+      }
+    },
+    "current_K50_evaluations": {
+      "Phase0A_B1_cosine": {
+        "job_id": "phase0a___all_common__",
+        "cohort": "historical __pooled__ reconstructed as __all_common__",
+        "n_rows": 20799,
+        "n_images": 2981,
+        "bootstrap": {
+          "n_replicates": 5000,
+          "seed": 0,
+          "ci_level": 0.95,
+          "resample_unit": "image_cluster"
+        },
+        "K5_to_K50": {
+          "AUROC_drop_K5_minus_K50": {
+            "point": 0.004732966690401685,
+            "ci95": [
+              -0.007467143559012714,
+              0.016828166569874146
+            ],
+            "units": "AUROC"
+          },
+          "E_AURC_relative_worsening": {
+            "point": 0.26348712123472795,
+            "ci95": [
+              0.18922572992273332,
+              0.3427855619540805
+            ],
+            "units": "fraction; display as percent x100"
+          },
+          "RER50_drop": {
+            "fraction_point": 0.26135355630468704,
+            "fraction_ci95": [
+              0.24146681885053758,
+              0.27910837508101627
+            ],
+            "pp_point": 26.135355630468705,
+            "pp_ci95": [
+              24.14668188505376,
+              27.910837508101626
+            ]
+          }
+        },
+        "route_A_K50_numeric": {
+          "passed": true,
+          "thresholds": {
+            "e_aurc_relative_point_gte": 0.2,
+            "e_aurc_ci_excludes_zero": true,
+            "rer50_or_rer80_drop_pp_gte": 10.0,
+            "rer_ci_excludes_zero": true
+          },
+          "witness_used": "RER@50; positive effect is K5 minus K50"
+        },
+        "route_B_AUROC_numeric": {
+          "passed": false,
+          "thresholds": {
+            "auroc_drop_point_gte": 0.03,
+            "ci_excludes_zero": true
+          }
+        },
+        "per_seed_K50": {
+          "B0": {
+            "auroc_drop": {
+              "point": 0.004732966690401685,
+              "ci_low": -0.007467143559012714,
+              "ci_high": 0.016828166569874146,
+              "valid_replicates": 5000,
+              "invalid_replicates": 0
+            },
+            "eaurc_relative_worsening": {
+              "point": 0.26348712123472795,
+              "ci_low": 0.18922572992273332,
+              "ci_high": 0.3427855619540805,
+              "valid_replicates": 5000,
+              "invalid_replicates": 0
+            },
+            "rer50_drop_fraction": {
+              "point": 0.26135355630468704,
+              "ci_low": 0.24146681885053758,
+              "ci_high": 0.27910837508101627,
+              "valid_replicates": 5000,
+              "invalid_replicates": 0
+            }
+          }
+        }
+      },
+      "Phase0B_B3_independent": {
+        "job_id": "phase0b___all_common__",
+        "cohort": "historical __pooled__ reconstructed as __all_common__",
+        "n_rows": 20799,
+        "n_images": 2981,
+        "bootstrap": {
+          "n_replicates": 5000,
+          "seed": 0,
+          "ci_level": 0.95,
+          "resample_unit": "image_cluster"
+        },
+        "K5_to_K50": {
+          "AUROC_drop_K5_minus_K50": {
+            "point": 0.05216064928826799,
+            "ci95": [
+              0.04377408607412999,
+              0.060400048583800325
+            ],
+            "units": "AUROC"
+          },
+          "E_AURC_relative_worsening": {
+            "point": 2.241353702657477,
+            "ci95": [
+              2.015378799642965,
+              2.4897637289110333
+            ],
+            "units": "fraction; display as percent x100"
+          },
+          "RER50_drop": {
+            "fraction_point": 0.4559951902305548,
+            "fraction_ci95": [
+              0.43560825817575566,
+              0.47674239297717447
+            ],
+            "pp_point": 45.59951902305548,
+            "pp_ci95": [
+              43.56082581757556,
+              47.67423929771745
+            ]
+          }
+        },
+        "route_A_K50_numeric": {
+          "passed": true,
+          "thresholds": {
+            "e_aurc_relative_point_gte": 0.2,
+            "e_aurc_ci_excludes_zero": true,
+            "rer50_or_rer80_drop_pp_gte": 10.0,
+            "rer_ci_excludes_zero": true
+          },
+          "witness_used": "RER@50; positive effect is K5 minus K50"
+        },
+        "route_B_AUROC_numeric": {
+          "passed": true,
+          "thresholds": {
+            "auroc_drop_point_gte": 0.03,
+            "ci_excludes_zero": true
+          }
+        },
+        "per_seed_K50": {
+          "b3_seed1": {
+            "auroc_drop": {
+              "point": 0.05190674397416706,
+              "ci_low": 0.0423439011084047,
+              "ci_high": 0.06137004669348288,
+              "valid_replicates": 5000,
+              "invalid_replicates": 0
+            },
+            "eaurc_relative_worsening": {
+              "point": 2.225385273167737,
+              "ci_low": 1.986238483556283,
+              "ci_high": 2.482998562890872,
+              "valid_replicates": 5000,
+              "invalid_replicates": 0
+            },
+            "rer50_drop_fraction": {
+              "point": 0.4605168489835426,
+              "ci_low": 0.4360007180151933,
+              "ci_high": 0.48267601294569284,
+              "valid_replicates": 5000,
+              "invalid_replicates": 0
+            }
+          },
+          "b3_seed2": {
+            "auroc_drop": {
+              "point": 0.052350202511363686,
+              "ci_low": 0.04280659956850556,
+              "ci_high": 0.06167774858607905,
+              "valid_replicates": 5000,
+              "invalid_replicates": 0
+            },
+            "eaurc_relative_worsening": {
+              "point": 2.2406555774886843,
+              "ci_low": 2.007705360489058,
+              "ci_high": 2.5004134815689714,
+              "valid_replicates": 5000,
+              "invalid_replicates": 0
+            },
+            "rer50_drop_fraction": {
+              "point": 0.4563969091746953,
+              "ci_low": 0.43234663296949255,
+              "ci_high": 0.4797948052428028,
+              "valid_replicates": 5000,
+              "invalid_replicates": 0
+            }
+          },
+          "b3_seed3": {
+            "auroc_drop": {
+              "point": 0.05222500137927322,
+              "ci_low": 0.04242494830290007,
+              "ci_high": 0.06176608148032874,
+              "valid_replicates": 5000,
+              "invalid_replicates": 0
+            },
+            "eaurc_relative_worsening": {
+              "point": 2.2580202573160095,
+              "ci_low": 2.0087800419447923,
+              "ci_high": 2.526256033999719,
+              "valid_replicates": 5000,
+              "invalid_replicates": 0
+            },
+            "rer50_drop_fraction": {
+              "point": 0.45107181253342654,
+              "ci_low": 0.42848663635485823,
+              "ci_high": 0.476168287138855,
+              "valid_replicates": 5000,
+              "invalid_replicates": 0
+            }
+          }
+        }
+      }
+    },
+    "K20_and_RER80_coverage": {
+      "not_currently_named_as_gate_estimates": true,
+      "condition_estimate_names": [
+        "K5__global_T::auroc_correct",
+        "K20__global_T::auroc_correct",
+        "K50__global_T::auroc_correct",
+        "K5__global_T::e_aurc",
+        "K20__global_T::e_aurc",
+        "K50__global_T::e_aurc",
+        "K5__global_T::rer_at_50",
+        "K20__global_T::rer_at_50",
+        "K50__global_T::rer_at_50",
+        "K5__global_T::rer_at_80",
+        "K20__global_T::rer_at_80",
+        "K50__global_T::rer_at_80"
+      ],
+      "raw_replicate_archives": {
+        "phase0a": {
+          "path": "results/research_repair_v1/statistics/raw_replicates/phase0a___all_common__.npz",
+          "sha256": "ffad4e2c350f08e9079381ae41aefdd3ddeeae7a40c5af621c2f91c6a6378966",
+          "notes": "Contains same-call, shared image-cluster draw arrays for K5/K10/K20/K50 global_T conditions and fixed scorer seed(s); deterministic paired K5→K20 metrics can be derived without drawing new replicates."
+        },
+        "phase0b": {
+          "path": "results/research_repair_v1/statistics/raw_replicates/phase0b___all_common__.npz",
+          "sha256": "8cb6d06ffc32d616583a0e4a2cdf73e85bd10ac7d93688496895e6d54ad263a8",
+          "notes": "Contains same-call, shared image-cluster draw arrays for K5/K10/K20/K50 global_T conditions and fixed scorer seed(s); deterministic paired K5→K20 metrics can be derived without drawing new replicates."
+        }
+      },
+      "recommended_derived_names": [
+        "crossK_K5_minus_K20__global_T::auroc_correct",
+        "crossK_relative_eaurc_worsening_K20__global_T",
+        "crossK_K5_minus_K20__global_T::rer_at_50",
+        "crossK_K5_minus_K20__global_T::rer_at_80"
+      ],
+      "derivation": "Use existing per-seed K5/K20/K50 condition arrays from the same job NPZ: compute per seed per draw, then seed-mean within draw; relative E-AURC=(E_Kx-E_K5)/E_K5; RER drop=100*(RER_K5-RER_Kx). Then take percentile endpoints over existing 5000 draws. No new image resampling. K50 already suffices for the recorded Route A decision; RER@50 was its historical witness."
+    },
+    "map_decision": "MANUAL_COMPONENT_RETAINED_FROM_HISTORICAL_RECORD; no invented numeric threshold and no bootstrap claim."
+  },
+  "source_sha256": {
+    "docs/research_protocol.md": "c52ff845f8838fb6fcd59bce3f12c4405f8c48e27f0211c3c4cde48f24c8c010",
+    "docs/experiment_log.md": "05d9ad3c3b1cbc4cf7f9e2c621397a3fb86f5471e8894d3d118b646bc9af4fb5",
+    "docs/phase0a_interpretation.md": "82bb1695c6193723bdde328828d2ae857b424855e933143a2c6a2acfcb67b71f",
+    "results/phase0a_corrected/metadata.json": "44e7723a55e6a1470b33785a4f7838d074bb9f56ffa00d25d645028d84916e8d",
+    "results/phase0a_corrected/reliability_bins_globalT.csv": "01a02679c535bf2662c099b4b7683f1d2ff537fbfc1ac7b4d46017e4bf6750c6",
+    "results/phase0b_independent/metadata.json": "99071f03ec45880feb2afd0c8a741f70b25fe7779956041f2a8aa17bac91e537",
+    "results/phase0b_independent/seed_1/reliability_bins.csv": "f7bd0a8b6da57363b0e9cdc7c61301fa0135be44e802aea86c302614a8f17248",
+    "results/phase0b_independent/seed_2/reliability_bins.csv": "c0e06cbc700678861f9b28d6bddd0b1dce1825cd307c0cd58dacfb7c7970ae48",
+    "results/phase0b_independent/seed_3/reliability_bins.csv": "b113afc62a14ac37d2f44f85d0e47e4b386202a0e69110dab25852c1ba0705d7",
+    "scripts/refresh_repair_gate_decisions.py": "2bb4783c9fc6d9638ddae48dfe29c1579a34c10d2f4d91690a73a078f75d1d61",
+    "results/research_repair_v1/statistics/summary.json": "18f4eb12f8cc4fc0d94b9bb91906fb8d591cc290b098711bd77d4ee30e4e2bf1",
+    "results/research_repair_v1/statistics/raw_replicates/phase0a___all_common__.npz": "ffad4e2c350f08e9079381ae41aefdd3ddeeae7a40c5af621c2f91c6a6378966",
+    "results/research_repair_v1/statistics/raw_replicates/phase0b___all_common__.npz": "8cb6d06ffc32d616583a0e4a2cdf73e85bd10ac7d93688496895e6d54ad263a8"
+  },
+  "review_findings_about_current_refresh_script": {
+    "a54_row_missing": "Current scripts/refresh_repair_gate_decisions.py still creates Phase0A/B B0_temperature_gate N/A rows but has no separate A5.4 row; the criterion and its recorded old route decisions would be omitted from refreshed operational-gate comparison.",
+    "phase0_job_identity": "Repair job scope label Phase0A_B0_temperature is a legacy name; source conditions are Phase0A B1 cosine and Phase0B B3. A5.4 refs must explicitly use global_T and the __all_common__ jobs."
+  }
+}

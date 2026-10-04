@@ -1,0 +1,20 @@
+[16:17:36] [a11-bundle] b3_seed1: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[16:17:36] [a11-bundle] b3_seed2: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[16:17:36] [a11-bundle] b3_seed3: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[16:17:38] RPN/phase1f_frozen_candidate_archive/hard5: preflight checks first 2 canonical rows
+[16:17:47] RPN/phase1f_frozen_candidate_archive/hard5: forwarded old/new n=2 rows, K=5
+[16:17:47] RPN/phase1f_frozen_candidate_archive/hard10: preflight checks first 2 canonical rows
+[16:17:55] RPN/phase1f_frozen_candidate_archive/hard10: forwarded old/new n=2 rows, K=10
+[16:17:55] RPN/phase1f_frozen_candidate_archive/expb_m0: preflight checks first 2 canonical rows
+[16:18:02] RPN/phase1f_frozen_candidate_archive/expb_m0: forwarded old/new n=2 rows, K=10
+[16:18:02] RPN/phase1f_frozen_candidate_archive/expb_m2: preflight checks first 2 canonical rows
+[16:18:10] RPN/phase1f_frozen_candidate_archive/expb_m2: forwarded old/new n=2 rows, K=10
+[16:18:10] RPN/phase1f_frozen_candidate_archive/expb_m4: preflight checks first 2 canonical rows
+[16:18:17] RPN/phase1f_frozen_candidate_archive/expb_m4: forwarded old/new n=2 rows, K=10
+[16:18:17] RPN/phase1f_frozen_candidate_archive/expb_m8: preflight checks first 2 canonical rows
+[16:18:25] RPN/phase1f_frozen_candidate_archive/expb_m8: forwarded old/new n=2 rows, K=10
+[16:18:25] RPN/v2_p1_frozen_hard_k5_predictions/hard5: preflight checks first 2 canonical rows
+[16:18:33] RPN/v2_p1_frozen_hard_k5_predictions/hard5: forwarded old/new n=2 rows, K=5
+[16:18:33] DETR/v2_p1_frozen_hard_k5_predictions/hard5: preflight checks first 2 canonical rows
+[16:18:40] DETR/v2_p1_frozen_hard_k5_predictions/hard5: forwarded old/new n=2 rows, K=5
+[16:18:41] candidate sensitivity forward PREFLIGHT_PASS: 8 source cohorts -> results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/summary.json

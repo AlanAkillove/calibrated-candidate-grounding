@@ -1,0 +1,210 @@
+{
+  "schema": "ccg.research_repair_v1.no_checkpoint_inventory.v1",
+  "scope_id": "m3_b0_severity_macro",
+  "created_utc": "2026-10-03T13:07:10Z",
+  "search_scope": "results/v2_local_competition/m3_mixture/** (recursive read-only inventory)",
+  "files": [
+    {
+      "path": "results/v2_local_competition/m3_mixture/amendment_v2m31.json",
+      "size_bytes": 12493,
+      "sha256": "d4e75eebbb9db3cd4e104d182d386533f0df62e0e6d5ec0933270744d81b7c85"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/b0/alpha_diagnostics.csv",
+      "size_bytes": 1572,
+      "sha256": "2b96a82712b4fadb88190bb27e6e0a80639a35b02625443f67b24f7e91c5ef62"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/b0/bootstrap_pairs.csv",
+      "size_bytes": 25421,
+      "sha256": "b25f68f30ef10e601f0566ec9eba970ad46b0dc00dc771fdee5226363db166d5"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/b0/calibration.csv",
+      "size_bytes": 6876,
+      "sha256": "b26a52156f4a72f0b222a3eeeaa162a4b76ef2948181e9b0dfe07ffc43f0fdee"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/b0/figures/m3_b0_adaptive_curves.png",
+      "size_bytes": 154920,
+      "sha256": "0f5450baeec124d1d825919768e7c5e8762d9f2f69f31d4cabe35dd748b218f8"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/b0/figures/m3_b0_macro_delta.png",
+      "size_bytes": 110446,
+      "sha256": "d6043e0dd40602deb4ae24b10c1982a0872fe61740f6afb89546649910840ff2"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/b0/m3_b0_audit.json",
+      "size_bytes": 3006,
+      "sha256": "ce09fc2519ec245f066462993ed0f224d5b86f0b3f9ca97e5226ba9bc9ffcc7a"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/b0/macro_metrics.csv",
+      "size_bytes": 1428,
+      "sha256": "0b7eac3b8bfe8f84675c3d0d20a6869eea3c7441b5fc1006e6ca60e60c554764"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/b0/metadata.json",
+      "size_bytes": 2185,
+      "sha256": "39d83299eb998aacba69d843ec8e030311bed7880bbfd27f3682bd8780f21c84"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/b0/point_metrics.csv",
+      "size_bytes": 11207,
+      "sha256": "07f0bce58981fa2f705c353312bb8c754755f366613227c46a01a5c6e53a1bdb"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/b0/regret.csv",
+      "size_bytes": 3259,
+      "sha256": "5135ac8f0d44ae4041034f2a57f56fab0e47b00c76f518344fe589fefb9a851c"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/b0/summary.json",
+      "size_bytes": 67580,
+      "sha256": "1286a4448cc2313a0c79eb272b76a90a100a7ab6e367b0c5bf7f0181e14e727a"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b1/alpha_diagnostics.csv",
+      "size_bytes": 1569,
+      "sha256": "bbf497c80aca011dd47ee67aad09c369db7ce5fa1de9c0255bc5819c0ae4d8f7"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b1/bootstrap_pairs.csv",
+      "size_bytes": 25104,
+      "sha256": "943269f9a769b551d24e82adee4461be0e527de3bb8877efe5cc00f66e713278"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b1/calibration.csv",
+      "size_bytes": 6905,
+      "sha256": "300a2f2b4aa5e58a24630b4f703ca85f4ac61b5c761848ce1592cf91ed07ac82"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b1/dose_anchor.csv",
+      "size_bytes": 1626,
+      "sha256": "d4057bd138001190bf2e83222c09791540caf7697c5a7dd29f3ffdf9262983b8"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b1/figures/m3_conf_b1_curves.png",
+      "size_bytes": 146980,
+      "sha256": "c564ce0f8d86cd920281593a346b8ac278b0b8b7b8bd9fe2be3c02ca49816a18"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b1/figures/m3_conf_b1_macro_delta.png",
+      "size_bytes": 104820,
+      "sha256": "204ea746cc039dcbe3e67d32b5fa51c79907a1129a20dea9f62eb403ae007968"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b1/gate.json",
+      "size_bytes": 18745,
+      "sha256": "f826a089f9e37bb85957fbae8b704e39a0f2cca4f11f450b845e5877efb0a2b9"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b1/macro_metrics.csv",
+      "size_bytes": 1420,
+      "sha256": "2fccf5b418f3def2d63f790fed56fd565ac15dae1698899da3ce4d5e0889e964"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b1/point_metrics.csv",
+      "size_bytes": 11230,
+      "sha256": "cfebd493410027a5f2b84a54c1a6c68c89d3a3fd2361435307683694ed8ea89c"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b1/regret.csv",
+      "size_bytes": 3259,
+      "sha256": "482068e976c61895e6a83d07819fd62aa1862d90f369c713b6ea2a43a013bfb0"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/alpha_diagnostics.csv",
+      "size_bytes": 1567,
+      "sha256": "8f792942e267fd196890c5ddf5c528b18ec49dad913814397ed315be445f8536"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/bootstrap_pairs.csv",
+      "size_bytes": 25133,
+      "sha256": "d105e592d1b199b8544cb298484380a212ed11344754c3295fd6852f99bfe2d5"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/calibration.csv",
+      "size_bytes": 6926,
+      "sha256": "5d3652445faa201e262ec734e0fc9205de017edaa0ef2953548fac613485865c"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/dose_anchor.csv",
+      "size_bytes": 1628,
+      "sha256": "642a49dfa404339ac33a488ad8e38599d01ba6893378c12224990b406f2c74b2"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/figures/m3_conf_b2_curves.png",
+      "size_bytes": 163737,
+      "sha256": "b5c339df9d7558415451fdb17a3d3f62f33b6c1cb604ceeee42c833d9ccf3040"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/figures/m3_conf_b2_macro_delta.png",
+      "size_bytes": 107664,
+      "sha256": "48d4afbbee8d74d27eb617d13c9174d43ac4ab7f3bb1eb17b3111fa795c0a490"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/gate.json",
+      "size_bytes": 18759,
+      "sha256": "c953c9d9dca7af90bbb4a217195e35a3f2ef4c9b0eed4257bf5cba963b77352f"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/macro_metrics.csv",
+      "size_bytes": 1436,
+      "sha256": "4c0b5c612917b8437c7ed955f84b5a8c1d4067383cd63153afeaef512f199b70"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/point_metrics.csv",
+      "size_bytes": 11263,
+      "sha256": "2ab40f536c62e6ffb42e8b5cd17bb3901cc99af5c15085c2bb87ec50162facbc"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/b2/regret.csv",
+      "size_bytes": 3240,
+      "sha256": "2c3f54cdbbdb3cc8a6c92d9c0615e77255faff0a8fd827a40bda61d4915eebfb"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/cross_backbone_verdict.json",
+      "size_bytes": 979,
+      "sha256": "a6954a7f7ff9bef6afb0f1a67f9f3391169f697d6d3ca1025b69cb9f3f81384a"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/m3_conf_audit.json",
+      "size_bytes": 7679,
+      "sha256": "94e001dd6208e888132bd87685107aded0afe91cd96af9be74b42215ad3aa41c"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/conf/metadata.json",
+      "size_bytes": 1960,
+      "sha256": "4230c3245e0716d7f638b71c0e2ce9e9147eb38b19dd79c024d498f70ab53b7e"
+    },
+    {
+      "path": "results/v2_local_competition/m3_mixture/protocol_m3.json",
+      "size_bytes": 7761,
+      "sha256": "d5e17d6bba56471bf9382c2c3ebf534a98550ed9dbd5fe1f826f2831e9a371da"
+    }
+  ],
+  "checkpoint_extensions_checked": [
+    ".ckpt",
+    ".joblib",
+    ".npy",
+    ".npz",
+    ".pickle",
+    ".pkl",
+    ".pt",
+    ".pth"
+  ],
+  "checkpoint_candidates": [],
+  "b0_recompute_dir_from_audit": "results/v2_local_competition/m3_mixture/b0/_audit_recompute",
+  "b0_recompute_dir_exists": false,
+  "finding": "No per-seed M3-B0 mixer/model checkpoint or exact mixer parameter artifact exists in the inspected M3 mixture output tree. metadata.json/summary.json retain aggregate fit summaries only; the B0 audit names a recompute directory that is absent.",
+  "supporting_file_hashes": {
+    "results/v2_local_competition/m3_mixture/amendment_v2m31.json": "d4e75eebbb9db3cd4e104d182d386533f0df62e0e6d5ec0933270744d81b7c85",
+    "results/v2_local_competition/m3_mixture/b0/m3_b0_audit.json": "ce09fc2519ec245f066462993ed0f224d5b86f0b3f9ca97e5226ba9bc9ffcc7a",
+    "results/v2_local_competition/m3_mixture/b0/metadata.json": "39d83299eb998aacba69d843ec8e030311bed7880bbfd27f3682bd8780f21c84",
+    "results/v2_local_competition/m3_mixture/b0/point_metrics.csv": "07f0bce58981fa2f705c353312bb8c754755f366613227c46a01a5c6e53a1bdb",
+    "results/v2_local_competition/m3_mixture/b0/summary.json": "1286a4448cc2313a0c79eb272b76a90a100a7ab6e367b0c5bf7f0181e14e727a",
+    "results/v2_local_competition/m3_mixture/protocol_m3.json": "d5e17d6bba56471bf9382c2c3ebf534a98550ed9dbd5fe1f826f2831e9a371da"
+  }
+}

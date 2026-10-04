@@ -1,0 +1,43 @@
+{
+  "schema": "research-repair-v1-candidate-sensitivity-one-replicate-preflight-v1",
+  "status": "PASS_WITH_PRIOR_SUMMARY_STATUS_AGGREGATION_BUG",
+  "formal": false,
+  "pilot_summary_path": "summary.json",
+  "pilot_summary_sha256": "79eb64f86a71ce221eb6c6614ce1e40b258e487568a6e26b8f4459ae5e20230b",
+  "pilot_summary_status_as_written": "PILOT_PARTIAL",
+  "recomputed_group_status": "PILOT",
+  "note": "The original pilot summary is preserved. It was written before fixing the completion aggregator, which inspected PENDING declarations instead of final source status mappings. All 15 groups and all 24 source-split statuses are complete; the status aggregator now has a regression test.",
+  "bootstrap": {
+    "resample_unit": "image_cluster",
+    "n_replicates": 1,
+    "seed": 0,
+    "ci_level": 0.95,
+    "method": "percentile"
+  },
+  "groups": {
+    "expected": 15,
+    "completed": 15,
+    "estimate_rows": 1404,
+    "source_cohort_split_rows": 24
+  },
+  "checks": {
+    "all_group_statuses_pilot": true,
+    "all_source_split_statuses_complete": true,
+    "raw_and_group_hashes_match": true,
+    "each_estimate_has_one_replicate_raw_key": true,
+    "point_identity_count": 117,
+    "max_point_identity_abs_residual": 5.551115123125783e-17,
+    "max_per_seed_point_identity_abs_residual": 2.7755575615628914e-17,
+    "max_per_seed_draw_identity_abs_residual": 1.3877787807814457e-17,
+    "raw_triplets_all_invalid": 0
+  },
+  "dose_estimands": {
+    "old_arm": "metric(old_m)-metric(old_m0)",
+    "corrected_arm": "metric(corrected_m)-metric(corrected_m0)",
+    "version_change": "[metric(old_m)-metric(corrected_m)]-[metric(old_m0)-metric(corrected_m0)]",
+    "fixed_original_old_m0": "separate descriptive contrast only; not the corrected arm baseline",
+    "point_rows_path": "dose_arm_point_preflight.csv",
+    "point_rows": 117
+  },
+  "interval_note": "One-replicate intervals are exploratory/unavailable; these values validate point-estimate schema and algebra only, not uncertainty or significance."
+}

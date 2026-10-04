@@ -1,0 +1,636 @@
+{
+  "schema": "ccg.research_repair_v1.independent_closeout.readonly_qa.v1",
+  "checked_utc": "2026-10-04T03:41:44.556155+00:00",
+  "closeout_directory": "results/research_repair_v1/independent_closeouts/20261004T031921Z",
+  "script_review": {
+    "scripts": {
+      "scripts/check_repair_acceptance.py": "07cb85e93c4bfad1ed097293f78c012bf1168a38470cb5436c08ffdce43190fe",
+      "scripts/verify_repair_inputs.py": "a37d72bae0d483e19ff15a360d2e1c6da3a13c703471c810357f8e3472bbd925",
+      "tests/test_repair_closeout_acceptance.py": "db99ac59c034f436aa6525512a1558ed77eb25dc8a8c6f8933f354dd0af66fef"
+    },
+    "targeted_integration_result": "18 PASS (reported by parent; not rerun in this read-only audit)",
+    "check_repair_acceptance": {
+      "finding": "PASS",
+      "details": [
+        "evidence_directory resolves the requested path and rejects any resolved path outside results/research_repair_v1.",
+        "run-specific stored_estimate_verification.json, final_input_verification.json, final_test_sources.json, and pytest_full_final.xml are loaded from the selected directory; there is no fallback to prior logs.",
+        "the CLI writes acceptance_check.json under the same selected evidence directory; the default remains results/research_repair_v1/logs.",
+        "shared finalized repair summaries/coverage/gates remain read from canonical output paths, as expected for the evidence checker."
+      ],
+      "test_coverage": "The new tests exercise missing selected evidence with old PASS files present, path escape rejection, and preservation of old evidence. The selected-destination write is implemented in __main__ through the same tested evidence_directory helper; the test file does not launch the CLI process directly."
+    },
+    "verify_repair_inputs": {
+      "finding": "PASS",
+      "details": [
+        "the requested evidence directory is resolved and constrained to results/research_repair_v1 before any write.",
+        "final_input_verification.json is saved into the requested directory; the default output remains results/research_repair_v1/logs.",
+        "verification reads the frozen baseline and supplemental manifests and checks current bytes; the closeout test confirms the previous canonical verification record remains byte-identical after selected-directory runs."
+      ],
+      "test_coverage": "Tests cover rejecting an outside path and preserving an existing prior verification record while detecting an input-byte change."
+    },
+    "closeout_tests": {
+      "finding": "PASS",
+      "cases": [
+        "selected closeout cannot fall back to old PASS evidence and old records remain unchanged",
+        "selected paths outside repair output are rejected for both tools",
+        "versioned input verification writes into the selected directory and does not overwrite the previous record"
+      ]
+    }
+  },
+  "raw_identity_check": {
+    "path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/statistics/raw_closeout_identity_check.json",
+    "status": "PASS",
+    "sha256": "24954930226b2b68c9ad888cbb895b9163b850b8dd263daa20fc9f4f2b102a91"
+  },
+  "preservation_manifest": {
+    "path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/preservation_manifest.json",
+    "sha256": "2e629bb7bd4d21217776140944cfb73c5b7f8f0241e5d9f7a3b7ab78b5aff220",
+    "declared_copy_count": 53,
+    "verified_copy_count": 53,
+    "failed_copies": [],
+    "copy_checks": [
+      {
+        "canonical_path": "README.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/README.md",
+        "expected_size_bytes": 5017,
+        "actual_size_bytes": 5017,
+        "expected_sha256": "550086f77074038874b6296e397fed8bf46505a9aacdf7fcc3b854a1b41ea5f2",
+        "actual_sha256": "550086f77074038874b6296e397fed8bf46505a9aacdf7fcc3b854a1b41ea5f2",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "reviews/repair_completion.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/reviews/repair_completion.md",
+        "expected_size_bytes": 7506,
+        "actual_size_bytes": 7506,
+        "expected_sha256": "d08d4e5736766730ca773fffffb07da7948f884982e813395bab96f9d27c634d",
+        "actual_sha256": "d08d4e5736766730ca773fffffb07da7948f884982e813395bab96f9d27c634d",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "docs/final_result_summary.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/docs/final_result_summary.md",
+        "expected_size_bytes": 4322,
+        "actual_size_bytes": 4322,
+        "expected_sha256": "a0304263ad6b7967920e82eb757b5a25ebe8898e9c4e999c8c37dc6cb3a54ad2",
+        "actual_sha256": "a0304263ad6b7967920e82eb757b5a25ebe8898e9c4e999c8c37dc6cb3a54ad2",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "docs/research_protocol.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/docs/research_protocol.md",
+        "expected_size_bytes": 183165,
+        "actual_size_bytes": 183165,
+        "expected_sha256": "5747298d17b26345b1e9c00bd195402d750fd933f73dba1e9f95723de5873c82",
+        "actual_sha256": "5747298d17b26345b1e9c00bd195402d750fd933f73dba1e9f95723de5873c82",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "docs/experiment_log.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/docs/experiment_log.md",
+        "expected_size_bytes": 224513,
+        "actual_size_bytes": 224513,
+        "expected_sha256": "7d09c3d28202c15f20a8160854aba6350c21558c87c5501305ba4a1d50275c3a",
+        "actual_sha256": "7d09c3d28202c15f20a8160854aba6350c21558c87c5501305ba4a1d50275c3a",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "src/ccg/metrics/selective.py",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/src/ccg/metrics/selective.py",
+        "expected_size_bytes": 8534,
+        "actual_size_bytes": 8534,
+        "expected_sha256": "fc39ded5d6b81af5ea88f6ced2b208e56dc1fcca6a84fcff5bffc79a3b97daf5",
+        "actual_sha256": "fc39ded5d6b81af5ea88f6ced2b208e56dc1fcca6a84fcff5bffc79a3b97daf5",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "src/ccg/repairs/statistics.py",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/src/ccg/repairs/statistics.py",
+        "expected_size_bytes": 20343,
+        "actual_size_bytes": 20343,
+        "expected_sha256": "2f33379aa8c3b9770dd7794949f80b6223b3622ed2592bb398d3dc7b9e2ff06a",
+        "actual_sha256": "2f33379aa8c3b9770dd7794949f80b6223b3622ed2592bb398d3dc7b9e2ff06a",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "scripts/build_repair_report.py",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/scripts/build_repair_report.py",
+        "expected_size_bytes": 48030,
+        "actual_size_bytes": 48030,
+        "expected_sha256": "af4299a7f3f4281201a670e39ed00280790b194c6495367ffcbbbc386fcc05ff",
+        "actual_sha256": "af4299a7f3f4281201a670e39ed00280790b194c6495367ffcbbbc386fcc05ff",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "scripts/check_repair_acceptance.py",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/scripts/check_repair_acceptance.py",
+        "expected_size_bytes": 20269,
+        "actual_size_bytes": 20269,
+        "expected_sha256": "87933df42b031081a4c13dd2c9825060e4fa8610a2a4951cc0f9978166c28c52",
+        "actual_sha256": "87933df42b031081a4c13dd2c9825060e4fa8610a2a4951cc0f9978166c28c52",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "scripts/run_repair_full_tests.py",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/scripts/run_repair_full_tests.py",
+        "expected_size_bytes": 2367,
+        "actual_size_bytes": 2367,
+        "expected_sha256": "fcfb8addc622ee1f96c3b612582580239e0e569de8dd7a8c5bcf8155c73bbd30",
+        "actual_sha256": "fcfb8addc622ee1f96c3b612582580239e0e569de8dd7a8c5bcf8155c73bbd30",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/STATUS.json",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/results/research_repair_v1/STATUS.json",
+        "expected_size_bytes": 4222,
+        "actual_size_bytes": 4222,
+        "expected_sha256": "bf265f95946ba76687d12902fe96a2a5faaf8047feb1041ccdc3c995b2615e1b",
+        "actual_sha256": "bf265f95946ba76687d12902fe96a2a5faaf8047feb1041ccdc3c995b2615e1b",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/logs/acceptance_check.json",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/results/research_repair_v1/logs/acceptance_check.json",
+        "expected_size_bytes": 12324,
+        "actual_size_bytes": 12324,
+        "expected_sha256": "fcdb22503aa8923dc0dc834aad766841a2c3ff740dda7ce03a9da2b203a83918",
+        "actual_sha256": "fcdb22503aa8923dc0dc834aad766841a2c3ff740dda7ce03a9da2b203a83918",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/logs/pytest_full_final.log",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/results/research_repair_v1/logs/pytest_full_final.log",
+        "expected_size_bytes": 3011,
+        "actual_size_bytes": 3011,
+        "expected_sha256": "4e8d42370c3cf80994a7613657f31c39aaad8ba60740b5c8ce1b875427339813",
+        "actual_sha256": "4e8d42370c3cf80994a7613657f31c39aaad8ba60740b5c8ce1b875427339813",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/logs/pytest_full_final.xml",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/results/research_repair_v1/logs/pytest_full_final.xml",
+        "expected_size_bytes": 148281,
+        "actual_size_bytes": 148281,
+        "expected_sha256": "c7d89efbdce37f0a9b08c829bc116f14b0f7d9d556972d4f8facc732d4565f7d",
+        "actual_sha256": "c7d89efbdce37f0a9b08c829bc116f14b0f7d9d556972d4f8facc732d4565f7d",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/logs/final_test_sources.json",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/results/research_repair_v1/logs/final_test_sources.json",
+        "expected_size_bytes": 28261,
+        "actual_size_bytes": 28261,
+        "expected_sha256": "b4cf56cea419fa848665de37b6d332cd811c9ce741ec1918810e9c8d36cb3cc5",
+        "actual_sha256": "b4cf56cea419fa848665de37b6d332cd811c9ce741ec1918810e9c8d36cb3cc5",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "reviews/repair_acceptance_2026-10-04.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/reviews/repair_acceptance_2026-10-04.md",
+        "expected_size_bytes": 14390,
+        "actual_size_bytes": 14390,
+        "expected_sha256": "82d1cfe8a154ffd9bcfd2ab1369d85492d3560e7f956d28f32f8656be80c0f7f",
+        "actual_sha256": "82d1cfe8a154ffd9bcfd2ab1369d85492d3560e7f956d28f32f8656be80c0f7f",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "reviews/acceptance_2026-10-04/verdict.json",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/reviews/acceptance_2026-10-04/verdict.json",
+        "expected_size_bytes": 2834,
+        "actual_size_bytes": 2834,
+        "expected_sha256": "c8cfa2a70c30cc4813d8f9b697b5df1545ce8a1a5fab94713681b2601fee495e",
+        "actual_sha256": "c8cfa2a70c30cc4813d8f9b697b5df1545ce8a1a5fab94713681b2601fee495e",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/candidates.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/candidates.md",
+        "expected_size_bytes": 2193,
+        "actual_size_bytes": 2193,
+        "expected_sha256": "d7e6fad99c20f4425509c2ef8ccf6bbc2acf00c010b2359d93aafbfcebd37d90",
+        "actual_sha256": "d7e6fad99c20f4425509c2ef8ccf6bbc2acf00c010b2359d93aafbfcebd37d90",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/candidate_sensitivity.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/candidate_sensitivity.md",
+        "expected_size_bytes": 60503,
+        "actual_size_bytes": 60503,
+        "expected_sha256": "bfa7b9631910a5964632bb14c459563b1c5763f55e54e7e9227362f6b560ae4f",
+        "actual_sha256": "bfa7b9631910a5964632bb14c459563b1c5763f55e54e7e9227362f6b560ae4f",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/coverage.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/coverage.md",
+        "expected_size_bytes": 4995,
+        "actual_size_bytes": 4995,
+        "expected_sha256": "e2cbce3a98bf939f743c17f45048a785b977f668dd3fc165b1861ef6d55b99b5",
+        "actual_sha256": "e2cbce3a98bf939f743c17f45048a785b977f668dd3fc165b1861ef6d55b99b5",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/evidence.json",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/evidence.json",
+        "expected_size_bytes": 7387,
+        "actual_size_bytes": 7387,
+        "expected_sha256": "99e435eca63a5d0103514ef496e478bbcc99fdf139f28b59b50f3cec0888bd2d",
+        "actual_sha256": "99e435eca63a5d0103514ef496e478bbcc99fdf139f28b59b50f3cec0888bd2d",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/figure_controlled_interface.png",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/figure_controlled_interface.png",
+        "expected_size_bytes": 178995,
+        "actual_size_bytes": 178995,
+        "expected_sha256": "4e2659fced4d78aa06893b1a405624bcbb68833c0f462dcbe49115e73087be46",
+        "actual_sha256": "4e2659fced4d78aa06893b1a405624bcbb68833c0f462dcbe49115e73087be46",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/figure_controlled_interface.svg",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/figure_controlled_interface.svg",
+        "expected_size_bytes": 87173,
+        "actual_size_bytes": 87173,
+        "expected_sha256": "ba8b6caf38c79f87749a89227e7eca7a30d84e8bfecf2d970bc846f626ce79d3",
+        "actual_sha256": "ba8b6caf38c79f87749a89227e7eca7a30d84e8bfecf2d970bc846f626ce79d3",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/figure_cross_k_training.png",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/figure_cross_k_training.png",
+        "expected_size_bytes": 110838,
+        "actual_size_bytes": 110838,
+        "expected_sha256": "b32c7afa9504ea5d06710283fff4b50b9903542ee9df2acdef74fa473c8b88c7",
+        "actual_sha256": "b32c7afa9504ea5d06710283fff4b50b9903542ee9df2acdef74fa473c8b88c7",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/figure_cross_k_training.svg",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/figure_cross_k_training.svg",
+        "expected_size_bytes": 62140,
+        "actual_size_bytes": 62140,
+        "expected_sha256": "b9f7531bd6c5817d3843ea2fe248e96c8918663be2e8aec2bc5aec5d2b7012da",
+        "actual_sha256": "b9f7531bd6c5817d3843ea2fe248e96c8918663be2e8aec2bc5aec5d2b7012da",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/figure_expansion_endpoints.png",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/figure_expansion_endpoints.png",
+        "expected_size_bytes": 219220,
+        "actual_size_bytes": 219220,
+        "expected_sha256": "f90cb11a01f7335d5e939f57be65b29ea295c8fd249dbd3c48701c4af3cd745d",
+        "actual_sha256": "f90cb11a01f7335d5e939f57be65b29ea295c8fd249dbd3c48701c4af3cd745d",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/figure_expansion_endpoints.svg",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/figure_expansion_endpoints.svg",
+        "expected_size_bytes": 110307,
+        "actual_size_bytes": 110307,
+        "expected_sha256": "33d880b9c74c32ce625b11107cda2114ff42f406ed3f20af401ddabf4b8e1c88",
+        "actual_sha256": "33d880b9c74c32ce625b11107cda2114ff42f406ed3f20af401ddabf4b8e1c88",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/figure_information_sources.png",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/figure_information_sources.png",
+        "expected_size_bytes": 96993,
+        "actual_size_bytes": 96993,
+        "expected_sha256": "c45b94aad4803b64a052c8302610efde4c5a5d33efc1798c66946dfb084c7360",
+        "actual_sha256": "c45b94aad4803b64a052c8302610efde4c5a5d33efc1798c66946dfb084c7360",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/figure_information_sources.svg",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/figure_information_sources.svg",
+        "expected_size_bytes": 58411,
+        "actual_size_bytes": 58411,
+        "expected_sha256": "e64c911ac8c55d2ce3c7b348555a54afff8ebe0c3f12692c6012012aa566f2d7",
+        "actual_sha256": "e64c911ac8c55d2ce3c7b348555a54afff8ebe0c3f12692c6012012aa566f2d7",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/figure_mechanism_paths.png",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/figure_mechanism_paths.png",
+        "expected_size_bytes": 86042,
+        "actual_size_bytes": 86042,
+        "expected_sha256": "ca67a8abc82650a431483627b23e94f162f1471f282e8f21019795fb21f18ff5",
+        "actual_sha256": "ca67a8abc82650a431483627b23e94f162f1471f282e8f21019795fb21f18ff5",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/figure_mechanism_paths.svg",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/figure_mechanism_paths.svg",
+        "expected_size_bytes": 74540,
+        "actual_size_bytes": 74540,
+        "expected_sha256": "51909dcacb2a31678bd2c15d6ae4efebc6c954fa340fdc0083464a7a60e8a4b3",
+        "actual_sha256": "51909dcacb2a31678bd2c15d6ae4efebc6c954fa340fdc0083464a7a60e8a4b3",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/figure_temperature_gap.png",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/figure_temperature_gap.png",
+        "expected_size_bytes": 55333,
+        "actual_size_bytes": 55333,
+        "expected_sha256": "1f1a0780afd71c1d40152f12584b6aaf1ff6108752b567ac53966a573f51acad",
+        "actual_sha256": "1f1a0780afd71c1d40152f12584b6aaf1ff6108752b567ac53966a573f51acad",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/figure_temperature_gap.svg",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/figure_temperature_gap.svg",
+        "expected_size_bytes": 47590,
+        "actual_size_bytes": 47590,
+        "expected_sha256": "e9b95b6023006c32ee2eae1469011f0d7f3be2802aae451fa65db2029187bf2c",
+        "actual_sha256": "e9b95b6023006c32ee2eae1469011f0d7f3be2802aae451fa65db2029187bf2c",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/formal_statistics.csv",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/formal_statistics.csv",
+        "expected_size_bytes": 2801255,
+        "actual_size_bytes": 2801255,
+        "expected_sha256": "2cfe85fe19bf569ebd454e1e2d6d578728cf30cfc4bc4058834da0b6e81c3090",
+        "actual_sha256": "2cfe85fe19bf569ebd454e1e2d6d578728cf30cfc4bc4058834da0b6e81c3090",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/gates.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/gates.md",
+        "expected_size_bytes": 17214,
+        "actual_size_bytes": 17214,
+        "expected_sha256": "5e636573a06a9a319d99e9b7068346334abc33609fe3104d31202a6ff13aaf5e",
+        "actual_sha256": "5e636573a06a9a319d99e9b7068346334abc33609fe3104d31202a6ff13aaf5e",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/information.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/information.md",
+        "expected_size_bytes": 5809,
+        "actual_size_bytes": 5809,
+        "expected_sha256": "52d048cbb3bb7b6e635113a7065a6b6755a36105e42728927283de0a3e957dc7",
+        "actual_sha256": "52d048cbb3bb7b6e635113a7065a6b6755a36105e42728927283de0a3e957dc7",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/main_tables.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/main_tables.md",
+        "expected_size_bytes": 2964,
+        "actual_size_bytes": 2964,
+        "expected_sha256": "3023fc73266df71170af03b3018e16c234b2f16292e3eb35b07931f3429ae07f",
+        "actual_sha256": "3023fc73266df71170af03b3018e16c234b2f16292e3eb35b07931f3429ae07f",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/mechanism.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/mechanism.md",
+        "expected_size_bytes": 6982,
+        "actual_size_bytes": 6982,
+        "expected_sha256": "a1db85756737aadce7b31ec71de4ec9f8a9668e373627d3080ced16d8366d7a3",
+        "actual_sha256": "a1db85756737aadce7b31ec71de4ec9f8a9668e373627d3080ced16d8366d7a3",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/publication/statistics.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/publication/statistics.md",
+        "expected_size_bytes": 281504,
+        "actual_size_bytes": 281504,
+        "expected_sha256": "5471aadbaa8b5305e0d762da31996d936322e3e037c8928542ff93102287cb5c",
+        "actual_sha256": "5471aadbaa8b5305e0d762da31996d936322e3e037c8928542ff93102287cb5c",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "scripts/verify_repair_inputs.py",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/scripts/verify_repair_inputs.py",
+        "expected_size_bytes": 4452,
+        "actual_size_bytes": 4452,
+        "expected_sha256": "0739fc278ca2b741fbfbe2b553fec42867ff86bad6e873db0f832961e3ab1cee",
+        "actual_sha256": "0739fc278ca2b741fbfbe2b553fec42867ff86bad6e873db0f832961e3ab1cee",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "scripts/verify_repair_estimates.py",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/scripts/verify_repair_estimates.py",
+        "expected_size_bytes": 9627,
+        "actual_size_bytes": 9627,
+        "expected_sha256": "fd1b424183628d576dd98137a5720e1a4ef788b07d9a92c1ccb2b51843150e4c",
+        "actual_sha256": "fd1b424183628d576dd98137a5720e1a4ef788b07d9a92c1ccb2b51843150e4c",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/logs/stored_estimate_verification.json",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/logs/stored_estimate_verification.json",
+        "expected_size_bytes": 21429,
+        "actual_size_bytes": 21429,
+        "expected_sha256": "106f63a35d82e2940cd83e99c91b536eb696c6127418e06bd54d5e4f0106e1f1",
+        "actual_sha256": "106f63a35d82e2940cd83e99c91b536eb696c6127418e06bd54d5e4f0106e1f1",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "docs/phase0a_interpretation.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/docs/phase0a_interpretation.md",
+        "expected_size_bytes": 7548,
+        "actual_size_bytes": 7548,
+        "expected_sha256": "82bb1695c6193723bdde328828d2ae857b424855e933143a2c6a2acfcb67b71f",
+        "actual_sha256": "82bb1695c6193723bdde328828d2ae857b424855e933143a2c6a2acfcb67b71f",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "docs/paper_blueprint_v1.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/docs/paper_blueprint_v1.md",
+        "expected_size_bytes": 6247,
+        "actual_size_bytes": 6247,
+        "expected_sha256": "f1fce6c79ca141359cda4c2c383ebf2811fb41d19defbf223394ed445a301d8d",
+        "actual_sha256": "f1fce6c79ca141359cda4c2c383ebf2811fb41d19defbf223394ed445a301d8d",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/registry/artifact_index.json",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/registry/artifact_index.json",
+        "expected_size_bytes": 136577,
+        "actual_size_bytes": 136577,
+        "expected_sha256": "4d514a603c0ccbad8dbaf88890bc78e607010e7c09df10e95221326172420078",
+        "actual_sha256": "4d514a603c0ccbad8dbaf88890bc78e607010e7c09df10e95221326172420078",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/registry/candidates_tables.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/registry/candidates_tables.md",
+        "expected_size_bytes": 136043,
+        "actual_size_bytes": 136043,
+        "expected_sha256": "7b6fe5e1e4b8f20d9b17ac0adddfa0a9be552e1e3b64ed9f59837acacd4cccf3",
+        "actual_sha256": "7b6fe5e1e4b8f20d9b17ac0adddfa0a9be552e1e3b64ed9f59837acacd4cccf3",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/registry/historical_corrections.json",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/registry/historical_corrections.json",
+        "expected_size_bytes": 4295,
+        "actual_size_bytes": 4295,
+        "expected_sha256": "41e507a65892815109f971f66eb0041ead4f9a09d549841cb3b9abd93a7f6f81",
+        "actual_sha256": "41e507a65892815109f971f66eb0041ead4f9a09d549841cb3b9abd93a7f6f81",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/registry/historical_corrections.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/registry/historical_corrections.md",
+        "expected_size_bytes": 1669,
+        "actual_size_bytes": 1669,
+        "expected_sha256": "b22d33365da85b53ab72db604634f5812568d721e10e593b449ae470c2c0f478",
+        "actual_sha256": "b22d33365da85b53ab72db604634f5812568d721e10e593b449ae470c2c0f478",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/registry/index.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/registry/index.md",
+        "expected_size_bytes": 2000,
+        "actual_size_bytes": 2000,
+        "expected_sha256": "67607b85778fde4f34088633b12f6a8bb6a60e856fbe1e5d3db7a19985613df7",
+        "actual_sha256": "67607b85778fde4f34088633b12f6a8bb6a60e856fbe1e5d3db7a19985613df7",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/registry/information_tables.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/registry/information_tables.md",
+        "expected_size_bytes": 448886,
+        "actual_size_bytes": 448886,
+        "expected_sha256": "57d32f0275ab779156a64931a1a74991eb08ead7ebe126f4954368e58091e273",
+        "actual_sha256": "57d32f0275ab779156a64931a1a74991eb08ead7ebe126f4954368e58091e273",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/registry/mechanism_tables.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/registry/mechanism_tables.md",
+        "expected_size_bytes": 116756,
+        "actual_size_bytes": 116756,
+        "expected_sha256": "56bf7726518ecd4f75ad138702824ca9f4b50e9fb18524a3ba522bf9a76298a4",
+        "actual_sha256": "56bf7726518ecd4f75ad138702824ca9f4b50e9fb18524a3ba522bf9a76298a4",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/registry/statistics_tables.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/registry/statistics_tables.md",
+        "expected_size_bytes": 2574,
+        "actual_size_bytes": 2574,
+        "expected_sha256": "806d7953e9e4aa622905e6c98dd5fc66db1eb0d3cc957a5d6b1a56da9c8f0d98",
+        "actual_sha256": "806d7953e9e4aa622905e6c98dd5fc66db1eb0d3cc957a5d6b1a56da9c8f0d98",
+        "exists": true,
+        "matches_manifest": true
+      },
+      {
+        "canonical_path": "results/research_repair_v1/registry/test_corrections.md",
+        "preserved_path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/prior_delivery/registry/test_corrections.md",
+        "expected_size_bytes": 2211,
+        "actual_size_bytes": 2211,
+        "expected_sha256": "ca065e37fcd7b791c805ece1b0ae499e430b2d88a8c4071c82968f15eb1e92e4",
+        "actual_sha256": "ca065e37fcd7b791c805ece1b0ae499e430b2d88a8c4071c82968f15eb1e92e4",
+        "exists": true,
+        "matches_manifest": true
+      }
+    ]
+  },
+  "canonical_original_checks": [
+    {
+      "path": "results/research_repair_v1/logs/acceptance_check.json",
+      "preserved_sha256": "fcdb22503aa8923dc0dc834aad766841a2c3ff740dda7ce03a9da2b203a83918",
+      "current_exists": true,
+      "current_sha256": "fcdb22503aa8923dc0dc834aad766841a2c3ff740dda7ce03a9da2b203a83918",
+      "byte_identical_to_preserved_copy": true
+    },
+    {
+      "path": "results/research_repair_v1/logs/pytest_full_final.log",
+      "preserved_sha256": "4e8d42370c3cf80994a7613657f31c39aaad8ba60740b5c8ce1b875427339813",
+      "current_exists": true,
+      "current_sha256": "4e8d42370c3cf80994a7613657f31c39aaad8ba60740b5c8ce1b875427339813",
+      "byte_identical_to_preserved_copy": true
+    },
+    {
+      "path": "results/research_repair_v1/logs/pytest_full_final.xml",
+      "preserved_sha256": "c7d89efbdce37f0a9b08c829bc116f14b0f7d9d556972d4f8facc732d4565f7d",
+      "current_exists": true,
+      "current_sha256": "c7d89efbdce37f0a9b08c829bc116f14b0f7d9d556972d4f8facc732d4565f7d",
+      "byte_identical_to_preserved_copy": true
+    },
+    {
+      "path": "results/research_repair_v1/logs/final_test_sources.json",
+      "preserved_sha256": "b4cf56cea419fa848665de37b6d332cd811c9ce741ec1918810e9c8d36cb3cc5",
+      "current_exists": true,
+      "current_sha256": "b4cf56cea419fa848665de37b6d332cd811c9ce741ec1918810e9c8d36cb3cc5",
+      "byte_identical_to_preserved_copy": true
+    },
+    {
+      "path": "reviews/acceptance_2026-10-04/verdict.json",
+      "preserved_sha256": "c8cfa2a70c30cc4813d8f9b697b5df1545ce8a1a5fab94713681b2601fee495e",
+      "current_exists": true,
+      "current_sha256": "c8cfa2a70c30cc4813d8f9b697b5df1545ce8a1a5fab94713681b2601fee495e",
+      "byte_identical_to_preserved_copy": true
+    },
+    {
+      "path": "results/research_repair_v1/logs/stored_estimate_verification.json",
+      "preserved_sha256": "106f63a35d82e2940cd83e99c91b536eb696c6127418e06bd54d5e4f0106e1f1",
+      "current_exists": true,
+      "current_sha256": "106f63a35d82e2940cd83e99c91b536eb696c6127418e06bd54d5e4f0106e1f1",
+      "byte_identical_to_preserved_copy": true
+    }
+  ],
+  "canonical_originals_all_byte_identical": true,
+  "metric_endpoint_parity_addendum": {
+    "path": "results/research_repair_v1/independent_closeouts/20261004T031921Z/statistics/metric_endpoint_parity_docstring_addendum.json",
+    "sha256": "e6939821931e19cbe3c56e589d92e172354c534c564e99fdacee6396d9cfb43a",
+    "status": "PASS_DOCSTRING_ONLY_SOURCE_UPDATE_INHERITS_EXACT_ENDPOINT_PARITY"
+  },
+  "scope_note": "This QA did not modify formal predictions, raw replicates, summaries, acceptance records, verdicts, or canonical input evidence. A separate root-directed documentation correction changed only two docstring passages in src/ccg/metrics/selective.py; its exact prior-source reconstruction and inherited endpoint parity are recorded in metric_endpoint_parity_docstring_addendum.json. The raw identity check is a current closeout comparison and cannot establish or replace a missing pre-derive raw SHA snapshot.",
+  "result": "PASS"
+}

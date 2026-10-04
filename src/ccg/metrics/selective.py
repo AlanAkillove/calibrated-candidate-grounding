@@ -134,7 +134,7 @@ def risk_at_coverage(confidence: Any, correctness: Any, coverage_level: float) -
 
 
 # ---------------------------------------------------------------------------
-# base-rate-aware / accuracy-normalised selective metrics (Phase 0A.1)
+# accuracy-conditioned selective metrics (Phase 0A.1)
 # ---------------------------------------------------------------------------
 def oracle_aurc(error_rate: float) -> float:
     """AURC of an *oracle* confidence ranking at a given full-set error rate.
@@ -147,10 +147,13 @@ def oracle_aurc(error_rate: float) -> float:
 
     with the conventions ``oracle_aurc(0) = 0`` and ``oracle_aurc(1) = 1`` (the
     latter is the limiting value; ``0 * ln(0)`` is taken to be ``0``).  This is
-    the accuracy-normalisation baseline that removes the AURC / base-error-rate
-    coupling: a *worse* error rate depresses the curve, so raw AURC alone cannot
-    be compared across K.  ``ln(1 - r)`` is evaluated with :func:`numpy.log1p`
-    for accuracy near ``r = 0``.
+    the best-achievable continuous reference curve at the observed error rate.
+    It is not a guaranteed lower bound for finite-sample trapezoidal AURC. Raw AURC
+    includes base-error-rate effects, and subtracting this reference does not
+    make E-AURC independent of accuracy: even an uninformative confidence
+    ranking has accuracy-dependent E-AURC. Compare it alongside accuracy and
+    correctness discrimination. ``ln(1 - r)`` is evaluated with
+    :func:`numpy.log1p` for accuracy near ``r = 0``.
 
     Parameters
     ----------
@@ -168,12 +171,17 @@ def oracle_aurc(error_rate: float) -> float:
 
 
 def e_aurc(aurc_value: float, accuracy: float) -> float:
-    """Excess AURC over the oracle bound: ``AURC - oracle_aurc(1 - accuracy)``.
+    """Excess AURC over the continuous oracle reference: ``AURC - oracle_aurc(1 - accuracy)``.
 
-    ``E-AURC >= 0``: how far the confidence ordering is from the best possible
-    ordering *at that accuracy*.  Subtracting the oracle term removes the
-    monotone dependence of raw AURC on the base error rate, so two candidate-set
-    sizes (or two variants) with different accuracies become comparable.
+    Here AURC is the trapezoidal integral over the finite-sample risk-coverage
+    points, while ``oracle_aurc`` is a continuous reference formula at the same
+    observed accuracy. Those are different discretizations, so their
+    difference can be negative in finite samples, even when confidence ranks
+    the samples in oracle order. Preserve the defined difference as computed;
+    do not clamp it to zero. The oracle term conditions the reference on the
+    observed accuracy, and E-AURC can still change with accuracy even when
+    confidence carries no information about correctness, so it is not a pure
+    accuracy-independent ranking measure.
     """
     value = float(aurc_value)
     if not np.isfinite(value):

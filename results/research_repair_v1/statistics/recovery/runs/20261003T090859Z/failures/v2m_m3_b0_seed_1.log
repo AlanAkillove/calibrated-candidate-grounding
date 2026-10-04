@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_legacy_model_recovery.py", line 696, in _recover_m25_and_b0
+    result = b0._run_seed(
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\run_v2m_m3_b0.py", line 472, in _run_seed
+    f"{float(np.mean([r['diff'] for r in boot_rows if r['level'] == level and r['model_a'] == 'AdaptiveMix' and r['model_b'] == 'StaticMix' and r['metric'] == 'auroc_correct'])):+.4f}"
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\run_v2m_m3_b0.py", line 472, in <listcomp>
+    f"{float(np.mean([r['diff'] for r in boot_rows if r['level'] == level and r['model_a'] == 'AdaptiveMix' and r['model_b'] == 'StaticMix' and r['metric'] == 'auroc_correct'])):+.4f}"
+KeyError: 'model_a'
+

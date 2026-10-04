@@ -1,0 +1,10 @@
+[15:20:22] [repair-candidates] loading frozen prediction identities and RefCOCO+ annotation joins
+[15:20:37] [repair-candidates] RPN: random K5=10425, random K10=10425, V2 hard K5=9623
+[15:20:41] [repair-candidates] DETR: random K5=10601, random K10=10601, V2 hard K5=8376
+[15:20:41] [repair-candidates] loading COCO objects for 1500 audited images
+[15:21:00] [repair-candidates] RPN: assigned COCO categories for 1494 proposal banks
+[15:21:05] [repair-candidates] DETR: assigned COCO categories for 1500 proposal banks
+[15:21:06] [repair-candidates] summarizing expression/category/image/object mismatch tables
+[15:21:06] [repair-candidates] mismatch detected; building versioned true-target-category candidates
+[15:23:05] [repair-candidates] completed: mismatches=138/21026; corrected construction=True
+candidate audit complete: AUDIT_COMPLETE_MISMATCH_FOUND mismatch=138/21026 output=F:\DL Projects\calibrated-candidate-grounding\results\research_repair_v1\candidates\audit_run_20261003_Cslot_audit4 pointer=results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/summary.json

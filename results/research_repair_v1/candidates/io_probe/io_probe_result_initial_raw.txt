@@ -1,0 +1,18 @@
+{
+  "basic.csv": {
+    "write": "ok",
+    "size": 10
+  },
+  "candidate_geometry_sensitivity_per_expression_probe.csv": {
+    "write": "ok",
+    "size": 10
+  },
+  "replace": {
+    "result": "ok",
+    "content": "atomic\\n"
+  },
+  "existing_append_open": {
+    "result": "ok",
+    "size": 41443997
+  }
+}\n

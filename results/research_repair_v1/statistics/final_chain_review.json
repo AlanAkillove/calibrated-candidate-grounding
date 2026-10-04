@@ -1,0 +1,175 @@
+{
+  "schema": "ccg.research_repair_v1.statistics.final_chain_review.v1",
+  "reviewed_utc": "2026-10-03T17:58:57.856900+00:00",
+  "status": "ROOT_ACCEPTANCE_PASS",
+  "statistics": {
+    "status_json_status": "PARTIAL_SCOPE_COMPLETE",
+    "completed_jobs": 59,
+    "estimate_count": 6646,
+    "replicates": 5000,
+    "coverage_scope_count": 16,
+    "coverage_status_counts": {
+      "FORMAL_5000_COMPLETE": 15,
+      "UNVERIFIABLE": 1
+    },
+    "gate_count": 23,
+    "gate_status_counts": {
+      "NOT_APPLICABLE": 2,
+      "EVALUATED": 20,
+      "UNVERIFIABLE": 1
+    },
+    "pending_gate_count": 0,
+    "m2_job_estimate_count": 282,
+    "m2_derived_estimate_present": true
+  },
+  "immutable_run_identity": {
+    "launch_manifest": {
+      "path": "results/research_repair_v1/statistics/formal_batches/20261003T133926Z/launch_manifest.json",
+      "sha256": "0d5095416e1a35524f80dc6dbbf2016462f79cc70c8c5660d6265f59a7cb6511",
+      "expected_sha256": "0d5095416e1a35524f80dc6dbbf2016462f79cc70c8c5660d6265f59a7cb6511",
+      "matches_recorded": true
+    },
+    "preflight": {
+      "path": "results/research_repair_v1/statistics/preflight.json",
+      "sha256": "66aca3d94296f55f5407548f0019108afde46820f05eb8b6d857168378d1ce10",
+      "expected_sha256": "66aca3d94296f55f5407548f0019108afde46820f05eb8b6d857168378d1ce10",
+      "matches_recorded": true
+    },
+    "frozen_statistics_source": {
+      "path": "results/research_repair_v1/statistics/formal_batches/20261003T133926Z/source_snapshot/scripts/repair_statistics.py",
+      "sha256": "e426e40d778233b6c8e93f0c4eeb5b2459da42005042d2586ee4dc73c195850e",
+      "expected_sha256": "e426e40d778233b6c8e93f0c4eeb5b2459da42005042d2586ee4dc73c195850e",
+      "matches_recorded": true
+    },
+    "launch_manifest_mutated": false
+  },
+  "derived_m2_estimate": {
+    "name": "m8__LCR_E1b_relative_eaurc_reduction",
+    "job_id": "m2_curriculum_m0_m2_m4_m8",
+    "job_estimate_count": 282,
+    "point": -0.03395720018099881,
+    "ci": [
+      -0.05759964912852949,
+      -0.011061452466178219
+    ],
+    "n_replicates": 5000,
+    "valid_replicates": 5000,
+    "invalid_replicates": 0,
+    "gate_eligible": true,
+    "source_raw": "results/research_repair_v1/statistics/raw_replicates/m2_curriculum_m0_m2_m4_m8.npz",
+    "source_raw_sha256_at_derivation": "15d6cbdc08adb6c97d8d3bc5daa134d2b9d0879b69221ae06ef4dce054562ce9",
+    "derived_raw": "results/research_repair_v1/statistics/raw_replicates/m2_curriculum_m0_m2_m4_m8__m2_relative_auxiliary.npz",
+    "derived_raw_sha256": "747a6097aeb9c0c6ee724df9ec213daba8e13864050161a3ef8d9a03d5eb5738",
+    "independent_verification": {
+      "path": "results/research_repair_v1/logs/m2_auxiliary_verification_final_20261004.json",
+      "sha256": "c664a5f73657454d2db7023288ea4cd7acbfa7070507ccc926c1999d4221e6bd",
+      "status": "PASS",
+      "same_index_per_seed": true,
+      "ledger_name_set_exact": true
+    }
+  },
+  "post_refresh_artifacts": {
+    "summary": {
+      "path": "results/research_repair_v1/statistics/summary.json",
+      "sha256": "99985fb91509d25c837d1d6b0aef9a3a5d6fbaf153fac83ddcfeb3de75e46114"
+    },
+    "coverage": {
+      "path": "results/research_repair_v1/statistics/required_scope_coverage.json",
+      "sha256": "1fa106ecaa4698bebb4d458877ff704350c80fec6b566021c14eb895cfa29764"
+    },
+    "gates": {
+      "path": "results/research_repair_v1/statistics/gate_decisions.json",
+      "sha256": "6b75ec238d6ac199f278c2d895e482b98202821644766a7a8efe00f2fd991c38"
+    },
+    "status": {
+      "path": "results/research_repair_v1/statistics/status.json",
+      "sha256": "3ff0e1e56f1fb4bbe1fb9529a19e82cddd4977b7d7b640e42aaf6e5813ca892e"
+    },
+    "count_reconciliation": {
+      "path": "results/research_repair_v1/statistics/count_reconciliation.json",
+      "sha256": "bd7ecb7a5c324700cc2aae2764fd7aba4a946aea8d0dbb14619a740bb24c9316",
+      "status": "COMPLETE_DERIVED_M2_REFRESHED_GATES_EVALUATED"
+    }
+  },
+  "raw_replicate_verification": {
+    "path": "results/research_repair_v1/logs/stored_estimate_verification.json",
+    "sha256": "106f63a35d82e2940cd83e99c91b536eb696c6127418e06bd54d5e4f0106e1f1",
+    "status": "PASS",
+    "failures": [],
+    "statistics_estimate_count": 6646,
+    "statement": "Current raw archives were independently checked for stored replicate values and percentile summaries; this report records their current size/SHA256.",
+    "historical_sha_boundary": "No pre-derive SHA snapshot was found for all pre-existing raw archives. Therefore this review does not claim universal before/after SHA equality. The M2 source archive has a derivation-time SHA and the derived archive has a recorded output SHA."
+  },
+  "frozen_derivation_sources": [
+    {
+      "path": "scripts/derive_m2_gate_estimate.py",
+      "snapshot_path": "results/research_repair_v1/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/scripts/derive_m2_gate_estimate.py",
+      "sha256": "17a8866799999e478df9ac3ad5e27d0a36029c8cad023cb3ef7d2deac24b2d92"
+    },
+    {
+      "path": "src/ccg/repairs/m2_auxiliary.py",
+      "snapshot_path": "results/research_repair_v1/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/src/ccg/repairs/m2_auxiliary.py",
+      "sha256": "748d4c762baec8e84f88b377df2254a5b3875c106e1556bd980c5e6097b27942"
+    },
+    {
+      "path": "src/ccg/repairs/bootstrap.py",
+      "snapshot_path": "results/research_repair_v1/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/src/ccg/repairs/bootstrap.py",
+      "sha256": "67a26f3768f921a5429124b9d0d490bb8e62fb5a2ec1977f6108313cb93126da"
+    },
+    {
+      "path": "src/ccg/repairs/statistics.py",
+      "snapshot_path": "results/research_repair_v1/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/src/ccg/repairs/statistics.py",
+      "sha256": "2f33379aa8c3b9770dd7794949f80b6223b3622ed2592bb398d3dc7b9e2ff06a"
+    },
+    {
+      "path": "scripts/refresh_repair_gate_decisions.py",
+      "snapshot_path": "results/research_repair_v1/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/scripts/refresh_repair_gate_decisions.py",
+      "sha256": "0419e0ddfbd0aa117553eb526af5d14a9834de42e70d6ec048fad939b0e7af5b"
+    },
+    {
+      "path": "src/ccg/repairs/legacy_gate_predicates.py",
+      "snapshot_path": "results/research_repair_v1/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot/src/ccg/repairs/legacy_gate_predicates.py",
+      "sha256": "762ff7330cb63bc0e1244243fe1da21f848036e66e3f63c5aaecd3b65d6bf089"
+    }
+  ],
+  "input_integrity": {
+    "path": "results/research_repair_v1/logs/final_input_verification.json",
+    "sha256": "2edae66cf8d0e2b06bac67d630a5d89edc729829dd9ee0d84f2acaf542fad41d",
+    "status": "PASS",
+    "verified_utc": "2026-10-03T17:52:01.874766+00:00",
+    "unique_files": 834,
+    "changed": [],
+    "append_only_git_prefix_checks": [
+      {
+        "path": "docs/research_protocol.md",
+        "base_commit": "07e15a66056436fcecb880c5aa2d75354beefe26",
+        "git_blob_sha256": "ff76ae285812143355243d5c415ad9dd63a4f64dc5fbcb8db22aecebeee13548",
+        "git_prefix_preserved_after_newline_normalization": true
+      },
+      {
+        "path": "docs/experiment_log.md",
+        "base_commit": "07e15a66056436fcecb880c5aa2d75354beefe26",
+        "git_blob_sha256": "4e4057e2cbe68677ffbcd05809daf5eda459dff0adc679485819d6d764c59ac7",
+        "git_prefix_preserved_after_newline_normalization": true
+      }
+    ]
+  },
+  "snapshot_path_corrections": {
+    "path": "results/research_repair_v1/statistics/snapshot_path_corrections.json",
+    "sha256": "2cdf0aa94ab53556778bd2c58366f06b867ad7bb97ac084bf94402c30b11c235",
+    "corrected_reference_count": 6
+  },
+  "root_acceptance": {
+    "path": "results/research_repair_v1/logs/acceptance_check.json",
+    "sha256": "fcdb22503aa8923dc0dc834aad766841a2c3ff740dda7ce03a9da2b203a83918",
+    "status": "PASS",
+    "checked_utc": "2026-10-03T18:04:07.105393+00:00",
+    "failures": []
+  },
+  "final_document_close": {
+    "gate_decisions_path": "results/research_repair_v1/statistics/gate_decisions.json",
+    "gate_decisions_sha256": "a9a317a499977d175968976b51c928c854f621bd2583e65f678ab67bcdcc71c6",
+    "acceptance_path": "results/research_repair_v1/logs/acceptance_check.json",
+    "acceptance_sha256": "fcdb22503aa8923dc0dc834aad766841a2c3ff740dda7ce03a9da2b203a83918"
+  }
+}

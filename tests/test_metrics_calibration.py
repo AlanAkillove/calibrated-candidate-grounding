@@ -21,6 +21,7 @@ from ccg.metrics.calibration import (
     top_label_ece,
     top_label_ece_adaptive,
 )
+from ccg.metrics.selective import aurc, e_aurc, oracle_aurc, risk_coverage_curve
 
 TOL = 1e-12
 
@@ -60,7 +61,7 @@ def test_temperature_controls_confidence_only() -> None:
     scores = np.array([[4.0, 1.0, -2.0]])
     conf_cold, pred_cold = confidence_from_scores(scores, temperature=1.0)
     conf_hot, pred_hot = confidence_from_scores(scores, temperature=20.0)
-    assert pred_cold.tolist() == pred_hot.tolist() == [0]  # temperature never changes the ranking
+    assert pred_cold.tolist() == pred_hot.tolist() == [0]  # scaling preserves this sample's candidate argmax
     assert conf_hot[0] < conf_cold[0]
     assert conf_cold[0] < 1.0 and conf_hot[0] > 1.0 / 3.0
     conf_sharp, _ = confidence_from_scores(scores, temperature=0.05)
@@ -114,6 +115,22 @@ def test_underconfidence_has_opposite_sign() -> None:
     assert confidence_accuracy_gap(conf, corr) == pytest.approx(-0.2, abs=TOL)
     assert top_label_ece(conf, corr) == pytest.approx(0.2, abs=TOL)
     assert top_label_ece(conf, corr) * confidence_accuracy_gap(conf, corr) < 0
+
+
+def test_finite_sample_eaurc_can_be_negative_for_oracle_ordering() -> None:
+    # The confidence order is already oracle-perfect. The finite curve uses a
+    # trapezoidal area over its two observed points; the reference is continuous.
+    confidence = np.asarray([0.8, 0.3])
+    correctness = np.asarray([1, 0])
+    coverage, risk = risk_coverage_curve(confidence, correctness)
+
+    raw_aurc = aurc(coverage, risk)
+    oracle = oracle_aurc(1.0 - float(np.mean(correctness)))
+    excess = e_aurc(raw_aurc, float(np.mean(correctness)))
+
+    assert raw_aurc == pytest.approx(0.125, abs=TOL)
+    assert oracle == pytest.approx(0.15342640972002736, abs=TOL)
+    assert excess == pytest.approx(-0.028426409720027357, abs=TOL)
 
 
 # --------------------------------------------------------------------------- #

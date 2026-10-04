@@ -1,0 +1,143 @@
+{
+  "schema": "research-repair-v1-candidate-audit-attempt-status-v1",
+  "attempt": 3,
+  "command": "E:/conda/envs/deepminer/python.exe -B scripts/repair_candidates.py --audit",
+  "pid": 34284,
+  "stdout_log": "results/research_repair_v1/candidates/candidate_audit_attempt3.stdout.log",
+  "stderr_log": "results/research_repair_v1/candidates/candidate_audit_attempt3.stderr.log",
+  "outcome": "FAILED_AT_FINAL_ATOMIC_REPLACE",
+  "exception_type": "PermissionError",
+  "winerror": 32,
+  "failure_target": "results/research_repair_v1/candidates/candidate_geometry_sensitivity_per_expression.csv",
+  "temporary_artifact": "results/research_repair_v1/candidates/.candidate_geometry_sensitivity_per_expression.csv.34284.b3e72e29d11a4565b63416f71a2bb0fd.tmp",
+  "temporary_artifact_retained": true,
+  "temporary_artifact_size_bytes": 41443997,
+  "temporary_artifact_sha256": "abeabf73b41ba6adb784715830f85847c1882ecba465d4ac7ba7943aa38b62a4",
+  "temporary_csv_data_rows": 63795,
+  "temporary_csv_header": [
+    "family",
+    "cell",
+    "candidate_source",
+    "source_path",
+    "variant",
+    "sentence_id",
+    "ref_id",
+    "image_id",
+    "ann_id",
+    "area_fraction_mean",
+    "area_fraction_median",
+    "area_fraction_p10",
+    "area_fraction_p90",
+    "area_px2_mean",
+    "area_px2_median",
+    "area_px2_p10",
+    "area_px2_p90",
+    "duplicate_excess_proposals",
+    "duplicate_gt_object_pairs",
+    "geometric_duplicate_pair_fraction",
+    "gt_object_duplicate_fraction",
+    "iou_to_true_target_object_mean",
+    "iou_to_true_target_object_median",
+    "iou_to_true_target_object_p10",
+    "iou_to_true_target_object_p90",
+    "max_iou_to_coco_object_mean",
+    "max_iou_to_coco_object_median",
+    "max_iou_to_coco_object_p10",
+    "max_iou_to_coco_object_p90",
+    "n_distinct_matched_gt_objects",
+    "n_matched_proposals",
+    "n_proposal_iou_pairs_ge_0_5",
+    "n_proposals",
+    "n_proposals_assigned_target_proposal_category",
+    "n_proposals_assigned_target_proposal_gt_object",
+    "n_proposals_assigned_true_target_category",
+    "n_proposals_assigned_true_target_object",
+    "n_unmatched_to_coco_object_iou_ge_0_5",
+    "objectness_mean",
+    "objectness_median",
+    "objectness_p10",
+    "objectness_p90",
+    "proposal_iou_pair_count",
+    "proposals_per_gt_object_json",
+    "true_target_category_id",
+    "unique_gt_object_ids_json"
+  ],
+  "original_partial_size_bytes": 41443997,
+  "original_partial_sha256_after_failure": "abeabf73b41ba6adb784715830f85847c1882ecba465d4ac7ba7943aa38b62a4",
+  "summary_written": false,
+  "source_mismatch_coverage_written": false,
+  "source_candidate_availability_written": false,
+  "updated_partial_outputs": [
+    {
+      "path": ".candidate_geometry_sensitivity_per_expression.csv.34284.b3e72e29d11a4565b63416f71a2bb0fd.tmp",
+      "size_bytes": 41443997,
+      "mtime_epoch": 1790995222.8587463
+    },
+    {
+      "path": "availability_intersection.csv",
+      "size_bytes": 1373,
+      "mtime_epoch": 1790995216.767131
+    },
+    {
+      "path": "candidate_audit_attempt3.stderr.log",
+      "size_bytes": 1072,
+      "mtime_epoch": 1790995223.2492664
+    },
+    {
+      "path": "candidate_audit_attempt3.stdout.log",
+      "size_bytes": 721,
+      "mtime_epoch": 1790995101.010389
+    },
+    {
+      "path": "candidate_geometry_historical_source_summary.csv",
+      "size_bytes": 9225,
+      "mtime_epoch": 1790995220.4282267
+    },
+    {
+      "path": "candidate_geometry_sensitivity_summary.csv",
+      "size_bytes": 9256,
+      "mtime_epoch": 1790995220.4312286
+    },
+    {
+      "path": "candidate_geometry_supply_intersection_per_expression.csv",
+      "size_bytes": 60437150,
+      "mtime_epoch": 1790995219.5758164
+    },
+    {
+      "path": "candidate_geometry_supply_intersection_summary.csv",
+      "size_bytes": 11396,
+      "mtime_epoch": 1790995216.7701318
+    },
+    {
+      "path": "candidate_sets_true_target_category_v1.npz",
+      "size_bytes": 1491524,
+      "mtime_epoch": 1790995220.3874407
+    },
+    {
+      "path": "mismatch_by_category.csv",
+      "size_bytes": 4037,
+      "mtime_epoch": 1790995216.719376
+    },
+    {
+      "path": "mismatch_by_expression.csv",
+      "size_bytes": 2353074,
+      "mtime_epoch": 1790995216.70926
+    },
+    {
+      "path": "mismatch_by_image.csv",
+      "size_bytes": 55278,
+      "mtime_epoch": 1790995216.741474
+    },
+    {
+      "path": "mismatch_by_object.csv",
+      "size_bytes": 384492,
+      "mtime_epoch": 1790995216.763132
+    },
+    {
+      "path": "mismatch_category_confusion.csv",
+      "size_bytes": 251119,
+      "mtime_epoch": 1790995216.7343853
+    }
+  ],
+  "generated_utc": "2026-10-03T02:52:06Z"
+}

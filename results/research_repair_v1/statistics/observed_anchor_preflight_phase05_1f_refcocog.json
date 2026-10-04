@@ -1,0 +1,3612 @@
+{
+  "schema": "ccg.research_repair_v1.statistics.observed_anchors.v1",
+  "checks": [
+    {
+      "job_id": "phase05_val_select",
+      "scope": "Phase05_score_sufficiency",
+      "cohort": "val_select",
+      "n_rows": 5282,
+      "n_images": 744,
+      "n_seeds": 3,
+      "n_anchors": 504,
+      "anchor_status": "LEGACY_POINT_UNAVAILABLE",
+      "nonfinite_legacy_anchors": [],
+      "legacy_anchor_unavailable": [
+        {
+          "estimate": "margin__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K10::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K20::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K50::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "msp__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K10::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K20::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K50::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "score_deepsets__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K10::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K20::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K50::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "msp__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K10::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K20::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K50::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "score_deepsets__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K10::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K20::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K50::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "msp__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K10::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K20::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K50::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "score_deepsets__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        }
+      ],
+      "recovery_status": "READ_ONLY_PREDICTION_ARTIFACT",
+      "sentence_id_status": "RECONSTRUCTED_BY_ORDERED_CANONICAL_ANCHORS",
+      "evidence": "all scorer CSV rows validated against seed-specific sentence/ref/image/split/K/correct canonical NPZ; repeated ref_id rows retained"
+    },
+    {
+      "job_id": "phase05_testA",
+      "scope": "Phase05_score_sufficiency",
+      "cohort": "testA",
+      "n_rows": 5646,
+      "n_images": 750,
+      "n_seeds": 3,
+      "n_anchors": 640,
+      "anchor_status": "PARTIAL_PASS_OLD_NONFINITE_UNANCHORED",
+      "nonfinite_legacy_anchors": [
+        {
+          "estimate": "crossK__norm_entropy__K20__e_aurc_worsening_relative",
+          "seeds": [
+            "b3_mean",
+            "b3_seed1",
+            "b3_seed2",
+            "b3_seed3"
+          ],
+          "reason": "legacy point is non-finite or absent; no finite-status anchor exists"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K50__e_aurc_worsening_relative",
+          "seeds": [
+            "b3_mean",
+            "b3_seed1",
+            "b3_seed2",
+            "b3_seed3"
+          ],
+          "reason": "legacy point is non-finite or absent; no finite-status anchor exists"
+        }
+      ],
+      "legacy_anchor_unavailable": [
+        {
+          "estimate": "margin__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K10::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K20::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K50::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "msp__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K10::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K20::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K50::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "score_deepsets__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K10::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K20::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K50::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "msp__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K10::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K20::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K50::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "score_deepsets__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K10::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K20::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K50::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "msp__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K10::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K20::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K50::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "score_deepsets__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "crossK__margin__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        }
+      ],
+      "recovery_status": "READ_ONLY_PREDICTION_ARTIFACT",
+      "sentence_id_status": "RECONSTRUCTED_BY_ORDERED_CANONICAL_ANCHORS",
+      "evidence": "all scorer CSV rows validated against seed-specific sentence/ref/image/split/K/correct canonical NPZ; repeated ref_id rows retained"
+    },
+    {
+      "job_id": "phase05_testB",
+      "scope": "Phase05_score_sufficiency",
+      "cohort": "testB",
+      "n_rows": 4640,
+      "n_images": 740,
+      "n_seeds": 3,
+      "n_anchors": 640,
+      "anchor_status": "PARTIAL_PASS_OLD_NONFINITE_UNANCHORED",
+      "nonfinite_legacy_anchors": [
+        {
+          "estimate": "crossK__norm_entropy__K20__e_aurc_worsening_relative",
+          "seeds": [
+            "b3_mean",
+            "b3_seed1",
+            "b3_seed2",
+            "b3_seed3"
+          ],
+          "reason": "legacy point is non-finite or absent; no finite-status anchor exists"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K50__e_aurc_worsening_relative",
+          "seeds": [
+            "b3_mean",
+            "b3_seed1",
+            "b3_seed2",
+            "b3_seed3"
+          ],
+          "reason": "legacy point is non-finite or absent; no finite-status anchor exists"
+        }
+      ],
+      "legacy_anchor_unavailable": [
+        {
+          "estimate": "margin__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K10::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K20::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K50::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "msp__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K10::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K20::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K50::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "score_deepsets__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K10::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K20::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K50::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "msp__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K10::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K20::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K50::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "score_deepsets__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K10::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K20::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K50::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "msp__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K10::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K20::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K50::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "score_deepsets__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "crossK__margin__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        }
+      ],
+      "recovery_status": "READ_ONLY_PREDICTION_ARTIFACT",
+      "sentence_id_status": "RECONSTRUCTED_BY_ORDERED_CANONICAL_ANCHORS",
+      "evidence": "all scorer CSV rows validated against seed-specific sentence/ref/image/split/K/correct canonical NPZ; repeated ref_id rows retained"
+    },
+    {
+      "job_id": "phase05___pooled_test__",
+      "scope": "Phase05_score_sufficiency",
+      "cohort": "__pooled_test__",
+      "n_rows": 10286,
+      "n_images": 1490,
+      "n_seeds": 3,
+      "n_anchors": 640,
+      "anchor_status": "PARTIAL_PASS_OLD_NONFINITE_UNANCHORED",
+      "nonfinite_legacy_anchors": [
+        {
+          "estimate": "crossK__norm_entropy__K20__e_aurc_worsening_relative",
+          "seeds": [
+            "b3_mean",
+            "b3_seed1",
+            "b3_seed2",
+            "b3_seed3"
+          ],
+          "reason": "legacy point is non-finite or absent; no finite-status anchor exists"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K50__e_aurc_worsening_relative",
+          "seeds": [
+            "b3_mean",
+            "b3_seed1",
+            "b3_seed2",
+            "b3_seed3"
+          ],
+          "reason": "legacy point is non-finite or absent; no finite-status anchor exists"
+        }
+      ],
+      "legacy_anchor_unavailable": [
+        {
+          "estimate": "margin__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K10::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K20::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K50::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "msp__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K10::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K20::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K50::ece_adaptive",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::brier_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::nll_binary",
+          "seed": "b3_seed1",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "score_deepsets__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K5::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K10::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K20::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K50::accuracy",
+          "seed": "b3_seed1",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K10::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K20::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K50::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "msp__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K10::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K20::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K50::ece_adaptive",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::brier_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::nll_binary",
+          "seed": "b3_seed2",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "score_deepsets__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K5::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K10::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K20::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K50::accuracy",
+          "seed": "b3_seed2",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K5::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K5::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K10::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K10::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K20::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K20::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "margin__K50::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "margin__K50::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "msp__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "msp__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K5::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K5::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K10::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K10::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K20::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K20::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "norm_entropy__K50::ece_adaptive",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::brier_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "norm_entropy__K50::nll_binary",
+          "seed": "b3_seed3",
+          "reason": "legacy metric value is non-finite for this model/scorer/cohort/K"
+        },
+        {
+          "estimate": "score_deepsets__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "score_deepsets__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_logistic__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K5::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K10::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K20::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "stats_mlp__K50::accuracy",
+          "seed": "b3_seed3",
+          "reason": "legacy reliability_metrics.csv has no b3_accuracy column"
+        },
+        {
+          "estimate": "crossK__margin__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__margin__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__msp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__norm_entropy__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__score_deepsets__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_logistic__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K20__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed1",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed2",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        },
+        {
+          "estimate": "crossK__stats_mlp__K50__e_aurc_worsening_absolute",
+          "seed": "b3_seed3",
+          "reason": "legacy cross-K table reports high-K E-AURC and relative worsening, not the absolute high-minus-low contrast"
+        }
+      ],
+      "recovery_status": "READ_ONLY_PREDICTION_ARTIFACT",
+      "sentence_id_status": "RECONSTRUCTED_BY_ORDERED_CANONICAL_ANCHORS",
+      "evidence": "all scorer CSV rows validated against seed-specific sentence/ref/image/split/K/correct canonical NPZ; repeated ref_id rows retained"
+    },
+    {
+      "job_id": "phase1f_k5_same4",
+      "scope": "Phase1F_hard_semantic",
+      "cohort": "same4",
+      "n_rows": 9487,
+      "n_images": 1424,
+      "n_seeds": 3,
+      "n_anchors": 173,
+      "anchor_status": "PASS",
+      "nonfinite_legacy_anchors": [],
+      "legacy_anchor_unavailable": [],
+      "recovery_status": "READ_ONLY_PREDICTION_ARTIFACT",
+      "sentence_id_status": "VERIFIED_NATIVE_ID",
+      "evidence": "All 6 phase1f prediction NPZs row-aligned on sentence_id/ref_id/image_id; condition-specific correctness and repeated ref IDs are retained."
+    },
+    {
+      "job_id": "phase1f_k10_same9",
+      "scope": "Phase1F_hard_semantic",
+      "cohort": "same9",
+      "n_rows": 6765,
+      "n_images": 1085,
+      "n_seeds": 3,
+      "n_anchors": 172,
+      "anchor_status": "PASS",
+      "nonfinite_legacy_anchors": [],
+      "legacy_anchor_unavailable": [],
+      "recovery_status": "READ_ONLY_PREDICTION_ARTIFACT",
+      "sentence_id_status": "VERIFIED_NATIVE_ID",
+      "evidence": "All 6 phase1f prediction NPZs row-aligned on sentence_id/ref_id/image_id; condition-specific correctness and repeated ref IDs are retained."
+    },
+    {
+      "job_id": "phase1f_dose_same8",
+      "scope": "Phase1F_hard_semantic",
+      "cohort": "same8",
+      "n_rows": 7410,
+      "n_images": 1189,
+      "n_seeds": 3,
+      "n_anchors": 336,
+      "anchor_status": "PASS",
+      "nonfinite_legacy_anchors": [],
+      "legacy_anchor_unavailable": [],
+      "recovery_status": "READ_ONLY_PREDICTION_ARTIFACT",
+      "sentence_id_status": "VERIFIED_NATIVE_ID",
+      "evidence": "All 12 phase1f prediction NPZs row-aligned on sentence_id/ref_id/image_id; condition-specific correctness and repeated ref IDs are retained."
+    },
+    {
+      "job_id": "refcocog_external_rand5_hard5",
+      "scope": "RefCOCOg_external",
+      "cohort": "external_strict",
+      "n_rows": 1890,
+      "n_images": 755,
+      "n_seeds": 3,
+      "n_anchors": 81,
+      "anchor_status": "PASS",
+      "nonfinite_legacy_anchors": [],
+      "legacy_anchor_unavailable": [],
+      "recovery_status": "READ_ONLY_PREDICTION_ARTIFACT",
+      "sentence_id_status": "VERIFIED_NATIVE_ID",
+      "evidence": "Six frozen external prediction NPZs aligned row-by-row on sentence_id/ref_id/image_id; correctness remains seed/cell-specific."
+    }
+  ]
+}

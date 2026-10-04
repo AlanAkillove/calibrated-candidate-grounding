@@ -1,0 +1,28 @@
+{
+  "schema": "research-repair-v1-candidate-audit-count-evidence-v1",
+  "status": "VERIFIED",
+  "summary_source": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/summary.json",
+  "summary_sha256": "d1a7eecac75467a7a46bae3133448451c57aa7a0c8550a4aca1da3cf3fe6cce8",
+  "expression_audit_source": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/mismatch_by_expression.csv",
+  "expression_audit_sha256": "19d59d02523100da64b1eecdc9b4573e08a898077e227abd1cbc96dc48d4e4d9",
+  "audit_record_unit": "family_expression_row",
+  "audit_record_rows": 21026,
+  "distinct_sentence_id_count": 10607,
+  "mismatch_record_count": 138,
+  "mismatch_family_target_object_pair_count": 47,
+  "mismatch_pair_key_fields": [
+    "family",
+    "image_id",
+    "ann_id"
+  ],
+  "by_family": {
+    "DETR": {
+      "audit_record_rows": 10601,
+      "mismatch_record_rows": 52
+    },
+    "RPN": {
+      "audit_record_rows": 10425,
+      "mismatch_record_rows": 86
+    }
+  }
+}

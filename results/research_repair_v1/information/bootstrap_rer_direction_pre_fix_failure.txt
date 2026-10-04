@@ -1,0 +1,50 @@
+Pre-fix regression evidence: the corrected expectation (Full RER minus S+Q RER) was tested against the old runner mapping.
+Command: E:/conda/envs/deepminer/python.exe -B -m pytest tests/test_repair_information_bootstrap.py::test_low_replicate_full_information_bootstrap_fixture_checks_pairing_sign_and_dod -q
+Exit code: 1
+
+STDOUT:
+F                                                                        [100%]
+================================== FAILURES ===================================
+_ test_low_replicate_full_information_bootstrap_fixture_checks_pairing_sign_and_dod _
+
+    def test_low_replicate_full_information_bootstrap_fixture_checks_pairing_sign_and_dod():
+        semantic, cross = _synthetic_tables()
+        flat, calls, raw = iboot._compute_bootstrap(semantic, cross, n_replicates=2, evidence_path="fixture.npz")
+    
+        assert len(calls) == 21  # random(all four K), matched cells, and dose cells; testA/B/pooled
+        assert raw
+        main = next(row for row in flat if row["scope"] == "random" and row["cell"] == "randomK5"
+                    and row["K"] == "5" and row["eval_split"] == "testA"
+                    and row["contrast"] == "Full_minus_S_plus_Q" and row["metric"] == "auroc_correct")
+        rer_gain = next(row for row in flat if row["scope"] == "random" and row["cell"] == "randomK5"
+                        and row["K"] == "5" and row["eval_split"] == "testA"
+                        and row["contrast"] == "Full_minus_S_plus_Q" and row["metric"] == "rer_at_50_gain_pp")
+        eaurc_gain = next(row for row in flat if row["scope"] == "random" and row["cell"] == "randomK5"
+                          and row["K"] == "5" and row["eval_split"] == "testA"
+                          and row["contrast"] == "Full_minus_S_plus_Q" and row["metric"] == "e_aurc_reduction")
+    
+        expected = {"auroc_correct": [], "rer_at_50_gain_pp": [], "e_aurc_reduction": []}
+        for seed in SEEDS:
+            full = semantic[iboot._key(seed, "randomK5", 5, "Full")]
+            sq = semantic[iboot._key(seed, "randomK5", 5, "S+Q")]
+            rows = full["eval_split"] == 0
+            fm = metric_bundle(full["confidence"][rows], full["grounding_correct"][rows], metrics=iboot.METRICS)
+            sm = metric_bundle(sq["confidence"][rows], sq["grounding_correct"][rows], metrics=iboot.METRICS)
+            expected["auroc_correct"].append(fm["auroc_correct"] - sm["auroc_correct"])
+            # RER is a skill score (larger is better), so the gain for
+            # Full_minus_S_plus_Q must be Full minus S+Q, matching the label.
+            expected["rer_at_50_gain_pp"].append(100.0 * (fm["rer_at_50"] - sm["rer_at_50"]))
+            expected["e_aurc_reduction"].append(sm["e_aurc"] - fm["e_aurc"])
+        assert main["point"] == pytest.approx(np.mean(expected["auroc_correct"]))
+>       assert rer_gain["point"] == pytest.approx(np.mean(expected["rer_at_50_gain_pp"]))
+E       assert -22.22222222222223 == 22.22222222222223 ± 2.2e-05
+E         
+E         comparison failed
+E         Obtained: -22.22222222222223
+E         Expected: 22.22222222222223 ± 2.2e-05
+
+tests\test_repair_information_bootstrap.py:122: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_repair_information_bootstrap.py::test_low_replicate_full_information_bootstrap_fixture_checks_pairing_sign_and_dod
+
+STDERR:

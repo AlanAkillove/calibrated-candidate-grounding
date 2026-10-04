@@ -1,0 +1,7 @@
+{
+  "schema": "research-repair-v1-current-audit-pointer-v1",
+  "status": "AUDIT_COMPLETE_MISMATCH_FOUND",
+  "audit_run_id": "20261003_Cslot_audit4",
+  "summary_path": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/summary.json",
+  "summary_sha256": "d1a7eecac75467a7a46bae3133448451c57aa7a0c8550a4aca1da3cf3fe6cce8"
+}

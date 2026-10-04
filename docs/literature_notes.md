@@ -1,6 +1,6 @@
 # Literature Notes — `docs/literature_notes.md`
 
-前序工作笔记。**目的不是罗列引用，而是明确本项目的创新边界**：哪些事情已经被别人做过
+前序工作笔记（含历史计划，target-absence 条目不代表本轮实测）。当前论文依据 Research Repair v1 的三个问题与受控目标在场范围。**目的不是罗列引用，而是明确本项目的创新边界**：哪些事情已经被别人做过
 （因此本项目绝不声称是自己提出的），以及本项目剩下的、真正需要验证的问题是什么。
 
 ## 0. 立场声明（重要）
@@ -27,12 +27,12 @@
 | **RCCF — A Real-Time Cross-Modality Correlation Filtering Method for Referring Expression Comprehension** (Liao et al.) | CVPR 2020 | 把 REC 重构为 phrase-region 相关性过滤/排序，并给出 RefCOCO/RefCOCO+ 的统计口径（我们 §dataset_protocol 引用的数据规模即来自此） | 提供 candidate-based 公式化的合法性；同时是我们的数据规模引用来源 |
 | **SSN — Self-Supervised Set-to-target Network for Visual Grounding by Subquery Matching** (Ding et al.) | CVPR 2021 | 显式使用 "set-to-target" 对齐与负样本来强化 candidate 判别 | 我们的 hardness regime 概念与之相邻；本项目不引入此类辅助任务（第一阶段的 loss 保持简单） |
 | **KLSP — Knowledge Learned from Scenario Prompts in Transformer Helps Visual Grounding** (Chen et al.) | ICCV 2021 | 用 scenario prompts 注入场景先验，在多候选判别式 grounding 中提升表现 | 属于 "更复杂的 candidate-aware 模型" 路线；我们在 Gate Q1/Q2 通过之前**刻意不**走这条路，把它作为对照文献而非 baseline 实现 |
-| **TransVG — Towards End-to-End Visual Grounding with Transformers** (Zhu et al.) | NeurIPS 2022（需查证：常见记为 NeurIPS 2021 / TPAMI 扩展） | 单流 end-to-end transformer 做整体图像 grounding（非显式 candidate 集合） | 说明 "非 candidate-set 接口" 也是主流；本项目的 candidate-set 接口是刻意选择的、面向 vision-agent 部署的设定 |
+| **TransVG — End-to-End Visual Grounding With Transformers** (Deng et al.) | ICCV 2021（[官方](https://openaccess.thecvf.com/content/ICCV2021/html/Deng_TransVG_End-to-End_Visual_Grounding_With_Transformers_ICCV_2021_paper.html)） | 单流 end-to-end transformer 做整体图像 grounding（非显式 candidate 集合） | 说明 "非 candidate-set 接口" 也是主流；本项目的 candidate-set 接口是刻意选择的、面向 vision-agent 部署的设定 |
 | **LAVT — Language-Assisted Vision Transformer** (Yang et al.) | CVPR 2022 | 跨模态分层融合（视觉主干内注入语言 token）做 REC | 我们不用其架构；只说明 "模态融合深度" 与我们的可靠性问题正交 |
 | **VTL — Towards Visual Text Language Reasoning** (Sun et al.) | CVPR 2023 | 把 grounding 拆成对固定 object proposals 的 region-text 匹配与多种推理类型标注 | 与我们共享 "proposals 固定、决策在后" 的结构；我们的问题是该结构下**概率是否可信** |
-| **ReCLIP — A Strong Zero-Shot Baseline for Referring Expression Comprehension** (Subramanian et al.) | ACL 2022 | CLIP + 定位细化（Grad-CAM）即可成为强 zero-shot REC baseline，并指出 CLIP 的 image-text 打分基本不考虑空间关系 | 直接支撑我们的 B1（frozen CLIP cosine）作为**合理且必要**的 baseline；同时提示 CLIP 空间盲区是需要写明的限制（RefCOCO+ 标注采集禁止绝对位置词、更侧重外观可在一定程度上缓解，但关系型与上下文型表达仍可出现：> RefCOCO+ annotation collection prohibits absolute location words, reducing reliance on simple absolute-position shortcuts, while relational and contextual expressions can still occur.） |
+| **ReCLIP — A Strong Zero-Shot Baseline for Referring Expression Comprehension** (Subramanian et al.) | ACL 2022 | 通过 cropping / blurring 隔离 proposal 后用 CLIP 区域打分，另配空间关系解析组件（[官方](https://aclanthology.org/2022.acl-long.357/)）；原笔记的 Grad-CAM 描述撤回 | 直接支撑我们的 B1（frozen CLIP cosine）作为**合理且必要**的 baseline；同时提示 CLIP 空间盲区是需要写明的限制（RefCOCO+ 标注采集禁止绝对位置词、更侧重外观可在一定程度上缓解，但关系型与上下文型表达仍可出现：> RefCOCO+ annotation collection prohibits absolute location words, reducing reliance on simple absolute-position shortcuts, while relational and contextual expressions can still occur.） |
 | **Set-of-Mark (SoM) Prompting** (Yang et al.) | arXiv 2023（需查证 venue） | 给图像区域打上显式标记编号，让 GPT-4V 类模型在 "被提供的候选集合" 中选择 | 说明 "把 candidate set 交给模型选择" 是当前 LVLM 的主流交互形式，因此 candidate-set shift 是现实问题；我们不用 LLM，但动机与之相关 |
-| **Grounding DINO / 检测式 grounding 基础模型** | 2023（需查证） | 端到端 open-set grounding | **本项目不使用、不微调**（prompt 第二十九节明确禁止 Grounding DINO fine-tuning） |
+| **Grounding DINO / 检测式 grounding 基础模型** | 2023（需查证） | 端到端 open-set grounding | V2-P2 已使用其冻结 class-prompt 检测输出作为第三 proposal family；不微调。早期“不使用”的计划描述已过时。 |
 
 ## 2. Hard negatives / 对抗性候选
 
@@ -50,7 +50,7 @@
 | **OMG-LLVA / "Not All Regions Are Paved With Gold"** (Ma et al.) | CVPR 2022（需查证） | 在区域选择任务中显式加入 "no-answer / 背景区域" 的处理 | 支撑 "NONE 是可建模的对象" 这一前提；我们的差别是区分 **synthetic omission vs natural proposal miss** |
 | **ViNoRe / "When and What: Image Region Selection for Grounded VQA"** (Schneider et al.) | EACL/NAACL 2021–2022（需查证） | 让模型同时决定 "选哪个区域" 与 "是否需要区域（no-region）" | 同上，属前序 "可弃权区域选择" 路线 |
 | **GRES / gRefCOCO** (Liu et al.) | CVPR 2023 | 把 referring 任务推广到 zero-target（无匹配）与 multi-target，并提供 GREC/GRES 评测 | 是 "scene-level 目标不存在" 的权威出处；本项目主线更关心 **candidate omission**（目标在图里但候选没提供），把 gRefCOCO 记为后续扩展 |
-| **FineCops-Ref** (Liu et al.) | EMNLP 2024 | 可控难度（object/attribute/multi-hop relation）+ 通过细粒度编辑/生成构造 negative text 与 negative images，专测 reject 能力。**实测核实（2026-09-29）**：官方数据在 figshare article **26048050**，license **CC BY 4.0**；图像域为 **GQA / Visual Genome**（非 COCO）；positive test **9,605 表达 / 4,313 图**，level 1/2/3 = **5,730 / 3,404 / 471**；negative **9,814 text + 8,507 image**；官方 level 定义本身就以 **GQA 精确同名对象** 分层（L1 无同名 / L2 需 1 个 attribute-relation / L3 需 ≥2）；figshare 上**确有 train/val 标注**（故非 evaluation-only），本项目只下载 test | **本项目的 external confirmation 数据集**（Phase 1E / Amendment A9）；我们不参与其榜单、不用其 train/val、不用其官方 CRS 分数（Qwen2-VL/InternVL），只借用其压力条件检验 reliability 结论是否迁移。**F0–F4 可行性审计实测（2026-09-29）**：同一冻结 N=64 RPN 在 GQA 图上 target recall@0.5 仅 **0.7579**（< 0.80 停止线）、same-category K5 可用性仅 **0.1861** → 按指令 §6 判为 **EXTERNAL STOP**，正式 external 评测未获授权（A9.13） |
+| **FineCops-Ref** (Liu et al.) | EMNLP 2024 | 可控难度（object/attribute/multi-hop relation）+ 通过细粒度编辑/生成构造 negative text 与 negative images，专测 reject 能力。**实测核实（2026-09-29）**：官方数据在 figshare article **26048050**，license **CC BY 4.0**；图像域为 **GQA / Visual Genome**（非 COCO）；positive test **9,605 表达 / 4,313 图**，level 1/2/3 = **5,730 / 3,404 / 471**；negative **9,814 text + 8,507 image**；官方 level 定义本身就以 **GQA 精确同名对象** 分层（L1 无同名 / L2 需 1 个 attribute-relation / L3 需 ≥2）；figshare 上**确有 train/val 标注**（故非 evaluation-only），本项目只下载 test | **曾规划的 external confirmation 路线**（Phase 1E / Amendment A9，实际 feasibility STOP）；我们不参与其榜单、不用其 train/val、不用其官方 CRS 分数（Qwen2-VL/InternVL），只借用其压力条件检验 reliability 结论是否迁移。**F0–F4 可行性审计实测（2026-09-29）**：同一冻结 N=64 RPN 在 GQA 图上 target recall@0.5 仅 **0.7579**（< 0.80 停止线）、same-category K5 可用性仅 **0.1861** → 按指令 §6 判为 **EXTERNAL STOP**，正式 external 评测未获授权（A9.13） |
 | **Ref-L4** | 2024（**需查证**：作者、venue 与标注维度未二次确认） | 为 grounding 提供 reasoning length / 难度标签，用于评测 instruction-tuned LVLM | 仅记录为后续扩展候选（难度分层与我们 K/hardness 分层是正交的两种 "难度"） |
 | **"Faithful Query–Region Binding for Frozen-Detector Visual Grounding"** 一类工作 | 2026（检索到，**需查证** 具体出处与是否同行评审） | 在冻结检测器 + 语言绑定的设定下讨论 absent-referent 处理 | 说明 "冻结 detector + 后期决策 + 目标缺失" 已有关注；我们必须把自己的设定与之明确区分（我们聚焦 calibration/selective risk 与 gate 式终止） |
 | **Flat (K+1)-way NONE、max-confidence / margin threshold（本项目 N0/N1/N2）** | — | 简单弃权机制 | 作为 Phase 2 的 baseline 集合；不声称它们是新颖机制 |
@@ -61,11 +61,11 @@
 |---|---|---|---|
 | **Probabilistic Outputs for DNNs and Statistical Implications regarding Training / Temperature Scaling** (Guo, Pleiss, Sun, Weinberger) | ICML 2017 | 现代 DNN 普遍过自信；**单参数 temperature scaling** 在保持 accuracy 的同时显著降低 ECE | 我们的 B2/C1 就是它。我们额外测的是：在 K/hardness shift 下**单个全局 T 是否仍然足够**（这正是 Gate Q2 的核心） |
 | **Platt scaling / Logistic regression model combination** (Platt 1999；Zadrozny & Elkan 2001–2002) | 1999–2002 | 标量校准与分而治之的校准基线 | 与 C3 同族（scalar → calibrated probability）；我们把它作为 stats-only calibrator 的近邻 |
-| **MMCE — Loss Functions for the Calibration of Pixel-wise Object Segmentation and Unlabeled Object Discovery** (Naeini, Cooper, Shepherd, Goldsmith, Cohen) | AAAI 2015 | 提出可微的 Kernel-based calibration error，把校准作为训练目标 | 本项目**不**采用校准损失训练（属 fancy loss 范畴）；只作为 metric 家族参考（MMCE 与 equal-mass binning 的对比） |
+| **MMCE — Trainable Calibration Measures for Neural Networks from Kernel Mean Embeddings** (Kumar, Sarawagi, Jain) | ICML 2018（[官方](https://proceedings.mlr.press/v80/kumar18a.html)） | 提出可微的 Kernel-based calibration error，把校准作为训练目标 | 本项目**不**采用校准损失训练（属 fancy loss 范畴）；只作为 metric 家族参考（MMCE 与 equal-mass binning 的对比） |
 | **Measuring Calibration in Deep Learning (ACE / BACE, adaptive binning)** (Nixon et al.) | JVCI 2019 | 系统比较固定宽 bin 与 **adaptive（等质量）bin**，指出 ECE 的分桶敏感性 | 我们主指标 **top-label ECE 使用 adaptive / equal-mass bins** 的直接依据；也要求报告 bin 数敏感性 |
 | **Soft Calibration Objectives (SCE, S-AvUC; 指出 L2 + equal-mass binning)** (Karandikar et al.) | NeurIPS 2021 | 提出 soft 校准损失，并在评测中强调 **equal-mass binning**、AvUC 等 | 支撑我们对 bins 的选择；其 AvUC 与 risk–coverage/AUC 家族关系可作为 secondary 讨论 |
 | **Calibration Errors and Uncertainty Bars for Grouped Robustness and Adaptation ("All Errors Are Local", ACE-based confidence intervals)** (Varma et al.) | 2022–2023（需查证） | 批评固定分桶 ECE，提出基于 local errors 的校准误差与置信区间 | 与我们的 image-level paired bootstrap 精神一致：**给 reliability 指标配上不确定性** |
-| **Can You Trust Neural Network Under Distribution Shift? Investigating Model Calibration in Transfer Learning** (Ovadia et al.) | ICLR 2019 | 显示域移下校准会显著退化，且简单校准器不一定够 | 概念模板：我们把 "域移" 换成 **candidate-set shift**，并加上 gate 式的 "先证明存在退化、再证明简单方法是否足够" |
+| **Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift** (Ovadia et al.) | NeurIPS 2019（[官方](https://papers.neurips.cc/paper_files/paper/2019/hash/8558cb408c1d76621371888657d2eb1d-Abstract.html)） | 显示域移下校准会显著退化，且简单校准器不一定够 | 概念模板：我们把 "域移" 换成 **candidate-set shift**，并加上 gate 式的 "先证明存在退化、再证明简单方法是否足够" |
 | **Correcting Confidence Calibration for Out-of-distribution Detection (post-hoc calibration under shift)** (Fang et al.) | NeurIPS 2020（需查证） | 用少量源域信息校正目标域置信度 | 与 C2（K-aware T）思路相近：把 "K" 当作条件变量做外推 |
 | **Enabling Calibration in the Zero-shot Inference of Large Vision-Language Models Through Priors** (LeVine et al.) | ICLR 2024（openreview 检索到，卷期需查证） | 发现 CLIP zero-shot 推理存在系统性 miscalibration，并用类先验校正 | 支撑 "CLIP 概率不可信" 的动机；我们的条件变量是 **candidate set**，与之互补 |
 | **"CLIP accuracy is related to the number and size of candidate objects"** (Rentschler et al.) | 2023（**需查证**：本轮检索未定位到权威条目） | 报告 CLIP 的分类性能随候选数量与目标尺寸变化 | 若核实，将成为我们 RQ1 最直接的先行证据（K 影响 accuracy）；我们的推进是把 **calibration / selective risk** 与 accuracy **分离** measurement |
@@ -152,3 +152,9 @@
  testA/testB）。因此合法描述只有 **cross-dataset external validation under a shared COCO visual domain**；
 **不得**写 cross-domain / cross-visual-domain generalization。控制视觉 proposal 域是优势而非缺陷：
 它使外部检验更接近对 **language / candidate-semantic effect 的 replication**。
+
+## Research Repair v1 引用纠正（2026-10-03）
+
+上述四项已返回官方论文页核实并纠正标题、作者/会场和方法描述。TransVG 的官方检索页可读，直接抓取返回403；使用官方检索记录核对。其余标注“需查证”的扩展工作不进入当前论文的事实依据，也不因本轮核实四项而宣称全库已验证。
+
+选择性指标的直接依据补充：[Traub et al., Overcoming Common Flaws in the Evaluation of Selective Classification Systems, NeurIPS 2024](https://proceedings.neurips.cc/paper_files/paper/2024/file/047c84ec50bd8ea29349b996fc64af4b-Paper-Conference.pdf)。E-AURC 仍依赖基础分类性能，本研究保留其选择性效用解释。

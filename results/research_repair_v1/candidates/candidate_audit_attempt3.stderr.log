@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_candidates.py", line 55, in <module>
+    raise SystemExit(main())
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_candidates.py", line 44, in main
+    summary = run_candidate_audit(out_dir=OUT_DIR)
+  File "F:\DL Projects\calibrated-candidate-grounding\src\ccg\repairs\candidates.py", line 1390, in run_candidate_audit
+    _write_csv(out_dir / "candidate_geometry_sensitivity_per_expression.csv",
+  File "F:\DL Projects\calibrated-candidate-grounding\src\ccg\repairs\candidates.py", line 182, in _write_csv
+    os.replace(temp, path)
+PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'F:\\DL Projects\\calibrated-candidate-grounding\\results\\research_repair_v1\\candidates\\.candidate_geometry_sensitivity_per_expression.csv.34284.b3e72e29d11a4565b63416f71a2bb0fd.tmp' -> 'F:\\DL Projects\\calibrated-candidate-grounding\\results\\research_repair_v1\\candidates\\candidate_geometry_sensitivity_per_expression.csv'

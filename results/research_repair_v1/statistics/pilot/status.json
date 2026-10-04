@@ -1,0 +1,18 @@
+{
+  "schema": "ccg.research_repair_v1.statistics.status.v1",
+  "status": "PILOT_COMPLETE_NOT_FORMAL",
+  "updated_utc": "2026-10-03T02:22:51.051785+00:00",
+  "completed_jobs": [
+    "phase0a_testA",
+    "phase0a_testB",
+    "phase0a_val_calib",
+    "phase0a_val_select",
+    "phase0b_testA",
+    "phase0b_testB",
+    "phase0b_val_calib",
+    "phase0b_val_select"
+  ],
+  "n_estimates": 1088,
+  "n_replicates": 5000,
+  "blocking_resource_slot": null
+}

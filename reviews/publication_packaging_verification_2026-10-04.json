@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "roundtrip": {
+    "status": "PASS",
+    "archives_verified": 9,
+    "restored": 9,
+    "existing_identical": 0,
+    "verify_only": false
+  },
+  "idempotent": {
+    "status": "PASS",
+    "archives_verified": 9,
+    "restored": 0,
+    "existing_identical": 9,
+    "verify_only": false
+  },
+  "temporary_directory": "F:\\DL Projects\\calibrated-candidate-grounding\\tmp\\publication_roundtrip_20261004",
+  "originals_modified": false,
+  "scope": "Git publication text hydration only; independent of scientific closeout"
+}

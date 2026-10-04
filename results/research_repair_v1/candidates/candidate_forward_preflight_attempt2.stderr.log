@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_candidate_forward.py", line 86, in <module>
+    raise SystemExit(main())
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_candidate_forward.py", line 42, in main
+    report = run_category_sensitivity_forward(
+  File "F:\DL Projects\calibrated-candidate-grounding\src\ccg\repairs\candidate_forward.py", line 869, in run_category_sensitivity_forward
+    random_refs_by_seed[scorer] = _load_source_reference(random_path, ids["sentence_id"])
+  File "F:\DL Projects\calibrated-candidate-grounding\src\ccg\repairs\candidate_forward.py", line 380, in _load_source_reference
+    raise CandidateForwardError(f"{path}: historical predictions do not contain the candidate common cohort")
+ccg.repairs.candidate_forward.CandidateForwardError: F:\DL Projects\calibrated-candidate-grounding\results\phase1f_hard_semantic\predictions\rand10__b3_seed1.npz: historical predictions do not contain the candidate common cohort

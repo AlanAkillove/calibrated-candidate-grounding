@@ -1,0 +1,10 @@
+{
+  "sources": {
+    "results/research_repair_v1/information/information_bootstrap.csv": "0755e9427fde43b7b7527ac7c62ef49bdb12cde8127a05ae64517bd86e140760",
+    "results/research_repair_v1/mechanism/bootstrap_ci.csv": "7d1b54e6d3dca246fc2fb8435189ec09cdb98c51bfd452486e6b4522b448018a"
+  },
+  "generated_sections": [
+    "paper_assessment_2026-10-04.md"
+  ],
+  "point_source": "formal artifact tables; no model/metric rerun"
+}

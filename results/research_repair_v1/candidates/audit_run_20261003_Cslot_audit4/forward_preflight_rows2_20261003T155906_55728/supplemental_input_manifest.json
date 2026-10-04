@@ -1,0 +1,33 @@
+{
+  "schema": "research-repair-input-manifest-v1",
+  "purpose": "DETR frozen feature-cache input omitted from the prepared 794-file baseline",
+  "baseline_manifest": "results/research_repair_v1/input_manifest.json",
+  "baseline_manifest_sha256": "511499c47659bde0bdf207befac4e6efb41975a8b4f1623b10e469c0b89a334f",
+  "inputs": [
+    {
+      "path": "cache/features_detr_r50/invalid_crops.csv",
+      "size_bytes": 37,
+      "sha256": "f253a00ec4fd95fe6410ec1488274db0fd76fc12a5bb37198199ead2681ab79b"
+    },
+    {
+      "path": "cache/features_detr_r50/metadata.json",
+      "size_bytes": 1685,
+      "sha256": "7dbf56a1fb5f784f8945cefdcdacdf75936a212dfd62f592fcd0aea67aee3e22"
+    },
+    {
+      "path": "cache/features_detr_r50/region_features.h5",
+      "size_bytes": 1317691272,
+      "sha256": "acb198dcd779b0d10d4208759611f120524ee0bf4556e0eda74793a90832f13d"
+    },
+    {
+      "path": "cache/features_detr_r50/text_features.h5",
+      "size_bytes": 154883968,
+      "sha256": "82c0d10195121bcefbf11e2adfab03348377e5aae6a7288e76568b8da25617a1"
+    },
+    {
+      "path": "cache/features_detr_r50/text_index.csv",
+      "size_bytes": 7258137,
+      "sha256": "bc4248b529d9d9c6241b16bc871fe4ce1d43fab6c22213501d852989acaf43a1"
+    }
+  ]
+}

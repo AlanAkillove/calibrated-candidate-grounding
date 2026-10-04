@@ -1,0 +1,8 @@
+[16:07:58] [a11-bundle] b3_seed1: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[16:07:58] [a11-bundle] b3_seed2: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[16:07:58] [a11-bundle] b3_seed3: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[16:08:00] RPN/phase1f_frozen_candidate_archive/hard5: preflight checks first 2 canonical rows
+[16:08:11] RPN/phase1f_frozen_candidate_archive/hard5: forwarded old/new n=2 rows, K=5
+[16:08:11] RPN/phase1f_frozen_candidate_archive/hard10: preflight checks first 2 canonical rows
+[16:08:20] RPN/phase1f_frozen_candidate_archive/hard10: forwarded old/new n=2 rows, K=10
+[16:08:20] RPN/phase1f_frozen_candidate_archive/expb_m0: preflight checks first 2 canonical rows

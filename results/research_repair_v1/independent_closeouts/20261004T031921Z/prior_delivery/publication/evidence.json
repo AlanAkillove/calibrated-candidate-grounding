@@ -1,0 +1,172 @@
+{
+  "schema": "research-repair-publication-v1",
+  "status_snapshot": "COMPLETE",
+  "completion_snapshot": true,
+  "formal_estimates": 6646,
+  "formal_jobs": [
+    "d1_c1_b3_clean",
+    "d1_c1_cosine_b0_clean",
+    "d1_c4_clean",
+    "d2_c1_common_k50",
+    "d2_c4_random_hard5",
+    "m1_k20_random",
+    "m1_k50_random",
+    "m1_random_k5",
+    "m1_random_k5_matched",
+    "m1_samecategory_k5",
+    "m25_specialist_m0_m2_m4_m8",
+    "m2_curriculum_m0_m2_m4_m8",
+    "p1_c1_DETR",
+    "p1_c1_GDINO",
+    "p1_c1_RPN",
+    "p1_c4_DETR",
+    "p1_c4_RPN",
+    "phase05___pooled_test__",
+    "phase05_testA",
+    "phase05_testB",
+    "phase05_val_select",
+    "phase0a___all_common__",
+    "phase0a___pooled_test__",
+    "phase0a_testA",
+    "phase0a_testB",
+    "phase0a_val_calib",
+    "phase0a_val_select",
+    "phase0b___all_common__",
+    "phase0b___pooled_test__",
+    "phase0b_testA",
+    "phase0b_testB",
+    "phase0b_val_calib",
+    "phase0b_val_select",
+    "phase1_fixed___pooled_test__",
+    "phase1_fixed_testA",
+    "phase1_fixed_testB",
+    "phase1_fixed_val_select",
+    "phase1_selected_operational___pooled_test__",
+    "phase1_selected_operational_testA",
+    "phase1_selected_operational_testB",
+    "phase1_selected_operational_val_select",
+    "phase1f_dose_same8",
+    "phase1f_k10_same9",
+    "phase1f_k5_same4",
+    "refcocog_external_rand5_hard5",
+    "v2g_g3_b1___all_common__",
+    "v2g_g3_b1___pooled_test__",
+    "v2g_g3_b1_testA",
+    "v2g_g3_b1_testB",
+    "v2g_g3_b1_val_calib",
+    "v2g_g3_b1_val_select",
+    "v2g_g3_b2___all_common__",
+    "v2g_g3_b2___pooled_test__",
+    "v2g_g3_b2_testA",
+    "v2g_g3_b2_testB",
+    "v2g_g3_b2_val_calib",
+    "v2g_g3_b2_val_select",
+    "v2g_g4_b1",
+    "v2g_g4_b2"
+  ],
+  "source": "results/research_repair_v1/statistics/summary.json",
+  "source_sha256": "99985fb91509d25c837d1d6b0aef9a3a5d6fbaf153fac83ddcfeb3de75e46114",
+  "figures": [
+    "figure_controlled_interface.png",
+    "figure_temperature_gap.png",
+    "figure_expansion_endpoints.png",
+    "figure_information_sources.png",
+    "figure_cross_k_training.png",
+    "figure_mechanism_paths.png"
+  ],
+  "interface_protocol_source": "reviews/repair_protocol.md",
+  "interface_protocol_sha256": "a14b48432896d877497462eb45d412d31aa1339e762442ada5a240103a21058e",
+  "information": {
+    "source": "results/research_repair_v1/information/summary.json",
+    "rows": 1860,
+    "figures": [
+      "figure_information_sources.png",
+      "figure_cross_k_training.png"
+    ],
+    "source_sha256": "ae4b666dd7e518bdbb5241d74908629a1ebd58c90bc027d7845542c4719d9783",
+    "ci_source": "results/research_repair_v1/information/information_bootstrap.csv",
+    "ci_source_sha256": "0755e9427fde43b7b7527ac7c62ef49bdb12cde8127a05ae64517bd86e140760",
+    "method_source": "results/research_repair_v1/information/information_bootstrap.json",
+    "method_source_sha256": "530de847343f2c740d1d159e42db0ada9b477a48abc5850c463b018bd97ac48d",
+    "cellwise_interpretation": "Incremental V signal is not uniformly resolved across reported cells. The central claim is limited to the measured cellwise effects; no general candidate-interaction conclusion follows."
+  },
+  "candidates": {
+    "source": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/summary.json",
+    "audit_status": "AUDIT_COMPLETE_MISMATCH_FOUND",
+    "sensitivity_status": "FORMAL_COMPLETE",
+    "source_sha256": "d1a7eecac75467a7a46bae3133448451c57aa7a0c8550a4aca1da3cf3fe6cce8",
+    "pointer_source": "results/research_repair_v1/candidates/current_audit.json",
+    "pointer_sha256": "8154f21bececf4c595305ab3a8b0c86ca21e1ea95898dbdcfe39a2683ee6e9cd",
+    "audit_run_id": "20261003_Cslot_audit4",
+    "mismatch": {
+      "total_expressions": 21026,
+      "total_mismatches": 138,
+      "overall_rate": 0.006563302577760868,
+      "by_family": {
+        "RPN": {
+          "n_expressions": 10425,
+          "n_mismatches": 86,
+          "mismatch_rate": 0.008249400479616307,
+          "n_unknown_target_proposal_category": 0
+        },
+        "DETR": {
+          "n_expressions": 10601,
+          "n_mismatches": 52,
+          "mismatch_rate": 0.004905197622865768,
+          "n_unknown_target_proposal_category": 0
+        }
+      },
+      "summary_dimensions": [
+        "expression",
+        "true_category",
+        "image",
+        "target_GT_object_ann_id",
+        "proposal_assigned_category/object"
+      ],
+      "unmatched_wording": "proposal not assigned to a COCO object at IoU >= 0.5; never described as nothing"
+    },
+    "sensitivity_rows": 1404,
+    "raw_numerical_qa_status": "PASS",
+    "sensitivity_source": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/sensitivity_bootstrap/summary.json",
+    "sensitivity_source_sha256": "c471927ba20f44bc7ee65ee480ac9954a2e027ea7b1f47cfe05938e37464b550",
+    "sensitivity_csv": "results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/forward/sensitivity_bootstrap/estimates.csv",
+    "sensitivity_csv_sha256": "6caca4080536d1d4fa9fa35950e0ab302c6deac11dc78f3921a17c25689cf4c1",
+    "forward_source_sha256": "ab93b666d64be0925fae8acc09fab2c7b308fc44eb06cc1b52b271c6f01a7250",
+    "raw_numerical_qa_source": "results/research_repair_v1/logs/stored_estimate_verification.json",
+    "raw_numerical_qa_sha256": "106f63a35d82e2940cd83e99c91b536eb696c6127418e06bd54d5e4f0106e1f1"
+  },
+  "mechanism": {
+    "source": "results/research_repair_v1/mechanism/summary.json",
+    "rows": 45,
+    "figures": [
+      "figure_mechanism_paths.png"
+    ],
+    "source_sha256": "c50405158d6895082cde1802e2491de362a0d3e965462ad6a05f5324db927a39",
+    "ci_source": "results/research_repair_v1/mechanism/bootstrap_ci.csv",
+    "ci_source_sha256": "7d1b54e6d3dca246fc2fb8435189ec09cdb98c51bfd452486e6b4522b448018a",
+    "path_interpretation": "Observed label path means have opposite signs in RPN, DETR, GDINO. The signed Shapley mean can conceal this cancellation; the accounting does not identify a cause."
+  },
+  "scope_and_gate_evidence": {
+    "coverage_source": "results/research_repair_v1/statistics/required_scope_coverage.json",
+    "coverage_sha256": "6a31784af5a73b230c9054927891b320ed14b3b05eeb695b1750b58d3e66f288",
+    "recovery_failures": [
+      {
+        "job_id": "m3_b0_severity_macro",
+        "path": "results/research_repair_v1/statistics/recovery/runs/20261003T095000Z/failures/m3_b0_severity_macro.json",
+        "sha256": "cdc50357c3f531f36bddbaa842a648dfe4f4caf4f429c635224e7f69c2d2e5f9"
+      },
+      {
+        "job_id": "m3_b1_severity_macro",
+        "path": "results/research_repair_v1/statistics/recovery/runs/20261003T130700Z/failures/m3_b1_severity_macro.json",
+        "sha256": "35aabd9e94b4185ec0cf2c8455d004579c65c10e290181ecc69945769a971842"
+      },
+      {
+        "job_id": "m3_b2_severity_macro",
+        "path": "results/research_repair_v1/statistics/recovery/runs/20261003T130700Z/failures/m3_b2_severity_macro.json",
+        "sha256": "b70db4f738c19fb44edd4d53cce66fcdc5035c8772f325b15d3a0e3d1b575dec"
+      }
+    ],
+    "gates_source": "results/research_repair_v1/statistics/gate_decisions.json",
+    "gates_sha256": "a9a317a499977d175968976b51c928c854f621bd2583e65f678ab67bcdcc71c6"
+  }
+}

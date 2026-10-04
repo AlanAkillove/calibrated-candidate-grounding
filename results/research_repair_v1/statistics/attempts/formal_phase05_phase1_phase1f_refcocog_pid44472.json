@@ -1,0 +1,54 @@
+{
+  "schema": "ccg.research_repair_v1.statistics.execution_attempt.v1",
+  "attempt_id": "formal_phase05_phase1_phase1f_refcocog_pid44472",
+  "pid": 44472,
+  "process_created_local": "2026-10-03T16:32:54.841598+08:00",
+  "command": [
+    "E:/conda/envs/deepminer/python.exe",
+    "-u",
+    "scripts/repair_statistics.py",
+    "--scope",
+    "phase05",
+    "--scope",
+    "phase1",
+    "--scope",
+    "phase1f",
+    "--scope",
+    "refcocog",
+    "--n-replicates",
+    "5000",
+    "--seed",
+    "0",
+    "--ci",
+    "0.95",
+    "--resource-slot-granted",
+    "root-A-SLOT-2026-10-03"
+  ],
+  "stdout": "results/research_repair_v1/statistics/logs_phase05_phase1_phase1f_refcocog_formal.log",
+  "stderr": "results/research_repair_v1/statistics/logs_phase05_phase1_phase1f_formal.err.log",
+  "protocol": {
+    "n_replicates": 5000,
+    "seed": 0,
+    "ci_level": 0.95,
+    "method": "percentile",
+    "resample_unit": "shared image cluster"
+  },
+  "resource_authorization": "root-A-SLOT-2026-10-03",
+  "code_identity": {
+    "launch_snapshot_saved": false,
+    "limitation": "The live runner/statistics source was edited after process launch; launch-time files were not snapshotted, so current source hashes are explicitly post-launch and are not asserted to identify in-memory code.",
+    "runner_sha256_at_launch": null,
+    "statistics_module_sha256_at_launch": null,
+    "bootstrap_module_sha256_at_launch": null,
+    "post_launch_observed_sha256": {
+      "scripts/repair_statistics.py": "7bdf3e7809183f478eea337e14b8ae76821f85c7c1a7560f6709b2a54d5f953b",
+      "src/ccg/repairs/statistics.py": "4baeb161bced67218e3c245748834ae67ad9eba779a9bf4b436160eb62b38a34",
+      "src/ccg/repairs/bootstrap.py": "67a26f3768f921a5429124b9d0d490bb8e62fb5a2ec1977f6108313cb93126da"
+    },
+    "bootstrap_source_changed_after_launch": false
+  },
+  "formal_jobs_completed_at_record_time": [
+    "phase05_val_select"
+  ],
+  "state": "RUNNING"
+}

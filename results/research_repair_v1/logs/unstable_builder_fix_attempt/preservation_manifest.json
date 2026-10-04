@@ -1,0 +1,54 @@
+{
+  "schema": "research-repair-v1-source-unstable-full-suite-attempt-v1",
+  "run_source_changed": [
+    "scripts/derive_m2_gate_estimate.py",
+    "scripts/repair_statistics.py",
+    "src/ccg/repairs/m2_auxiliary.py",
+    "tests/test_repair_m2_auxiliary.py"
+  ],
+  "runner_exit": 0,
+  "source_unchanged_during_test_run": false,
+  "source_hashes": [
+    {
+      "path": "scripts/derive_m2_gate_estimate.py",
+      "start_sha256": "296fc8ef1e40e7ff90eed840aa92c5a029c1128b25d401d639542c87b827d6ac",
+      "preserved_after_sha256": "1c3c63b5df940979625b4471735d1d2fc3a1a738701341ccd4815a053fa895be",
+      "preserved_copy": "source_after/scripts_derive_m2_gate_estimate.py"
+    },
+    {
+      "path": "scripts/repair_statistics.py",
+      "start_sha256": "99e29d32146e1a2563c6254a604ddeb42baafff18bc59cc274a389a6d0675790",
+      "preserved_after_sha256": "72fe5842aeeb1eb940c7d7b01848ac54c2b32429412b4174cd27043dbf39ee6f",
+      "preserved_copy": "source_after/scripts_repair_statistics.py"
+    },
+    {
+      "path": "src/ccg/repairs/m2_auxiliary.py",
+      "start_sha256": "565a59d72dae0a8d21212a6e8b74094887518721b1b6a3449f568ad712bd1578",
+      "preserved_after_sha256": "2acbcd37dfe2d3d16ae007435b173ff62c2fe32a853e2aded78d08e9c1ae77a1",
+      "preserved_copy": "source_after/m2_auxiliary.py"
+    },
+    {
+      "path": "tests/test_repair_m2_auxiliary.py",
+      "start_sha256": "4f05b26929016c023d8350723f8ac184c77df49dd58e542ed031c15a54a3bfdc",
+      "preserved_after_sha256": "a700e01f5e41e6e4615d35b2dea0ce573bc64b25d1877b8af32d54d5ed0924d6",
+      "preserved_copy": "source_after/test_repair_m2_auxiliary.py"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "pytest_full_builder_fix_unstable.log",
+      "sha256": "447940b311812722bcc35d2b47e91488c3d1d8b6a5fea5849e17b174f28b1266",
+      "bytes": 2930
+    },
+    {
+      "path": "pytest_full_builder_fix_unstable.xml",
+      "sha256": "560f867b5a973f9a7db49ff08d25b7907a1c63f923847db626f5dce0328767c2",
+      "bytes": 148008
+    },
+    {
+      "path": "full_test_sources_builder_fix_unstable.json",
+      "sha256": "1ce8b6933e665966ba2af47486c080cdc6cfbd7604bee6a1669a179b7a6b2986",
+      "bytes": 28428
+    }
+  ]
+}

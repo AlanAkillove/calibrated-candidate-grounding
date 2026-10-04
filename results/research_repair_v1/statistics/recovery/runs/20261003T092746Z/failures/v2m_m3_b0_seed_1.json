@@ -1,0 +1,66 @@
+{
+  "schema": "research-repair-v1-recovery-failure-v1",
+  "scope_id": "v2m_m3_b0_seed_1",
+  "attempt_id": "20261003T092746Z",
+  "status": "RUNNER_DEFECT_RETRY_REQUIRED",
+  "attempted_route": [
+    {
+      "step": "load M1/M2 frozen manifests and scalers",
+      "applicable": true
+    },
+    {
+      "step": "run original M3-B0 frozen scorer/feature/inference path",
+      "applicable": true
+    },
+    {
+      "step": "M3-B0 mixer fit",
+      "applicable": true,
+      "fit_data": "reliability_train/tune m={0,2,4} only"
+    },
+    {
+      "step": "M25 original expert fit",
+      "applicable": false,
+      "reason": "M25 specifies frozen M1/M2 experts; re-fitting would violate its read-only design"
+    }
+  ],
+  "source_sha256": {
+    "results/v2_backbone_generalization/g4_protocol_freeze.json": "6845a3f9143fbcdd275257ebf51cd882e25281aa63913250ed57cc247139bb8b",
+    "results/v2_local_competition/m1_random_only/seed_1/confidences.npz": "12e1b2ec8ce6620dff5377d93def59b54c1459668b0fb4103426d42f69d2c181",
+    "results/v2_local_competition/m1_random_only/seed_1/model_manifest.json": "5d78ec3f51d9f98b15d6a58b5527d2711eced3c2541fbb5d1350761160df973e",
+    "results/v2_local_competition/m2_curriculum/point_metrics.csv": "7c0a19b6bf6d3643e1739248b14f0813b644fdb0a56a1efbbb6981dbf7820cf7",
+    "results/v2_local_competition/m2_curriculum/seed_1/confidences.npz": "4208303b3af37cc513c434278eef4fec540ae202fdce1b81f5b978458da3c594",
+    "results/v2_local_competition/m2_curriculum/seed_1/model_manifest_seed1.json": "9aa027f377ee943018f8bc2330bf22dff072f4d2143f46c2cf0c6570c5aeef97",
+    "results/v2_local_competition/m3_mixture/amendment_v2m31.json": "d4e75eebbb9db3cd4e104d182d386533f0df62e0e6d5ec0933270744d81b7c85",
+    "results/v2_local_competition/m3_mixture/b0/point_metrics.csv": "07f0bce58981fa2f705c353312bb8c754755f366613227c46a01a5c6e53a1bdb",
+    "results/v2_local_competition/m3_mixture/protocol_m3.json": "d5e17d6bba56471bf9382c2c3ebf534a98550ed9dbd5fe1f826f2831e9a371da",
+    "scripts/build_v2m_m2_manifests.py": "4e53e37276911e7ee878931c698c29740858a98756a96df2754bf2db2a70fc8a",
+    "scripts/repair_legacy_model_recovery.py": "acd62bb83e57bcebd7580cf95aa7c62dcfb4fcc986dfd196c111d10ee5f8cbc8",
+    "scripts/run_v2g_hard.py": "61fef9a224bd580d88108900447cfb3d4cf1b637c38431a648386723378f7697",
+    "scripts/run_v2g_reliability.py": "6acb1d93852e9b2733815caabc44309e54bd7136f9cdb70b6ea35141b2841bad",
+    "scripts/run_v2m_m1.py": "438928d78ebb63c06874efcd0a1dedf04d410f79ff13458de20ad1a06f992a0f",
+    "scripts/run_v2m_m2.py": "f1b01a9f073710e14900fb825e88b4ffacba1ad822030515542720984495336a",
+    "scripts/run_v2m_m25.py": "d54528ba808b0e5beae57704409f51233ca9c2383210aff5d20f0ad8d8d3899a",
+    "scripts/run_v2m_m3_b0.py": "580c19e53b119a106c44fbd4b9806223a13fefa2548902269de3ad968a11348e",
+    "scripts/run_v2m_m3_conf.py": "a2aae27c54ebb72d9df7d73816e5a3fa85f4cf3f730bcb8bba5f8315a138eee0",
+    "src/ccg/mixture/mixer.py": "0e849dbe8e7821c77bf24ac6e9d7a99332bd01c269f47a2f36585879a4edd08c",
+    "src/ccg/reliability/evaluate.py": "06aa92250d1f1d5be6a7d9e8e2319e28d86e9702c25c667edb02f597d01b46e2",
+    "src/ccg/reliability/features.py": "acb43bc90d1f55b739206994fca6466b18a82ea643b0185a5f3f44c4d13840e8",
+    "src/ccg/reliability/models.py": "8e4d1656201bea8d77f01effaa07f7a2ca2e5e0078a2adc27440e42e87748c5f",
+    "src/ccg/repairs/legacy_recovery.py": "cb2286fff4dcaebcc5f1e941274c4f642c4a02d7be80396a4d173c9710c72bdb",
+    "src/ccg/semantic/data.py": "a18bb6e2296356bcf9148cd779aacb3d6402f4586f1b0b99342bad5eb832e522",
+    "src/ccg/semantic/hard.py": "1285db53413e455b208e396638582eeea072dd4911f49309878d194a7bafe6e1",
+    "src/ccg/semantic/hard_scores.py": "5959eca91d61232d7834e4ff01ee0d781b70e6656ed28f6d23a0476f2de3a298",
+    "src/ccg/v2/semantic_features.py": "0d25d25cfd44ae39c6a8921011dedc58ce3f9cd763b2e267dbae7c790af37828"
+  },
+  "original_tolerance": {
+    "M1_M2_confidence": 1e-09,
+    "M2_point_metrics": 1e-09,
+    "M3_B0_committed_point_metrics": 1e-09
+  },
+  "observed_error": null,
+  "error_type": "RuntimeError",
+  "failure_reason": "RuntimeError: supplemental source snapshot conflict for scripts/repair_legacy_model_recovery.py; this is not a model recovery failure.",
+  "classification_note": "Attempt-level input-manifest assembly defect: a mutable recovery script hash conflicted with a prior attempt snapshot after the M25 archive had already been written. The M25 archive for this seed is independently anchor-verified and preserved. The B0 point-table comparison was not reached in this attempt; its separate strict mismatch evidence is recorded in attempt 20261003T092217Z.",
+  "log_path": "results/research_repair_v1/statistics/recovery/runs/20261003T092746Z/failures/v2m_m3_b0_seed_1.log",
+  "log_sha256": "cbd8186c6e5bc25cc8495d388a06b535a787f76131b9bad4551d368ee3390264"
+}

@@ -1,0 +1,12 @@
+[16:19:59] [a11-bundle] b3_seed1: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[16:19:59] [a11-bundle] b3_seed2: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[16:20:00] [a11-bundle] b3_seed3: verified e1b_coefficients_max_abs=0.00e+00, stats17_normalisation_max_abs=0.00e+00, stats_logistic_pred_max_abs=2.22e-16, temperature_max_abs=0.00e+00
+[16:21:16] RPN/phase1f_frozen_candidate_archive/hard5: forwarded old/new n=9466 rows, K=5
+[16:21:50] RPN/phase1f_frozen_candidate_archive/hard10: forwarded old/new n=6747 rows, K=10
+[16:22:26] RPN/phase1f_frozen_candidate_archive/expb_m0: forwarded old/new n=7410 rows, K=10
+[16:23:03] RPN/phase1f_frozen_candidate_archive/expb_m2: forwarded old/new n=7410 rows, K=10
+[16:23:39] RPN/phase1f_frozen_candidate_archive/expb_m4: forwarded old/new n=7398 rows, K=10
+[16:24:16] RPN/phase1f_frozen_candidate_archive/expb_m8: forwarded old/new n=7389 rows, K=10
+[16:26:04] RPN/v2_p1_frozen_hard_k5_predictions/hard5: forwarded old/new n=9602 rows, K=5
+[16:27:25] DETR/v2_p1_frozen_hard_k5_predictions/hard5: forwarded old/new n=8373 rows, K=5
+[16:27:25] candidate sensitivity forward COMPLETE: 8 source cohorts -> results/research_repair_v1/candidates/audit_run_20261003_Cslot_audit4/summary.json

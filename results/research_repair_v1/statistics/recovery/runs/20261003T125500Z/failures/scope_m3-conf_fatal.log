@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_legacy_model_recovery.py", line 1397, in main
+    _recover_m3_conf(run_dir, manifest, log)
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_legacy_model_recovery.py", line 1063, in _recover_m3_conf
+    paths = conf._backbone_paths(freeze, tag)
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\run_v2m_m3_conf.py", line 311, in _backbone_paths
+    raise KeyError(f"backbone tag {tag!r} absent from the freeze file")
+KeyError: "backbone tag 'b1' absent from the freeze file"
+

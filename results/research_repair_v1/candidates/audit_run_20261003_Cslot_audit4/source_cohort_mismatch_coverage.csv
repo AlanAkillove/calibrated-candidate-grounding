@@ -1,0 +1,9 @@
+family,cell,candidate_source,source_path,source_rows,source_sentence_ids_unique,source_rows_covered_by_category_audit,target_proposal_mismatches,target_proposal_mismatch_rate,measured_cell_applicable
+RPN,hard5,phase1f_frozen_candidate_archive,results/phase1f_hard_semantic/manifests/hard5_candidates.npz,9487,True,9487,54,0.005691999578370402,True
+RPN,hard10,phase1f_frozen_candidate_archive,results/phase1f_hard_semantic/manifests/hard10_candidates.npz,6765,True,6765,24,0.003547671840354767,True
+RPN,expb_m0,phase1f_frozen_candidate_archive,results/phase1f_hard_semantic/manifests/expb_m0_candidates.npz,7410,True,7410,27,0.0036437246963562753,True
+RPN,expb_m2,phase1f_frozen_candidate_archive,results/phase1f_hard_semantic/manifests/expb_m2_candidates.npz,7410,True,7410,27,0.0036437246963562753,True
+RPN,expb_m4,phase1f_frozen_candidate_archive,results/phase1f_hard_semantic/manifests/expb_m4_candidates.npz,7410,True,7410,27,0.0036437246963562753,True
+RPN,expb_m8,phase1f_frozen_candidate_archive,results/phase1f_hard_semantic/manifests/expb_m8_candidates.npz,7410,True,7410,27,0.0036437246963562753,True
+RPN,hard5,v2_p1_frozen_hard_k5_predictions,results/v2_proposal_robustness/predictions/p1__RPN__hard_k5__b3_seed1.npz,9623,True,9623,54,0.005611555647926842,True
+DETR,hard5,v2_p1_frozen_hard_k5_predictions,results/v2_proposal_robustness/predictions/p1__DETR__hard_k5__b3_seed1.npz,8376,True,8376,11,0.0013132760267430754,True

@@ -1,0 +1,24 @@
+{
+  "schema": "research-repair-v1-final-test-launch-v1",
+  "started_utc": "2026-10-04T03:41:03.981025+00:00",
+  "cwd": "F:\\DL Projects\\calibrated-candidate-grounding",
+  "command": [
+    "E:\\conda\\envs\\deepminer\\python.exe",
+    "-B",
+    "-u",
+    "scripts/run_repair_full_tests.py",
+    "--evidence-dir",
+    "results/research_repair_v1/independent_closeouts/20261004T031921Z/logs",
+    "--basetemp",
+    ".rqc1/pt"
+  ],
+  "python_executable": "E:\\conda\\envs\\deepminer\\python.exe",
+  "tmp_env": {
+    "TMP": "F:\\DL Projects\\calibrated-candidate-grounding\\.rqc1",
+    "TEMP": "F:\\DL Projects\\calibrated-candidate-grounding\\.rqc1",
+    "TMPDIR": "F:\\DL Projects\\calibrated-candidate-grounding\\.rqc1"
+  },
+  "stdout_stderr_log": "F:\\DL Projects\\calibrated-candidate-grounding\\results\\research_repair_v1\\independent_closeouts\\20261004T031921Z\\logs\\pytest_full_final.log",
+  "pid": 5276,
+  "pid_owner": "direct Python subprocess running scripts/run_repair_full_tests.py"
+}

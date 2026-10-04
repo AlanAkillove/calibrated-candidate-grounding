@@ -1,0 +1,27 @@
+{
+  "schema": "research-repair-v1-candidate-sensitivity-progress-v1",
+  "status": "PILOT_PARTIAL",
+  "formal": false,
+  "n_replicates": 1,
+  "seed": 0,
+  "ci": 0.95,
+  "completed_groups": [
+    "RPN__phase1f_frozen_candidate_archive__hard5__pooled_testA_testB",
+    "RPN__phase1f_frozen_candidate_archive__hard5__testA",
+    "RPN__phase1f_frozen_candidate_archive__hard5__testB",
+    "RPN__phase1f_frozen_candidate_archive__hard10__pooled_testA_testB",
+    "RPN__phase1f_frozen_candidate_archive__hard10__testA",
+    "RPN__phase1f_frozen_candidate_archive__hard10__testB",
+    "RPN__v2_p1_frozen_hard_k5_predictions__hard5__pooled_testA_testB",
+    "RPN__v2_p1_frozen_hard_k5_predictions__hard5__testA",
+    "RPN__v2_p1_frozen_hard_k5_predictions__hard5__testB",
+    "DETR__v2_p1_frozen_hard_k5_predictions__hard5__pooled_testA_testB",
+    "DETR__v2_p1_frozen_hard_k5_predictions__hard5__testA",
+    "DETR__v2_p1_frozen_hard_k5_predictions__hard5__testB",
+    "RPN__phase1f_frozen_candidate_archive__dose_joint__pooled_testA_testB",
+    "RPN__phase1f_frozen_candidate_archive__dose_joint__testA",
+    "RPN__phase1f_frozen_candidate_archive__dose_joint__testB"
+  ],
+  "n_groups": 15,
+  "summary": "summary.json"
+}

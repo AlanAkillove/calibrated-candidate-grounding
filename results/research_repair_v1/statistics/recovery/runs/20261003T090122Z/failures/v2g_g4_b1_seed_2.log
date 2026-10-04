@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "F:\DL Projects\calibrated-candidate-grounding\scripts\repair_legacy_model_recovery.py", line 636, in _recover_g4
+    "source_paths": source_paths + [g4.PHASE_A_ROOT / "phaseA_summary.csv"],
+AttributeError: module 'repair_v2g_hard' has no attribute 'PHASE_A_ROOT'
+

@@ -1,0 +1,149 @@
+{
+  "schema": "ccg.research_repair_v1.statistics.count_reconciliation.v1",
+  "created_utc": "2026-10-03T17:39:11.414Z",
+  "status": "COMPLETE_DERIVED_M2_REFRESHED_GATES_EVALUATED",
+  "formal_batch": {
+    "run_id": "20261003T133926Z",
+    "launch_manifest": "results/research_repair_v1/statistics/formal_batches/20261003T133926Z/launch_manifest.json",
+    "launch_manifest_sha256": "0d5095416e1a35524f80dc6dbbf2016462f79cc70c8c5660d6265f59a7cb6511",
+    "preflight": "results/research_repair_v1/statistics/preflight.json",
+    "preflight_sha256": "66aca3d94296f55f5407548f0019108afde46820f05eb8b6d857168378d1ce10",
+    "completed_job_log": "results/research_repair_v1/statistics/logs/repair_stats_31jobs_20261003T133926Z.log",
+    "completed_jobs": 31,
+    "logged_estimate_count": 2825.0,
+    "launch_primary_estimate_count": 2807.0,
+    "preflight_primary_estimate_count": 2807.0,
+    "frozen_statistics_source_snapshot": "results/research_repair_v1/statistics/formal_batches/20261003T133926Z/source_snapshot/scripts/repair_statistics.py",
+    "frozen_statistics_source_sha256": "e426e40d778233b6c8e93f0c4eeb5b2459da42005042d2586ee4dc73c195850e"
+  },
+  "auxiliary_reconciliation": {
+    "source": "The exact frozen repair_statistics.py snapshot was executed read-only with its frozen BUILDERS normalization against the frozen preflight inputs; each of the three listed jobs contains six auxiliary estimates absent from launch_manifest.jobs[].n_estimates.",
+    "jobs": [
+      {
+        "job_id": "d2_c4_random_hard5",
+        "primary_estimate_count": 7,
+        "auxiliary_estimate_count": 6,
+        "actual_completed_estimate_count": 13
+      },
+      {
+        "job_id": "p1_c4_RPN",
+        "primary_estimate_count": 51,
+        "auxiliary_estimate_count": 6,
+        "actual_completed_estimate_count": 57
+      },
+      {
+        "job_id": "p1_c4_DETR",
+        "primary_estimate_count": 51,
+        "auxiliary_estimate_count": 6,
+        "actual_completed_estimate_count": 57
+      }
+    ],
+    "total_omitted_auxiliary_estimates": 18,
+    "auxiliary_estimate_names": [
+      "manipulation__winner_competitor_max_cos__hard_minus_rand",
+      "manipulation__winner_competitor_max_cos__directional",
+      "manipulation__winner_top2_cos__hard_minus_rand",
+      "manipulation__winner_top2_cos__directional",
+      "manipulation__q_margin12__hard_minus_rand",
+      "manipulation__q_margin12__directional"
+    ],
+    "builder_evidence": "D2_C4 and P1_C4 builders each create two estimates for each of the three MANIPULATION_METRICS: hard-minus-random and direction-scaled."
+  },
+  "total_counts": {
+    "previous_formal_jobs": 28,
+    "previous_formal_estimates": 3820.0,
+    "current_formal_jobs": 31,
+    "current_formal_estimates": 2825.0,
+    "all_formal_jobs": 59,
+    "all_formal_estimates_before_m2_derived_estimate": 6645,
+    "expected_formal_estimates_after_m2_derived_estimate": 6646
+  },
+  "launch_manifest_mutated": false,
+  "notes": [
+    "The launch manifest remains unchanged and records primary estimate counts only for the three jobs with pre-existing auxiliary estimates.",
+    "The 18 auxiliary estimates were present in the exact frozen builder code and are included in the actual completed log counts.",
+    "M2 derived relative E-AURC is a single deterministic same-draw estimate and will add one summary/ledger item after application; no bootstrap draws will be generated."
+  ],
+  "m2_derived_estimate": {
+    "status": "DERIVED_AND_WRITTEN",
+    "estimate": "m8__LCR_E1b_relative_eaurc_reduction",
+    "point": -0.03395720018099881,
+    "old_point": -0.03395720018099881,
+    "ci_low": -0.05759964912852949,
+    "ci_high": -0.011061452466178219,
+    "valid_replicates": 5000,
+    "invalid_replicates": 0,
+    "gate_eligible": true,
+    "source_raw_replicates": "results/research_repair_v1/statistics/raw_replicates/m2_curriculum_m0_m2_m4_m8.npz",
+    "source_raw_replicates_sha256": "15d6cbdc08adb6c97d8d3bc5daa134d2b9d0879b69221ae06ef4dce054562ce9",
+    "output_raw_replicates": "results/research_repair_v1/statistics/raw_replicates/m2_curriculum_m0_m2_m4_m8__m2_relative_auxiliary.npz",
+    "output_raw_replicates_sha256": "747a6097aeb9c0c6ee724df9ec213daba8e13864050161a3ef8d9a03d5eb5738",
+    "apply_log": "results/research_repair_v1/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/logs/derive_m2_apply.log",
+    "apply_log_sha256": "32b210312c765fc046e4df7b503e8884720676236fe6a8e351478dcb740115a6",
+    "derivation_script_snapshot": "17a8866799999e478df9ac3ad5e27d0a36029c8cad023cb3ef7d2deac24b2d92",
+    "old_point_anchor_status": "PASS"
+  },
+  "post_refresh_state": {
+    "status": "PARTIAL_SCOPE_COMPLETE",
+    "completed_jobs": 59,
+    "estimate_count": 6646,
+    "n_replicates": 5000,
+    "summary_sha256": "99985fb91509d25c837d1d6b0aef9a3a5d6fbaf153fac83ddcfeb3de75e46114",
+    "coverage_scope_count": 16,
+    "formal_scope_count": 15,
+    "unverifiable_scope_ids": [
+      "m3"
+    ],
+    "coverage_sha256": "1fa106ecaa4698bebb4d458877ff704350c80fec6b566021c14eb895cfa29764",
+    "gate_rows": 23,
+    "gate_status_counts": {
+      "UNVERIFIABLE": 1,
+      "NOT_APPLICABLE": 2,
+      "EVALUATED": 20
+    },
+    "pending_gate_count": 0,
+    "gate_decisions_sha256": "6b75ec238d6ac199f278c2d895e482b98202821644766a7a8efe00f2fd991c38",
+    "status_json_sha256": "3ff0e1e56f1fb4bbe1fb9529a19e82cddd4977b7d7b640e42aaf6e5813ca892e"
+  },
+  "final_gate_fix_sources": [
+    {
+      "path": "scripts/refresh_repair_gate_decisions.py",
+      "snapshot_path": "results/research_repair_v1/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot_after_d2c1_fix/scripts/refresh_repair_gate_decisions.py",
+      "size_bytes": 45762,
+      "sha256": "38aeeae226018211a63918ee8a3568e1c53c874ed3f6969b1b9f45fc2c3f2eb9"
+    },
+    {
+      "path": "tests/test_repair_gate_decisions.py",
+      "snapshot_path": "results/research_repair_v1/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/source_snapshot_after_d2c1_fix/tests/test_repair_gate_decisions.py",
+      "size_bytes": 7320,
+      "sha256": "cc64c18527cb74488d126c7866ffe4d4d6eedf53fdc1d752d5daad04ea306112"
+    }
+  ],
+  "d2_c1_gate_fix_test": {
+    "command": "python -B -m pytest tests/test_repair_gate_decisions.py -q",
+    "result": "4 passed",
+    "log": "results/research_repair_v1/statistics/derivation_runs/m2_relative_eaurc/20261003T173744Z/logs/test_repair_gate_decisions_d2c1.log",
+    "log_sha256": "9d5a2646cfea101970d3c6e3eb8c2650770734a095b2562b4c25cf9f554c913c"
+  },
+  "snapshot_path_corrections": {
+    "path": "results/research_repair_v1/statistics/snapshot_path_corrections.json",
+    "sha256": "2cdf0aa94ab53556778bd2c58366f06b867ad7bb97ac084bf94402c30b11c235",
+    "corrected_reference_count": 2
+  },
+  "before_document_close_snapshot": {
+    "path": "results/research_repair_v1/statistics/before_document_close/20261003T180816Z/count_reconciliation.json",
+    "sha256": "bd7ecb7a5c324700cc2aae2764fd7aba4a946aea8d0dbb14619a740bb24c9316"
+  },
+  "final_document_close": {
+    "acceptance": {
+      "path": "results/research_repair_v1/logs/acceptance_check.json",
+      "sha256": "fcdb22503aa8923dc0dc834aad766841a2c3ff740dda7ce03a9da2b203a83918",
+      "status": "PASS"
+    },
+    "gate_decisions": {
+      "path": "results/research_repair_v1/statistics/gate_decisions.json",
+      "sha256": "a9a317a499977d175968976b51c928c854f621bd2583e65f678ab67bcdcc71c6"
+    },
+    "note": "post_refresh_state remains the historical post-refresh snapshot; this field binds the later root document-close gate output."
+  }
+}

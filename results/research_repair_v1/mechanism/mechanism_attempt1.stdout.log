@@ -1,0 +1,6 @@
+[15:29:50] [repair-mechanism] frozen input manifest verified; loading aligned K5/K50 identities and C1 anchors
+[15:29:50] [repair-mechanism] RPN: verified n=10286 rows, images=1490; bootstrapping
+[15:30:22] [repair-mechanism] DETR: verified n=9665 rows, images=1421; bootstrapping
+[15:30:51] [repair-mechanism] GDINO: verified n=10402 rows, images=1489; bootstrapping
+[15:31:22] [repair-mechanism] completed all families and wrote the shared-bootstrap mechanism summary
+status=COMPLETE output_dir=F:\DL Projects\calibrated-candidate-grounding\results\research_repair_v1\mechanism
