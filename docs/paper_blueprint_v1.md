@@ -28,6 +28,13 @@ sample lower bound. Adaptive ECE percentile intervals do not establish nominal
 coverage or population miscalibration merely from a positive lower endpoint. Monotonic scalar
 confidence transforms preserve AUROC; logits temperature need not preserve MSP order.
 
+The [analysis literature review](../reviews/analysis_literature_review_2026-10-04.md)
+records source reading depth, four-corner/path identities, and the distinction between
+metric accounting and causal mediation. Under Gupta and Ramdas's strict terminology,
+the current pooled confidence/correctness ECE is confidence calibration, rather than
+calibration additionally conditioned on the predicted label; state the actual formula
+and retain legacy metric names only for artifact/API compatibility.
+
 ## 3. Controlled evaluation design
 
 Describe target inclusion, uniqueness filtering, maximum-K feasibility, common
