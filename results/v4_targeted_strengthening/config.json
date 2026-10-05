@@ -1,0 +1,101 @@
+{
+  "schema": "v4-config-v1",
+  "baseline": "a203744cba2a44b12514012a966a753f028ab1e2",
+  "backbones": [
+    "b0",
+    "b16"
+  ],
+  "scorer_seeds": [
+    1,
+    2,
+    3
+  ],
+  "development_status": "result-driven follow-up on already-observed FineCops",
+  "train_images": 523,
+  "tune_images": 224,
+  "train_K": [
+    5,
+    10
+  ],
+  "C": [
+    0.1,
+    1,
+    10
+  ],
+  "selection_tie_tolerance": 0.002,
+  "reuse_frozen_controls": [
+    "S",
+    "S+Q"
+  ],
+  "new_groups": [
+    "S+V_pure",
+    "Full_pure"
+  ],
+  "formal_controlled_images": 2888,
+  "formal_controlled_expressions": 7004,
+  "coverages": [
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9
+  ],
+  "ambiguity": "nn_cos_mean",
+  "ambiguity_source": "image-balanced source train controlled K50",
+  "bootstrap": {
+    "draws": 5000,
+    "seed": 0,
+    "unit": "image",
+    "marginal_ci": 0.95,
+    "family_size": 6,
+    "adjusted_ci": 0.9916666666666667,
+    "estimator": "mean within-seed effects"
+  },
+  "primary": [
+    "A_delta_AURC_b0",
+    "A_delta_AURC_b16",
+    "A4_high_low_delta_AUROC_b0",
+    "A4_high_low_delta_AUROC_b16",
+    "B_pure_delta_AUROC_b0",
+    "B_pure_delta_AUROC_b16"
+  ],
+  "secondary_controlled_K": [
+    5,
+    10,
+    20
+  ],
+  "secondary_natural_K": [
+    5,
+    20,
+    50
+  ],
+  "gpu_budget_hours": 20,
+  "gpu_warning_hours": 12,
+  "blas_threads": 2,
+  "prohibited": [
+    "new architecture",
+    "new seed",
+    "feature rescue",
+    "post-result dataset switching",
+    "extra heterogeneity"
+  ],
+  "external_initial_status": "NO_GO pending actual source/domain/access/permission/size gates",
+  "external_priority": [
+    "ReferIt",
+    "RefEgo",
+    "Talk2Car",
+    "Flickr30k"
+  ],
+  "external_audit_images": 400,
+  "external_seed": 20261005,
+  "external_gate": {
+    "bank_recall_05": 0.7,
+    "controlled_usable_fraction": 0.5,
+    "controlled_audit_images": 200,
+    "formal_images_min": 500,
+    "formal_expressions_min": 1000
+  }
+}

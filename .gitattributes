@@ -12,3 +12,8 @@ src/ccg/v3/** -text
 scripts/v3_*.py -text
 scripts/build_v3*.py -text
 tests/test_v3_*.py -text
+results/v4_targeted_strengthening/** -text
+src/ccg/v4/** -text
+scripts/v4_*.py -text
+tests/test_v4_*.py -text
+docs/paper_*v4.md -text

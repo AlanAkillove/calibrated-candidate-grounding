@@ -1,0 +1,9 @@
+Protected inventory: results/v3_final_validation; 170 cumulative files
+Protected inventory: results/research_repair_v1; 890 cumulative files
+V3 formal frozen inputs: 500/3307
+V3 formal frozen inputs: 1000/3307
+V3 formal frozen inputs: 1500/3307
+V3 formal frozen inputs: 2000/3307
+V3 formal frozen inputs: 2500/3307
+V3 formal frozen inputs: 3000/3307
+{"status": "PASS", "protected_files": 890, "v3_freeze_input_records": 3307, "repair_unique_input_paths": 834, "errors": []}

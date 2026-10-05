@@ -82,6 +82,15 @@ results/v3_final_validation/**/*.csv.gz
 results/v3_final_validation/pipeline/**/predictions.jsonl
 results/v3_final_validation/pipeline/**/predictions.jsonl.tmp
 results/v3_final_validation/publication/git_whitespace_check.log
+# V4: preserve compact reproducible evidence, not downloaded media/test fixtures.
+!results/v4_targeted_strengthening/
+!results/v4_targeted_strengthening/**
+results/v4_targeted_strengthening/**/*.jpg
+results/v4_targeted_strengthening/**/*.jpeg
+results/v4_targeted_strengthening/**/*.mp4
+results/v4_targeted_strengthening/**/*.h5
+results/v4_targeted_strengthening/**/*.tmp
+results/v4_targeted_strengthening/acceptance/tmp/
 experiments/**/outputs/
 
 # Local logs / scratch

@@ -1,0 +1,58 @@
+{
+  "schema": "v4-stage-freeze-v1",
+  "stage": "p0",
+  "created_utc": "2026-10-05T04:45:39.030161+00:00",
+  "files": [
+    {
+      "path": "results/v4_targeted_strengthening/baseline_audit_initial.json",
+      "sha256": "41cc5fe9e32f934f1b228f897deefdcc0f046aa583ba4741d4fc792e33103def",
+      "size_bytes": 291918
+    },
+    {
+      "path": "results/v4_targeted_strengthening/config.json",
+      "sha256": "7fa2fc609c18704bfd50a6603a1b5b2048e371d8a378630035331e2b9b0bfe3b",
+      "size_bytes": 2060
+    },
+    {
+      "path": "reviews/v4_feature_dependency_audit.md",
+      "sha256": "4d1b58ee281065670a123e874544cfe91a19f4d0746f485a513b1d35b897ad26",
+      "size_bytes": 10094
+    },
+    {
+      "path": "reviews/v4_protocol.md",
+      "sha256": "17bb6434053bcd7e58c1b59bacc644adf8d4a6ce6f0a5222a561331065042b55",
+      "size_bytes": 14889
+    },
+    {
+      "path": "scripts/v4_audit_baseline.py",
+      "sha256": "8b7b253586bfa2146137b5bebe757c0751da7b67d7db09b28a983224b527cfd5",
+      "size_bytes": 5882
+    },
+    {
+      "path": "scripts/v4_freeze.py",
+      "sha256": "a236c7ab8c38d20ede29ef7a412da71bb862cd3fd3bb0fa75e89ce50c93abe31",
+      "size_bytes": 4430
+    },
+    {
+      "path": "src/ccg/v4/practical.py",
+      "sha256": "4a566c4ed147201b9e0938f96e7106450b0f2e1c1cf03f39acd2606039ac366b",
+      "size_bytes": 20828
+    },
+    {
+      "path": "src/ccg/v4/pure_features.py",
+      "sha256": "ed1f4cc32f5e1d99aa02d0752fb46a1ffe1a0b7cdb8a32dbe9528392847c7940",
+      "size_bytes": 9350
+    },
+    {
+      "path": "tests/test_v4_practical.py",
+      "sha256": "69576c80c7a2db7fe58cad2c1f5fc0f21995f7b6d7035a65433287c5747ba622",
+      "size_bytes": 7840
+    },
+    {
+      "path": "tests/test_v4_pure_features.py",
+      "sha256": "6546551cc27cdcb3b8ef1d98796844204daaecf709e87ecc760a8a4c86325737",
+      "size_bytes": 5559
+    }
+  ],
+  "baseline": "a203744cba2a44b12514012a966a753f028ab1e2"
+}
